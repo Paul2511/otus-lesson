@@ -1,0 +1,5 @@
+!default.*
+*.crt
+*.csr
+*.key
+*.pem
