@@ -21,7 +21,7 @@
   </div>
   <div class="form-group">
   <label>Должность</label>
-  <label><input type="radio" value="manager" name="worktype"></label>
-  <label><input type="radio" value="developer"name="worktype"></label>
+  <label>Менеджер <input type="radio" value="manager" name="worktype"></label>
+  <label>Программист <input type="radio" value="developer"name="worktype"></label>
   </div>
  <button type="submit" class="btn btn-primary">Submit</button>
