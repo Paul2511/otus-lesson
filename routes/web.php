@@ -13,10 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+
+Route::get('/', function () {
+    return view('main', ['pageTitle' => 'Главная']);
+});
+
+Route::get('/dictionaries', function () {
+    return view('dictionaries',  ['pageTitle' => 'Словари']);
+});
+
+Route::get('/dictionary', function () {
+    return view('dictionary',  ['pageTitle' => 'Словарь']);
+});
+
+
