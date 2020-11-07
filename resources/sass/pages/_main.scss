@@ -1,0 +1,26 @@
+.column {
+    background-color: #f5f2f2;
+    border-radius: 5px;
+    padding: 5px;
+
+    &__title {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    &__body{
+        padding: 5px;
+    }
+
+    .card {
+        padding: 5px;
+        margin-top: 5px;
+        background-color: #fff;
+        border-radius: 5px;
+
+        &__title {
+            font-size: 18px;
+        }
+    }
+}
