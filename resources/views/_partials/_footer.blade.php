@@ -10,5 +10,5 @@
       </div>
     </div>
   </div>
-</footer>
+</footer> 
 <!-- footer end-->

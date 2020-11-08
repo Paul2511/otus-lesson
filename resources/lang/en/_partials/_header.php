@@ -10,7 +10,7 @@ return [
     |
     |
     */
-
+    
     'russian' => 'Russian',
     'english' => 'English',
     'edit' => 'Edit Profile',

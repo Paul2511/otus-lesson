@@ -1,4 +1,4 @@
-@extends('auth.layouts.master')
+@extends('auth.layouts.master') 
 @section('title',__('auth.register').' | '.__('app.name'))
 @section('styles')
 

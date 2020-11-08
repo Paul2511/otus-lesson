@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master') 
 
 @section('title', Str::ucfirst(__('pages/orders.orders')))
 

@@ -12,7 +12,7 @@ return [
     | you want to customize your views to better match your application.
     |
     */
-
+    
     'knowledgebase' => 'knowledgebase',
     'next' => 'Next &raquo;',
 

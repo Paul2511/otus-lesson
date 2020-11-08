@@ -10,7 +10,7 @@ return [
     |
     |
     */
-
+    
     'dashboard' => 'dashboard',
     'orders' => 'orders',
     'documents' => 'documents',

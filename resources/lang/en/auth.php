@@ -12,6 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    
     'login' => 'Login',
     'register' => 'Sign Up',
     'yourName' => 'Your Name',
@@ -29,5 +30,5 @@ return [
     'confirm' => 'Confirm Password',
     'signup' => 'Sign Up',
     'already' => 'Are you already user?',
-    
+
 ];

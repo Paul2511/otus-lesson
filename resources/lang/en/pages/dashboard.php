@@ -12,7 +12,7 @@ return [
     | you want to customize your views to better match your application.
     |
     */
-
+    
     'dashboard' => 'dashboard',
     'orders' => 'Orders',
     'lorem' => 'Lorem ipsum dolor sit amet',

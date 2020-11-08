@@ -1,4 +1,4 @@
-<!-- latest jquery-->
+<!-- latest jquery--> 
 <script src="{{asset('assets/js/jquery-3.2.1.min.js')}}"></script>
 <!-- Bootstrap js-->
 <script src="{{asset('assets/js/bootstrap/popper.min.js')}}"></script>
