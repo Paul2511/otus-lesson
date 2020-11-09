@@ -4,15 +4,16 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">Домой</a></li>
-                <li class="breadcrumb-item"><a href="/dictionaries">Словари</a></li>
+                <li class="breadcrumb-item"><a href="/home">{{ __('Домой') }}</a></li>
+                <li class="breadcrumb-item"><a href="/dictionaries">{{ __('Словари') }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Мой словарь</li>
             </ol>
         </nav>
     </div>
 
-    <div class="container mt-4">
+    <div class="container mt-4 d-flex justify-content-between">
         <h1>Мой словарь <span class="badge badge-pill badge-primary">14</span></h1>
+        <button type="button" class="btn btn-primary">{{ __('Начать тренировку') }}</button>
     </div>
 
     <div class="container mt-3">

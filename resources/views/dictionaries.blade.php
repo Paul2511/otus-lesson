@@ -4,14 +4,14 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">Домой</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Словари</li>
+                <li class="breadcrumb-item"><a href="/home">{{ __('Домой') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ __('Словари') }}</li>
             </ol>
         </nav>
     </div>
 
     <div class="container mt-4">
-        <h1>Словари</h1>
+        <h1>{{ __('Словари') }}</h1>
     </div>
 
     <div class="container mt-3">
@@ -21,7 +21,7 @@
                 <span class="badge badge-primary badge-pill">14</span>
             </span>
             <div>
-                <button type="button" class="btn btn-primary">Начать тренировку</button>
+                <button type="button" class="btn btn-primary">{{ __('Начать тренировку') }}</button>
 
                 <button type="button" class="btn btn-danger">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
@@ -40,7 +40,7 @@
                 <span class="badge badge-primary badge-pill">100</span>
             </span>
             <div>
-                <button type="button" class="btn btn-primary">Начать тренировку</button>
+                <button type="button" class="btn btn-primary">{{ __('Начать тренировку') }}</button>
 
                 <button type="button" class="btn btn-danger">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
@@ -59,7 +59,7 @@
                 <span class="badge badge-primary badge-pill">50</span>
             </span>
             <div>
-                <button type="button" class="btn btn-primary">Начать тренировку</button>
+                <button type="button" class="btn btn-primary">{{ __('Начать тренировку') }}</button>
 
                 <button type="button" class="btn btn-danger">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
@@ -78,7 +78,7 @@
                 <span class="badge badge-primary badge-pill">1000</span>
             </span>
             <div>
-                <button type="button" class="btn btn-primary">Начать тренировку</button>
+                <button type="button" class="btn btn-primary">{{ __('Начать тренировку') }}</button>
 
                 <button type="button" class="btn btn-danger">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"

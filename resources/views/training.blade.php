@@ -4,7 +4,7 @@
     @include('blocks.breadcrumb')
 
     <div class="container mt-4">
-        <h1>Тренировка: Мой словарь <span class="badge badge-pill badge-primary">2 / 14</span></h1>
+        <h1>{{ __('Тренировка') }}: Мой словарь <span class="badge badge-pill badge-primary">2 / 14</span></h1>
     </div>
 
     <div class="container mt-4">
@@ -31,8 +31,8 @@
                         </div>
 
                         <div class="mt-3 d-flex justify-content-between">
-                            <button type="button" class="btn btn-success">Я знаю это слово, пропустить</button>
-                            <button type="button" class="btn btn-danger">Я не знаю это слово, изучать</button>
+                            <button type="button" class="btn btn-success">{{ __('Я знаю это слово, пропустить') }}</button>
+                            <button type="button" class="btn btn-danger">{{ __('Я не знаю это слово, изучать') }}</button>
                         </div>
                     </div>
                 </div>
@@ -41,6 +41,6 @@
     </div>
 
     <div class="container mt-4">
-        <button type="button" class="btn btn-primary">Закончить тренировку</button>
+        <button type="button" class="btn btn-primary">{{ __('Закончить тренировку') }}</button>
     </div>
 @endsection
