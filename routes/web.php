@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
 Route::get('/', function () {
-    return view('welcome');
+	return view('pages.welcome');
 });
+
+Route::get('/contacts', function () {
+	return view('pages.contacts');
+})
+	->name('contacts');
+
+/* TODO: Заменить страницами, созданными через скаффолдинг  */
+Route::get('/dev/login', function () {
+	return view('pages.login');
+})
+	->name('login');
+
+Route::get('/dev/register', function () {
+	return view('pages.register');
+})
+	->name('register');
