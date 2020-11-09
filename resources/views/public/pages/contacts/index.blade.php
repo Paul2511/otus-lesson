@@ -1,4 +1,4 @@
-@extends('public.layouts._page')
+@extends('public.layouts.app')
 
 @section('title', trans('views.contacts_title'))
 

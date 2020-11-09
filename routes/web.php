@@ -24,43 +24,43 @@ Route::group([
 ], function() {
 
     Route::get('/', function () {
-        return view('public.layouts.homepage');
+        return view('public.pages.homepage.index');
     });
 
     Route::get('/login', function () {
-        return view('public.layouts.auth');
+        return view('public.pages.auth.index');
     });
 
     Route::get('/logout', function () {
-        return view('public.layouts.auth');
+        return view('public.pages.auth.index');
     });
 
     Route::post('/login', ['before' => 'csrf', function () {
-        return view('public.layouts.auth');
+        return view('public.pages.auth.index');
     }]);
 
     Route::get( '/register', function () {
-        return view('public.layouts.reg');
+        return view('public.pages.register.index');
     });
 
     Route::post('/register', ['before' => 'csrf', function () {
-        return view('public.layouts.reg');
+        return view('public.pages.register.index');
     }]);
 
     Route::get( '/account', function () {
-        return view('public.layouts.account');
+        return view('public.pages.accounts.index');
     });
 
     Route::post('/account', ['before' => 'csrf', function () {
-        return view('public.layouts.account');
+        return view('public.pages.accounts.index');
     }]);
 
     Route::get('/contacts', function () {
-        return view('public.layouts.contacts');
+        return view('public.pages.contacts.index');
     });
 
     Route::get('/search', function () {
-        return view('public.layouts.search');
+        return view('public.pages.search.index');
     });
 
     Route::fallback(function () {
