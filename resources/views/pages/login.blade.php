@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="py-5">
+    <div class="py-5 d-flex flex-column flex-grow-1">
         <div class="container">
             <div class="row">
 
