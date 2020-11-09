@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 
 @section('title', Str::ucfirst(__('pages/orders.orders')))
 
@@ -48,7 +48,7 @@
                     <th scope="row">{{ $i }}</th>
                     <td>{{ __('pages/orders.company')}}</td>
                     <td>{{ __('pages/orders.jd')}}</td>
-                    <td>{{ date("d M Y",rand(1862055000,1282055681)) }}</td>
+                    <td>{{ Date::now()->format('d M Y') }}</td>
                     <td class="txt-secondary">{{ __('pages/orders.pending')}}</td>
                     <td>
                       <div class="btn-group">

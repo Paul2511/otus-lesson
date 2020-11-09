@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('title', __('users/profile.editProfile'))
 @section('style')
 
@@ -161,10 +161,10 @@
                 <tr>
                   <td><a class="text-inherit" href="#">Untrammelled prevents </a></td>
                   {{-- as an example --}}
-                  <td>{{ date("d M Y",rand(1862055000,1282055681)) }}</td>
+                  <td>{{ Date::now()->format('d M Y') }}</td>
                   <td><span class="status-icon bg-success"></span> {{ __('users/profile.completed') }}</td>
                   {{-- as an example --}}
-                  <td>$ <? echo( number_format(rand(10000,99999),2) ) ?> </td>
+                  <td>$ <?php echo( number_format(rand(10000,99999),2) ) ?> </td>
                   <td class="text-right">
                     <a class="btn btn-primary btn-sm" href="javascript:void(0)"><i class="fa fa-pencil"></i> {{ __('users/profile.edit') }}</a>
                     <a class="btn btn-transparent btn-sm" href="javascript:void(0)"><i class="fa fa-link"></i> {{ __('users/profile.update') }}</a>

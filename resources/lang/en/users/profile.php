@@ -1,54 +1,38 @@
 <?php
-
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Dashboard page Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used by the paginator library to build
-    | the simple pagination links. You are free to change them to anything
-    | you want to customize your views to better match your application.
-    |
-    */
-
-    'profile' => 'profile',
-    'users' => 'Users',
-    'editProfile' => 'Edit Profile',
-    'userProfile' => 'User Profile',
-    'companyProfile' => 'Company Profile',
-    'bio' => 'Bio',
-    'userEmail' => 'Email-Address',
-    'password' => 'Password',
-    'website' => 'Website',
-    'company' => 'Company',
-    'save' => 'Save',
-    'username' => 'Username',
-    'companyEmail' => 'Email address',
-    'firstName' => 'First Name',
-    'lastName' => 'Last Name',
-    'address' => 'Address',
-    'city' => 'City',
-    'postalCode' => 'Postal Code',
-    'country' => 'Country',
-    'about' => 'About',
-    'updateProfile' => 'Update Profile',
-    'projectsAndDocuments' => 'Projects And Documents',
-    'projectName' => 'Project Name',
-    'date' => 'Date',
-    'status' => 'Status',
-    'price' => 'Price',
-    'completed' => 'Completed',
-    'edit' => 'Edit',
-    'update' => 'Update',
-    'delete' => 'Delete',
-    'select' => '--Select--',
-    'ru' => 'Russia',
-    'ua' => 'Ukraine',
-    'ge' => 'Germany',
-    'ca' => 'Canada',
-
-
-
+    "about" => "About",
+    "address" => "Address",
+    "bio" => "Bio",
+    "ca" => "Canada",
+    "city" => "City",
+    "company" => "Company",
+    "companyEmail" => "Email address",
+    "companyProfile" => "Company Profile",
+    "completed" => "Completed",
+    "country" => "Country",
+    "date" => "Date",
+    "delete" => "Delete",
+    "edit" => "Edit",
+    "editProfile" => "Edit Profile",
+    "firstName" => "First Name",
+    "ge" => "Germany",
+    "lastName" => "Last Name",
+    "password" => "Password",
+    "postalCode" => "Postal Code",
+    "price" => "Price",
+    "profile" => "profile",
+    "projectName" => "Project Name",
+    "projectsAndDocuments" => "Projects And Documents",
+    "ru" => "Russia",
+    "save" => "Save",
+    "select" => "--Select--",
+    "status" => "Status",
+    "ua" => "Ukraine",
+    "update" => "Update",
+    "updateProfile" => "Update Profile",
+    "userEmail" => "Email-Address",
+    "userProfile" => "User Profile",
+    "username" => "Username",
+    "users" => "Users",
+    "website" => "Website"
 ];

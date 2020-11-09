@@ -10908,18 +10908,3 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.sidebar {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-
-.page-sidebar {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-
-.sidebar-user {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-

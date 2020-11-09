@@ -1,24 +1,12 @@
 <?php
-
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Sidebar Lines
-    |--------------------------------------------------------------------------
-    |
-    |
-    |
-    */
-    
-    'dashboard' => 'dashboard',
-    'orders' => 'orders',
-    'documents' => 'documents',
-    'payments' => 'payments',
-    'knowledgebase' => 'knowledgebase',
-    'contacts' => 'contacts',
-    'company' => 'Company ltd.',
-    'name' => 'First Name',
-    'position' => 'HR manager',
-
+    "company" => "Company ltd.",
+    "contacts" => "contacts",
+    "dashboard" => "dashboard",
+    "documents" => "documents",
+    "knowledgebase" => "knowledgebase",
+    "name" => "First Name",
+    "orders" => "orders",
+    "payments" => "payments",
+    "position" => "HR manager"
 ];

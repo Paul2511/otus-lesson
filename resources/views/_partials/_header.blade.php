@@ -1,4 +1,4 @@
-<!-- Page Header Start--> 
+<!-- Page Header Start-->
 <div class="page-main-header open">
   <div class="main-header-right row">
     <div class="main-header-left d-lg-none">
@@ -17,10 +17,10 @@
         <li></li>
         {{--        Language dropdown --}}
         <li class="onhover-dropdown"><a class="txt-dark" href="#">
-            <h6>EN</h6></a>
+            <h6>{{ App::isLocale('en') ? "EN" : "RU" }}</h6></a>
           <ul class="language-dropdown onhover-show-div p-20">
-            <li><a href="#" data-lng="en"><i class="flag-icon flag-icon-is"></i>{{__('_partials/_header.english')}}</a></li>
-            <li><a href="#" data-lng="ru"><i class="flag-icon flag-icon-ru"></i>{{__('_partials/_header.russian')}}</a></li>
+            <li><a href="{{ url('locale/en') }}" data-lng="en"><i class="flag-icon flag-icon-is"></i>{{__('_partials/_header.english')}}</a></li>
+            <li><a href="{{ url('locale/ru') }}" data-lng="ru"><i class="flag-icon flag-icon-ru"></i>{{__('_partials/_header.russian')}}</a></li>
           </ul>
         </li>
         {{-- Language dropdown --}}

@@ -1,18 +1,2 @@
 <?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Meta Language Lines
-    |--------------------------------------------------------------------------
-    |
-    |
-    |
-    */
-    
-    'description' => 'My description',
-    'keywords' => 'My keywords',
-
-
-];
+return ["description" => "My description", "keywords" => "My keywords"];
