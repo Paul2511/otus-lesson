@@ -19,15 +19,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
 Route::get('/', function () {
-    return view('main', ['pageTitle' => 'Главная']);
+    return view('main');
 });
 
 Route::get('/dictionaries', function () {
-    return view('dictionaries',  ['pageTitle' => 'Словари']);
+    return view('dictionaries');
 });
 
 Route::get('/dictionary', function () {
-    return view('dictionary',  ['pageTitle' => 'Словарь']);
+    return view('dictionary');
+});
+
+Route::get('/training', function () {
+    return view('training');
 });
 
 
