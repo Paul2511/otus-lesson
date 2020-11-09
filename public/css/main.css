@@ -36,6 +36,10 @@ p {
   border-radius: 5px;
 }
 
+.column .card:hover {
+  cursor: pointer;
+}
+
 .column .card__title {
   font-size: 18px;
 }
