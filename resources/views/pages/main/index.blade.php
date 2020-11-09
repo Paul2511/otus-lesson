@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('page_title' , 'Главная')
 
 @section('page_content')
 <!-- Banner Area Starts -->

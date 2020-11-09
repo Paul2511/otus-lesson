@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Page Title -->
-    <title>@yield('page_title')</title>
+    <title>@yield('page_title') - {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('./images/favicon.png')}}" type="image/x-icon">

@@ -3,24 +3,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="#" class="d-md-flex justify-content-between">
-                        <select>
-                            <option value="1">Категории</option>
-                            <option value="2">Part Time</option>
-                            <option value="3">Full Time</option>
-                            <option value="4">Remote</option>
-                            <option value="5">Office Job</option>
-                        </select>
-                        <select>
-                            <option value="1">Область</option>
-                            <option value="2">Dhaka</option>
-                            <option value="3">Rajshahi</option>
-                            <option value="4">Barishal</option>
-                            <option value="5">Noakhali</option>
-                        </select>
-                        <input type="text" placeholder="Что ищем" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'" required>
-                        <button type="submit" class="template-btn">Найти</button>
-                    </form>
+                    {!! Form::open(['enctype' => 'multipart/form-data', 'class'=>'d-md-flex justify-content-between']) !!}
+                        {{Form::select('category',  ['Category1' => 'Category1', 'Category2' => 'Category2'], 'Category2')}}
+                        {{Form::select('region',  ['region1' => 'region1', 'region2' => 'region2'], 'region1')}}
+                        {{Form::text('text', 'Что ищем')}}
+                        {{Form::submit('Найти', ['class' => 'template-btn'])}}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
