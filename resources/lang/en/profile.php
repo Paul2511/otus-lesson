@@ -1,0 +1,23 @@
+<?php
+return [
+    'header' => 'General data',
+    'register_date' => 'Register date',
+    'premium' => 'Premium',
+    'checked' => 'Checked',
+    'yse' => 'yes',
+    'first_name'=> 'First name',
+    'last_name' => 'Last name',
+    'sex' => 'Sex',
+    'birthday' => 'Birthday',
+    'email' => 'Email',
+    'password' => 'Password',
+    'setting' => 'Setting',
+    'chases' => 'Chases',
+    'subscriptions' => 'Subscriptions',
+    'notifications' => 'Notifications',
+    'nr' =>'Nr',
+    'name' => 'Name',
+    'idno' => 'IDNO',
+    'link' => 'Link',
+    'empty' => 'Empty',
+];
