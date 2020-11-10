@@ -41,8 +41,8 @@ class SetLocale
      * @return bool
      */
     private function isLocaleSupported(string $locale) {
-        $arAllow = (array) config('app.available_locales');
-        return in_array($locale, $arAllow);
+        $availableLocales = (array) config('app.available_locales', []);
+        return in_array($locale, $availableLocales);
     }
 
     /**
@@ -56,9 +56,21 @@ class SetLocale
         $locale = $this->getRequestLocale($request);
         $localeDefault = config('app.locale');
         if(!empty($localeDefault) && $localeDefault != $locale) {
-            $redirectURI = str_replace('/'.$locale,'/'.$localeDefault, $request->getRequestUri());
-            return redirect($redirectURI);
+            return redirect($this->generateLocaleUri($request, $localeDefault));
         }
+        abort(404);
         return $next($request);
+    }
+
+    /**
+     * Get current URI with locale code replaced
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string $locale
+     * @return string
+     */
+    private function generateLocaleUri(Request $request, string $locale) {
+        $localeCurrent = $this->getRequestLocale($request);
+        return preg_replace('/\/'.$localeCurrent.'/', '/'.$locale, $request->getRequestUri(), 1);
     }
 }
