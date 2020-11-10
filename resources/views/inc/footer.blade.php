@@ -1,4 +1,3 @@
-@if ($page_name != 'auth_default')
     <!--  BEGIN FOOTER  -->
     <div class="footer-wrapper">
         <div class="footer-section f-section-1">
@@ -7,4 +6,3 @@
     </div>
     <!--  END FOOTER  -->
 
-@endif

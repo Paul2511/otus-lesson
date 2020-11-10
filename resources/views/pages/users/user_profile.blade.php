@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('styles')
+    <link href="{{asset('assets/css/users/user-profile.css')}}" rel="stylesheet" type="text/css" />
+@endsection
 @section('content')
 
             <div class="layout-px-spacing">

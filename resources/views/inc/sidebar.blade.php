@@ -1,6 +1,3 @@
-@if (
-$page_name != 'auth_default')
-
     <!--  BEGIN SIDEBAR  -->
     <div class="sidebar-wrapper sidebar-theme">
 
@@ -8,7 +5,6 @@ $page_name != 'auth_default')
             <div class="shadow-bottom"></div>
 
             <ul class="list-unstyled menu-categories" id="accordionExample">
-                @if ($page_name != 'alt_menu' && $page_name != 'blank_page' && $page_name != 'boxed' && $page_name != 'breadcrumb' )
                     <li class="menu {{ ($category_name === 'dashboard') ? 'active' : '' }}">
                         <a href="/home" data-active="{{ ($category_name === 'dashboard') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'dashboard') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="">
@@ -93,14 +89,9 @@ $page_name != 'auth_default')
                         </a>
                     </li>
 
-                @else
-                @endif
-
             </ul>
 
         </nav>
 
     </div>
     <!--  END SIDEBAR  -->
-
-@endif

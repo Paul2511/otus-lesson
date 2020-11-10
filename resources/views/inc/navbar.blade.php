@@ -1,10 +1,3 @@
-@if (
-$page_name != 'error404' &&
-$page_name != 'error500' &&
-$page_name != 'error503' &&
-$page_name != 'auth_default')
-
-
     <!--  BEGIN NAVBAR  -->
     <div class="header-container fixed-top">
         <header class="header navbar navbar-expand-sm">
@@ -21,8 +14,6 @@ $page_name != 'auth_default')
             </ul>
 
             <ul class="navbar-item flex-row ml-md-auto">
-
-                @if ($category_name != 'starter_kits')
                     @include('inc.lang')
 
                     <li class="nav-item dropdown notification-dropdown">
@@ -37,7 +28,6 @@ $page_name != 'auth_default')
                             <span class="badge badge-success"></span>
                         </a>
                     </li>
-                @endif
 
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown"
@@ -97,7 +87,7 @@ $page_name != 'auth_default')
 
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                {{ set_breadcrumb($page_name, $category_name) }}
+                                <x-app-breadcrumbs page-name="{{$page_name}}" category-name="{{$category_name}}"/>
                             </ol>
                         </nav>
 
@@ -108,4 +98,3 @@ $page_name != 'auth_default')
     </div>
     <!--  END NAVBAR  -->
 
-@endif

@@ -21,5 +21,6 @@ return [
     'Quotas' => 'Quotas Report',
     'About' => 'About us',
     'About Us' => 'About us',
+    'Login' => 'Log in',
 
 ];
