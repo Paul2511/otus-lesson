@@ -11,20 +11,28 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about') }}">@lang('breadcrumbs.about')</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('price') }}">@lang('breadcrumbs.price')</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('feedback') }}">@lang('breadcrumbs.feedback')</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">@lang('breadcrumbs.login')</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">@lang('breadcrumbs.register')</a>
                                 </li>
                             @endif
                         @else

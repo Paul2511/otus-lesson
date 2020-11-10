@@ -1,27 +1,26 @@
 // Utils
 @import
 "./utils/variables",
-"./utils/mixins";
+"./utils/mixins"
+;
 
 //Components
-@import "./components/nav";
+@import
+"./components/nav",
+"./components/feedback-form"
+;
 
 //Layouts
 @import
 "./layout/header",
-"./layout/footer"
-;
+"./layout/footer";
 
 //Pages
-@import
-"./pages/main"
-;
+@import "./pages/main";
 
 // Vendors
-@import
-"./vendors/vendors";
+@import "./vendors/vendors";
 
 // Themes
-@import
-"./themes/default";
+@import "./themes/default";
 

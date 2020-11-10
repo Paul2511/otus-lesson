@@ -15,12 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.index');
-});
+})->name('home');
 
 Route::get('/profile', function () {
     return view('pages.profile');
-});
+})->name('profile');
+
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/price', function () {
+    return view('pages.price');
+})->name('price');
+
+Route::get('/feedback', function () {
+    return view('pages.feedback');
+})->name('feedback');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
