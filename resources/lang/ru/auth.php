@@ -13,7 +13,13 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed'   => 'Эти учетные данные не соответствуют нашим записям.',
+    'throttle' => 'Слишком много попыток входа в систему. Повторите попытку через :seconds сек.',
 
+    'enter_name'       => 'Введите имя',
+    'enter_email'      => 'Введите e-mail',
+    'email_caption'    => 'Мы никогда никому не передадим вашу электронную почту.',
+    'enter_password'   => 'Введите пароль',
+    'confirm_password' => 'Подтвердите пароль',
+    'remember_me'      => 'Запомнить меня',
 ];

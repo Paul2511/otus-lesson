@@ -17,20 +17,26 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('contacts') }}">@lang('Contact us')</a>
+                    <a class="nav-link" href="{{ route('contacts') }}">
+                        @lang('messages.contact_us')
+                    </a>
                 </li>
 
                 <!-- Authentication Links -->
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">@lang('Login')</a>
+                            <a class="nav-link" href="{{ route('login') }}">
+                                @lang('messages.login')
+                            </a>
                         </li>
                     @endif
 
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">@lang('Register')</a>
+                            <a class="nav-link" href="{{ route('register') }}">
+                                @lang('messages.register')
+                            </a>
                         </li>
                     @endif
                 @else
