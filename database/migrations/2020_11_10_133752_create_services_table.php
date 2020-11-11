@@ -20,18 +20,18 @@ class CreateServicesTable extends Migration
             $table->boolean('sent_fms');
             $table->datetime('rnr_date');
             $table->string('inbox_num');
-            $table->enum('rnr_status', ['new', 'draft', 'to_sign', 'passed', 'recieved', 'closed', 'canceled', 'refused', 'refund', 'client', 'from']);
+            $table->tinyInteger('rnr_status');
             $table->datetime('rnr_ready');
             $table->datetime('rnr_recieved');
             $table->datetime('invite_sent');
-            $table->enum('invite_status', ['new', 'draft', 'to_sign', 'passed', 'recieved', 'closed', 'canceled', 'refused', 'refund', 'client', 'from']);
+            $table->tinyInteger('invite_status');
             $table->datetime('invite_po');
             $table->datetime('invite_recieved');
             $table->datetime('visa_sent');
-            $table->enum('visa_status', ['new', 'draft', 'to_sign', 'passed', 'recieved', 'closed', 'canceled', 'refused', 'refund', 'client', 'from']);
+            $table->tinyInteger('visa_status');
             $table->datetime('visa_po');
             $table->datetime('visa_recieved');
-            $table->enum('specialist_status', ['new', 'draft', 'to_sign', 'passed', 'recieved', 'closed', 'canceled', 'refused', 'refund', 'client', 'from']);
+            $table->tinyInteger('specialist_status');
             $table->timestamps();
             $table->foreign('1c_specialist_uuid')
                     ->references('1c_specialist_uuid')

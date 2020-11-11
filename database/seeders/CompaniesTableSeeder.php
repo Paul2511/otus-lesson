@@ -16,7 +16,7 @@ class CompaniesTableSeeder extends Seeder
     {
       $faker = \Faker\Factory::create('Ru_RU');
       DB::table('companies')->insert([
-          '1c_uuid' => 'fc15d28c-2885-4ec5-8208-d227ef03e4e9',
+          '1c_company_uuid' => 'fc15d28c-2885-4ec5-8208-d227ef03e4e9',
           'name' =>  $faker->word,
           'full_name' => $faker->word,
           'inn' => $faker->unique()->numberBetween(9990000000,9999999999),

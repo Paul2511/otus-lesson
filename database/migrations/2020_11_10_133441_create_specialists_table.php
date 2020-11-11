@@ -15,7 +15,7 @@ class CreateSpecialistsTable extends Migration
     {
         Schema::create('specialists', function (Blueprint $table) {
             $table->id();
-            $table->string('1c_uuid')->unique();
+            $table->string('1c_company_uuid')->unique();
             $table->string('1c_specialist_uuid')->unique();
             $table->string('first_name');
             $table->string('last_name');
@@ -23,8 +23,8 @@ class CreateSpecialistsTable extends Migration
             $table->datetime('dob');
             $table->string('position')->nullable();
             $table->timestamps();
-            $table->foreign('1c_uuid')
-                    ->references('1c_uuid')
+            $table->foreign('1c_company_uuid')
+                    ->references('1c_company_uuid')
                     ->on('companies');
         });
     }

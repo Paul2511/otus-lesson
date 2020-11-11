@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('value');
             $table->datetime('billed');
             $table->datetime('payed');
-            $table->enum('status', ['billed', 'payed', 'pending', 'refund', 'cancel']);
+            $table->tinyInteger('status');
             $table->timestamps();
           });
       }

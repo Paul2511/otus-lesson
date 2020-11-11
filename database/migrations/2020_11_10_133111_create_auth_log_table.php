@@ -15,7 +15,7 @@ class CreateAuthLogTable extends Migration
     {
         Schema::create('auth_log', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->string('auth_type')->nullable();
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();

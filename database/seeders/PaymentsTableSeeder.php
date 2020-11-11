@@ -16,12 +16,11 @@ class PaymentsTableSeeder extends Seeder
     public function run()
     {
       $faker = \Faker\Factory::create();
-      $enum = ['billed', 'payed', 'pending', 'refund', 'cancel'];
       DB::table('payments')->insert([
           'value' => $faker->randomFloat(null,0),
           'billed' => now(),
           'payed' => now(),
-          'status' => $faker->randomElement($enum),
+          'status' => $faker->randomDigit,
           'created_at' => now(),
           'updated_at' => now(),
       ]);
