@@ -15,9 +15,9 @@
     @yield('css')
 </head>
 <body>
-@include('frontEnd.parts.header')
+@include('public.parts.header')
 @yield('content')
-@include('frontEnd.parts.svg')
-@include('frontEnd.parts.footer')
+@include('public.parts.svg')
+@include('public.parts.footer')
 </body>
 </html>

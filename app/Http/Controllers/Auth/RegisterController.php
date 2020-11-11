@@ -73,6 +73,6 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('frontEnd.auth.register');
+        return view('public.auth.register');
     }
 }

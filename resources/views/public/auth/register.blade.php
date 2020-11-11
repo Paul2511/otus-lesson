@@ -1,4 +1,4 @@
-@extends('frontEnd.layouts.app')
+@extends('public.layouts.app')
 @section('content')
     <div class="container pt-5 pb-5">
         <div class="login_page">
