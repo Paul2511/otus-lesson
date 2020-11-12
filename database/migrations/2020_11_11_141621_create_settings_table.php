@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserResourceTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,15 @@ class CreateUserResourceTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_resource', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('resource_id');
-            $table->tinyInteger('is_active')->unsigned();
+            $table->string('type');
+            $table->string('value');
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete("cascade");
-            $table->foreign('resource_id')
-                ->references('id')
-                ->on('resources')
                 ->onDelete("cascade");
         });
     }
@@ -37,6 +33,6 @@ class CreateUserResourceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_resources');
+        Schema::dropIfExists('settings');
     }
 }
