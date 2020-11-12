@@ -1,0 +1,128 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+@import 'components/home';
+
+body {
+  color: $black;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.flex-cell {
+  display: flex;
+  flex-direction: column;
+
+  &--centered {
+    justify-content: center;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+.color-white {
+  color: $white !important;
+}
+
+.color-black {
+  color: $black !important;
+}
+
+.color-blue {
+  color: $blue !important;
+}
+
+.color-indigo {
+  color: $indigo !important;
+}
+
+.color-purple {
+  color: $purple !important;
+}
+
+.color-pink {
+  color: $pink !important;
+}
+
+.color-red {
+  color: $red !important;
+}
+
+.color-orange {
+  color: $orange !important;
+}
+
+.color-yellow {
+  color: $yellow !important;
+}
+
+.color-green {
+  color: $green !important;
+}
+
+.color-teal {
+  color: $teal !important;
+}
+
+.color-cyan {
+  color: $cyan !important;
+}
+
+.bgc-black {
+  background-color: $black;
+}
+
+.bgc-white {
+  background-color: $white;
+}
+
+.bgc-blue {
+  background-color: $blue;
+}
+
+.bgc-indigo {
+  background-color: $indigo;
+}
+
+.bgc-purple {
+  background-color: $purple;
+}
+
+.bgc-pink {
+  background-color: $pink;
+}
+
+.bgc-red {
+  background-color: $red;
+}
+
+.bgc-orange {
+  background-color: $orange;
+}
+
+.bgc-yellow {
+  background-color: $yellow;
+}
+
+.bgc-green {
+  background-color: $green;
+}
+
+.bgc-teal {
+  background-color: $teal;
+}
+
+.bgc-cyan {
+  background-color: $cyan;
+}
+

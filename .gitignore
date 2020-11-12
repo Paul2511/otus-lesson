@@ -12,3 +12,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+package-lock.json
+_ide_helper.php
+.phpstorm.meta.php
