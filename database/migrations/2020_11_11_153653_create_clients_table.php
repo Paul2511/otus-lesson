@@ -26,7 +26,6 @@ class CreateClientsTable extends Migration
             $table->string("complaints");
             $table->text("selected_service");
             $table->bigInteger("user_id")->unsigned();
-            $table->index("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->timestamps();
         });

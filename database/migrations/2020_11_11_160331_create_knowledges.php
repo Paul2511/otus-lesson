@@ -19,7 +19,6 @@ class CreateKnowledges extends Migration
             $table->text("description");
             $table->text("data");
             $table->bigInteger("user_id")->unsigned();
-            $table->index("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->timestamps();
         });

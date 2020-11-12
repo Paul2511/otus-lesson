@@ -17,10 +17,8 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->text("text");
             $table->bigInteger("user_id")->unsigned();
-            $table->index("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->bigInteger("task_id")->unsigned();
-            $table->index("task_id");
             $table->foreign("task_id")->references("id")->on("tasks")->onDelete("cascade");
             $table->timestamps();
         });

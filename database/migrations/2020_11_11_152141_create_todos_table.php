@@ -18,7 +18,6 @@ class CreateTodosTable extends Migration
             $table->string("name");
             $table->tinyInteger("status");
             $table->bigInteger("task_id")->unsigned();
-            $table->index("task_id");
             $table->foreign("task_id")->references("id")->on("tasks")->onDelete("cascade");
             $table->timestamps();
         });
