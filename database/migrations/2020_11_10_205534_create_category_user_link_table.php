@@ -13,14 +13,14 @@ class CreateCategoryUserLinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_user_link', function (Blueprint $table) {
+        Schema::create('category_user', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();
             $table->timestamps();
         });
 
-        Schema::table('category_user_link', function(
+        Schema::table('category_user', function(
             Blueprint $table
         ){
             $table->foreign('user_id')

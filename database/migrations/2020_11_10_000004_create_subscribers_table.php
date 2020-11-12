@@ -17,7 +17,7 @@ class CreateSubscribersTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('subscriber_id')->unsigned();
-            $table->string('status');
+            $table->tinyInt('status');
             $table->timestamps();
         });
         Schema::table('subscribers', function(

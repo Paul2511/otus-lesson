@@ -13,7 +13,7 @@ class CreateMessageLinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('message_link', function (Blueprint $table) {
+        Schema::create('message_user', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_from_id')->unsigned();
             $table->bigInteger('user_to_id')->unsigned();
@@ -21,7 +21,7 @@ class CreateMessageLinkTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('message_link', function(
+        Schema::table('message_user', function(
             Blueprint $table
         ){
             $table->foreign('user_from_id')

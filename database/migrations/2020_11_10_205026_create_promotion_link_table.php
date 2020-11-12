@@ -13,7 +13,7 @@ class CreatePromotionLinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('promotion_link', function (Blueprint $table) {
+        Schema::create('promotion_user', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('promotion_id')->unsigned();
@@ -21,7 +21,7 @@ class CreatePromotionLinkTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('promotion_link', function(
+        Schema::table('promotion_user', function(
             Blueprint $table
         ){
             $table->foreign('user_id')
