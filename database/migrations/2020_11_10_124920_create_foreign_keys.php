@@ -30,12 +30,12 @@ class CreateForeignKeys extends Migration
                 ->onUpdate('restrict');
         });
 
-        Schema::table('tasks_images', function (Blueprint $table) {
+        Schema::table('task_images', function (Blueprint $table) {
             $table->foreign('task_id')->references('id')->on('tasks')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
         });
-        Schema::table('comments_images', function (Blueprint $table) {
+        Schema::table('comment_images', function (Blueprint $table) {
             $table->foreign('comment_id')->references('id')->on('comments')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
@@ -54,11 +54,11 @@ class CreateForeignKeys extends Migration
             $table->dropForeign('comments_user_id_foreign');
         });
 
-        Schema::table('tasks_images', function (Blueprint $table) {
-            $table->dropForeign('tasks_images_task_id_foreign');
+        Schema::table('task_images', function (Blueprint $table) {
+            $table->dropForeign('task_images_task_id_foreign');
         });
-        Schema::table('comments_images', function (Blueprint $table) {
-            $table->dropForeign('comments_images_comment_id_foreign');
+        Schema::table('comment_images', function (Blueprint $table) {
+            $table->dropForeign('comment_images_comment_id_foreign');
         });
     }
 }
