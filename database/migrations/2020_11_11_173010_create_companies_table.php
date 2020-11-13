@@ -23,7 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->text('description')->nullable();
             $table->timestamp('registration_date')->nullable();
             $table->foreignId('legal_form_id')->nullable()->constrained()->onDelete('set null');
-            $table->enum('status', ['active', 'closed'])->default('active');
+            $table->integer('status')->default(10);
             $table->string('vat')->nullable();
             $table->timestamp('vat_register_date')->nullable();
             $table->timestamp('vat_cancel_date')->nullable();

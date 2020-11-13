@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password',255);
             $table->string('phone')->nullable();
             $table->enum('sex',['man','woman'])->nullable();
-            $table->enum('type',['member','worker'])->nullable();
+            $table->integer('type')->default(10);
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->integer('status')->default(9);
