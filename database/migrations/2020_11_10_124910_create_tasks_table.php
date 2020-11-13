@@ -15,7 +15,7 @@ class CreateTasksTable extends Migration {
 			$table->unsignedBigInteger('user_id')->index();
 			$table->string('title');
 			$table->string('description');
-			$table->json('watcher');
+			$table->string('watcher')->nullable();
 			$table->softDeletes();
 		});
 	}
