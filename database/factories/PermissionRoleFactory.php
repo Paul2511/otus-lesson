@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\RoleHasPermission;
+use App\Models\PermissionRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RoleHasPermissionFactory extends Factory
+class PermissionRoleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = RoleHasPermission::class;
+    protected $model = PermissionRole::class;
 
     /**
      * Define the model's default state.

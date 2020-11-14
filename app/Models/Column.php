@@ -33,8 +33,6 @@ class Column extends Model
 {
     use HasFactory;
 
-    protected $table = 'columns';
-
     public $timestamps = 'true';
 
     protected $fillable = [

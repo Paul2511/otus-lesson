@@ -31,8 +31,6 @@ class CommentImage extends Model
 {
     use HasFactory;
 
-    protected $table = 'comment_images';
-
     protected $fillable = [
         'comment_id',
         'path_img'

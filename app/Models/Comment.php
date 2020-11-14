@@ -33,8 +33,6 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $table = 'comments';
-
     protected $fillable = [
         'task_id',
         'user_id',
