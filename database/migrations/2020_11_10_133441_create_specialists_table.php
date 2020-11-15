@@ -15,16 +15,16 @@ class CreateSpecialistsTable extends Migration
     {
         Schema::create('specialists', function (Blueprint $table) {
             $table->id();
-            $table->string('1c_company_uuid')->unique();
-            $table->string('1c_specialist_uuid')->unique();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('middle_name')->nullable();
+            $table->string('company_uuid');
+            $table->string('specialist_uuid')->unique();
+            $table->string('first_name',50);
+            $table->string('last_name',50);
+            $table->string('middle_name',50)->nullable();
             $table->datetime('dob');
-            $table->string('position')->nullable();
+            $table->string('position',200)->nullable();
             $table->timestamps();
-            $table->foreign('1c_company_uuid')
-                    ->references('1c_company_uuid')
+            $table->foreign('company_uuid')
+                    ->references('company_uuid')
                     ->on('companies');
         });
     }

@@ -2,14 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Document;
-use App\Models\Payment;
+use App\Models\Role;
 use DB;
+use Hash;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class PaymentsTableSeeder extends Seeder
+class RolesTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -17,7 +18,12 @@ class PaymentsTableSeeder extends Seeder
      */
     public function run()
     {
-        Payment::factory()->times(10)->create();
+    $roles = [0, 10, 20];
+    foreach ($roles as $role)
+        {
+        DB::table('roles')->insert(['name' => $role]);
+        }
     }
-}
 
+
+}

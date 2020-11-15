@@ -15,26 +15,30 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('1c_specialist_uuid')->unique();
-            $table->string('1c_service_uuid')->unique();
+            $table->string('specialist_uuid');
+            $table->string('service_uuid')->unique();
             $table->boolean('sent_fms');
             $table->datetime('rnr_date');
-            $table->string('inbox_num');
-            $table->tinyInteger('rnr_status');
+            $table->string('inbox_num',20);
+            $table->tinyInteger('rnr_status')
+                ->default(\App\Models\Service::STATUS_NEW);
             $table->datetime('rnr_ready');
             $table->datetime('rnr_recieved');
             $table->datetime('invite_sent');
-            $table->tinyInteger('invite_status');
+            $table->tinyInteger('invite_status')
+                ->default(\App\Models\Service::STATUS_NEW);
             $table->datetime('invite_po');
             $table->datetime('invite_recieved');
             $table->datetime('visa_sent');
-            $table->tinyInteger('visa_status');
+            $table->tinyInteger('visa_status')
+                ->default(\App\Models\Service::STATUS_NEW);
             $table->datetime('visa_po');
             $table->datetime('visa_recieved');
-            $table->tinyInteger('specialist_status');
+            $table->tinyInteger('specialist_status')
+                ->default(\App\Models\Service::STATUS_NEW);
             $table->timestamps();
-            $table->foreign('1c_specialist_uuid')
-                    ->references('1c_specialist_uuid')
+            $table->foreign('specialist_uuid')
+                    ->references('specialist_uuid')
                     ->on('specialists');
         });
     }

@@ -15,9 +15,8 @@ class CreateCompanyUserTable extends Migration
     {
         Schema::create('company_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('inn');
-            $table->timestamps();
             $table->foreign('inn')
                     ->references('inn')
                     ->on('companies');

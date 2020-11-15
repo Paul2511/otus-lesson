@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
+use App\Models\Specialist;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -15,17 +17,6 @@ class SpecialistsTableSeeder extends Seeder
      */
     public function run()
     {
-      $faker = \Faker\Factory::create('Ru_RU');
-      DB::table('specialists')->insert([
-          '1c_company_uuid' => 'fc15d28c-2885-4ec5-8208-d227ef03e4e9',
-          '1c_specialist_uuid' => 'c555d738-efd4-42ce-9f01-42c63995bfa0',
-          'first_name' => $faker->firstName,
-          'last_name' => $faker->lastName,
-          'middle_name' => $faker->firstName,
-          'dob' => now(),
-          'position' => $faker->word,
-          'created_at' => now(),
-          'updated_at' => now(),
-      ]);
+        Specialist::factory()->times(1)->make();
     }
 }

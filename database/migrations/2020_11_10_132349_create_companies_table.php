@@ -15,7 +15,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('1c_company_uuid')->unique();
+            $table->string('company_uuid')->unique();
             $table->string('name');
             $table->string('full_name');
             $table->unsignedBigInteger('inn')->unique();
@@ -25,7 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->unsignedBigInteger('phone');
             $table->string('address_legal')->nullable();
             $table->string('address_actual')->nullable();
-            $table->string('card_num');
+            $table->string('card_num',10);
             $table->timestamps();
         });
     }

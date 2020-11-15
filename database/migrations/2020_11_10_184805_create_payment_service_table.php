@@ -16,13 +16,13 @@ class CreatePaymentServiceTable extends Migration
         Schema::create('payment_service', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('payment_id');
-            $table->string('1c_service_uuid')->unique();
+            $table->string('service_uuid');
             $table->foreign('payment_id')
                     ->references('id')
                     ->on('payments')
                     ->onDelete("cascade");
-            $table->foreign('1c_service_uuid')
-                    ->references('1c_service_uuid')
+            $table->foreign('service_uuid')
+                    ->references('service_uuid')
                     ->on('services')
                     ->onDelete("cascade");
         });
