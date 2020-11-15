@@ -15,7 +15,7 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->tinyInteger('active')->unsigned(); // флаг активации, на случай блокировки уровня доступа
+            $table->smallInteger('status')->unsigned(); // состояние роли, отключение / включение / удаление
             $table->smallInteger('level')->unsigned(); // уровень доступа, определяет роль
             $table->string('description'); // описание роли
             $table->timestamps();

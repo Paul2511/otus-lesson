@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSettingsUserTable extends Migration
+class CreateCoreSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateSettingsUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings_user', function (Blueprint $table) {
-            $table->string('key')->index();
+        Schema::create('core_settings', function (Blueprint $table) {
+            $table->string('key')->unique()->index();
             $table->string('value');
-            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateSettingsUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings_user');
+        Schema::dropIfExists('core_settings');
     }
 }

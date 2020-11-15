@@ -16,16 +16,14 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('slug')->unique()->index();
-            $table->integer('sort')->unsigned()->default(1000); // индекс сортировки, для ручного урпавления позицией поста в выводе
+            $table->integer('priority')->unsigned()->default(1000); // индекс сортировки, для ручного урпавления позицией поста в выводе
             $table->string('name_view');
             $table->string('name_raw');
             $table->string('text_view');
             $table->string('text_raw');
             $table->string('source_link');
             $table->string('source_label');
-            $table->tinyInteger('active')->unsigned(); // флаг активности
-            $table->tinyInteger('deleted')->unsigned(); // флаг удаления владельцем
-            $table->tinyInteger('ban')->unsigned(); // флаг удаления администратором
+            $table->smallInteger('status')->unsigned(); // состояние поста, отключение / включение / модерация / удаление владельцем / удаление администратором
             $table->foreignUuid('creator_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignUuid('redactor_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('counter_like')->unsigned(); // счетчик лайков, формируется из сырых данных таблицы reactions

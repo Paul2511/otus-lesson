@@ -16,7 +16,7 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('slug')->unique()->index();
-            $table->integer('sort')->unsigned()->default(1000); // индекс сортировки, для ручного урпавления позицией тега в выводе
+            $table->integer('priority')->unsigned()->default(1000); // индекс сортировки, для ручного урпавления позицией тега в выводе
             $table->string('name');
             $table->tinyInteger('active')->unsigned(); // флаг активности
             $table->timestamps();
