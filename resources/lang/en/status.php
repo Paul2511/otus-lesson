@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     ServiceStatus::STATUS_NEW => "New",
     ServiceStatus::STATUS_DRAFT => "Draft",
@@ -11,6 +10,6 @@ return [
     ServiceStatus::STATUS_CANCELED => "Canceled",
     ServiceStatus::STATUS_REFUSED => "Refused",
     ServiceStatus::STATUS_REFUND => "Refund",
-    ServiceStatus::STATUS_CLIENT => "Returned to client",
-    ServiceStatus::STATUS_FROM => "According list"
+    ServiceStatus::STATUS_RETURNED_TO_CLIENT => "Returned to client",
+    ServiceStatus::STATUS_REFERENCE => "Reference"
 ];

@@ -15,7 +15,7 @@ class ServiceStatus
     const STATUS_CANCELED = 70;
     const STATUS_REFUSED = 80;
     const STATUS_REFUND = 90;
-    const STATUS_CLIENT = 100;
-    const STATUS_FROM = 110;
+    const STATUS_RETURNED_TO_CLIENT = 100;
+    const STATUS_REFERENCE = 110;
 
 }
