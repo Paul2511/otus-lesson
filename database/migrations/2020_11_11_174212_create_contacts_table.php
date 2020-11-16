@@ -19,7 +19,7 @@ class CreateContactsTable extends Migration
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->foreignId('contact_type_id')->constrained()->onDelete('cascade');
             $table->text('comment');
-            $table->enum('status',['raw','approved','declined'])->default('raw');
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->unique(['value','company_id','contact_type_id']);
         });

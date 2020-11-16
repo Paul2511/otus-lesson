@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlanUserTable extends Migration
+class CreatePlanUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePlanUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('plan_user', function (Blueprint $table) {
+        Schema::create('plan_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('plan_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
@@ -32,6 +32,6 @@ class CreatePlanUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plan_user');
+        Schema::dropIfExists('plan_users');
     }
 }

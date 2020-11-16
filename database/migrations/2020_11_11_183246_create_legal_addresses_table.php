@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLegalAddressTable extends Migration
+class CreateLegalAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateLegalAddressTable extends Migration
      */
     public function up()
     {
-        Schema::create('legal_address', function (Blueprint $table) {
+        Schema::create('legal_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->foreignId('country')->constrained()->onDelete('cascade');
+            $table->foreignId('country_id')->constrained()->onDelete('cascade');
             $table->string('administrative_area_level_1')->nullable();
             $table->string('administrative_area_level_2')->nullable();
             $table->string('administrative_area_level_3')->nullable();
@@ -40,6 +40,6 @@ class CreateLegalAddressTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('legal_address');
+        Schema::dropIfExists('legal_addresses');
     }
 }
