@@ -60,9 +60,9 @@ class User extends Authenticatable
     use  HasFactory,Notifiable;
 
     const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
-    const STATUS_PENDING = 10;
-    const STATUS_DELETED = 20;
+    const STATUS_ACTIVE = 10;
+    const STATUS_PENDING = 20;
+    const STATUS_DELETED = 30;
 
     /**
      * The attributes that are mass assignable.
@@ -111,4 +111,5 @@ class User extends Authenticatable
         return $this->hasMany(Company::class)
             ->using(CompanyUser::class);
     }
+
 }

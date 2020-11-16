@@ -34,11 +34,11 @@ class Payment extends Model
 {
     use HasFactory;
 
-    const BILLED= 10;
-    const PAYED = 20;
-    const PENDING = 30;
-    const REFUND = 40;
-    const CANCELED = 50;
+    const STATUS_BILLED = 10;
+    const STATUS_PAYED = 20;
+    const STATUS_PENDING = 30;
+    const STATUS_REFUND = 40;
+    const STATUS_CANCELED = 50;
 
     protected $fillable = [
         'value',

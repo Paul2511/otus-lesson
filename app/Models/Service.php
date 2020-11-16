@@ -61,18 +61,6 @@ class Service extends Model
 {
     use HasFactory;
 
-    const STATUS_NEW = 10;
-    const DRAFT = 20;
-    const TO_SIGN = 30;
-    const PASSED = 40;
-    const RECIEVED = 50;
-    const CLOSED  = 60;
-    const CANCELED = 70;
-    const REFUSED = 80;
-    const REFUND = 90;
-    const CLIENT = 100;
-    const FROM = 110;
-
     /**
      * The attributes that aren't mass assignable.
      *
@@ -108,4 +96,10 @@ class Service extends Model
         return $this->hasMany(Payment::class, 'service_uuid')
             ->using(PaymentService::class);
     }
+
+    public function isPassed()
+    {
+        return $this->specialist_status == ServiceStatus::STATUS_PASSED;
+    }
+
 }

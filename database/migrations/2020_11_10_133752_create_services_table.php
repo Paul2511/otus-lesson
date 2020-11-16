@@ -21,21 +21,21 @@ class CreateServicesTable extends Migration
             $table->datetime('rnr_date');
             $table->string('inbox_num',20);
             $table->tinyInteger('rnr_status')
-                ->default(\App\Models\Service::STATUS_NEW);
+                ->default(\App\Models\ServiceStatus::STATUS_NEW);
             $table->datetime('rnr_ready');
             $table->datetime('rnr_recieved');
             $table->datetime('invite_sent');
             $table->tinyInteger('invite_status')
-                ->default(\App\Models\Service::STATUS_NEW);
+                ->default(\App\Models\ServiceStatus::STATUS_NEW);
             $table->datetime('invite_po');
             $table->datetime('invite_recieved');
             $table->datetime('visa_sent');
             $table->tinyInteger('visa_status')
-                ->default(\App\Models\Service::STATUS_NEW);
+                ->default(\App\Models\ServiceStatus::STATUS_NEW);
             $table->datetime('visa_po');
             $table->datetime('visa_recieved');
             $table->tinyInteger('specialist_status')
-                ->default(\App\Models\Service::STATUS_NEW);
+                ->default(\App\Models\ServiceStatus::STATUS_NEW);
             $table->timestamps();
             $table->foreign('specialist_uuid')
                     ->references('specialist_uuid')
