@@ -39,5 +39,7 @@ return [
     //end register
 
     'welcome' => 'Welcome',
+    'copyrights' => 'All rights reserved',
+    'policy' => 'Privacy policy',
 
 ];
