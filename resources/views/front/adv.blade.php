@@ -4,6 +4,5 @@
 
 @section('content')
     <h1>@lang('messages.h1_adv')</h1>
-    <p>Приветствуем на странице объявлений!</p>
-    <p>Здесь будут выводиться объявления</p>
+    @lang('messages.content_adv')
 @endsection
