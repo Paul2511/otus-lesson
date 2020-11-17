@@ -7,7 +7,7 @@
     ])
     @yield('profile')
     @yield('users')
-    @yield('signup_shedule')
+    @yield('signup_schedule')
     @yield('signup_card')
     @yield('comments')
     @yield('faq')

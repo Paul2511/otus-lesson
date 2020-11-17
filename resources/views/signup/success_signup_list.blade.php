@@ -1,6 +1,6 @@
 @extends('privacy')
-@section('signup_shedule')
-@if(isset($each_check_shedule_info) && $each_check_shedule_info!=='')
+@section('signup_schedule')
+@if(isset($each_check_schedule_info) && $each_check_schedule_info!=='')
     <div class="site-section  block-14 bg-light nav-direction-white">
         <div class="container">
             <div class="row  mb-3">

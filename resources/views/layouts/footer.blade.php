@@ -26,7 +26,7 @@
                             <li><a href="{{ route('actions') }}">{{ __('Акции') }}</a></li>
                             <li><a href="{{ route('cards') }}">{{ __('Клубные карты') }}</a></li>
                             <li><a href="{{ route('trainers') }}">{{ __('Тренеры') }}</a></li>
-                            <li><a href="{{ route('shedule') }}">{{ __('Расписание') }}</a></li>
+                            <li><a href="{{ route('schedule') }}">{{ __('Расписание') }}</a></li>
                             <li><a href="{{ route('contacts') }}">{{ __('Контакты') }}</a></li>
                             <li><a href="{{ route('login') }}">{{ __('Личный кабинет') }}</a></li>
                         </ul>

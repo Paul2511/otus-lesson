@@ -15,7 +15,7 @@
                             <div class="block-testimony">
                                 <div class="person row  align-items-end">
                                     <div class="col-md-auto">
-                                        <img src="{{ asset("{$comment->binaryfiles_file_src}") }}" alt="Image"
+                                        <img src="{{ asset("{$comment->files_url}") }}" alt="Image"
                                              class="img-fluid rounded-circle" style="width: 70px!important;">
                                     </div>
                                     <div class="col-md-auto text-left">

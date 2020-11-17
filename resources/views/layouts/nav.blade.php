@@ -72,9 +72,9 @@
             {{--------------trainers---------------}}
             <li class="nav-item"><a class="nav-link {{ Request::is('trainers') ? 'active' : '' }}"
                                     href="{{ route('trainers') }}">{{ __('Тренеры') }}</a></li>
-            {{--------------shedule---------------}}
-            <li class="nav-item"><a class="nav-link {{ Request::is('shedule') ? 'active' : '' }}"
-                                    href="{{ route('shedule') }}">{{ __('Расписание') }}</a></li>
+            {{--------------schedule---------------}}
+            <li class="nav-item"><a class="nav-link {{ Request::is('schedule') ? 'active' : '' }}"
+                                    href="{{ route('schedule') }}">{{ __('Расписание') }}</a></li>
             {{--------------contacts---------------}}
             <li class="nav-item"><a class="nav-link {{ Request::is('contacts') ? 'active' : '' }}"
                                     href="{{ route('contacts') }}">{{ __('Контакты') }}</a></li>
@@ -84,7 +84,7 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown " class="nav-link dropdown-toggle {{ Request::is('privacy*') ? 'active' : '' }}"
                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <img id="img_photo" src="{{ asset("{$avatar_src}") }}" alt="Image"
+                    <img id="img_photo" src="{{ asset("{$avatar_url}") }}" alt="Image"
                          class="img-fluid rounded-circle avatar-nav img-thumbnail">
                     {{ Auth::user()->name }} (Админ)
                     <span class="caret"></span></a>
@@ -95,8 +95,8 @@
                     <a class="dropdown-item {{ Request::is('*privacy/admin/users*') ? 'active' : '' }}"
                        href="{{ route('privacy.admin.users') }}">{{ __('Пользователи') }}</a>
 
-                    <a class="dropdown-item {{ Request::is('*privacy/admin/shedules*') ? 'active' : '' }}"
-                       href="{{ route('privacy.admin.shedules') }}">{{ __('Расписание') }}</a>
+                    <a class="dropdown-item {{ Request::is('*privacy/admin/schedules*') ? 'active' : '' }}"
+                       href="{{ route('privacy.admin.schedules') }}">{{ __('Расписание') }}</a>
 
                     <a class="dropdown-item {{ Request::is('*privacy/admin/cards*') ? 'active' : '' }}"
                        href="{{ route('privacy.admin.cards') }}">{{ __('Карты') }}</a>
@@ -120,7 +120,7 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown " class="nav-link dropdown-toggle {{ Request::is('privacy*') ? 'active' : '' }}"
                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <img id="img_photo" src="{{ asset("{$avatar_src}") }}" alt="Image"
+                    <img id="img_photo" src="{{ asset("{$avatar_url}") }}" alt="Image"
                          class="img-fluid rounded-circle avatar-nav img-thumbnail">
                     {{ Auth::user()->name }}
                     <span class="caret"></span></a>
@@ -128,8 +128,8 @@
                     <a class="dropdown-item {{ Request::is('*privacy/profile*') ? 'active' : '' }}"
                        href="{{ route('privacy.profile') }}">{{ __('Мой профиль') }}</a>
 
-                    <a class="dropdown-item {{ Request::is('*privacy/shedules*') ? 'active' : '' }}"
-                       href="{{ route('privacy.shedules') }}">{{ __('Мои тренировки') }}</a>
+                    <a class="dropdown-item {{ Request::is('*privacy/schedules*') ? 'active' : '' }}"
+                       href="{{ route('privacy.schedules') }}">{{ __('Мои тренировки') }}</a>
 
                     <a class="dropdown-item {{ Request::is('*privacy/cards*') ? 'active' : '' }}"
                        href="{{ route('privacy.cards') }}">{{ __('Мои карты') }}</a>
@@ -153,7 +153,7 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown " class="nav-link dropdown-toggle {{ Request::is('privacy*') ? 'active' : '' }}"
                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <img id="img_photo" src="{{ asset("{$avatar_src}") }}" alt="Image"
+                    <img id="img_photo" src="{{ asset("{$avatar_url}") }}" alt="Image"
                          class="img-fluid rounded-circle avatar-nav img-thumbnail">
                     {{ Auth::user()->name }} (Тренер)
                     <span class="caret"></span></a>
@@ -162,8 +162,8 @@
                     <a class="dropdown-item {{ Request::is('*privacy/profile*') ? 'active' : '' }}"
                        href="{{ route('privacy.profile') }}">{{ __('Мой профиль') }}</a>
 
-                    <a class="dropdown-item {{ Request::is('*privacy/shedules*') ? 'active' : '' }}"
-                       href="{{ route('privacy.shedules') }}">{{ __('Мои тренировки') }}</a>
+                    <a class="dropdown-item {{ Request::is('*privacy/schedules*') ? 'active' : '' }}"
+                       href="{{ route('privacy.schedules') }}">{{ __('Мои тренировки') }}</a>
 
 
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -179,7 +179,7 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown " class="nav-link dropdown-toggle {{ Request::is('privacy*') ? 'active' : '' }}"
                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <img id="img_photo" src="{{ asset("{$avatar_src}") }}" alt="Image"
+                    <img id="img_photo" src="{{ asset("{$avatar_url}") }}" alt="Image"
                          class="img-fluid rounded-circle avatar-nav img-thumbnail">
                     {{ Auth::user()->name }} (Support)
                     <span class="caret"></span></a>
@@ -205,7 +205,7 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown " class="nav-link dropdown-toggle {{ Request::is('privacy*') ? 'active' : '' }}"
                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <img id="img_photo" src="{{ asset("{$avatar_src}") }}" alt="Image"
+                    <img id="img_photo" src="{{ asset("{$avatar_url}") }}" alt="Image"
                          class="img-fluid rounded-circle avatar-nav img-thumbnail">
                     {{ Auth::user()->name }} (Менеджер)
                     <span class="caret"></span></a>

@@ -35,7 +35,7 @@
                             <div class="row bg-white">
                                 <div class="col mb-2 text-center">
                                     <label for="file">
-                                        <img id="img_p" src="{{ asset("{$avatar_src}") }}" alt="Image"
+                                        <img id="img_p" src="{{ asset("{$avatar_url}") }}" alt="Image"
                                              class="img-fluid rounded-circle avatar">
                                     </label>
                                 </div>
