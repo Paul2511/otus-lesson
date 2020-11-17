@@ -15,7 +15,7 @@ class CreateTagContentsTable extends Migration
     {
         Schema::create('tag_contents', function (Blueprint $table) {
             $table->foreignUuid('tag_id')->references('id')->on('tags')->onDelete('cascade');
-            $table->string('entity_type')->index(); // сущность, например USER / POST
+            $table->smallInteger('entity_type'); // сущность, например USER / POST
             $table->string('entity_id')->index(); // идентификатор сущности
         });
     }

@@ -15,7 +15,7 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('external_hash'); // внешний идентификатор, для синхронизации с внешними источниками
+            $table->string('external_hash')->default(''); // внешний идентификатор, для синхронизации с внешними источниками
             $table->string('name_view'); // имя для представления, для views
             $table->string('name_raw'); // имя исходника, как в файловой системе
             $table->string('path'); // путь от корня хранилища файлов приложения до исходника

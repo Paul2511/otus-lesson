@@ -16,7 +16,7 @@ class CreateReactionsTable extends Migration
         Schema::create('reactions', function (Blueprint $table) {
             $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('ip_address', 45)->nullable();
-            $table->string('type'); // вид реакции, например LIKE / DISLIKE / FAVORITE
+            $table->smallInteger('type'); // вид реакции, например LIKE / DISLIKE / FAVORITE
             $table->string('entity_type')->index(); // сущность, например USER / POST
             $table->string('entity_id')->index(); // идентификатор сущности
             $table->timestamp('created_at')->nullable()->useCurrent();

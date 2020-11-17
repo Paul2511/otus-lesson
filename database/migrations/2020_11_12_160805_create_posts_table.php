@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +24,7 @@ class CreatePostsTable extends Migration
             $table->string('text_raw');
             $table->string('source_link');
             $table->string('source_label');
-            $table->smallInteger('status')->unsigned(); // состояние поста, отключение / включение / модерация / удаление владельцем / удаление администратором
+            $table->smallInteger('status')->unsigned()->default(Post::STATUS_INACTIVE); // состояние поста, отключение / включение / модерация / удаление владельцем / удаление администратором
             $table->foreignUuid('creator_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignUuid('redactor_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('counter_like')->unsigned(); // счетчик лайков, формируется из сырых данных таблицы reactions

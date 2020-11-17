@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Sms;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +17,9 @@ class CreateSmsTable extends Migration
         Schema::create('sms', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('ip_address', 45)->nullable();
             $table->string('text');
-            $table->smallInteger('status')->unsigned(); // состояние отправки сообщения
+            $table->smallInteger('status')->unsigned()->default(Sms::STATUS_NEW); // состояние отправки сообщения
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('send_at')->nullable();
         });

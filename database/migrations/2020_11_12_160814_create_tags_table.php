@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ class CreateTagsTable extends Migration
             $table->string('slug')->unique()->index();
             $table->integer('priority')->unsigned()->default(1000); // индекс сортировки, для ручного урпавления позицией тега в выводе
             $table->string('name');
-            $table->tinyInteger('active')->unsigned(); // флаг активности
+            $table->smallInteger('status')->unsigned()->default(Tag::STATUS_ACTIVE); // состояние тега, активно / удалено
             $table->timestamps();
         });
     }

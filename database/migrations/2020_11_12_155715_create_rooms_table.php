@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Room;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +18,7 @@ class CreateRoomsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->foreignUuid('creator_id')->references('id')->on('users')->onDelete('cascade');
-            $table->tinyInteger('deleted')->unsigned(); // флаг удаления владельцем
-            $table->tinyInteger('ban')->unsigned(); // флаг удаления администратором
+            $table->smallInteger('status')->unsigned()->default(Room::STATUS_ACTIVE); // состояние чата, активно / удаление владельцем / удаление администратором
             $table->timestamps();
         });
     }

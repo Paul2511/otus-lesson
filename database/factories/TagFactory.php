@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\BaseModel;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TagFactory extends Factory
@@ -12,7 +12,7 @@ class TagFactory extends Factory
      *
      * @var string
      */
-    protected $model = BaseModel::class;
+    protected $model = Tag::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,9 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->unique()->words(3, true),
+            'slug' => $this->faker->unique()->slug,
+            'priority' => $this->faker->randomNumber(),
         ];
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\BaseModel;
+use App\Models\Room;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RoomFactory extends Factory
@@ -12,7 +13,7 @@ class RoomFactory extends Factory
      *
      * @var string
      */
-    protected $model = BaseModel::class;
+    protected $model = Room::class;
 
     /**
      * Define the model's default state.
@@ -21,8 +22,15 @@ class RoomFactory extends Factory
      */
     public function definition()
     {
+        $creator = User::query()
+            ->inRandomOrder()
+            ->limit(1)
+            ->first();
+
         return [
-            //
+            'title' => $this->faker->unique()->words(3, true),
+            'creator_id' => $creator->id,
         ];
     }
 }
+
