@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateMessagesTable extends Migration
 {
     /**
+     * Сообщения
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,8 +17,8 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('chat_id')->nullable()->index('fk_messages_chat_id_idx');
-            $table->unsignedBigInteger('author_id')->nullable()->index('fk_messages_author_id_idx');
+            $table->unsignedBigInteger('chat_id')->index('fk_messages_chat_id_idx');
+            $table->unsignedBigInteger('author_id')->index('fk_messages_author_id_idx');
             $table->string('status')->nullable();
             $table->text('title')->nullable();
             $table->text('text')->nullable();

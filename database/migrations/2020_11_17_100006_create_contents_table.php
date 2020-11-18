@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateContentsTable extends Migration
 {
     /**
+     * Контент сайта, тексты рассылок и проч.
+     *
      * Run the migrations.
      *
      * @return void
@@ -16,7 +18,7 @@ class CreateContentsTable extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('title')->nullable();
-            $table->text('text')->nullable();
+            $table->text('text')->nullable();//могут быть не заполненным либо тема, либо текст
             $table->string('status')->nullable();
             $table->timestamps();
         });

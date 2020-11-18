@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Schema;
 class CreateSchedulesTable extends Migration
 {
     /**
+     * Формирование/редактирование расписания клуба на конкретные даты
+     * (для упрощения логики 2-х недельного расписания по четности, отмен и замен, избежания конфликтов)
+     * Ограничения на уникальность добавляемых записей будут определены в коде
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,9 +19,9 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date_training')->nullable();
-            $table->integer('time_id')->unsigned()->nullable()->index('fk_schedules_time_id_idx');
-            $table->unsignedBigInteger('user_id')->nullable()->index('fk_schedules_user_id_idx');
+            $table->date('date')->nullable();
+            $table->integer('time_id')->unsigned()->index('fk_schedules_time_id_idx');//время всегда указываем
+            $table->unsignedBigInteger('trainer_id')->nullable()->index('fk_schedules_user_id_idx');//могут быть окна в расписании
             $table->integer('section_id')->unsigned()->nullable()->index('fk_schedules_section_id_idx');
             $table->integer('gym_id')->unsigned()->nullable()->index('fk_schedules_gim_id_idx');
             $table->timestamps();

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateCardsTable extends Migration
 {
     /**
+     * Клубные карты
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,10 +17,10 @@ class CreateCardsTable extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->nullable();
-            $table->integer('count_month')->nullable();
-            $table->integer('count_day')->nullable();
-            $table->decimal('price', 8, 0)->nullable();
+            $table->string('title');
+            $table->integer('count_month')->nullable();// если карта выдана на опр количество месяцев
+            $table->integer('count_day')->nullable();//если карта выдана на опр количество дней
+            $table->decimal('price', 8, 0);
             $table->timestamps();
         });
     }

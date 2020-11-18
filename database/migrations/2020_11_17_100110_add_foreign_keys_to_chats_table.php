@@ -14,7 +14,7 @@ class AddForeignKeysToChatsTable extends Migration
     public function up(): void
     {
         Schema::table('chats', function (Blueprint $table) {
-            $table->foreign('guest_id', 'fk_chats_guest_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('guest_id', 'fk_chats_guest_id')->references('id')->on('users')->onUpdate('CASCADE');
         });
     }
 

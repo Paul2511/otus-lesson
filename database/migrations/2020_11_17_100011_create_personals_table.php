@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreatePersonalsTable extends Migration
 {
     /**
+     * Персональная информация пользователей
+     *
      * Run the migrations.
      *
      * @return void

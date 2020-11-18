@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateScheduleUserTable extends Migration
 {
     /**
+     * Расписание гостя
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,8 +17,8 @@ class CreateScheduleUserTable extends Migration
     {
         Schema::create('schedule_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable()->index('fk_schedule_user_user_id_idx');
-            $table->unsignedBigInteger('schedule_id')->nullable()->index('fk_schedule_user_schedule_id_idx');
+            $table->unsignedBigInteger('user_id')->index('fk_schedule_user_user_id_idx');
+            $table->unsignedBigInteger('schedule_id')->index('fk_schedule_user_schedule_id_idx');
             $table->string('status')->nullable();
             $table->timestamps();
         });

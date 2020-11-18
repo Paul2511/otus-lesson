@@ -14,8 +14,8 @@ class AddForeignKeysToScheduleUserTable extends Migration
     public function up(): void
     {
         Schema::table('schedule_user', function (Blueprint $table) {
-            $table->foreign('schedule_id', 'fk_schedule_user_schedule_id')->references('id')->on('schedules')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('user_id', 'fk_schedule_user_user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('schedule_id', 'fk_schedule_user_schedule_id')->references('id')->on('schedules')->onUpdate('CASCADE');
+            $table->foreign('user_id', 'fk_schedule_user_user_id')->references('id')->on('users')->onUpdate('CASCADE');
         });
     }
 

@@ -14,8 +14,8 @@ class AddForeignKeysToContentUserTable extends Migration
     public function up(): void
     {
         Schema::table('content_user', function (Blueprint $table) {
-            $table->foreign('content_id', 'fk_content_user_content_id')->references('id')->on('contents')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('user_id', 'fk_content_user_user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('content_id', 'fk_content_user_content_id')->references('id')->on('contents')->onUpdate('CASCADE');
+            $table->foreign('user_id', 'fk_content_user_user_id')->references('id')->on('users')->onUpdate('CASCADE');
         });
     }
 

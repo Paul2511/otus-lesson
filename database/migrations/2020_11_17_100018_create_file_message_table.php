@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateFileMessageTable extends Migration
 {
     /**
+     * Файлы-прикрепления к сообщениям
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,8 +17,8 @@ class CreateFileMessageTable extends Migration
     {
         Schema::create('file_message', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('file_id')->nullable()->index('fk_file_message_file_id_idx');
-            $table->unsignedBigInteger('message_id')->nullable()->index('fk_file_message_message_id_idx');
+            $table->unsignedBigInteger('file_id')->index('fk_file_message_file_id_idx');
+            $table->unsignedBigInteger('message_id')->index('fk_file_message_message_id_idx');
             $table->timestamps();
         });
     }

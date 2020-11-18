@@ -14,8 +14,8 @@ class AddForeignKeysToFileUserTable extends Migration
     public function up(): void
     {
         Schema::table('file_user', function (Blueprint $table) {
-            $table->foreign('file_id', 'fk_file_user_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('user_id', 'fk_file_user_user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('file_id', 'fk_file_user_file_id')->references('id')->on('files')->onUpdate('CASCADE');
+            $table->foreign('user_id', 'fk_file_user_user_id')->references('id')->on('users')->onUpdate('CASCADE');
         });
     }
 

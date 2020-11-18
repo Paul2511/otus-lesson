@@ -14,10 +14,10 @@ class AddForeignKeysToSchedulesTable extends Migration
     public function up(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->foreign('gym_id', 'fk_schedules_gym_id')->references('id')->on('gyms')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('section_id', 'fk_schedules_section_id')->references('id')->on('sections')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('time_id', 'fk_schedules_time_id')->references('id')->on('times')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('user_id', 'fk_schedules_user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('gym_id', 'fk_schedules_gym_id')->references('id')->on('gyms')->onUpdate('CASCADE');
+            $table->foreign('section_id', 'fk_schedules_section_id')->references('id')->on('sections')->onUpdate('CASCADE');
+            $table->foreign('time_id', 'fk_schedules_time_id')->references('id')->on('times')->onUpdate('CASCADE');
+            $table->foreign('trainer_id', 'fk_schedules_user_id')->references('id')->on('users')->onUpdate('CASCADE');
         });
     }
 

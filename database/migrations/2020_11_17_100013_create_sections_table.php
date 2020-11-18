@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateSectionsTable extends Migration
 {
     /**
+     * Секции
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,7 +17,7 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->nullable();
+            $table->string('title');
             $table->timestamps();
         });
     }

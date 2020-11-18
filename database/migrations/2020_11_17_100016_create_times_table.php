@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateTimesTable extends Migration
 {
     /**
+     * Временные интервалы занятий
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,8 +17,8 @@ class CreateTimesTable extends Migration
     {
         Schema::create('times', function (Blueprint $table) {
             $table->increments('id');
-            $table->time('start')->nullable();
-            $table->time('end')->nullable();
+            $table->time('start');
+            $table->time('end');
             $table->timestamps();
         });
     }

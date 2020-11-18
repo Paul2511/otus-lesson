@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateGymsTable extends Migration
 {
     /**
+     * Залы
+     *
      * Run the migrations.
      *
      * @return void
@@ -16,7 +18,7 @@ class CreateGymsTable extends Migration
         Schema::create('gyms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->nullable();
-            $table->integer('number')->nullable();
+            $table->integer('number');//все залы должны иметь номер
             $table->timestamps();
         });
     }

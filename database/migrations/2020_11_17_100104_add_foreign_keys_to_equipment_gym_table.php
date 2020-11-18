@@ -14,8 +14,8 @@ class AddForeignKeysToEquipmentGymTable extends Migration
     public function up(): void
     {
         Schema::table('equipment_gym', function (Blueprint $table) {
-            $table->foreign('equipment_id', 'fk_equipment_gym_equipment_id')->references('id')->on('equipments')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreign('gym_id', 'fk_equipment_gym_gym_id')->references('id')->on('gyms')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('equipment_id', 'fk_equipment_gym_equipment_id')->references('id')->on('equipments')->onUpdate('CASCADE');
+            $table->foreign('gym_id', 'fk_equipment_gym_gym_id')->references('id')->on('gyms')->onUpdate('CASCADE');
         });
     }
 

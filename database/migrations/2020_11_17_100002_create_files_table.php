@@ -16,8 +16,8 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->nullable();
-            $table->string('fid')->nullable();//уникальный хэш файла
-            $table->string('url')->nullable();
+            $table->string('fid');//уникальный хэш файла
+            $table->string('url');
             $table->timestamps();
         });
     }

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateEquipmentsTable extends Migration
 {
     /**
+     * Оборудование
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,7 +17,7 @@ class CreateEquipmentsTable extends Migration
     {
         Schema::create('equipments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title', 45)->nullable();
+            $table->text('title');
             $table->integer('count')->nullable();
             $table->timestamps();
         });

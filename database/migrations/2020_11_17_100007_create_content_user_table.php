@@ -15,8 +15,8 @@ class CreateContentUserTable extends Migration
     {
         Schema::create('content_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('content_id')->nullable()->index('fk_content_user_content_id_idx');
-            $table->unsignedBigInteger('user_id')->nullable()->index('fk_content_user_user_id_idx');
+            $table->unsignedBigInteger('content_id')->index('fk_content_user_content_id_idx');
+            $table->unsignedBigInteger('user_id')->index('fk_content_user_user_id_idx');
             $table->timestamps();
         });
     }

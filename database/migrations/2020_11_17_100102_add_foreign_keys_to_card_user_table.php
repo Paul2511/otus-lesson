@@ -14,8 +14,8 @@ class AddForeignKeysToCardUserTable extends Migration
     public function up(): void
     {
         Schema::table('card_user', function (Blueprint $table) {
-            $table->foreign('card_id', 'fk_card_user_card_id')->references('id')->on('cards')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('user_id', 'fk_card_user_user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('card_id', 'fk_card_user_card_id')->references('id')->on('cards')->onUpdate('CASCADE');
+            $table->foreign('user_id', 'fk_card_user_user_id')->references('id')->on('users')->onUpdate('CASCADE');
         });
     }
 

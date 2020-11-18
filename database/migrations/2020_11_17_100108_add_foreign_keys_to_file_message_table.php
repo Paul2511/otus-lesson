@@ -14,8 +14,8 @@ class AddForeignKeysToFileMessageTable extends Migration
     public function up(): void
     {
         Schema::table('file_message', function (Blueprint $table) {
-            $table->foreign('file_id', 'fk_file_message_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign('message_id', 'fk_file_message_message_id')->references('id')->on('messages')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('file_id', 'fk_file_message_file_id')->references('id')->on('files')->onUpdate('CASCADE');
+            $table->foreign('message_id', 'fk_file_message_message_id')->references('id')->on('messages')->onUpdate('CASCADE');
         });
     }
 

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateFileUserTable extends Migration
 {
     /**
+     * Связь пользователей с файлами (например с личными/дефолтными аватарками)
+     *
      * Run the migrations.
      *
      * @return void
@@ -15,8 +17,8 @@ class CreateFileUserTable extends Migration
     {
         Schema::create('file_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable()->index('fk_file_user_user_id_idx');
-            $table->unsignedBigInteger('file_id')->nullable()->index('fk_file_user_file_id_idx');
+            $table->unsignedBigInteger('user_id')->index('fk_file_user_user_id_idx');
+            $table->unsignedBigInteger('file_id')->index('fk_file_user_file_id_idx');
             $table->timestamps();
         });
     }

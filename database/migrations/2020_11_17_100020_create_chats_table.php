@@ -8,6 +8,10 @@ class CreateChatsTable extends Migration
 {
 
     /**
+     * Чаты обращений в тех поддержку
+     * После отправки обращения гостем - на его id создется уникальный чат,
+     * к которому будут привязаны сообщения - вопросы гостя и ответы тех поддерки
+     *
      * Run the migrations.
      *
      * @return void
@@ -16,7 +20,7 @@ class CreateChatsTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('guest_id')->nullable();
+            $table->unsignedBigInteger('guest_id');
             $table->string('status')->nullable();
             $table->timestamps();
         });
