@@ -4,10 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContentsTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
-     * Контент сайта и проч.
+     * Сообщения для гостей, рассылка
      *
      * Run the migrations.
      *
@@ -15,10 +15,10 @@ class CreateContentsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('title')->nullable();
-            $table->text('text')->nullable();//могут быть не заполненным либо тема, либо текст
+            $table->text('text');
+            $table->string('status')->default('awaiting');//ожидает отправки
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateContentsTable extends Migration
      */
     public function down(): void
     {
-        Schema::drop('contents');
+        Schema::drop('notifications');
     }
 }
