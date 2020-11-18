@@ -19,7 +19,7 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('chat_id')->index('fk_messages_chat_id_idx');
             $table->unsignedBigInteger('author_id')->index('fk_messages_author_id_idx');
-            $table->string('status')->nullable();
+            $table->string('status')->default('awaiting');//Ожидает ответа
             $table->text('title')->nullable();
             $table->text('text')->nullable();
             $table->timestamps();

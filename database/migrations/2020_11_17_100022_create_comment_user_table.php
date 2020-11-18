@@ -4,21 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContentsTable extends Migration
+class CreateCommentUserTable extends Migration
 {
     /**
-     * Контент сайта, тексты рассылок и проч.
-     *
      * Run the migrations.
      *
      * @return void
      */
     public function up(): void
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('comment_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('title')->nullable();
-            $table->text('text')->nullable();//могут быть не заполненным либо тема, либо текст
+            $table->unsignedBigInteger('comment_id')->index('fk_comment_user_comment_id_idx');
+            $table->unsignedBigInteger('user_id')->index('fk_comment_user_user_id_idx');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateContentsTable extends Migration
      */
     public function down(): void
     {
-        Schema::drop('contents');
+        Schema::drop('comment_user');
     }
 }
