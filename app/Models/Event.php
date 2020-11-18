@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $ip_address
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereIpAddress($value)
  */
 class Event extends BaseModel
 {

@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Sms whereText($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Sms whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $ip_address
+ * @method static \Illuminate\Database\Eloquent\Builder|Sms whereIpAddress($value)
  */
 class Sms extends BaseModel
 {

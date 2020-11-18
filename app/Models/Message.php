@@ -35,11 +35,6 @@ class Message extends BaseModel
 {
     use HasFactory, UseUuid;
 
-    const STATUS_INACTIVE = 10;
-    const STATUS_ACTIVE = 20;
-    const STATUS_DELETED_BY_OWNER = 30;
-    const STATUS_DELETED_BY_ADMIN = 40;
-
     /**
      * Поля массового назначения
      *
@@ -67,6 +62,20 @@ class Message extends BaseModel
     public function room()
     {
         return $this->belongsTo(Room::class);
+    }
+
+    /**
+     * Список доступных статусов сущности
+     *
+     * @return array
+     */
+    public static function getStatuses() {
+        return [
+            self::STATUS_INACTIVE,
+            self::STATUS_ACTIVE,
+            self::STATUS_DELETED_BY_OWNER,
+            self::STATUS_DELETED_BY_ADMIN,
+        ];
     }
 
 }
