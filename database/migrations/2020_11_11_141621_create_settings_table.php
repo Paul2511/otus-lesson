@@ -19,6 +19,7 @@ class CreateSettingsTable extends Migration
             $table->string('type');
             $table->string('value');
             $table->timestamps();
+            $table->unique(['user_id','type','value']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

@@ -19,6 +19,7 @@ class CreateResourceUserTable extends Migration
             $table->unsignedBigInteger('resource_id');
             $table->tinyInteger('is_active')->unsigned();
             $table->timestamps();
+            $table->unique(['user_id','resource_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
