@@ -15,7 +15,8 @@ class CreateDictionariesTable extends Migration
     {
         Schema::create('dictionaries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')
+                ->constrained();
             $table->string('name', 100);
             $table->timestamps();
         });
