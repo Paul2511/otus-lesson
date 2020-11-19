@@ -32,10 +32,10 @@ class PetFactory extends Factory
             return abort(500);
         }
 
-        $sex = $this->faker->randomElement(array_keys(Pet::$sexLabels));
+        $sex = $this->faker->randomElement(array_keys(Pet::sexLabels()));
 
         //Для генерации клички подключаем свой фейкер
-        $this->faker->addProvider(new \App\Faker\AnimalNameProvider($this->faker));
+        $this->faker->addProvider(new \App\Fakers\AnimalNameProvider($this->faker));
         $name = $this->faker->animalName($sex);
 
         return [

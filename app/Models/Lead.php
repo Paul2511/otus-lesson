@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\Phone;
+use App\Helpers\UtilsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -45,12 +46,6 @@ class Lead extends BaseModel
     const TYPE_INCOMING_CALL = 'incoming_call';
     const TYPE_OUTGOING_CALL = 'outgoing_call';
 
-    public static $typeLabels = [
-        self::TYPE_SITE_REQUEST => 'Заявка с сайта',
-        self::TYPE_INCOMING_CALL => 'Входящий вызов',
-        self::TYPE_OUTGOING_CALL => 'Исходящий вызов'
-    ];
-
     const STATUS_UNSORTED = 0;
     const STATUS_NEED_CALLBACK = 10;
     const STATUS_REPEATED = 20;
@@ -60,16 +55,15 @@ class Lead extends BaseModel
     const STATUS_CANCEL_MEET = 60;
     const STATUS_SPEC = 70;
 
-    public static $statusLabels = [
-        self::STATUS_UNSORTED => 'Не разобрано',
-        self::STATUS_NEED_CALLBACK => 'Нужно перезвонить',
-        self::STATUS_REPEATED => 'Повторное обращение',
-        self::STATUS_MEET_HOUSE => 'Вызов на дом',
-        self::STATUS_MEET_CLINIC => 'Посещение клиники',
-        self::STATUS_CHANGE_MEET => 'Перенос заявки',
-        self::STATUS_CANCEL_MEET => 'Отмена заявки',
-        self::STATUS_SPEC => 'Обращение специалиста',
-    ];
+    /**
+     * @var array
+     */
+    private static $typeLabels;
+
+    /**
+     * @var array
+     */
+    private static $statusLabels;
 
     public $commentType = 'lead';
 
@@ -106,6 +100,24 @@ class Lead extends BaseModel
     public function getExternalPhoneFormatAttribute()
     {
         return Phone::formatPhone($this->attributes['external_phone']);
+    }
+
+    /**
+     * @return array
+     */
+    public static function typeLabels()
+    {
+        if (isset(self::$typeLabels)) return self::$typeLabels;
+        return self::$typeLabels = UtilsHelper::getLangLabels(static::class, 'type');
+    }
+
+    /**
+     * @return array
+     */
+    public static function statusLabels()
+    {
+        if (isset(self::$statusLabels)) return self::$statusLabels;
+        return self::$statusLabels = UtilsHelper::getLangLabels(static::class, 'status');
     }
 
 }

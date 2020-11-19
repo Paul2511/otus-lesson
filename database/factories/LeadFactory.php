@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Faker\CustomPhoneProvider;
+use App\Fakers\CustomPhoneProvider;
 use App\Models\Lead;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,9 +23,9 @@ class LeadFactory extends Factory
      */
     public function definition()
     {
-        $type = $this->faker->randomElement(array_keys(Lead::$typeLabels));
+        $type = $this->faker->randomElement(array_keys(Lead::typeLabels()));
 
-        $statuses = Lead::$statusLabels;
+        $statuses = Lead::statusLabels();
         unset($statuses[Lead::STATUS_SPEC]);
         $status = $this->faker->randomElement(array_keys($statuses));
 

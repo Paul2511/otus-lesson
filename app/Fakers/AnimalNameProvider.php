@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Faker;
+namespace App\Fakers;
 
 use Faker\Provider\Person;
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\UtilsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -52,18 +53,15 @@ class UserDetail extends BaseModel
     const CLASSIFIER_SPEC_ALLOWED = 'spec_allowed';
     const CLASSIFIER_SPEC_NOT_ALLOWED = 'spec_not_allowed';
 
-    public static $clientClassifierLabels = [
-        self::CLASSIFIER_CLIENT_TARGET => 'Целевой',
-        self::CLASSIFIER_CLIENT_SPAM => 'Спам/реклама',
-        self::CLASSIFIER_CLIENT_OFF => 'Непрофильный',
-        self::CLASSIFIER_CLIENT_FAR => 'Далеко от города',
-        self::CLASSIFIER_CLIENT_OTHER => 'Прочие не по теме',
-    ];
+    /**
+     * @var
+     */
+    private static $classifierClientLabels;
 
-    public static $specClassifierLabels = [
-        self::CLASSIFIER_SPEC_ALLOWED => 'Допущен',
-        self::CLASSIFIER_SPEC_NOT_ALLOWED => 'Не допущен'
-    ];
+    /**
+     * @var
+     */
+    private static $classifierSpecLabels;
 
     public $commentType = 'userDetail';
 
@@ -133,4 +131,21 @@ class UserDetail extends BaseModel
         return $fio ? $fio : null;
     }
 
+    /**
+     * @return array
+     */
+    public static function classifierClientLabels()
+    {
+        if (isset(self::$classifierClientLabels)) return self::$classifierClientLabels;
+        return self::$classifierClientLabels = UtilsHelper::getLangLabels(static::class, ['classifier', 'client']);
+    }
+
+    /**
+     * @return array
+     */
+    public static function classifierSpecLabels()
+    {
+        if (isset(self::$classifierSpecLabels)) return self::$classifierSpecLabels;
+        return self::$classifierSpecLabels = UtilsHelper::getLangLabels(static::class, ['classifier', 'spec']);
+    }
 }

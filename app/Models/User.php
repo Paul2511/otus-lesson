@@ -12,6 +12,8 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use App\Casts\Phone;
 use Illuminate\Database\Eloquent\Builder;
+use App\Helpers\UtilsHelper;
+use phpDocumentor\Reflection\Types\Self_;
 
 /**
  * App\Models\User
@@ -86,20 +88,18 @@ class User extends Authenticatable
     const ROLE_MANAGER = 30;
     const ROLE_ADMIN = 40;
 
-    public static $roleLabels = [
-        self::ROLE_CLIENT => 'Клиент',
-        self::ROLE_SPEC => 'Специалист',
-        self::ROLE_MANAGER => 'Менеджер',
-        self::ROLE_ADMIN => 'Администратор'
-    ];
-
     const STATUS_ACTIVE = 10;
     const STATUS_NOT_ACTIVE = 20;
 
-    public static $statusLabels = [
-        self::STATUS_ACTIVE => 'Активный',
-        self::STATUS_NOT_ACTIVE => 'Заблокирован'
-    ];
+    /**
+     * @var array
+     */
+    private static $roleLabels;
+
+    /**
+     * @var array
+     */
+    private static $statusLabels;
 
     /**
      * The attributes that are mass assignable.
@@ -227,6 +227,24 @@ class User extends Authenticatable
     public function getPhoneFormatAttribute()
     {
         return Phone::formatPhone($this->attributes['phone']);
+    }
+
+    /**
+     * @return array
+     */
+    public static function roleLabels()
+    {
+        if (isset(self::$roleLabels)) return self::$roleLabels;
+        return self::$roleLabels = UtilsHelper::getLangLabels(static::class, 'role');
+    }
+
+    /**
+     * @return array
+     */
+    public static function statusLabels()
+    {
+        if (isset(self::$statusLabels)) return self::$statusLabels;
+        return self::$statusLabels = UtilsHelper::getLangLabels(static::class, 'status');
     }
 
 }

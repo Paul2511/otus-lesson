@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use App\Faker\CustomPhoneProvider;
+use App\Fakers\CustomPhoneProvider;
 
 class UserFactory extends Factory
 {

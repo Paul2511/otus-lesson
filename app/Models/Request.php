@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\UtilsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -53,22 +54,20 @@ class Request extends BaseModel
     const TYPE_HOUSE = 'house';
     const TYPE_CLINIC = 'clinic';
 
-    public static $typeLabels = [
-        self::TYPE_HOUSE => 'Вызов на дом',
-        self::TYPE_CLINIC => 'Посещение клиники'
-    ];
-
     const STATUS_ACTUAL = 10;
     const STATUS_CANCELED = 20;
     const STATUS_FAULT = 30;
     const STATUS_DONE = 40;
 
-    public static $statusLabels = [
-        self::STATUS_ACTUAL => 'Актуальная',
-        self::STATUS_CANCELED => 'Отменена клиентом',
-        self::STATUS_FAULT => 'Отменена специалистом',
-        self::STATUS_DONE => 'Выполнена',
-    ];
+    /**
+     * @var
+     */
+    private static $typeLabels;
+
+    /**
+     * @var
+     */
+    private static $statusLabels;
 
     public $commentType = 'request';
 
@@ -110,6 +109,24 @@ class Request extends BaseModel
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * @return array
+     */
+    public static function typeLabels()
+    {
+        if (isset(self::$typeLabels)) return self::$typeLabels;
+        return self::$typeLabels = UtilsHelper::getLangLabels(static::class, 'type');
+    }
+
+    /**
+     * @return array
+     */
+    public static function statusLabels()
+    {
+        if (isset(self::$statusLabels)) return self::$statusLabels;
+        return self::$statusLabels = UtilsHelper::getLangLabels(static::class, 'status');
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\UtilsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -44,10 +45,10 @@ class Pet extends BaseModel
     const SEX_MALE = 'male';
     const SEX_FEMALE = 'female';
 
-    public static $sexLabels = [
-        self::SEX_MALE => 'Мужской',
-        self::SEX_FEMALE => 'Женский',
-    ];
+    /**
+     * @var array
+     */
+    private static $sexLabels;
 
     public $commentType = 'pet';
 
@@ -70,5 +71,14 @@ class Pet extends BaseModel
     public function petType()
     {
         return $this->belongsTo(PetType::class);
+    }
+
+    /**
+     * @return array
+     */
+    public static function sexLabels()
+    {
+        if (isset(self::$sexLabels)) return self::$sexLabels;
+        return self::$sexLabels = UtilsHelper::getLangLabels(static::class, 'sex', 'main');
     }
 }
