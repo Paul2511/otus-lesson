@@ -15,10 +15,13 @@ class CreateContextsTable extends Migration
     {
         Schema::create('contexts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('word_id');
+            $table->foreignId('word_id')
+                ->constrained();
             $table->string('value', 100);
-            $table->string('prefix', 200)->nullable();
-            $table->string('postfix', 200)->nullable();
+            $table->string('prefix', 200)
+                ->nullable();
+            $table->string('postfix', 200)
+                ->nullable();
             $table->timestamps();
         });
     }

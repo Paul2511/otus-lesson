@@ -15,10 +15,12 @@ class CreateWordsTable extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dictionary_id');
+            $table->foreignId('dictionary_id')
+                ->constrained();
             $table->string('value', 100);
             $table->string('translation', 200);
-            $table->tinyInteger('status')->nullable();
+            $table->unsignedTinyInteger('status')
+                ->nullable();
             $table->timestamps();
         });
     }
