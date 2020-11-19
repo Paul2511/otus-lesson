@@ -35,6 +35,11 @@ class FileRoom extends BasePivot
 {
     use HasFactory, UseUuid;
 
+    const STATUS_INACTIVE = 10;
+    const STATUS_ACTIVE = 20;
+    const STATUS_DELETED_BY_OWNER = 30;
+    const STATUS_DELETED_BY_ADMIN = 40;
+
     public $timestamps = false;
 
     /**

@@ -32,6 +32,11 @@ class Sms extends BaseModel
 {
     use HasFactory, UseUuid;
 
+    const STATUS_NEW = 10;
+    const STATUS_SENT = 20;
+    const STATUS_FAILED = 30;
+    const STATUS_CANCELED = 40;
+
     public $timestamps = false;
 
     /**
@@ -65,9 +70,9 @@ class Sms extends BaseModel
     public static function getStatuses() {
         return [
             self::STATUS_NEW,
-            self::STATUS_SEND,
-            self::STATUS_FAIL,
-            self::STATUS_CANCEL,
+            self::STATUS_SENT,
+            self::STATUS_FAILED,
+            self::STATUS_CANCELED,
         ];
     }
 

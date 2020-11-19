@@ -60,6 +60,12 @@ class User extends BaseModel implements
 {
     use HasFactory, Notifiable, UseUuid, Authenticatable, Authorizable, CanResetPassword, MustVerifyEmail;
 
+    const STATUS_INACTIVE = 10;
+    const STATUS_MODERATION = 20;
+    const STATUS_ACTIVE = 30;
+    const STATUS_DELETED_BY_OWNER = 40;
+    const STATUS_DELETED_BY_ADMIN = 50;
+
     /**
      * Поля массового назначения
      *

@@ -31,6 +31,11 @@ class Role extends BaseModel
 {
     use HasFactory, UseUuid;
 
+    const STATUS_INACTIVE = 10;
+    const STATUS_ACTIVE = 20;
+    const STATUS_DELETED_BY_OWNER = 30;
+    const STATUS_DELETED_BY_ADMIN = 40;
+
     const LEVEL_USER = 10;
     const LEVEL_REDACTOR = 20;
     const LEVEL_MODERATOR = 30;

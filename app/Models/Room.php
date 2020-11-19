@@ -32,6 +32,11 @@ class Room extends BaseModel
 {
     use HasFactory, UseUuid;
 
+    const STATUS_INACTIVE = 10;
+    const STATUS_ACTIVE = 30;
+    const STATUS_DELETED_BY_OWNER = 50;
+    const STATUS_DELETED_BY_ADMIN = 60;
+
     /**
      * Поля массового назначения
      *

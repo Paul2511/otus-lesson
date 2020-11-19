@@ -31,6 +31,10 @@ class Tag extends BaseModel
 {
     use HasFactory, UseUuid;
 
+    const STATUS_INACTIVE = 10;
+    const STATUS_ACTIVE = 20;
+    const STATUS_DELETED = 30;
+
     public $timestamps = false;
 
     /**
