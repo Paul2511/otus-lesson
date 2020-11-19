@@ -21,7 +21,7 @@ class CreateChatsTable extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('guest_id');
-            $table->string('status')->default('active');
+            $table->integer('status')->default(10);
             $table->timestamps();
         });
     }

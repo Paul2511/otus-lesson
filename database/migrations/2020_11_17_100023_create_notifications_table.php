@@ -18,7 +18,7 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('text');
-            $table->string('status')->default('awaiting');//ожидает отправки
+            $table->integer('status')->default(10);//ожидает отправки
             $table->timestamps();
         });
     }

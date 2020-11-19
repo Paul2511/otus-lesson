@@ -21,7 +21,7 @@ class CreateCardUserTable extends Migration
             $table->integer('card_id')->unsigned()->index('fk_card_user_card_id_idx');
             $table->date('start')->nullable();//подарочная карта выдается без даты начала использования
             $table->date('end')->nullable();//карта может быть досрочно аннулирована
-            $table->string('status')->default('awaiting');//Ожидает подтверджения
+            $table->integer('status')->default(10);//Ожидает подтверджения
             $table->timestamps();
         });
     }

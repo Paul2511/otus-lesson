@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('role_id')->unsigned()->index('fk_users_roles_idx');
+            $table->integer('role')->default(10)->index('fk_users_roles_idx');//min rank = 10 (anonymous)
             $table->unsignedBigInteger('personal_id')->nullable()->index('fk_users_personals_idx');
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();

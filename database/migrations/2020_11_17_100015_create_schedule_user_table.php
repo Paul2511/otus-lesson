@@ -19,7 +19,7 @@ class CreateScheduleUserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index('fk_schedule_user_user_id_idx');
             $table->unsignedBigInteger('schedule_id')->index('fk_schedule_user_schedule_id_idx');
-            $table->string('status')->default('awaiting');//Запись на занятие ожидает подтверджения
+            $table->integer('status')->default(10);//Запись на занятие ожидает подтверджения
             $table->timestamps();
         });
     }
