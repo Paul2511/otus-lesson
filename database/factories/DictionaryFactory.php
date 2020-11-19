@@ -22,7 +22,7 @@ class DictionaryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->word,
         ];
     }
 }

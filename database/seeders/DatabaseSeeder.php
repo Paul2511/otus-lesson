@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Context;
+use App\Models\Dictionary;
+use App\Models\User;
+use App\Models\Word;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,10 +17,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            DictionarySeeder::class,
-            WordSeeder::class,
-            ContextSeeder::class,
-        ]);
+        $users = User::factory()
+            ->has(
+                Dictionary::factory()
+                    ->count(3)
+                    ->has(
+                        Word::factory()
+                            ->count(15)
+                            ->has(
+                                Context::factory()
+                                    ->count(2)
+                            )
+                    )
+            )
+            ->count(5)
+            ->create();
     }
 }

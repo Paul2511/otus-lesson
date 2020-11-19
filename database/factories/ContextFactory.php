@@ -22,7 +22,9 @@ class ContextFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'value'   => $this->faker->word,
+            'prefix'  => $this->faker->word,
+            'postfix' => $this->faker->word,
         ];
     }
 }
