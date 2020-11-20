@@ -21,6 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone');
             $table->datetime('last_login_at')->nullable();
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('region_id');
+            $table->foreign('region_id')
+                ->references('id')
+                ->on('regions');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -17,8 +17,7 @@ class CreateRegionsTable extends Migration
             $table->id();
             $table->string('title')->unique();;
             $table->string('slug');
-            $table->integer('parent_id');
-            $table->integer('user_id');
+            $table->integer('parent_id')->nullable();
             $table->timestamps();
         });
     }
