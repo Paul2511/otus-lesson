@@ -15,6 +15,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        User::factory()->count(5)->create();
+
         $payload = [
             'email' => 'admin@admin.com',
             'name' => 'Admin',
@@ -23,5 +25,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         User::create($payload);
+
+
     }
 }
