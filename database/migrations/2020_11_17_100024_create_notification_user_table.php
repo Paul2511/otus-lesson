@@ -17,6 +17,7 @@ class CreateNotificationUserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('notification_id')->index('fk_notification_user_notification_id_idx');
             $table->unsignedBigInteger('user_id')->index('fk_notification_user_user_id_idx');
+            $table->integer('status')->default(10)->index('fk_notification_user_status_idx');//ожидает отправки
             $table->timestamps();
         });
     }

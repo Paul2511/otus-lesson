@@ -23,12 +23,16 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('role')->default(10)->index('fk_users_roles_idx');//min rank = 10 (anonymous)
-            $table->unsignedBigInteger('personal_id')->nullable()->index('fk_users_personals_idx');
-            $table->string('name')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->unique()->nullable()->index('fk_users_email_idx');
             $table->dateTime('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('remember_token', 100)->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('middle_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('telephone')->nullable();
+            $table->date('birthday')->nullable();
+            $table->unsignedBigInteger('file_id')->default(1)->index('fk_users_files_idx');//аватарка
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class AddForeignKeysToMessagesTable extends Migration
     {
         Schema::table('messages', function (Blueprint $table) {
             $table->foreign('chat_id', 'fk_messages_chat_id')->references('id')->on('chats')->onUpdate('CASCADE');
-            $table->foreign('author_id', 'fk_messages_author_id')->references('id')->on('users')->onUpdate('CASCADE');
+            $table->foreign('user_id', 'fk_messages_user_id')->references('id')->on('users')->onUpdate('CASCADE');
         });
     }
 
@@ -28,7 +28,7 @@ class AddForeignKeysToMessagesTable extends Migration
     {
         Schema::table('messages', function (Blueprint $table) {
             $table->dropForeign('fk_messages_chat_id');
-            $table->dropForeign('fk_messages_author_id');
+            $table->dropForeign('fk_messages_user_id');
         });
     }
 }

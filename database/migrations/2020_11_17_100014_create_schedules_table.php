@@ -21,7 +21,7 @@ class CreateSchedulesTable extends Migration
             $table->bigIncrements('id');
             $table->date('date')->nullable();
             $table->integer('time_id')->unsigned()->index('fk_schedules_time_id_idx');//время всегда указываем
-            $table->unsignedBigInteger('trainer_id')->nullable()->index('fk_schedules_user_id_idx');//могут быть окна в расписании
+            $table->unsignedBigInteger('user_id')->nullable()->index('fk_schedules_user_id_idx');//тренер
             $table->integer('section_id')->unsigned()->nullable()->index('fk_schedules_section_id_idx');
             $table->integer('gym_id')->unsigned()->nullable()->index('fk_schedules_gim_id_idx');
             $table->timestamps();

@@ -15,7 +15,7 @@ class AddForeignKeysToUsersTable extends Migration {
     {
 		Schema::table('users', function(Blueprint $table)
 		{
-			$table->foreign('personal_id', 'fk_users_personals')->references('id')->on('personals')->onUpdate('CASCADE');
+			$table->foreign('file_id', 'fk_users_files')->references('id')->on('files')->onUpdate('CASCADE');
 		});
 	}
 
@@ -29,7 +29,7 @@ class AddForeignKeysToUsersTable extends Migration {
     {
 		Schema::table('users', function(Blueprint $table)
 		{
-			$table->dropForeign('fk_users_personal');
+			$table->dropForeign('fk_users_files');
 		});
 	}
 
