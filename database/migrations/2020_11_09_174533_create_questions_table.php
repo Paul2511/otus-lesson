@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Question;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,7 +26,7 @@ class CreateQuestionsTable extends Migration
             $table->string('name');
 
             // возможные типы checkbox / radio, в будущем могут появиться другие
-            $table->string('type')->default('checkbox');
+            $table->tinyInteger('type')->default(Question::TYPE_CHECKBOX);
 
             $table->longText('text')->nullable();
             $table->json('pictures')->nullable();

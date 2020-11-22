@@ -19,21 +19,33 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::get('/', function () {
-	return view('pages.welcome');
+    return view('pages.welcome');
 });
 
 Route::get('/contacts', function () {
-	return view('pages.contacts');
+    return view('pages.contacts');
 })
-	->name('contacts');
+    ->name('contacts');
 
 /* TODO: Заменить страницами, созданными через скаффолдинг  */
 Route::get('/dev/login', function () {
-	return view('pages.login');
+    return view('pages.login');
 })
-	->name('login');
+    ->name('login');
 
 Route::get('/dev/register', function () {
-	return view('pages.register');
+    return view('pages.register');
 })
-	->name('register');
+    ->name('register');
+
+
+Route::prefix('admin')->group(
+    function () {
+        Route::get(
+            'surveys',
+            function () {
+                return view('admin.survey.list');
+            }
+        );
+    }
+);
