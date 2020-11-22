@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Gym;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,7 @@ class CreateGymsTable extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->integer('number');//все залы должны иметь номер
+            $table->integer('status')->default(Gym::STATUS_ACTIVE);
             $table->timestamps();
         });
     }

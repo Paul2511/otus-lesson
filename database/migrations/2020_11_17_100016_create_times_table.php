@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Time;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,7 @@ class CreateTimesTable extends Migration
             $table->increments('id');
             $table->time('start');
             $table->time('end');
+            $table->integer('status')->default(Time::STATUS_ACTIVE);
             $table->timestamps();
         });
     }

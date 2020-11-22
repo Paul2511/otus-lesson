@@ -19,7 +19,7 @@ class CreateNotificationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->nullable();
             $table->text('text');
-            $table->integer('type')->default(10)->index('fk_notifications_type_idx');
+            $table->integer('type')->index('fk_notifications_type_idx');
             $table->timestamps();
         });
     }

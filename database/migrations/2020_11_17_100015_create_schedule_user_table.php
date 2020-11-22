@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ScheduleUser;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ class CreateScheduleUserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index('fk_schedule_user_user_id_idx');
             $table->unsignedBigInteger('schedule_id')->index('fk_schedule_user_schedule_id_idx');
-            $table->integer('status')->default(10)->index('fk_schedule_user_status_idx');//Запись на занятие ожидает подтверджения
+            $table->integer('status')->default(ScheduleUser::STATUS_PENDING)->index('fk_schedule_user_status_idx');//Запись на занятие ожидает подтверджения
             $table->timestamps();
         });
     }

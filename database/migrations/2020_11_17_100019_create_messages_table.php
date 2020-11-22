@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Message;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('chat_id')->index('fk_messages_chat_id_idx');
             $table->unsignedBigInteger('user_id')->index('fk_messages_author_id_idx');//автор сообщения
-            $table->integer('status')->default(10)->index('fk_messages_status_idx');//Ожидает ответа
+            $table->integer('status')->default(Message::STATUS_UNREAD)->index('fk_messages_status_idx');//Ожидает ответа
             $table->text('title')->nullable();
             $table->text('text')->nullable();
             $table->timestamps();

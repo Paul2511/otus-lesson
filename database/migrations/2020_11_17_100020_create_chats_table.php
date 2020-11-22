@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Chat;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,7 @@ class CreateChatsTable extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index('fk_chats_guest_id_idx');//гость клуба
-            $table->integer('status')->default(10)->index('fk_chats_status_idx');
+            $table->integer('status')->default(Chat::STATUS_ACTIVE)->index('fk_chats_status_idx');
             $table->timestamps();
         });
     }

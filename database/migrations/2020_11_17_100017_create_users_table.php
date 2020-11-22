@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +23,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('role')->default(10)->index('fk_users_roles_idx');//min rank = 10 (anonymous)
+            $table->integer('role')->default(User::ROLE_ANONYMOUS)->index('fk_users_roles_idx');//min rank = 10 (anonymous)
             $table->string('email')->unique()->nullable()->index('fk_users_email_idx');
             $table->dateTime('email_verified_at')->nullable();
             $table->string('password')->nullable();
@@ -30,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('telephone')->nullable();
+            $table->string('phone')->nullable();
             $table->date('birthday')->nullable();
             $table->unsignedBigInteger('file_id')->default(1)->index('fk_users_files_idx');//аватарка
             $table->timestamps();
