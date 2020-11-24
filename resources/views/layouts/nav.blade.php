@@ -200,31 +200,6 @@
                 </div>
             </li>
             @endsupport
-            {{--------------privacy-content--------------}}
-            @content
-            <li class="nav-item dropdown">
-                <a id="navbarDropdown " class="nav-link dropdown-toggle {{ Request::is('privacy*') ? 'active' : '' }}"
-                   href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <img id="img_photo" src="{{ asset("{$avatar_url}") }}" alt="Image"
-                         class="img-fluid rounded-circle avatar-nav img-thumbnail">
-                    {{ Auth::user()->name }} (Менеджер)
-                    <span class="caret"></span></a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                    <a class="dropdown-item {{ Request::is('*privacy/profile*') ? 'active' : '' }}"
-                       href="{{ route('privacy.profile') }}">{{ __('Мой профиль') }}</a>
-
-                    <a class="dropdown-item {{ Request::is('*privacy/comments*') ? 'active' : '' }}"
-                       href="{{ route('privacy.comments') }}">{{ __('Мои отзывы') }}</a>
-
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">{{ __('Выход') }}</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </li>
-            @endcontent
         </ul>
     </div>
 </nav>

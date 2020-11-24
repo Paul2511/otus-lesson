@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Card;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ class CreateCardsTable extends Migration
             $table->integer('count_month')->nullable();// если карта выдана на опр количество месяцев
             $table->integer('count_day')->nullable();//если карта выдана на опр количество дней
             $table->decimal('price', 8, 0);
+            $table->integer('status')->default(Card::STATUS_ACTIVE);
             $table->timestamps();
         });
     }

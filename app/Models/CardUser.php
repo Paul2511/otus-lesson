@@ -25,6 +25,14 @@ class CardUser extends BaseModel
     public const STATUS_CANCEL = 40;
     public const STATUS_ACTIVE = 50;
 
+    public const STATUS_NAME_PENDING = 'PENDING';
+    public const STATUS_NAME_INACTIVE = 'INACTIVE';
+    public const STATUS_NAME_EXPIRED = 'EXPIRED';
+    public const STATUS_NAME_CANCEL = 'CANCEL';
+    public const STATUS_NAME_ACTIVE = 'ACTIVE';
+
+    protected $table = 'card_user';
+
     /**
      * @var array
      */
@@ -42,10 +50,30 @@ class CardUser extends BaseModel
     protected $casts = [
         'user_id' => 'integer',
         'card_id' => 'integer',
-        'start' => 'date',
-        'end' => 'date',
+        'start' => 'Carbon',
+        'end' => 'Carbon',
         'status' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * @return array
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_NAME_PENDING => self::STATUS_PENDING,
+            self::STATUS_NAME_INACTIVE => self::STATUS_INACTIVE,
+            self::STATUS_NAME_EXPIRED => self::STATUS_EXPIRED,
+            self::STATUS_NAME_CANCEL => self::STATUS_CANCEL,
+            self::STATUS_NAME_ACTIVE => self::STATUS_ACTIVE,
+        ];
+    }
 }

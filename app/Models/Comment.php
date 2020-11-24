@@ -22,6 +22,10 @@ class Comment extends BaseModel
     public const STATUS_CANCEL = 20;
     public const STATUS_PUBLIC = 30;
 
+    public const STATUS_NAME_PENDING = 'PENDING';
+    public const STATUS_NAME_CANCEL = 'CANCEL';
+    public const STATUS_NAME_PUBLIC = 'PUBLIC';
+
     /**
      * @var array
      */
@@ -38,9 +42,18 @@ class Comment extends BaseModel
         'user_id' => 'string',
         'text' => 'string',
         'status' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /** @var array */
+    public $timestamps = true;
 
     /**
      * @return BelongsTo
@@ -48,5 +61,17 @@ class Comment extends BaseModel
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_NAME_PENDING => self::STATUS_PENDING,
+            self::STATUS_NAME_CANCEL => self::STATUS_CANCEL,
+            self::STATUS_NAME_PUBLIC => self::STATUS_PUBLIC,
+        ];
     }
 }

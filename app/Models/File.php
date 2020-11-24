@@ -39,8 +39,14 @@ class File extends BaseModel
         'title' => 'string',
         'fid' => 'string',
         'url' => 'string',
-        'updated_at' => 'datetime',
-        'created_at' => 'datetime',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 
     /**

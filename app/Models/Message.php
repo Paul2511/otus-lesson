@@ -24,6 +24,9 @@ class Message extends BaseModel
     public const STATUS_UNREAD = 10;
     public const STATUS_READ = 10;
 
+    public const STATUS_NAME_UNREAD = 'UNREAD';
+    public const STATUS_NAME_READ = 'READ';
+
     /**
      * @var array
      */
@@ -44,8 +47,14 @@ class Message extends BaseModel
         'title' => 'string',
         'text' => 'string',
         'status' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -70,5 +79,16 @@ class Message extends BaseModel
     public function files(): BelongsToMany
     {
         return $this->belongsToMany(File::class, 'file_message');
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_NAME_UNREAD => self::STATUS_UNREAD,
+            self::STATUS_NAME_READ => self::STATUS_READ,
+        ];
     }
 }

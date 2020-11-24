@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Schedule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ class CreateSchedulesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable()->index('fk_schedules_user_id_idx');//тренер
             $table->integer('section_id')->unsigned()->nullable()->index('fk_schedules_section_id_idx');
             $table->integer('gym_id')->unsigned()->nullable()->index('fk_schedules_gim_id_idx');
+            $table->integer('status')->default(Schedule::STATUS_ACTIVE);
             $table->timestamps();
         });
     }

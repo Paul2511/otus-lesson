@@ -21,6 +21,9 @@ class Gym extends BaseModel
     public const STATUS_INACTIVE = 10;
     public const STATUS_ACTIVE = 20;
 
+    public const STATUS_NAME_INACTIVE = 'INACTIVE';
+    public const STATUS_NAME_ACTIVE = 'ACTIVE';
+
     /**
      * @var array
      */
@@ -37,8 +40,14 @@ class Gym extends BaseModel
         'title' => 'time',
         'number' => 'integer',
         'status' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -47,5 +56,16 @@ class Gym extends BaseModel
     public function schedules(): HasMany
     {
         return $this->hasMany(Schedule::class, 'gym_id');
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_NAME_INACTIVE => self::STATUS_INACTIVE,
+            self::STATUS_NAME_ACTIVE => self::STATUS_ACTIVE,
+        ];
     }
 }

@@ -38,6 +38,11 @@ class User extends Authenticatable
     public const ROLE_TRAINER = 30;
     public const ROLE_ADMIN = 40;
 
+    public const ROLE_NAME_ANONYMOUS = 'ANONYMOUS';
+    public const ROLE_NAME_GUEST = 'GUEST';
+    public const ROLE_NAME_TRAINER = 'TRAINER';
+    public const ROLE_NAME_ADMIN = 'ADMIN';
+
     /**
      * @var array
      */
@@ -76,8 +81,14 @@ class User extends Authenticatable
         'phone' => 'string',
         'birthday' => 'date',
         'file_id' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -149,5 +160,18 @@ class User extends Authenticatable
     public function trainerSchedules(): HasMany
     {
         return $this->hasMany(Schedule::class, 'user_id');
+    }
+
+    /**
+     * @return array
+     */
+    public static function getRoles(): array
+    {
+        return [
+            self::ROLE_NAME_ANONYMOUS => self::ROLE_ANONYMOUS,
+            self::ROLE_NAME_GUEST => self::ROLE_GUEST,
+            self::ROLE_NAME_TRAINER => self::ROLE_TRAINER,
+            self::ROLE_NAME_ADMIN => self::ROLE_ADMIN,
+        ];
     }
 }
