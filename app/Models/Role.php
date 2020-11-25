@@ -29,16 +29,37 @@ class Role extends Model
     const ROLE_MANAGER = 10;
     const ROLE_ADMIN = 20;
 
+    public static $roles = [
+        self::ROLE_USER => 'User',
+        self::ROLE_MANAGER => 'Manager',
+        self::ROLE_ADMIN => 'Admin',
+    ];
+
     public $timestamps = false;
 
     protected $fillable = [
         'name',
     ];
 
+    public static function roles()
+    {
+        return self::roles();
+    }
+
+    public static function getRoleAttribute()
+    {
+        return self::roles($roles[$value]);
+    }
+
     public function users()
     {
-        return $this->belongsToMany(User::class)
+        return $this->hasMany(User::class)
             ->using(RoleUser::class);
+    }
+
+    public function isAdmin()
+    {
+        return Auth::user()->role == self::ROLE_ADMIN;
     }
 
 }

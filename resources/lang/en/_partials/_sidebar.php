@@ -7,6 +7,7 @@ return [
     "knowledgebase" => "knowledgebase",
     "name" => "First Name",
     "orders" => "orders",
+    "users" => "users",
     "payments" => "payments",
     "position" => "HR manager"
 ];

@@ -16,13 +16,20 @@ Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);
     return redirect()->back();
 });
-Route::redirect('/', '/dashboard');
-Route::view('/users/profile', 'users.profile')->name('profile');
-Route::view('/contacts', 'contacts')->name('contacts');
-Route::view('/knowledgebase', 'knowledgebase')->name('knowledgebase');
-Route::view('/documents', 'documents')->name('documents');
-Route::view('/payments', 'payments')->name('payments');
-Route::view('/orders', 'orders')->name('orders');
+Route::redirect('/', 'users/dashboard');
+//Login
 Route::view('register', 'auth.register')->name('register');
 Route::view('login', 'auth.login')->name('login');
-Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+//Users Route Group
+Route::prefix('users')->group(function () {
+    Route::view('profile', 'users.profile')->name('profile');
+    Route::view('contacts', 'users.contacts')->name('contacts');
+    Route::view('knowledgebase', 'users.knowledgebase')->name('knowledgebase');
+    Route::view('documents', 'users.documents')->name('documents');
+    Route::view('payments', 'users.payments')->name('payments');
+    Route::view('orders', 'users.orders')->name('orders');
+    Route::view('dashboard', 'users.dashboard')->name('dashboard');
+});
+
+app(\App\Services\Routes\Providers\Admin\AdminRoutesProvider::class)->registerRoutes();

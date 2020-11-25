@@ -1,13 +1,13 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
-@section('title', Str::ucfirst(__('pages/contacts.contacts')))
+@section('title', Str::ucfirst(__('pages/documents.documents')))
 
 @section('style')
 @endsection
 
-@section('breadcrumb-title', __('pages/contacts.contacts') )
+@section('breadcrumb-title', __('pages/documents.documents') )
 @section('breadcrumb-item')
-<li class="breadcrumb-item active">{{ __('pages/contacts.contacts')}}</li>
+<li class="breadcrumb-item active">{{ __('pages/documents.documents')}}</li>
 @endsection
 
 @section('body')

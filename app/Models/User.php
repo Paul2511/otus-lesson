@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserStatus;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,7 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+
 
 /**
  * Class User
@@ -64,20 +66,23 @@ class User extends Authenticatable
     const STATUS_PENDING = 20;
     const STATUS_DELETED = 30;
 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'middletName',
+        'inn',
+        'first_name',
+        'last_name',
+        'middle_name',
         'position',
         'phone',
         'email',
         'password',
-        'status'
+        'status',
+        'affilated_company'
     ];
 
     /**
@@ -102,14 +107,21 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->hasMany(Role::class)
+        return $this->belongsToMany(Role::class)
             ->using(RoleUser::class);
+
     }
 
     public function companies()
     {
-        return $this->hasMany(Company::class)
-            ->using(CompanyUser::class);
+        return $this->
+        belongsToMany(Company::class,
+            'company_user',
+            'inn',
+            'inn',
+            'inn',
+            'inn');
     }
+
 
 }

@@ -1,13 +1,13 @@
-@extends('layouts.master')
+@extends('users.layouts.master')
 
-@section('title', Str::ucfirst(__('pages/payments.payments')))
+@section('title', Str::ucfirst(__('pages/documents.documents')))
 
 @section('style')
 @endsection
 
-@section('breadcrumb-title', __('pages/payments.payments') )
+@section('breadcrumb-title', __('pages/documents.documents') )
 @section('breadcrumb-item')
-<li class="breadcrumb-item active">{{ __('pages/payments.payments')}}</li>
+<li class="breadcrumb-item active">{{ __('pages/documents.documents')}}</li>
 @endsection
 
 @section('body')

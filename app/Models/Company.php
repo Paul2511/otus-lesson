@@ -83,4 +83,6 @@ class Company extends Model
     {
         return $this->hasMany(Specialist::class, 'company_uuid');
     }
+
+
 }

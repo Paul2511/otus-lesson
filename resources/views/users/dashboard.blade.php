@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('users.layouts.master')
 
 @section('title', __('Dashboard'))
 
@@ -17,11 +17,11 @@
 <div class="container-fluid">
   <div class="row starter-main">
     {{-- Top widgets --}}
-    @include('_partials._widgets')
+    @include('users._partials._widgets')
     {{-- Orders Card --}}
-    @include('_partials._orders')
+    @include('users._partials._orders')
     {{-- Calendar Card --}}
-    @include('_partials._calendar')
+    @include('users._partials._calendar')
   </div>
 </div>
 <!-- Container-fluid Ends-->

@@ -18,7 +18,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-    $roles = [0, 10, 20];
+    $roles = [Role::ROLE_USER, Role::ROLE_MANAGER, Role::ROLE_ADMIN];
+    $slugs = ['messages.roles.user','messages.roles.manager','messanger.roles.admin'];
     foreach ($roles as $role)
         {
         DB::table('roles')->insert(['name' => $role]);

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UserStatus;
 use DB;
 use Hash;
 use Carbon\Carbon;
@@ -19,7 +20,7 @@ class UsersTableSeeder extends Seeder
     {
         return $this->state(function (array $attributes) {
             return [
-                'status' => User::STATUS_INACTIVE,
+                'status' => UserStatus::STATUS_INACTIVE,
             ];
         });
     }

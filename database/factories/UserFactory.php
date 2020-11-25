@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\UserStatus;
 use Hash;
 use Carbon\Carbon;
 use App\Models\User;
@@ -30,6 +31,7 @@ class UserFactory extends Factory
             'last_name' => $this->faker->lastName,
             'middle_name' => $this->faker->firstName,
             'position' => $this->faker->jobTitle,
+            'affilated_company' => $this->faker->company,
             'phone' => $this->faker->unique()->numberBetween(9990000000,9999999999),
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('password'),

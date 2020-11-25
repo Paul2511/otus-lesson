@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\ServiceStatus;
+
 return [
     ServiceStatus::STATUS_NEW => "New",
     ServiceStatus::STATUS_DRAFT => "Draft",

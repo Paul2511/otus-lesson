@@ -15,14 +15,16 @@ class CreateCompanyUserTable extends Migration
     {
         Schema::create('company_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('inn');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('inn')->nullable();
             $table->foreign('inn')
                     ->references('inn')
-                    ->on('companies');
+                    ->on('companies')
+                    ->onDelete('set null');
             $table->foreign('user_id')
                     ->references('id')
-                    ->on('users');
+                    ->on('users')
+                    ->onDelete('set null');
         });
     }
 

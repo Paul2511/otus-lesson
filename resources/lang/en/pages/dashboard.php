@@ -1,6 +1,7 @@
 <?php
 return [
     "dashboard" => "dashboard",
+    "adminDashboard" => "Admin dashboard",
     "details" => "Details",
     "documents" => "Documents",
     "estimated" => "Estimated date of receipt of the relevant documents.",

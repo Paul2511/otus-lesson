@@ -1,13 +1,13 @@
-@extends('layouts.master')
+@extends('users.layouts.master')
 
-@section('title', Str::ucfirst(__('pages/knowledgebase.knowledgebase')))
+@section('title', Str::ucfirst(__('pages/payments.payments')))
 
 @section('style')
 @endsection
 
-@section('breadcrumb-title', __('pages/knowledgebase.knowledgebase') )
+@section('breadcrumb-title', __('pages/payments.payments') )
 @section('breadcrumb-item')
-<li class="breadcrumb-item active">{{ __('pages/knowledgebase.knowledgebase')}}</li>
+<li class="breadcrumb-item active">{{ __('pages/payments.payments')}}</li>
 @endsection
 
 @section('body')
