@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
@@ -29,12 +30,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class LegalAddress extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -42,18 +37,18 @@ class LegalAddress extends Model
     protected $fillable = ['company_id', 'country_id', 'administrative_area_level_1', 'administrative_area_level_2', 'administrative_area_level_3', 'locality', 'route', 'street', 'street_number', 'postal_code', 'room', 'raw_address', 'lat', 'lng', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function company()
+    public function company(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo(Company::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->belongsTo(Country::class);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -19,12 +21,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class LegalForm extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -32,18 +28,18 @@ class LegalForm extends Model
     protected $fillable = ['country_id', 'title', 'code', 'aliases', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function companies()
+    public function companies(): HasMany
     {
-        return $this->hasMany('App\Models\Company');
+        return $this->hasMany(Company::class);
     }
 }

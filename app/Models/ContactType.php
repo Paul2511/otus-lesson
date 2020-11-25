@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -16,12 +17,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ContactType extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -29,10 +24,10 @@ class ContactType extends Model
     protected $fillable = ['title', 'icon', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function contacts()
+    public function contacts(): HasMany
     {
-        return $this->hasMany('App\Models\Contact');
+        return $this->hasMany(Contact::class);
     }
 }

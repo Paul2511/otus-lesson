@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 /**
  * @property integer $id
@@ -20,30 +23,23 @@ class News extends Model
     use HasFactory;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
      * @var array
      */
     protected $fillable = ['user_id', 'title', 'slug', 'text', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function newsCategories()
+    public function newsCategories(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\NewsCategory');
+        return $this->belongsToMany(NewsCategory::class);
     }
 }

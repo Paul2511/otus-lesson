@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 /**
  * @property integer $id
@@ -26,38 +29,31 @@ class TenderAward extends Model
     use HasFactory;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
      * @var array
      */
     protected $fillable = ['company_id', 'tender_id', 'title', 'amount', 'currency', 'year', 'external_id', 'status', 'status_details', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function company()
+    public function company(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo(Company::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function tender()
+    public function tender(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Tender');
+        return $this->belongsTo(Tender::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function tenderAwardItems()
+    public function tenderAwardItems(): HasMany
     {
-        return $this->hasMany('App\Models\TenderAwardItem');
+        return $this->hasMany(TenderAwardItem::class);
     }
 }

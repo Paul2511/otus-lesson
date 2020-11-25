@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 /**
  * @property integer $id
@@ -46,62 +49,55 @@ class User extends Model
     public const STATUS_ACTIVE = 10;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
      * @var array
      */
     protected $fillable = ['first_name', 'last_name', 'email', 'password', 'phone', 'sex', 'type', 'email_verified_at', 'last_login_at', 'status', 'remember_token', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function companies()
+    public function companies(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Company');
+        return $this->belongsToMany(Company::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function news()
     {
-        return $this->hasMany('App\Models\News');
+        return $this->hasMany(News::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function orderNotes()
+    public function orderNotes(): HasMany
     {
-        return $this->hasMany('App\Models\OrderNote');
+        return $this->hasMany(OrderNote::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function orders()
+    public function orders(): HasMany
     {
-        return $this->hasMany('App\Models\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function planUsersOwner()
+    public function planUsersOwner(): HasMany
     {
-        return $this->hasMany('App\Models\PlanUser', 'owner_id');
+        return $this->hasMany(PlanUser::class, 'owner_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function planUsers()
+    public function planUsers(): HasMany
     {
-        return $this->hasMany('App\Models\Plan');
+        return $this->hasMany(Plan::class);
     }
 }

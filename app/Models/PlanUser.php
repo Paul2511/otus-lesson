@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
@@ -16,43 +17,36 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $updated_at
  * @property User $user
  * @property Plan $plan
- * @property User $user
+ * @property User $owner
  */
 class PlanUser extends Model
 {
-    /**
-     * The "type" of the auto-incrementing ID.
-     * 
-     * @var string
-     */
-    protected $keyType = 'integer';
-
     /**
      * @var array
      */
     protected $fillable = ['plan_id', 'user_id', 'owner_id', 'start_date', 'end_date', 'price', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User', 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function plan()
+    public function plan(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Plan');
+        return $this->belongsTo(Plan::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function owner(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 }

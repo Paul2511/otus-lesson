@@ -19,7 +19,7 @@ class CreateTenderAwardItemsTable extends Migration
             $table->foreignId('cvp_code_id')->nullable()->constrained()->onDelete('set null');
             $table->text('cvp_description')->nullable();
             $table->text('description')->nullable();
-            $table->decimal('quantitty', 11, 2)->nullable();
+            $table->decimal('quantity', 11, 2)->nullable();
             $table->string('unit')->nullable();
             $table->decimal('value', 11, 2)->nullable();
             $table->timestamps();

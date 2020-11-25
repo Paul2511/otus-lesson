@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -21,30 +23,23 @@ class FinancialReportCode extends Model
     use HasFactory;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
      * @var array
      */
     protected $fillable = ['country_id', 'type', 'code', 'title', 'aliases', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function financialReports()
+    public function financialReports(): HasMany
     {
-        return $this->hasMany('App\Models\FinancialReport');
+        return $this->hasMany(FinancialReport::class);
     }
 }

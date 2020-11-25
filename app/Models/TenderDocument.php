@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
@@ -18,12 +19,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class TenderDocument extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -31,10 +26,10 @@ class TenderDocument extends Model
     protected $fillable = ['tender_id', 'title', 'usl', 'description', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function tender()
+    public function tender(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Tender');
+        return $this->belongsTo(Tender::class);
     }
 }

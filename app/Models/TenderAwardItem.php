@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 /**
  * @property integer $id
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property integer $cvp_code_id
  * @property string $cvp_description
  * @property string $description
- * @property float $quantitty
+ * @property float $quantity
  * @property string $unit
  * @property float $value
  * @property string $created_at
@@ -23,30 +25,23 @@ class TenderAwardItem extends Model
     use HasFactory;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
      * @var array
      */
-    protected $fillable = ['tender_award_id', 'cvp_code_id', 'cvp_description', 'description', 'quantitty', 'unit', 'value', 'created_at', 'updated_at'];
+    protected $fillable = ['tender_award_id', 'cvp_code_id', 'cvp_description', 'description', 'quantity', 'unit', 'value', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function cvpCode()
+    public function cvpCode(): BelongsTo
     {
-        return $this->belongsTo('App\Models\CvpCode');
+        return $this->belongsTo(CvpCode::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function tenderAward()
+    public function tenderAward(): BelongsTo
     {
-        return $this->belongsTo('App\Models\TenderAward');
+        return $this->belongsTo(TenderAward::class);
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -21,12 +24,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class CvpCode extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -34,50 +31,50 @@ class CvpCode extends Model
     protected $fillable = ['parent_id', 'country_id', 'code', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function cvpCode()
+    public function cvpCode(): BelongsTo
     {
-        return $this->belongsTo('App\Models\CvpCode', 'parent_id');
+        return $this->belongsTo(__CLASS__, 'parent_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function companies()
+    public function companies(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Company', null, 'cvp_code');
+        return $this->belongsToMany(Company::class, null, 'cvp_code');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function tenderAwardItems()
+    public function tenderAwardItems(): HasMany
     {
-        return $this->hasMany('App\Models\TenderAwardItem');
+        return $this->hasMany(TenderAwardItem::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function tenderItems()
+    public function tenderItems(): HasMany
     {
-        return $this->hasMany('App\Models\TenderItem');
+        return $this->hasMany(TenderItem::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function tenders()
+    public function tenders(): HasMany
     {
-        return $this->hasMany('App\Models\Tender');
+        return $this->hasMany(Tender::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
@@ -22,12 +23,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ContactTender extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -35,18 +30,18 @@ class ContactTender extends Model
     protected $fillable = ['tender_id', 'company_id', 'name', 'phone', 'email', 'fax', 'site', 'type', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function company()
+    public function company():BelongsTo
     {
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo(Company::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function tender()
+    public function tender(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Tender');
+        return $this->belongsTo(Tender::class);
     }
 }

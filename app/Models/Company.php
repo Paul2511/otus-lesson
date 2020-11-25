@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -45,134 +48,127 @@ class Company extends Model
     use HasFactory;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
      * @var array
      */
     protected $fillable = ['legal_form_id', 'country_id', 'identification_code', 'title', 'clear_title', 'raw_title', 'slug', 'description', 'registration_date', 'status', 'vat', 'vat_register_date', 'vat_cancel_date', 'excise', 'excise_register_date', 'excise_cancel_date', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function country()
+    public function country():BelongsTo
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function legalForm()
+    public function legalForm():BelongsTo
     {
-        return $this->belongsTo('App\Models\LegalForm');
+        return $this->belongsTo(LegalForm::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function cvpCodes()
+    public function cvpCodes():BelongsToMany
     {
-        return $this->belongsToMany('App\Models\CvpCode', null, null, 'cvp_code');
+        return $this->belongsToMany(CvpCode::class, null, null, 'cvp_code');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function licensedActivities()
+    public function licensedActivities():BelongsToMany
     {
-        return $this->belongsToMany('App\Models\LicensedActivity');
+        return $this->belongsToMany(LicensedActivity::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function unlicensedActivities()
+    public function unlicensedActivities():BelongsToMany
     {
-        return $this->belongsToMany('App\Models\UnlicensedActivity');
+        return $this->belongsToMany(UnlicensedActivity::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function users()
+    public function users():BelongsToMany
     {
-        return $this->belongsToMany('App\Models\User');
+        return $this->belongsToMany(User::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function contactTenders()
+    public function contactTenders():HasMany
     {
-        return $this->hasMany('App\Models\ContactTender');
+        return $this->hasMany(ContactTender::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function contacts()
+    public function contacts():HasMany
     {
-        return $this->hasMany('App\Models\Contact');
+        return $this->hasMany(Contact::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function financialReports()
+    public function financialReports():HasMany
     {
-        return $this->hasMany('App\Models\FinancialReport');
+        return $this->hasMany(FinancialReport::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function founders()
+    public function founders():HasMany
     {
-        return $this->hasMany('App\Models\Founder');
+        return $this->hasMany(Founder::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function historyCompanies()
+    public function historyCompanies():HasMany
     {
-        return $this->hasMany('App\Models\HistoryCompany');
+        return $this->hasMany(HistoryCompany::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function leaders()
+    public function leaders():HasMany
     {
-        return $this->hasMany('App\Models\Leader');
+        return $this->hasMany(Leader::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function legalAddresses()
+    public function legalAddresses():HasMany
     {
-        return $this->hasMany('App\Models\LegalAddress');
+        return $this->hasMany(LegalAddress::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function tenderAwards()
+    public function tenderAwards():HasMany
     {
-        return $this->hasMany('App\Models\TenderAward');
+        return $this->hasMany(TenderAward::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function tenders()
+    public function tenders() :HasMany
     {
-        return $this->hasMany('App\Models\Tender');
+        return $this->hasMany(Tender::class);
     }
 }

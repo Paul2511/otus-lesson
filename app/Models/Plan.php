@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 /**
  * @property integer $id
@@ -21,31 +23,25 @@ class Plan extends Model
 {
     use HasFactory;
 
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
      */
-    protected $fillable = ['title', 'code', 'descriprion', 'price', 'duration', 'mail_notification', 'created_at', 'updated_at'];
+    protected $fillable = ['title', 'code', 'description', 'price', 'duration', 'mail_notification', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function orders()
+    public function orders(): HasMany
     {
-        return $this->hasMany('App\Models\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function planUsers()
+    public function planUsers(): HasMany
     {
-        return $this->hasMany('App\Models\PlanUser');
+        return $this->hasMany(PlanUser::class);
     }
 }

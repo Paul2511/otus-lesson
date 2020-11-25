@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
@@ -16,31 +17,24 @@ use Illuminate\Database\Eloquent\Model;
  */
 class OrderNote extends Model
 {
-    /**
-     * The "type" of the auto-incrementing ID.
-     * 
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
+     /**
      * @var array
      */
     protected $fillable = ['order_id', 'user_id', 'text', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function order()
+    public function order(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Order');
+        return $this->belongsTo(Order::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 }

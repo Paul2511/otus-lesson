@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
@@ -22,12 +23,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class TenderItem extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -35,18 +30,18 @@ class TenderItem extends Model
     protected $fillable = ['tender_id', 'cvp_code_id', 'description', 'quantity', 'unit', 'cvp_description', 'related_lot', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function cvpCode()
+    public function cvpCode(): BelongsTo
     {
-        return $this->belongsTo('App\Models\CvpCode');
+        return $this->belongsTo(CvpCode::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function tender()
+    public function tender(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Tender');
+        return $this->belongsTo(Tender::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -23,12 +24,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Country extends Model
 {
     use HasFactory;
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
 
     /**
      * @var array
@@ -41,58 +36,58 @@ class Country extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function companies()
+    public function companies():HasMany
     {
-        return $this->hasMany('App\Models\Company');
+        return $this->hasMany(Company::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function cvpCodes()
+    public function cvpCodes(): HasMany
     {
-        return $this->hasMany('App\Models\CvpCode');
+        return $this->hasMany(CvpCode::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function financialReportCodes()
+    public function financialReportCodes(): HasMany
     {
-        return $this->hasMany('App\Models\FinancialReportCode');
+        return $this->hasMany(FinancialReportCode::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function legalAddresses()
+    public function legalAddresses(): HasMany
     {
-        return $this->hasMany('App\Models\LegalAddress', 'country');
+        return $this->hasMany(LegalAddress::class, 'country');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function legalForms()
+    public function legalForms(): HasMany
     {
-        return $this->hasMany('App\Models\LegalForm');
+        return $this->hasMany(LegalForm::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function licensedActivities()
+    public function licensedActivities(): HasMany
     {
-        return $this->hasMany('App\Models\LicensedActivity');
+        return $this->hasMany(LicensedActivity::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function unlicensedActivities()
+    public function unlicensedActivities(): HasMany
     {
-        return $this->hasMany('App\Models\UnlicensedActivity');
+        return $this->hasMany(UnlicensedActivity::class);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 /**
  * @property integer $id
@@ -23,39 +26,32 @@ namespace App\Models;
  */
 class Order extends Model
 {
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'integer';
-
-    /**
+     /**
      * @var array
      */
     protected $fillable = ['user_id', 'plan_id', 'type_pay', 'name', 'email', 'phone', 'note', 'hash', 'status', 'price', 'created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function plan()
+    public function plan(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Plan');
+        return $this->belongsTo(Plan::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function orderNotes()
+    public function orderNotes(): HasMany
     {
-        return $this->hasMany('App\Models\OrderNote');
+        return $this->hasMany(OrderNote::class);
     }
 }

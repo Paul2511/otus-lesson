@@ -17,7 +17,7 @@ class CreatePlansTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('code');
-            $table->longText('descriprion')->nullable();
+            $table->longText('description')->nullable();
             $table->decimal('price',10,2);
             $table->integer('duration');
             $table->boolean('mail_notification')->default(false);
