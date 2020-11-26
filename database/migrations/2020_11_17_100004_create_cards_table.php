@@ -21,7 +21,7 @@ class CreateCardsTable extends Migration
             $table->string('title');
             $table->integer('count_month')->nullable();// если карта выдана на опр количество месяцев
             $table->integer('count_day')->nullable();//если карта выдана на опр количество дней
-            $table->decimal('price', 8, 0);
+            $table->decimal('price', 8, 2);
             $table->integer('status')->default(Card::STATUS_ACTIVE);
             $table->timestamps();
         });

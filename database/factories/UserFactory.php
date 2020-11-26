@@ -24,7 +24,7 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-foreach (User::getRoles() as $role) {
+foreach (User::ROLES as $role) {
     $factory->state(User::class, $role, [
         'role' => $role,
     ]);

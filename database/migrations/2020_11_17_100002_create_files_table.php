@@ -29,9 +29,9 @@ class CreateFilesTable extends Migration
         // аватарка по умолчанию
         $timestamp = Carbon::now();
         DB::table('files')->insert([
-            'title' => File::TITLE_AVATAR_DEFAULT,
-            'fid' => File::FID_AVATAR_DEFAULT,
-            'url' => File::URL_AVATAR_DEFAULT,
+            'title' => config('files.default.title_avatar'),
+            'fid' => config('files.default.fid_avatar'),
+            'url' => config('files.default.url_avatar'),
             'created_at' => $timestamp,
             'updated_at' => $timestamp,
         ]);

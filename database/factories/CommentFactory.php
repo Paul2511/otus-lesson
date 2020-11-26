@@ -10,6 +10,6 @@ $factory->define(Comment::class, function (Faker $faker) {
 
     return [
         'text' => $fakerRu->text(255),
-        'status' => $faker->randomElement(Comment::getStatuses()),
+        'status' => $faker->randomElement(Comment::STATUSES),
     ];
 });

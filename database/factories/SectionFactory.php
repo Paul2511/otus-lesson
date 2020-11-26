@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Section::class, function (Faker $faker) {
     return [
         'title' => 'title',
-        'status' => $faker->randomElement(Section::getStatuses()),
+        'status' => $faker->randomElement(Section::STATUSES),
     ];
 });
 

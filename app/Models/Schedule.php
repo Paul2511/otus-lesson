@@ -26,8 +26,10 @@ class Schedule extends BaseModel
     public const STATUS_INACTIVE = 10;
     public const STATUS_ACTIVE = 20;
 
-    public const STATUS_NAME_INACTIVE = 'INACTIVE';
-    public const STATUS_NAME_ACTIVE = 'ACTIVE';
+    public const STATUSES = [
+        self::STATUS_INACTIVE,
+        self::STATUS_ACTIVE,
+    ];
 
     /**
      * @var array
@@ -45,7 +47,6 @@ class Schedule extends BaseModel
      * @var array
      */
     protected $casts = [
-        'date' => 'Carbon',
         'time_id' => 'integer',
         'user_id' => 'integer',
         'section_id' => 'integer',
@@ -57,6 +58,7 @@ class Schedule extends BaseModel
      * @var array
      */
     protected $dates = [
+        'date' => 'Carbon',// требует cast
         'created_at',
         'updated_at',
     ];
@@ -101,16 +103,5 @@ class Schedule extends BaseModel
     public function gym(): BelongsTo
     {
         return $this->belongsTo(Gym::class, 'gym_id');
-    }
-
-    /**
-     * @return array
-     */
-    public static function getStatuses(): array
-    {
-        return [
-            self::STATUS_NAME_INACTIVE => self::STATUS_INACTIVE,
-            self::STATUS_NAME_ACTIVE => self::STATUS_ACTIVE,
-        ];
     }
 }

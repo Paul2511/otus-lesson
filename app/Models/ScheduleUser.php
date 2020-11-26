@@ -24,11 +24,13 @@ class ScheduleUser extends BaseModel
     public const STATUS_NOT_VISITED = 40;
     public const STATUS_VISITED = 50;
 
-    public const STATUS_NAME_PENDING = 'PENDING';
-    public const STATUS_NAME_CANCEL = 'CANCEL';
-    public const STATUS_NAME_CONFIRM = 'CONFIRM';
-    public const STATUS_NAME_NOT_VISITED = 'NOT_VISITED';
-    public const STATUS_NAME_VISITED = 'VISITED';
+    public const STATUSES = [
+        self::STATUS_PENDING,
+        self::STATUS_CANCEL,
+        self::STATUS_CONFIRM,
+        self::STATUS_NOT_VISITED,
+        self::STATUS_VISITED,
+    ];
 
     protected $table = 'schedule_user';
 
@@ -49,26 +51,4 @@ class ScheduleUser extends BaseModel
         'schedule_id' => 'integer',
         'status' => 'integer',
     ];
-
-    /**
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
-     * @return array
-     */
-    public static function getStatuses(): array
-    {
-        return [
-            self::STATUS_NAME_PENDING => self::STATUS_PENDING,
-            self::STATUS_NAME_CANCEL => self::STATUS_CANCEL,
-            self::STATUS_NAME_CONFIRM => self::STATUS_CONFIRM,
-            self::STATUS_NAME_NOT_VISITED => self::STATUS_NOT_VISITED,
-            self::STATUS_NAME_VISITED => self::STATUS_VISITED,
-        ];
-    }
 }

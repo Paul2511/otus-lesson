@@ -11,7 +11,7 @@ $factory->define(Card::class, function (Faker $faker) {
         'count_month' => 0,
         'count_day' => 0,
         'price' => 0,
-        'status' => $faker->randomElement(Card::getStatuses())
+        'status' => $faker->randomElement(Card::STATUSES)
     ];
 });
 

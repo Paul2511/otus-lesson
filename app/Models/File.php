@@ -19,10 +19,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class File extends BaseModel
 {
-    public const TITLE_AVATAR_DEFAULT = 'avatar_default';
-    public const FID_AVATAR_DEFAULT = 'd0976ada-35dd-4005-991f-dd0e915e95ae';
-    public const URL_AVATAR_DEFAULT = '/images/guest_avatar_light.png';
-
     /**
      * @var array
      */
@@ -39,14 +35,6 @@ class File extends BaseModel
         'title' => 'string',
         'fid' => 'string',
         'url' => 'string',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**

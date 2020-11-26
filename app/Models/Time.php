@@ -21,8 +21,10 @@ class Time extends BaseModel
     public const STATUS_INACTIVE = 10;
     public const STATUS_ACTIVE = 20;
 
-    public const STATUS_NAME_INACTIVE = 'INACTIVE';
-    public const STATUS_NAME_ACTIVE = 'ACTIVE';
+    public const STATUSES = [
+        self::STATUS_INACTIVE,
+        self::STATUS_ACTIVE,
+    ];
 
     /**
      * @var array
@@ -37,8 +39,6 @@ class Time extends BaseModel
      * @var array
      */
     protected $casts = [
-        'start' => 'Carbon',
-        'end' => 'Carbon',
         'status' => 'integer',
     ];
 
@@ -46,6 +46,8 @@ class Time extends BaseModel
      * @var array
      */
     protected $dates = [
+        'start',
+        'end',
         'created_at',
         'updated_at',
     ];
@@ -56,16 +58,5 @@ class Time extends BaseModel
     public function schedules(): HasMany
     {
         return $this->hasMany(Schedule::class, 'time_id');
-    }
-
-    /**
-     * @return array
-     */
-    public static function getStatuses(): array
-    {
-        return [
-            self::STATUS_NAME_INACTIVE => self::STATUS_INACTIVE,
-            self::STATUS_NAME_ACTIVE => self::STATUS_ACTIVE,
-        ];
     }
 }

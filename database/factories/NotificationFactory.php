@@ -15,8 +15,7 @@ $factory->define(Notification::class, function (Faker $faker) {
     ];
 });
 
-$types = array_merge(Notification::getTypesForGuest(), Notification::getTypesForAdmin());
-foreach ($types as $name => $type) {
+foreach (NotificationSeeder::getTypes() as $name => $type) {
     $factory->state(Notification::class, $name, [
         'title' => $name,
         'type' => $type,

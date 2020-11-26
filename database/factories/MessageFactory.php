@@ -11,6 +11,6 @@ $factory->define(Message::class, function (Faker $faker) {
     return [
         'title' => $fakerRu->text(100),
         'text' => $fakerRu->text(500),
-        'status' => $faker->randomElement(Message::getStatuses()),
+        'status' => $faker->randomElement(Message::STATUSES),
     ];
 });

@@ -34,8 +34,5 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('trainer', function() {
             return auth()->check() && Auth::user()->isTrainer();
         });
-        Blade::if('support', function() {
-            return auth()->check() && Auth::user()->isSupport();
-        });
     }
 }

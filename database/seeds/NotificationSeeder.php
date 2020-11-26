@@ -7,9 +7,21 @@ class NotificationSeeder extends Seeder
 {
     public function run(): void
     {
-        $types = array_merge(Notification::getTypesForGuest(), Notification::getTypesForAdmin());
-        foreach ($types as $name => $type) {
+        foreach (self::getTypes() as $name => $type) {
             factory(Notification::class, 10)->states($name)->create();
         }
+    }
+
+    /**
+     * @return array
+     */
+    public static function getTypes(): array
+    {
+        $types = [];
+        foreach (Notification::TYPES as $item) {
+            $types[trans('notifications.types.' . $item)] = $item;
+        }
+
+        return $types;
     }
 }

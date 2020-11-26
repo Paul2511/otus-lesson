@@ -23,8 +23,10 @@ class Card extends BaseModel
     public const STATUS_INACTIVE = 10;
     public const STATUS_ACTIVE = 20;
 
-    public const STATUS_NAME_INACTIVE = 'INACTIVE';
-    public const STATUS_NAME_ACTIVE = 'ACTIVE';
+    public const STATUSES = [
+        self::STATUS_INACTIVE,
+        self::STATUS_ACTIVE,
+    ];
 
     /**
      * @var array
@@ -44,16 +46,8 @@ class Card extends BaseModel
         'title' => 'string',
         'count_month' => 'integer',
         'count_day' => 'integer',
-        'price' => 'integer',
+        'price' => 'decimal:2',
         'status' => 'integer',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**
@@ -62,16 +56,5 @@ class Card extends BaseModel
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'card_user');
-    }
-
-    /**
-     * @return array
-     */
-    public static function getStatuses(): array
-    {
-        return [
-            self::STATUS_NAME_INACTIVE => self::STATUS_INACTIVE,
-            self::STATUS_NAME_ACTIVE => self::STATUS_ACTIVE,
-        ];
     }
 }

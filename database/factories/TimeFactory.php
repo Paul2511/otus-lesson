@@ -9,7 +9,7 @@ $factory->define(Time::class, function (Faker $faker) {
     return [
         'start' => time(),
         'end' => time(),
-        'status' => $faker->randomElement(Time::getStatuses()),
+        'status' => $faker->randomElement(Time::STATUSES),
     ];
 });
 
