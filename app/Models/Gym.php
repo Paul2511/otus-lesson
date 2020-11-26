@@ -39,7 +39,7 @@ class Gym extends BaseModel
      * @var array
      */
     protected $casts = [
-        'title' => 'time',
+        'title' => 'string',
         'number' => 'integer',
         'status' => 'integer',
     ];
