@@ -26,7 +26,7 @@ class EloquentUserRepository
         return $qb->paginate($perPage);
     }
 
-    public function updateUserById($request, int $id): User
+    public function updateUserById(int $id, $request): User
     {
         $user = $this->findById($id);
         $user->fill($request)->save();
@@ -39,7 +39,7 @@ class EloquentUserRepository
         return User::findOrFail($id);
     }
 
-    public function showUserByIdWithRelations(int $id, array $with = []): User
+    public function findUserByIdWithRelations(int $id, array $with = []): User
     {
         $qb = User::query();
         $qb->with($with);

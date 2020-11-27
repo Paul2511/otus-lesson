@@ -87,7 +87,7 @@
     <div class="col-md-4">
         <div class="form-group">
             {!! Form::label('status',  __('messages.users.index.status'), ['class' => 'col-form-label']) !!}
-            {!! Form::select('status', $status, '10',['class' => 'form-control']) !!}
+            {!! Form::select('status', $statuses, '10',['class' => 'form-control']) !!}
         </div>
     </div>
     <div class="col-md-4">

@@ -73,16 +73,9 @@ $(document).ready(function ($) {
             success: function (data) {
                 $('#userModalData').trigger("reset");
                 $('#userEditorModal').modal('hide');
+
                 $('#users-table').load(location.href+' #users-table>*','').hide().fadeIn(800);
-                // setTimeout(
-                //     function()
-                //     {
-                //         $('#row' + user_id).fadeIn("slow", function() {
-                //             $(this).addClass("table-success");
-                //         });
-                //         $(this).removeClass("table-success");
-                //
-                //     }, 1000);
+                $(this).remove();
             },
             error: function (data) {
                 errors = data.responseJSON.errors;
@@ -104,9 +97,7 @@ $(document).ready(function ($) {
     /*
          DELETE a link and remove from the page
     */
-
     $('.delete-user').click(function () {
-        if (confirm("Are you sure?")) {
             var user_id = $(this).val();
             $.ajaxSetup({
                 headers: {
@@ -118,7 +109,6 @@ $(document).ready(function ($) {
                 url: 'users/' + user_id,
                 success: function (data) {
                     console.log(data);
-
                     $("#user" + user_id).remove();
                     $('#users-table').load(location.href+' #users-table>*','').hide().fadeIn(800);
                 },
@@ -126,7 +116,6 @@ $(document).ready(function ($) {
                     console.log(data);
                 }
             });
-        }
     });
 
 

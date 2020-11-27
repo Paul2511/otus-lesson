@@ -6,7 +6,7 @@ namespace App\Services\Users\Translators;
 
 use App\Models\User;
 
-class UserStatusTranslator
+class UserStatusesTranslator
 {
     public function translate(string $lang): array
     {

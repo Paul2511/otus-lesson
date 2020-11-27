@@ -21,9 +21,9 @@ class UpdateUserHandler
         $this->eloquentUserRepository = $eloquentUserRepository;
     }
 
-    public function handle(array $data, int $id)
+    public function handle(int $id, array $data)
     {
-        $user = $this->eloquentUserRepository->updateUserById($data, $id);
+        $user = $this->eloquentUserRepository->updateUserById($id, $data);
         $user = $this->eloquentUserRepository->attachRoleToUser($data, $user);
 
         return $user;

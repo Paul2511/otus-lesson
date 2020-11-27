@@ -10,58 +10,58 @@ use App\Services\UsersService;
 
 final class AdminUsersController extends AdminBaseController
 {
-    private UsersService $UsersService;
+    private UsersService $usersService;
 
     public function __construct(
-        UsersService $UsersService
+        UsersService $usersService
     )
     {
-        $this->UsersService = $UsersService;
+        $this->usersService = $usersService;
     }
 
     public function index()
     {
-        $users = $this->UsersService->paginateUsers(self::DEFAULT_MODELS_PER_PAGE);
-        $status = $this->getStatus();
+        $users = $this->usersService->paginateUsers(self::DEFAULT_MODELS_PER_PAGE);
+        $statuses = $this->getStatuses();
         $roles = $this->getRoles();
 
-        return view('admin.users.index', compact('users', 'status', 'roles'));
+        return view('admin.users.index', compact('users', 'statuses', 'roles'));
     }
 
-    private function getStatus(): array
+    private function getStatuses(): array
     {
-        return $this->UsersService->translateStatus(App::getlocale());
+        return $this->usersService->translateStatuses(App::getlocale());
     }
 
     private function getRoles(): array
     {
-        return $this->UsersService->translateRoles(App::getLocale());
+        return $this->usersService->translateRoles(App::getLocale());
     }
 
     public function store(AdminUsersStoreRequest $request)
     {
-        $user = $this->UsersService->createUser($request->getFormData());
+        $user = $this->usersService->createUser($request->getFormData());
 
         return response()->json($user);
     }
 
     public function show($id)
     {
-        $user = $this->UsersService->showUser($id);
+        $user = $this->usersService->findUser($id);
 
         return response()->json($user);
     }
 
-    public function update(AdminUsersUpdateRequest $request, $id)
+    public function update($id, AdminUsersUpdateRequest $request)
     {
-        $user = $this->UsersService->updateUser($request->getFormUpdateData(), $id);
+        $user = $this->usersService->updateUser($id, $request->getFormUpdateData());
 
         return response()->json($user);
     }
 
     public function destroy($id)
     {
-        $user = $this->UsersService->deleteUser($id);
+        $user = $this->usersService->deleteUser($id);
 
         return response()->json($user);
     }

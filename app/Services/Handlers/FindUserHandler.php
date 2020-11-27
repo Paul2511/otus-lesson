@@ -6,7 +6,7 @@ namespace App\Services\Handlers;
 
 use App\Services\Users\Repositories\EloquentUserRepository;
 
-class ShowUserHandler
+class FindUserHandler
 {
     /**
      * @var EloquentUserRepository
@@ -23,7 +23,7 @@ class ShowUserHandler
 
     public function handle(int $id)
     {
-        $user = $this->eloquentUserRepository->showUserByIdWithRelations($id, [
+        $user = $this->eloquentUserRepository->findUserByIdWithRelations($id, [
             'roles', 'companies'
         ]);
 
