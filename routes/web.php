@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CMS\Permission\PermissionController;
+use App\Http\Controllers\CMS\Role\RoleController;
 use App\Http\Controllers\CMS\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +38,8 @@ Route::get('/feedback', function () {
 
 Route::group(['prefix' => 'cms'], function () {
     Route::resource('user', UserController::class);
+    Route::resource('role', RoleController::class);
+    Route::resource('permission', PermissionController::class);
 });
 
 Auth::routes();

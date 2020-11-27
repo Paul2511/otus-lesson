@@ -11,18 +11,17 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    private $eloquentUserRepository;
+    private $usersServices;
 
-    public function __construct(EloquentUserRepository $eloquentUserRepository)
+    public function __construct(UsersServices $usersServices)
     {
-        $this->eloquentUserRepository = $eloquentUserRepository;
+        $this->usersServices = $usersServices;
     }
 
 
     public function index()
     {
-
-        return $this->eloquentUserRepository->getAll();
+        return $this->usersServices->eloquentUserRepository->search();
     }
 
 
@@ -34,13 +33,13 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $this->eloquentUserRepository->create($request->toArray());
+        $this->usersServices->eloquentUserRepository->create($request->toArray());
     }
 
 
     public function show($id)
     {
-        return $this->eloquentUserRepository->show($id);
+        return $this->usersServices->eloquentUserRepository->findOrFail($id);
     }
 
 
@@ -52,14 +51,14 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
-        $entity = $this->eloquentUserRepository->show($id);
+        $entity = $this->usersServices->eloquentUserRepository->findOrFail($id);
         $entity->update($request->all());
         return $entity;
     }
 
     public function destroy($id)
     {
-        $entity = $this->eloquentUserRepository->show($id);
+        $entity = $this->usersServices->eloquentUserRepository->findOrFail($id);
         return $entity->delete();
     }
 }

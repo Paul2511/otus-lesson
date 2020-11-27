@@ -1,20 +1,20 @@
 <?php
 
 
-namespace App\Services\Users\Repository;
+namespace App\Services\Permissions\Repository;
 
 
-use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-
-class EloquentUserRepository
+class EloquentPermissionRepository
 {
+
     protected function getQueryBuilder(): Builder
     {
-        return User::query();
+        return Permission::query();
     }
 
     public function search(): LengthAwarePaginator

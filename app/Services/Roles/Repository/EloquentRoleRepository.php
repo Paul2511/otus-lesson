@@ -1,20 +1,19 @@
 <?php
 
 
-namespace App\Services\Users\Repository;
+namespace App\Services\Roles\Repository;
 
 
-use App\Models\User;
+use App\Models\Role;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-
-class EloquentUserRepository
+class EloquentRoleRepository
 {
     protected function getQueryBuilder(): Builder
     {
-        return User::query();
+        return Role::query();
     }
 
     public function search(): LengthAwarePaginator
