@@ -12,24 +12,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class EloquentUserRepository
 {
-    protected function getQueryBuilder(): Builder
-    {
-        return User::query();
-    }
-
     public function search(): LengthAwarePaginator
     {
-        return $this->getQueryBuilder()->paginate();
+        return User::paginate();
     }
 
     public function findOrFail(int $id): Model
     {
-        return $this->getQueryBuilder()->findOrFail($id);
+        return User::findOrFail($id);
     }
 
     public function create(array $data)
     {
-        $this->getQueryBuilder()->create($data);
+        User::create($data);
     }
 
 }

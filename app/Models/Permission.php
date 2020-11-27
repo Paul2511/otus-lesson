@@ -24,6 +24,9 @@ use Carbon\Carbon;
  * @method static Builder|Permission whereId($value)
  * @method static Builder|Permission whereTitle($value)
  * @method static Builder|Permission whereUpdatedAt($value)
+ * @method static paginate()
+ * @method static findOrFail(int $id)
+ * @method static create(array $data)
  * @property-read Collection|Permission[] $roles
  * @property-read int|null $roles_count
  */

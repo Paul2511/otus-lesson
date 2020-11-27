@@ -11,24 +11,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class EloquentRoleRepository
 {
-    protected function getQueryBuilder(): Builder
-    {
-        return Role::query();
-    }
-
     public function search(): LengthAwarePaginator
     {
-        return $this->getQueryBuilder()->paginate();
+        return Role::paginate();
     }
 
     public function findOrFail(int $id): Model
     {
-        return $this->getQueryBuilder()->findOrFail($id);
+        return Role::findOrFail($id);
     }
 
     public function create(array $data)
     {
-        $this->getQueryBuilder()->create($data);
+        Role::create($data);
     }
 
 }

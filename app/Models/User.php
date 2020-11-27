@@ -44,6 +44,8 @@ use Illuminate\Database\Eloquent\{
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @method static find(int $int)
+ * @method static paginate()
+ * @method static findOrFail(int $id)
  */
 class User extends Authenticatable
 {

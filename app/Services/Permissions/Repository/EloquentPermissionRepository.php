@@ -11,25 +11,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class EloquentPermissionRepository
 {
-
-    protected function getQueryBuilder(): Builder
-    {
-        return Permission::query();
-    }
-
     public function search(): LengthAwarePaginator
     {
-        return $this->getQueryBuilder()->paginate();
+        return Permission::paginate();
     }
 
     public function findOrFail(int $id): Model
     {
-        return $this->getQueryBuilder()->findOrFail($id);
+        return Permission::findOrFail($id);
     }
 
     public function create(array $data)
     {
-        $this->getQueryBuilder()->create($data);
+        Permission::create($data);
     }
 
 }
