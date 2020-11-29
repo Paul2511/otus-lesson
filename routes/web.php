@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\Routes\Provider\SurveysRoutesProvider;
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,14 +39,4 @@ Route::get('/dev/register', function () {
 })
     ->name('register');
 
-
-Route::prefix('admin')->group(
-    function () {
-        Route::get(
-            'surveys',
-            function () {
-                return view('admin.survey.list');
-            }
-        );
-    }
-);
+app(SurveysRoutesProvider::class)->register();

@@ -15,5 +15,8 @@ return [
     "do_login"     => "Войти",
     "register"     => "Регистрация",
     "do_register"  => "Зарегистрироваться",
-
+    'go_back'      => '&larr; Назад',
+    'field_name'   => 'Название поля',
+    'form_submit'  => 'Сохранить',
+    'form_delete'  => 'Удалить',
 ];

@@ -7,6 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import '~tailwindcss/dist/base.css';
+@import '~tailwindcss/dist/utilities.css';
+
 @import 'components/home';
 
 body {
@@ -126,3 +129,10 @@ img {
   background-color: $cyan;
 }
 
+.pager-wrapper {
+  span[aria-current="page"] > span {
+    font-weight: bold;
+    background-color: lighten($cyan, 28) !important;
+    color: $cyan;
+  }
+}

@@ -17,11 +17,11 @@ class SurveySeeder extends Seeder
     public function run()
     {
         Survey::factory()
-            ->times(4)
+            ->times(30)
             ->has(
                 Question::factory()
                     ->has(Answer::factory()->count(4))
-                    ->count(10)
+                    ->count(15)
             )
             ->create();
     }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Services\Routes\Provider\AdminSurveysRoutes;
+
+
 return [
 
     /*
@@ -226,6 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'AdminSurveysRoutes' => AdminSurveysRoutes::class,
 
     ],
 
