@@ -4,6 +4,7 @@
 namespace App\Services\Routes\Provider;
 
 
+use App\Http\Controllers\Admin\Survey\AdminQuestionAnswersController;
 use App\Http\Controllers\Admin\Survey\AdminSurveyQuestionsController;
 use App\Http\Controllers\Admin\Survey\AdminSurveysController;
 use Route;
@@ -26,6 +27,7 @@ class SurveysRoutesProvider
 
         Route::resource('surveys', AdminSurveysController::class);
         Route::resource('survey/{survey}/questions', AdminSurveyQuestionsController::class);
+        Route::resource('survey/{survey}/question/{question}/answers', AdminQuestionAnswersController::class);
 
     }
 
