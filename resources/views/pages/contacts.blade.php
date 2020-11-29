@@ -1,0 +1,10 @@
+@extends("layouts.base")
+@section("title")
+    @lang('contacts.contacts')
+@endsection
+@section("content")
+    <h2>@lang('contacts.contacts')</h2>
+    <article>
+        <p>@lang('contacts.address')</p>
+    </article>
+@endsection
