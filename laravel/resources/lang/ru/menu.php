@@ -6,6 +6,7 @@ return [
   'signIn' => 'Войти',
   'signUp' => 'Зарегистрироваться',
   'logout' => 'Выйти',
-  'submitQuestion' => 'Предложить вопрос',
+  'submit_question' => 'Предложить вопрос',
   'about' => 'О сервисе',
+  'all_questions' => 'Все вопросы',
 ];

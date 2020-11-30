@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
+
 
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\QuestionCategory;
+use App\Models\Translation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
-class QuestionController extends Controller
+class QuestionController extends DashboardController
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +37,7 @@ class QuestionController extends Controller
 
         $questions = Question::paginate();
 
-        return view('questions.index',[
+        return view('dashboard.questions.index',[
            'questions' => $questions
         ]);
     }
@@ -47,7 +49,34 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        //@todo Консоль показывает что на этой странице 51 запрос к бд. За что??
+
+        $categoriesData = $this->getCategoriesData();
+        $statuses = $this->getStatuses();
+
+        return view('dashboard.questions.create',[
+            'categoriesData' => $categoriesData,
+            'statuses' => $statuses,
+        ]);
+    }
+
+    // @todo violates the SRP and MVC pattern
+    protected function getCategoriesData(): array
+    {
+        $data = [];
+        foreach (QuestionCategory::where('question_category_id','=',null)->get() as $item){
+            $item->getCategoriesTree($data, $item);
+        }
+        return $data;
+    }
+
+    protected function getStatuses(): array
+    {
+        // @todo violates the SRP and MVC pattern
+        return [
+            Question::STATUS_INACTIVE => __('messages.statuses.inactive'),
+            Question::STATUS_ACTIVE => __('messages.statuses.active'),
+        ];
     }
 
     /**
@@ -58,7 +87,40 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($request->all());
+        //echo 'FFFFFFFFFFFFFFF';
+        dd($request);
+
+        $exist = Question::create($request->all());
+
+        $translationModels = $answerModels = [];
+
+        foreach ($request->input('title') as $locale => $item) {
+            $translationModels[] = new Translation([
+                'locale' => $locale,
+                'key' => 'title',
+                'value' => $item ?? ''
+            ]);
+        }
+
+        foreach ($request->input('answer') as $locale => $answers) {
+            foreach ($answers as $item) {
+                $answer = new Answer([
+                    'right' => Answer::RIGHT_NO
+                ]);
+                /*$translations[] = new Translation([
+                    'locale' => $locale,
+                    'key' => 'title',
+                    'value' => $item ?? ''
+                ]);*/
+
+                $answerModels[] = $answer;
+            }
+        }
+
+        $exist->answers()->saveMany($answerModels);
+        $exist->translations()->saveMany($translationModels);
+
     }
 
     /**

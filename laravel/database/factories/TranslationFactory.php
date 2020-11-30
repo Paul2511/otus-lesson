@@ -50,7 +50,8 @@ class TranslationFactory extends Factory
         return [
             'entity_type' => $entity_type,
             'entity_id' => random_int(1,5),
-            'locale' => random_int(0,1) === 0 ? 'ru' : 'en',
+            //'locale' => random_int(0,1) === 0 ? 'ru' : 'en',
+            'locale' => 'ru',
             'key' => $key,
             'value' => $this->faker->sentence,
         ];

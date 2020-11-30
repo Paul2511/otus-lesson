@@ -18,10 +18,6 @@ class QuestionSeeder extends Seeder
      */
     public function run(Question $model)
     {
-        $tableName = $model->getTable();
-        DB::table( $tableName )->delete();
-        DB::statement("ALTER TABLE `{$tableName}` AUTO_INCREMENT = 1");
-
         // @todo It doesn't works. Why?
         $model::factory()->hasTranslations(3)->create();
 
@@ -42,5 +38,12 @@ class QuestionSeeder extends Seeder
             //@todo It works, but Translation will not save too
             $exist->translations()->saveMany($translations);
         }
+    }
+
+    public function clearTables(Question $model): void
+    {
+        $tableName = $model->getTable();
+        DB::table( $tableName )->delete();
+        DB::statement("ALTER TABLE `{$tableName}` AUTO_INCREMENT = 1");
     }
 }
