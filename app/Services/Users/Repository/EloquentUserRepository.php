@@ -6,7 +6,6 @@ namespace App\Services\Users\Repository;
 
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -21,10 +20,4 @@ class EloquentUserRepository
     {
         return User::findOrFail($id);
     }
-
-    public function create(array $data)
-    {
-        User::create($data);
-    }
-
 }

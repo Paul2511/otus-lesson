@@ -18,7 +18,6 @@ class UserController extends Controller
         $this->usersServices = $usersServices;
     }
 
-
     public function index()
     {
         return $this->usersServices->eloquentUserRepository->search();
@@ -33,7 +32,7 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $this->usersServices->eloquentUserRepository->create($request->toArray());
+        $this->usersServices->createUserHandler->create($request->toArray());
     }
 
 

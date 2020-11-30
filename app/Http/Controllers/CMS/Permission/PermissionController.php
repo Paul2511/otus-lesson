@@ -23,7 +23,7 @@ class PermissionController extends Controller
 
     public function store(CreatePermissionRequest $request)
     {
-        $this->permissionsServices->eloquentPermissionRepository->create($request->toArray());
+        $this->permissionsServices->createPermissionHandler->create($request->toArray());
     }
 
 

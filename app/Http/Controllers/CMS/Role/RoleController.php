@@ -23,7 +23,7 @@ class RoleController extends Controller
 
     public function store(CreateRoleRequest $request)
     {
-        $this->rolesServices->eloquentRoleRepository->create($request->toArray());
+        $this->rolesServices->createRoleHandler->create($request->toArray());
     }
 
 

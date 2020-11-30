@@ -6,7 +6,6 @@ namespace App\Services\Permissions\Repository;
 
 use App\Models\Permission;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class EloquentPermissionRepository
@@ -20,10 +19,4 @@ class EloquentPermissionRepository
     {
         return Permission::findOrFail($id);
     }
-
-    public function create(array $data)
-    {
-        Permission::create($data);
-    }
-
 }
