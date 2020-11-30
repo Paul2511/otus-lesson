@@ -79,6 +79,8 @@
                 :index="index"
                 :to="item.slug !== 'external' ? item.url : null"
                 :href="item.slug === 'external' ? item.url : null"
+                :featherIcon="!item.iconPack"
+                :iconPack="item.iconPack ? item.iconPack : 'material-icons'"
                 :icon="item.icon" :target="item.target"
                 :isDisabled="item.isDisabled"
                 :slug="item.slug">

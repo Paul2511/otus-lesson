@@ -17,15 +17,14 @@ import colors from "@/../themeConfig.js"
 
 // *From Auth - Data will be received from auth provider
 const userDefaults = {
-  uid         : 0,          // From Auth
+  id         : 3,          // From Auth
   displayName : "Константин Петров", // From Auth
   about       : "Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.",
   photoURL    : require("@assets/images/portrait/small/avatar-s-11.jpg"), // From Auth
   status      : "online",
   userRole    : "admin",
     displaySpec: "Клиент"
-}
-
+};
 
 // Check if device is touch device
 // This is used to remove perfect scrollbar from touch devices
@@ -52,7 +51,8 @@ const is_touch_device = () => {
 // /////////////////////////////////////////////
 
 const state = {
-    AppActiveUser           : userDefaults,
+    //AppActiveUser           : userDefaults,
+    AppActiveUser           : {id: null},
     bodyOverlay             : false,
     isVerticalNavMenuActive : true,
     is_touch_device         : is_touch_device(),

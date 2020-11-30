@@ -11,4 +11,12 @@ Vue.filter('title', function (value, replacer = '_') {
     capitalized_array.push(capitalized)
   })
   return capitalized_array.join(' ')
-})
+});
+
+Vue.filter('arr2str', function(arr) {
+    if (typeof(arr) !== 'object') {
+        return arr;
+    }
+    return arr.join('<br/>');
+});
+

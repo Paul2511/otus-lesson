@@ -6,6 +6,7 @@ use App\Helpers\UtilsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use App\Casts\PetPhotoCast;
 
 /**
  * App\Models\Pet
@@ -56,11 +57,18 @@ class Pet extends BaseModel
         'pet_type_id', 'name', 'age', 'bread', 'sex', 'photo'
     ];
 
-
-    protected $casts = [
-        'photo' => 'array'
+    protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
 
+    protected $casts = [
+        'photo' => PetPhotoCast::class
+    ];
+
+    protected $appends = [
+        'sexLabel', 'sexLabels', 'petTypeTitle', 'petTypes'
+    ];
 
     public function client()
     {
@@ -71,6 +79,28 @@ class Pet extends BaseModel
     public function petType()
     {
         return $this->belongsTo(PetType::class);
+    }
+
+    public function getSexLabelAttribute()
+    {
+        $labels = self::sexLabels();
+        return $labels[$this->sex] ?? '';
+    }
+
+    public function getSexLabelsAttribute()
+    {
+        return self::sexLabels();
+    }
+
+    public function getPetTypeTitleAttribute()
+    {
+        $petType = $this->petType;
+        return $petType->title ?? '';
+    }
+
+    public function getPetTypesAttribute()
+    {
+        return PetType::all();
     }
 
     /**

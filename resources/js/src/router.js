@@ -38,14 +38,18 @@ const router = new Router({
                 {
                     path: '/cabinet',
                     name: 'cabinet',
-                    component: () => import('./views/cabinet/Home.vue')
+                    component: () => import('./views/cabinet/Dashboard.vue')
                 },
-
                 {
-                path: '/cabinet/page2',
-                name: 'page-2',
-                component: () => import('./views/cabinet/Page2.vue')
-              },
+                    path: '/cabinet/profile',
+                    name: 'profile',
+                    component: () => import('./views/cabinet/user-settings/UserSettings.vue')
+                },
+                {
+                    path: '/cabinet/pets',
+                    name: 'pets',
+                    component: () => import('./views/cabinet/pets/Pets.vue')
+                },
             ],
         },
     // =============================================================================
@@ -64,13 +68,14 @@ const router = new Router({
                     component: () => import('@/views/pages/Home.vue')
                 },
               {
-                path: '/pages/login',
-                name: 'page-login',
+                path: '/login',
+                name: 'login',
                 component: () => import('@/views/pages/Login.vue')
               },
               {
-                path: '/pages/error-404',
-                name: 'page-error-404',
+                path: '/error-404',
+                name: 'error-404',
+
                 component: () => import('@/views/pages/Error404.vue')
               },
             ]
@@ -78,7 +83,7 @@ const router = new Router({
         // Redirect to 404 page, if no match found
         {
             path: '*',
-            redirect: '/pages/error-404'
+            redirect: '/error-404'
         }
     ],
 })

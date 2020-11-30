@@ -20,25 +20,33 @@
 
 
 export default [
-  // {
-  //   url: "/apps/email",
-  //   name: "Email",
-  //   slug: "email",
-  //   icon: "MailIcon",
-  //   i18n: "Email",
-  // },
-  {
-    url: "/cabinet",
-    name: "Dashboard",
-    slug: "home",
-    icon: "HomeIcon",
-    i18n: "Dashboard",
-  },
-  {
-    url: "/cabinet/page2",
-    name: "Page2",
-    slug: "page2",
-    icon: "FileIcon",
-    i18n: "Page2",
-  }
+    // {
+    //   url: "/apps/email",
+    //   name: "Email",
+    //   slug: "email",
+    //   icon: "MailIcon",
+    //   i18n: "Email",
+    // },
+    {
+        url: "/cabinet",
+        name: "Dashboard",
+        slug: "home",
+        icon: "HomeIcon",
+        i18n: "Dashboard",
+    },
+    {
+        url: "/cabinet/profile",
+        name: "Profile",
+        slug: "Profile",
+        icon: "UserIcon",
+        i18n: "Profile",
+    },
+    {
+        url: "/cabinet/pets",
+        name: "Pets",
+        slug: "Pets",
+        iconPack: "material-icons",
+        icon: "pets",
+        i18n: "myPets",
+    }
 ]

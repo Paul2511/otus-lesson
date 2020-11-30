@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any}', function ($any = null) {
+/*Route::get('/{any}', function ($any = null) {
     return view('application');
-})->where('any', '.*');
+})->where('any', '.*');*/
+
+
+Route::get('/{any}', ApplicationController::class)->where('any', '.*');
+
 
 

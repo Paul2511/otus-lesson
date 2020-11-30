@@ -739,3 +739,21 @@
 .view-upload {
   z-index: 52000;
 }
+
+.vs-sidebar--item i.material-icons {
+  margin-right: 14px;
+  font-size: 20px;
+}
+
+.vx-card__actions {
+  .vs-con-dropdown {
+    cursor: pointer;
+    .a-icon {
+      color: gray;
+      i {
+        font-size: 22px;
+      }
+    }
+  }
+}
+

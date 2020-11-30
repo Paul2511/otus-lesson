@@ -4855,6 +4855,30 @@ i.wizard-icon {
   z-index: 52000;
 }
 
+.vs-sidebar--item i.material-icons {
+  font-size: 20px;
+}
+
+[dir=ltr] .vs-sidebar--item i.material-icons {
+  margin-right: 14px;
+}
+
+[dir=rtl] .vs-sidebar--item i.material-icons {
+  margin-left: 14px;
+}
+
+[dir] .vx-card__actions .vs-con-dropdown {
+  cursor: pointer;
+}
+
+.vx-card__actions .vs-con-dropdown .a-icon {
+  color: gray;
+}
+
+.vx-card__actions .vs-con-dropdown .a-icon i {
+  font-size: 22px;
+}
+
 /*=========================================================================================
     File Name: _tailwindFixes.scss
     Description: partial- Tailwind Fixes

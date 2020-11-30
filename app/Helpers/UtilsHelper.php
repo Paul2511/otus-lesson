@@ -24,7 +24,7 @@ class UtilsHelper
                 $keyPart = $keyParts[0] ?? '';
                 if (is_string($part) && strtoupper($part) === $keyPart) {
                     $keyStr = self::dashesToCamelCase($key);
-                    $result[$key] = trans($langDir.'.'.$keyStr);
+                    $result[$constant] = trans($langDir.'.'.$keyStr);
                 } elseif (is_array($part)) {
                     $part = array_map(function ($item) {
                         return strtoupper($item);
@@ -32,7 +32,7 @@ class UtilsHelper
                     $inter = array_intersect($part, $keyParts);
                     if ($inter && count($inter) === count($part) ) {
                         $keyStr = self::dashesToCamelCase($key);
-                        $result[$key] = trans($langDir.'.'.$keyStr);
+                        $result[$constant] = trans($langDir.'.'.$keyStr);
                     }
                 }
             }

@@ -91,54 +91,41 @@ class User extends Authenticatable
     const STATUS_ACTIVE = 10;
     const STATUS_NOT_ACTIVE = 20;
 
-    /**
-     * @var array
-     */
-    private static $roleLabels;
+    private static array $roleLabels;
 
-    /**
-     * @var array
-     */
-    private static $statusLabels;
+    private static array $statusLabels;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password', 'role', 'status', 'phone'
+    private static array $statusColors = [
+        self::STATUS_ACTIVE => 'success',
+        self::STATUS_NOT_ACTIVE => 'danger'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    protected $fillable = [
+        'email', 'password', 'role', 'status'
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'created_at',
+        'updated_at',
+        'name'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime:Y-m-d H:i',
         'phone' => Phone::class
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
+
     protected $appends = [
-        'phoneFormat', 'isAdmin', 'isClient'
+        'phoneFormat',
+        'roleLabel',
+        'statusLabel',
+        'statusColor',
+        'statusLabels'
     ];
 
     /**
@@ -229,19 +216,35 @@ class User extends Authenticatable
         return Phone::formatPhone($this->attributes['phone']);
     }
 
-    /**
-     * @return array
-     */
-    public static function roleLabels()
+    public function getRoleLabelAttribute()
+    {
+        $labels = self::roleLabels();
+        return $labels[$this->role] ?? '';
+    }
+
+    public function getStatusLabelsAttribute()
+    {
+        return self::statusLabels();
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        $labels = self::statusLabels();
+        return $labels[$this->status] ?? '';
+    }
+
+    public function getStatusColorAttribute()
+    {
+        return self::$statusColors[$this->status] ?? '';
+    }
+
+    public static function roleLabels(): array
     {
         if (isset(self::$roleLabels)) return self::$roleLabels;
         return self::$roleLabels = UtilsHelper::getLangLabels(static::class, 'role');
     }
 
-    /**
-     * @return array
-     */
-    public static function statusLabels()
+    public static function statusLabels(): array
     {
         if (isset(self::$statusLabels)) return self::$statusLabels;
         return self::$statusLabels = UtilsHelper::getLangLabels(static::class, 'status');

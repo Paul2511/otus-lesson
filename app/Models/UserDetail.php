@@ -6,6 +6,7 @@ use App\Helpers\UtilsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use App\Casts\AvatarCast;
 
 /**
  * App\Models\UserDetail
@@ -53,15 +54,9 @@ class UserDetail extends BaseModel
     const CLASSIFIER_SPEC_ALLOWED = 'spec_allowed';
     const CLASSIFIER_SPEC_NOT_ALLOWED = 'spec_not_allowed';
 
-    /**
-     * @var
-     */
-    private static $classifierClientLabels;
+    private static array $classifierClientLabels;
 
-    /**
-     * @var
-     */
-    private static $classifierSpecLabels;
+    private static array $classifierSpecLabels;
 
     public $commentType = 'userDetail';
 
@@ -69,17 +64,19 @@ class UserDetail extends BaseModel
         'lastname', 'firstname', 'middlename', 'classifier', 'specialization_id', 'avatar'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     protected $casts = [
-        'avatar' => 'array'
+        'avatar' => AvatarCast::class
     ];
 
-    /**
-     * @var array
-     */
+
     protected $appends = [
-        'fio', 'shortFio'
+        'fio', 'shortFio', 'displayName'
     ];
-
 
     public function user()
     {
@@ -107,9 +104,8 @@ class UserDetail extends BaseModel
 
     /**
      * Возвращает полное ФИО
-     * @return string
      */
-    public function getFioAttribute()
+    public function getFioAttribute(): string
     {
         $lastName = $this->lastname?$this->lastname.' ':'';
         $firstName = $this->firstname?$this->firstname.' ':'';
@@ -117,11 +113,24 @@ class UserDetail extends BaseModel
         return trim($lastName . $firstName . $middleName);
     }
 
+    public function getDisplayNameAttribute(): string
+    {
+        $lastName = $this->lastname?$this->lastname.' ':'';
+        $firstName = $this->firstname?$this->firstname.' ':'';
+        $result = trim($lastName . $firstName);
+
+        if (empty($result)) {
+            $user = $this->user;
+            $result = ucfirst($user->getRoleLabelAttribute());
+        }
+
+        return $result;
+    }
+
     /**
      * Возвращает сокращенное ФИО: Иванов И.И.
-     * @return string
      */
-    public function getShortFioAttribute()
+    public function getShortFioAttribute(): string
     {
         $firstName = $this->firstname ? mb_substr($this->firstname, 0, 1).'.' : null;
         $middleName = $this->middlename ? mb_substr($this->middlename, 0, 1).'.' : null;
@@ -131,19 +140,14 @@ class UserDetail extends BaseModel
         return $fio ? $fio : null;
     }
 
-    /**
-     * @return array
-     */
-    public static function classifierClientLabels()
+
+    public static function classifierClientLabels(): array
     {
         if (isset(self::$classifierClientLabels)) return self::$classifierClientLabels;
         return self::$classifierClientLabels = UtilsHelper::getLangLabels(static::class, ['classifier', 'client']);
     }
 
-    /**
-     * @return array
-     */
-    public static function classifierSpecLabels()
+    public static function classifierSpecLabels(): array
     {
         if (isset(self::$classifierSpecLabels)) return self::$classifierSpecLabels;
         return self::$classifierSpecLabels = UtilsHelper::getLangLabels(static::class, ['classifier', 'spec']);

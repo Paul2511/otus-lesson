@@ -1,0 +1,87 @@
+<template>
+    <div class="vx-row">
+        <!-- Avatar Col -->
+        <div class="vx-col" id="avatar-col">
+            <div class="img-container mb-4">
+                <img :src="user.detail.avatar.src" class="rounded w-full" />
+            </div>
+        </div>
+
+        <!-- Information - Col 1 -->
+        <div class="vx-col flex-1" id="account-info-col-1">
+            <table>
+                <tr>
+                    <td class="font-semibold">Фамилия</td>
+                    <td>{{ user.detail.lastname }}</td>
+                </tr>
+                <tr>
+                    <td class="font-semibold">Имя</td>
+                    <td>{{ user.detail.firstname }}</td>
+                </tr>
+                <tr>
+                    <td class="font-semibold">Отчество</td>
+                    <td>{{ user.detail.middlename }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- /Information - Col 1 -->
+
+        <!-- Information - Col 2 -->
+        <div class="vx-col flex-1" id="account-info-col-2">
+            <table>
+                <tr>
+                    <td class="font-semibold">Телефон</td>
+                    <td>{{ user.phoneFormat }}</td>
+                </tr>
+                <tr>
+                    <td class="font-semibold">Email</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td class="font-semibold">Статус</td>
+                    <td>
+                        <vs-chip :color="user.statusColor">
+                            {{ user.statusLabel }}
+                        </vs-chip>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-semibold">Роль</td>
+                    <td>{{ user.roleLabel }}</td>
+                </tr>
+                <tr v-if="!!user.detail.specialization">
+                    <td class="font-semibold">Специализация</td>
+                    <td>{{ user.detail.specialization.name }}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- /Information - Col 2 -->
+
+        <div class="vx-col w-full flex" id="account-manage-buttons">
+            <vs-button icon-pack="feather" icon="icon-edit" class="mr-4" @click.native="edit">Редактировать</vs-button>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        props: {
+            user: {
+                type: Object,
+                required: true
+            },
+        },
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            edit() {
+                this.$emit('edit');
+            }
+        }
+    }
+
+</script>
