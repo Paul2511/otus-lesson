@@ -1,27 +1,30 @@
+@include("includes.validate")
 <div class="form-group">
     <label for="InputEmail">Email</label>
-    <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+    <input name="email" type="email" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" value="{{old('email', $user->email)}}">
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 </div>
 <div class="form-group">
     <label for="InputPassword">Пароль</label>
-    <input type="password" class="form-control" id="InputPassword" placeholder="Password">
+    <input name="password" type="password" id="InputPassword" value="{{old('password', $user->password)}}" placeholder="Password">
 </div>
   <div class="form-group">
     <label for="InputName">Имя</label>
-    <input type="text" id="InputName" placeholder="Заполните имя">
+    <input name="name" type="text" id="InputName" placeholder="Заполните имя" value="{{old('name', $user->name)}}">
   </div>
   <div class="form-group">
   <label for="InputLastName">Фамилия</label>
-  <input type="text" id="InputLastName" placeholder="Заполните фамилию">
+  <input name="last_name" type="text" id="InputLastName" placeholder="Заполните фамилию" value="{{old('last_name', $user->name)}}">
   </div>
   <div class="form-group">
   <label for="InputPatronimycName">Отчество</label>
-  <input type="text" id="InputPatronimycName" placeholder="Заполните отчество">
+  <input name="patronymic" type="text" id="InputPatronimycName" placeholder="Заполните отчество" value="{{old('patronymic', $user->patronymic)}}">
   </div>
-  <div class="form-group">
-  <label>Должность</label>
-  <label>Менеджер <input type="radio" value="manager" name="worktype"></label>
-  <label>Программист <input type="radio" value="developer"name="worktype"></label>
-  </div>
+  @if($register)
+    <div class="form-group">
+      <label>Должность</label>
+      <label>Менеджер <input type="radio" value="manager" name="role"></label>
+      <label>Программист <input type="radio" value="developer" name="role"></label>
+    </div>
+  @endif
  <button type="submit" class="btn btn-primary">Submit</button>

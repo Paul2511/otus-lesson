@@ -5,10 +5,10 @@
 @section("content")
 	<h2>Личный кабинет</h2>
 	<article>
-		<p>Имя: Владислав</p>
-		<p>Фамилия: Дворянинов</p>
-		<p>Отчество: Викторович</p>
-		<p>Email:dvovlad@mail.ru</p>
-		<p>Должность:Admin</p>
+		<p>Имя: {{$user->name}}</p>
+		<p>Фамилия: {{$user->last_name}}</p>
+		<p>Отчество: {{$user->patronymic}}</p>
+		<p>Email: {{$user->email}}</p>
+		<p>Должность: {{$user->role}}</p>
 	</article>
 @endsection
