@@ -1,2 +1,4 @@
 /DOCKER/db_percona/db_data/*
 .idea
+backups_db
+laravel/storage/*
