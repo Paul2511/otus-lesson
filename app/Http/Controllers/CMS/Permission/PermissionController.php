@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
-    private $permissionsServices;
+    private PermissionsServices $permissionsServices;
 
     public function __construct(PermissionsServices $permissionsServices)
     {
