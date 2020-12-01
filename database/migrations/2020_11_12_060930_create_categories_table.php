@@ -19,7 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('slug');
             $table->string('thumbnail');
             $table->integer('status');
-            $table->integer('parent_id');
+            $table->integer('parent_id')->nullable();
             $table->timestamps();
         });
     }

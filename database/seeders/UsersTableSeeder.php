@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
+use Hash;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -14,6 +16,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->times(4)->create();
+        User::factory()->create([
+            'role_id' => Role::ROLE_ADMIN,
+            'email' => 'admin@admin.admin',
+            'password' => Hash::make('admin'),
+            'region_id' => 4,
+        ]);
+        User::factory()->times(10)->create();
     }
 }

@@ -54,6 +54,10 @@ class Advert extends Model
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 10;
 
+    const STATUS_DEFAULT = 0;
+    const STATUS_PREMIUM = 10;
+
+
     protected $fillable = [
         'title',
         'slug',
@@ -76,9 +80,9 @@ class Advert extends Model
     {
         return $this->belongsTo(Region::class);
     }
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function image(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -88,6 +92,6 @@ class Advert extends Model
 
     public function favorites(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'advert_favorites', 'advert_id', 'user_id');
+        return $this->belongsToMany(User::class, 'advert_favorites', 'advert_id', 'user_id')->using(AdvertFavourite::class);
     }
 }

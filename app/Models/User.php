@@ -99,6 +99,6 @@ class User extends Authenticatable
 
     public function favorites(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
+        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id')->using(AdvertFavourite::class);;
     }
 }
