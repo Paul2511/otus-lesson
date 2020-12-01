@@ -19,15 +19,6 @@ class CreateGroupTypesTable extends Migration
             $table->string('title', 20);
             $table->timestamps();
         });
-
-        DB::insert("INSERT INTO
-                        group_types (name, title)
-                    VALUES
-                        ('space', 'Space'),
-                        ('folder', 'Folder'),
-                        ('simple-list', 'Simple List'),
-                        ('task-list', 'Task List')"
-        );
     }
 
     /**

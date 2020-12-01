@@ -19,15 +19,6 @@ class CreateColumnTypesTable extends Migration
             $table->string('title', 20);
             $table->timestamps();
         });
-
-        DB::insert("INSERT INTO
-                        column_types (name, title)
-                    VALUES
-                        ('detail', 'Detail'),
-                        ('deadline', 'Deadline'),
-                        ('status', 'Status'),
-                        ('description', 'Description')"
-        );
     }
 
     /**

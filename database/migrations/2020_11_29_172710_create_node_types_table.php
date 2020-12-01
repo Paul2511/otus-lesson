@@ -18,15 +18,6 @@ class CreateNodeTypesTable extends Migration
             $table->string('name', 20)->unique();
             $table->string('title', 20);
         });
-
-        DB::insert("INSERT INTO
-                        node_types (name, title)
-                    VALUES
-                        ('note', 'Note'),
-                        ('simple-task', 'Simple Task'),
-                        ('document', 'Document'),
-                        ('task', 'Task')"
-        );
     }
 
     /**

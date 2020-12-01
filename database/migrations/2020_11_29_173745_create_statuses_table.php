@@ -20,18 +20,6 @@ class CreateStatusesTable extends Migration
             $table->string('title', 20);
             $table->timestamps();
         });
-
-        DB::insert("INSERT INTO
-                        statuses (node_type_id, name, title)
-                    VALUES
-                        (2, 'open', 'Open'),
-                        (2, 'done', 'Done'),
-                        (4, 'new', 'New'),
-                        (4, 'open', 'Open'),
-                        (4, 'in-progress', 'In Progress'),
-                        (4, 'done', 'Done'),
-                        (4, 'closed', 'Closed')"
-        );
     }
 
     /**
