@@ -10,7 +10,7 @@ class CreateRoleHandler
 {
     public function create(array $data)
     {
-        Role::create($data);
+       return Role::create($data);
     }
 
 }

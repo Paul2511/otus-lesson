@@ -4,12 +4,13 @@ namespace App\Http\Controllers\CMS\Role;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleAndPermission\CreateRoleRequest;
+use App\Http\Requests\RoleAndPermission\UpdateRoleRequest;
 use App\Services\Roles\RolesServices;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    private $rolesServices;
+    private RolesServices $rolesServices;
 
     public function __construct(RolesServices $rolesServices)
     {
@@ -18,17 +19,27 @@ class RoleController extends Controller
 
     public function index()
     {
-        return $this->rolesServices->eloquentRoleRepository->search();
+        return $this->rolesServices->getRoles();
     }
 
     public function store(CreateRoleRequest $request)
     {
-        $this->rolesServices->createRoleHandler->create($request->toArray());
+        return $this->rolesServices->storeRole($request->toArray());
     }
 
 
     public function show($id)
     {
-        return $this->rolesServices->eloquentRoleRepository->findOrFail($id);
+        return $this->rolesServices->findRole($id);
+    }
+
+    public function update(UpdateRoleRequest $request, int $id)
+    {
+        return $this->rolesServices->updateRole($request->toArray(), $id);
+    }
+
+    public function destroy(int $id)
+    {
+        return $this->rolesServices->deleteRole($id);
     }
 }

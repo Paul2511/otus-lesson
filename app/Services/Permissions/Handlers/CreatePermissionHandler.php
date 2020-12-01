@@ -10,7 +10,7 @@ class CreatePermissionHandler
 {
     public function create(array $data)
     {
-        Permission::create($data);
+        return Permission::create($data);
     }
 
 }

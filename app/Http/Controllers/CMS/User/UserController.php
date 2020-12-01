@@ -5,13 +5,11 @@ namespace App\Http\Controllers\CMS\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Services\Users\Repository\EloquentUserRepository;
 use App\Services\Users\UsersServices;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    private $usersServices;
+    private UsersServices $usersServices;
 
     public function __construct(UsersServices $usersServices)
     {
@@ -20,7 +18,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return $this->usersServices->eloquentUserRepository->search();
+        return $this->usersServices->getUsers();
     }
 
 
@@ -32,13 +30,13 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $this->usersServices->createUserHandler->create($request->toArray());
+        $this->usersServices->storeUser($request->toArray());
     }
 
 
     public function show($id)
     {
-        return $this->usersServices->eloquentUserRepository->findOrFail($id);
+        return $this->usersServices->findUser($id);
     }
 
 
@@ -50,14 +48,11 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
-        $entity = $this->usersServices->eloquentUserRepository->findOrFail($id);
-        $entity->update($request->all());
-        return $entity;
+        $this->usersServices->updateUser($request->toArray(),$id);
     }
 
     public function destroy($id)
     {
-        $entity = $this->usersServices->eloquentUserRepository->findOrFail($id);
-        return $entity->delete();
+        return $this->usersServices->deleteUser($id);
     }
 }

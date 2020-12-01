@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS\Permission;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleAndPermission\CreatePermissionRequest;
+use App\Http\Requests\RoleAndPermission\UpdatePermissionRequest;
 use App\Services\Permissions\PermissionsServices;
 use Illuminate\Http\Request;
 
@@ -18,17 +19,27 @@ class PermissionController extends Controller
 
     public function index()
     {
-        return $this->permissionsServices->eloquentPermissionRepository->search();
+        return $this->permissionsServices->getPermission();
     }
 
     public function store(CreatePermissionRequest $request)
     {
-        $this->permissionsServices->createPermissionHandler->create($request->toArray());
+        $this->permissionsServices->storePermission($request->toArray());
     }
 
 
-    public function show($id)
+    public function show(int $id)
     {
-        return $this->permissionsServices->eloquentPermissionRepository->findOrFail($id);
+        return $this->permissionsServices->findPermission($id);
+    }
+
+    public function update(UpdatePermissionRequest $request, int $id)
+    {
+        return $this->permissionsServices->updatePermission($request->toArray(), $id);
+    }
+
+    public function destroy(int $id)
+    {
+        return $this->permissionsServices->deletePermission($id);
     }
 }
