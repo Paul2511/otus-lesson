@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\SectionGroup;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,8 @@ class CreateSectionGroupsTable extends Migration
             $table->string('slug', 255)
                 ->unique();
             $table->text('description');
+            $table->smallInteger('status')
+                ->default(SectionGroup::STATUS_INACTIVE);
             $table->timestamps();
         });
     }

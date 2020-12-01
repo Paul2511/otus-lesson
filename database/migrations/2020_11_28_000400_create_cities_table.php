@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\City;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +17,10 @@ class CreateCitiesTable extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('country_id');
-            $table->string('name');
-            $table->string('slug');
+            $table->string('name', 255);
+            $table->string('slug', 255);
+            $table->smallInteger('status')
+                ->default(City::STATUS_INACTIVE);
             $table->timestamps();
 
             $table->foreign('country_id')

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Country;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,8 @@ class CreateCountriesTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('continent_name');
+            $table->smallInteger('status')
+                ->default(Country::STATUS_INACTIVE);
             $table->timestamps();
         });
     }

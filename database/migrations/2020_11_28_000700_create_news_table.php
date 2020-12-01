@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\News;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,21 +16,22 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')
+            $table->string('title', 255)
                 ->unique();
-            $table->string('slug')
+            $table->string('slug', 255)
                 ->unique();
             $table->text('text');
-            $table->string('picture', 255);
+            $table->string('picture', 200);
             $table->boolean('status')
-                ->default(False);
+                ->default(News::STATUS_INACTIVE);
             $table->unsignedBigInteger('user_id')
                 ->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('set null');
         });
     }
 

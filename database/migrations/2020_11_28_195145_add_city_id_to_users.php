@@ -18,7 +18,8 @@ class AddCityIdToUsers extends Migration
 
             $table->foreign('city_id')
                 ->references('id')
-                ->on('cities');
+                ->on('cities')
+                ->onDelete('set null');
         });
     }
 
@@ -30,7 +31,8 @@ class AddCityIdToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropForeign('users_city_id_foreign');
+            $table->dropColumn('city_id');
         });
     }
 }

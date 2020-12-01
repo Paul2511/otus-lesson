@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Section;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,6 +26,8 @@ class CreateSectionsTable extends Migration
                 ->nullable();
             $table->unsignedInteger('parent_id')
                 ->nullable();
+            $table->smallInteger('status')
+                ->default(Section::STATUS_INACTIVE);
             $table->timestamps();
         });
 
@@ -35,7 +38,8 @@ class CreateSectionsTable extends Migration
                 ->onDelete('cascade');
             $table->foreign('parent_id')
                 ->references('id')
-                ->on('sections');
+                ->on('sections')
+                ->onDelete('set null');
         });
     }
 

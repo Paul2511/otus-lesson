@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,12 +20,14 @@ class CreateUsersTable extends Migration
                 ->nullable();
             $table->string('email', 50)
                 ->unique();
-            $table->string('phone', 20)
+            $table->string('phone', 30)
                 ->unique()
                 ->nullable();
             $table->timestamp('email_verified_at')
                 ->nullable();
             $table->string('password', 255);
+            $table->smallInteger('status')
+                ->default(User::STATUS_INACTIVE);
             $table->rememberToken();
             $table->timestamps();
         });
