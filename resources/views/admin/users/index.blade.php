@@ -13,9 +13,11 @@
 @section('bookmark')
     <div class="col">
         <div class="bookmark pull-right">
+            @can(\App\Policies\Ability::CREATE, \App\Models\User::class)
             <button class="btn btn-success btn m-2" id="btn-add" name="btn-add">
                 <span class="fa fa-plus"></span> {{ __('pages/users.add')}}
             </button>
+            @endcan
         </div>
     </div>
 @endsection

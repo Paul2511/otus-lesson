@@ -15,12 +15,12 @@
       <p><small>{{ __('_partials/_sidebar.position') }}</small></p>
     </div>
     <ul class="sidebar-menu">
-      <li><a class="sidebar-header" href="{{route('dashboard')}}" ><i data-feather="home"></i><span>{{ __('pages/dashboard.dashboard')}}</span></a></li>
-      <li><a class="sidebar-header" href="{{route('orders')}}" ><i data-feather="file"></i><span>{{ __('_partials/_sidebar.orders')}}</span></a></li>
-      <li><a class="sidebar-header" href="{{route('documents')}}" ><i data-feather="book"></i><span>{{ __('_partials/_sidebar.documents')}}</span></a></li>
-      <li><a class="sidebar-header" href="{{route('payments')}}" ><i data-feather="credit-card"></i><span>{{ __('_partials/_sidebar.payments')}}</span></a></li>
-      <li><a class="sidebar-header" href="{{route('knowledgebase')}}" ><i data-feather="help-circle"></i><span>{{ __('_partials/_sidebar.knowledgebase')}}</span></a></li>
-      <li><a class="sidebar-header" href="{{route('contacts')}}" ><i data-feather="mail"></i><span>{{ __('_partials/_sidebar.contacts')}}</span></a></li>
+      <li><a class="sidebar-header" href="{{route(\App\Services\Routes\Providers\User\UserRoutes::USER_DASHBOARD)}}" ><i data-feather="home"></i><span>{{ __('pages/dashboard.dashboard')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="file"></i><span>{{ __('_partials/_sidebar.orders')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="book"></i><span>{{ __('_partials/_sidebar.documents')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="credit-card"></i><span>{{ __('_partials/_sidebar.payments')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="help-circle"></i><span>{{ __('_partials/_sidebar.knowledgebase')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="mail"></i><span>{{ __('_partials/_sidebar.contacts')}}</span></a></li>
     </ul>
   </div>
 </div>

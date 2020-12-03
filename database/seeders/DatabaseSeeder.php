@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ability;
 use App\Models\Payment;
 use DB;
 use App\Models\Company;
@@ -24,11 +25,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //Create Roles Table
+        // Create Roles Table
         $this->call([RolesTableSeeder::class]);
-        //Create 10 Companies
+        // Creat Abilities Table
+        $this->call([AbilitiesTableSeeder::class]);
+        // Create 10 Companies
         Company::factory(10)->create();
-        //Create Specialist and Users
+        // Create Specialist and Users
         foreach (Company::all() as $company) {
             // Create 2 Specialists in each Company
             Specialist::factory(2)->create([
@@ -39,17 +42,23 @@ class DatabaseSeeder extends Seeder
                 'inn' => $company->inn,
             ]);
             // Seeding pivot tables
-            foreach (User::where('inn',$company->inn)->pluck('id') as $user_id){
+            foreach (User::where('inn',$company->inn)->get() as $user){
                 //Seeding company_user pivot table
                 DB::table('company_user')->insert([
-                    'user_id' => $user_id,
+                    'user_id' => $user->id,
                     'inn' => $company->inn]);
                 //Seeding role_user pivot table
                 DB::table('role_user')->insert([
-                    'user_id' => $user_id,
+                    'user_id' => $user->id,
                     'role_id' => rand(1,3)
                 ]);
             }
+        }
+        foreach (Role::all() as $role) {
+            DB::table('ability_role')->insert([
+                'role_id' => rand(1,3),
+                'ability_id' => rand(1,2)
+            ]);
         }
         // Seeding Services
         foreach (Specialist::all() as $specialist) {
@@ -76,6 +85,7 @@ class DatabaseSeeder extends Seeder
                     'service_uuid' => $service->service_uuid
                 ]);
             }
+
         }
 
 

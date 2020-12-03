@@ -5,6 +5,7 @@ namespace App\Services\Handlers;
 
 
 use App\Http\Controllers\Admin\AdminBaseController;
+use App\Models\User;
 use App\Services\Users\Repositories\EloquentUserRepository;
 
 

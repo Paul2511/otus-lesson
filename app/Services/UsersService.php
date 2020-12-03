@@ -1,14 +1,16 @@
-<?php
+<?php /** @noinspection PhpUnreachableStatementInspection */
 
 
 namespace App\Services;
 
 
+use App\Models\User;
 use App\Services\Handlers\CreateUserHandler;
 use App\Services\Handlers\DeleteUserHandler;
 use App\Services\Handlers\PaginateUsersHandler;
 use App\Services\Handlers\FindUserHandler;
 use App\Services\Handlers\UpdateUserHandler;
+use App\Services\Users\Repositories\EloquentUserRepository;
 use App\Services\Users\Translators\UserRolesTranslator;
 use App\Services\Users\Translators\UserStatusesTranslator;
 
@@ -22,6 +24,7 @@ class UsersService
     private $findUserHandler;
     private $updateUserHandler;
     private $deleteUserHandler;
+    private $eloquentUserRepository;
 
     /**
      * UsersService constructor.
@@ -30,8 +33,9 @@ class UsersService
      * @param CreateUserHandler $createUserHandler
      * @param PaginateUsersHandler $paginateUsersHandler
      * @param FindUserHandler $findUserHandler
-     * @param DeleteUserHandler $deleteUserHandler
      * @param UpdateUserHandler $updateUserHandler
+     * @param DeleteUserHandler $deleteUserHandler
+     * @param EloquentUserRepository $eloquentUserRepository
      */
     public function __construct(
 
@@ -41,7 +45,8 @@ class UsersService
         PaginateUsersHandler $paginateUsersHandler,
         FindUserHandler $findUserHandler,
         UpdateUserHandler $updateUserHandler,
-        DeleteUserHandler $deleteUserHandler
+        DeleteUserHandler $deleteUserHandler,
+        EloquentUserRepository $eloquentUserRepository
 
     )
     {
@@ -52,6 +57,7 @@ class UsersService
         $this->findUserHandler = $findUserHandler;
         $this->updateUserHandler = $updateUserHandler;
         $this->deleteUserHandler = $deleteUserHandler;
+        $this->eloquentUserRepository = $eloquentUserRepository;
 
     }
 
@@ -77,7 +83,9 @@ class UsersService
 
     public function findUser(int $id)
     {
-        return $this->findUserHandler->handle($id);
+        return $this->eloquentUserRepository->findUserByIdWithRelations($id, [
+            'roles', 'companies'
+        ]);
     }
 
     public function updateUser(int $id, array $data)
@@ -89,4 +97,5 @@ class UsersService
     {
         return $this->deleteUserHandler->handle($id);
     }
+
 }

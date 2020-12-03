@@ -17,39 +17,59 @@
               <h4 class="text-center mb-4">{{ Str::upper(__('messages.auth.register')) }}</h4>
               <h6 class="text-center">{{ __('messages.auth.newEnter') }}</h6>
               {{-- Register form starts --}}
-              {!! Form::open(['url' => 'users/register','class' => 'theme-form']) !!}
+              {!! Form::open(['route' => 'register','method' => 'post','class' => 'theme-form']) !!}
                 <div class="form-row">
                   <div class="col-md-6">
                     <div class="form-group">
-                  {!! Form::label('firstName',  __('messages.auth.firstName'), ['class' => 'col-form-label']) !!}
-                  {!! Form::text('firstName', '', ['class' => 'form-control', 'placeholder' => __('messages.auth.firstName'), 'required']) !!}
+                  {!! Form::label('first_name',  __('messages.auth.firstName'), ['class' => 'col-form-label']) !!}
+                  {!! Form::text('first_name', '', ['class' => 'form-control'.($errors->has('last_name') ? ' is-invalid' : null), 'placeholder' => __('messages.auth.firstName'), 'required']) !!}
+                  @error('first_name')
+                  <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                  @enderror
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                  {!! Form::label('lastName',  __('messages.auth.lastName'), ['class' => 'col-form-label']) !!}
-                  {!! Form::text('lastName', '', ['class' => 'form-control', 'placeholder' => __('messages.auth.lastName'), 'required']) !!}
+                  {!! Form::label('last_name',  __('messages.auth.lastName'), ['class' => 'col-form-label']) !!}
+                  {!! Form::text('last_name', '', ['class' => 'form-control'.($errors->has('last_name') ? ' is-invalid' : null), 'placeholder' => __('messages.auth.lastName'), 'required']) !!}
+                  @error('last_name')
+                  <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                  @enderror
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                   {!! Form::label('email', __('messages.auth.email'), ['class' => 'col-form-label']) !!}
-                  {!! Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'your-email@domain.com', 'required']) !!}
+                  {!! Form::email('email', '', ['class' => 'form-control'.($errors->has('email') ? ' is-invalid' : null), 'placeholder' => 'your-email@domain.com', 'required']) !!}
+                  @error('email')
+                  <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                  @enderror
                 </div>
                 <div class="form-group">
                   {!! Form::label('password', __('messages.auth.password'), ['class' => 'col-form-label']) !!}
-                  {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
+                  {!! Form::password('password', ['class' => 'form-control'.($errors->has('password') ? ' is-invalid' : null), 'required']) !!}
+                  @error('password')
+                  <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                  @enderror
                 </div>
                 <div class="form-group">
-                  {!! Form::label('confirm', __('messages.auth.confirm'), ['class' => 'col-form-label']) !!}
-                  {!! Form::password('confirm', ['class' => 'form-control', 'required']) !!}
+                  {!! Form::label('password-confirm', __('messages.auth.confirm'), ['class' => 'col-form-label']) !!}
+                  {!! Form::password('password-confirm', ['name'=>'password_confirmation', 'class' => 'form-control',  'required']) !!}
                 </div>
                 <div class="form-row">
                   <div class="form-group form-row mt-3 mb-4 ml-2">
                       {!! Form::submit( Str::ucfirst(__('messages.auth.signup')),['class' => 'btn btn-primary btn-block'] ) !!}
                   </div>
                   <div class="col-sm-8">
-                    <div class="text-left mt-4 m-l-30">{{ __('messages.auth.already') }} <a class="btn-link text-capitalize" href="/login">{{ __('messages.auth.login') }}</a></div>
+                    <div class="text-left mt-4 m-l-30">{{ __('messages.auth.already') }} <a class="btn-link text-capitalize" href="{{route('login')}}">{{ __('messages.auth.login') }}</a></div>
                   </div>
                 </div>
                 {!! Form::close() !!}

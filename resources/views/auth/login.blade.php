@@ -9,9 +9,9 @@
     <div class="col-md-12">
       <div class="auth-innerright">
         <div class="authentication-box">
-          {{-- Logo --}}
-          {{-- <div class="text-center"><img src="{{asset('assets/images/logo-sample.png')}}" alt=""></div> --}}
-          {{-- Logo --}}
+{{--           Logo--}}
+{{--           <div class="text-center"><img src="{{asset('assets/images/logo-sample.png')}}" alt=""></div>--}}
+{{--           Logo--}}
           <div class="card mt-4">
             <div class="card-body">
               <div class="text-center">
@@ -19,14 +19,24 @@
                 <h6>{{__('messages.auth.enter') }}</h6>
               </div>
                 {{-- Login form opens--}}
-                {!! Form::open(['url' => 'foo/bar','class' => 'theme-form']) !!}
+                {!! Form::open(['route' => 'login','method' => 'post', 'class' => 'theme-form']) !!}
                 <div class="form-group">
                   {!! Form::label('email', __('messages.auth.yourEmail'), ['class' => 'col-form-label pt-0']) !!}
-                  {!! Form::email('email', '', ['class' => 'form-control', 'required']) !!}
+                  {!! Form::email('email', '', ['class' => 'form-control'.($errors->has('email') ? ' is-invalid' : null), 'required']) !!}
+                  @error('email')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
                 </div>
                 <div class="form-group">
                   {!! Form::label('password', __('messages.auth.password'), ['class' => 'col-form-label']) !!}
-                  {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
+                  {!! Form::password('password', ['class' => 'form-control'.($errors->has('password') ? ' is-invalid' : null), 'required']) !!}
+                  @error('password')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
                 </div>
                 <div class="checkbox p-0">
                   {!! Form::checkbox('remember','0', false, ['id' => 'remember']) !!}
@@ -40,7 +50,7 @@
 
                 {!! Form::close() !!}
                 {{-- Login form closes--}}
-              <div class="text-center mt-4"><a class="txt-dark" href="#">{{ __('messages.auth.forgot') }}</a></div>
+              <div class="text-center mt-4"><a class="txt-dark" href="{{ route('password.request') }}">{{ __('messages.auth.forgot') }}</a></div>
             </div>
           </div>
         </div>

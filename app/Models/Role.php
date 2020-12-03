@@ -35,10 +35,27 @@ class Role extends Model
         'name',
     ];
 
+    public function ability()
+    {
+        return $this->belongsTo(
+            Ability::class,
+            'id',
+            'id',
+            'ability_role')
+            ->first()
+            ->ability;
+    }
+
     public function users()
     {
         return $this->hasMany(User::class)
             ->using(RoleUser::class);
+    }
+
+    public function role()
+    {
+        return $this->hasOne(Ability::class)
+            ->using(AbilityRole::class);
     }
 
 }

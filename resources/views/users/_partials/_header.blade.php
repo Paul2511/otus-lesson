@@ -52,10 +52,17 @@
           <div class="media align-items-center"><img class="align-self-center pull-right img-50 rounded-circle" src="{{asset('assets/images/dashboard/user.png')}}" alt="header-user">
           </div>
           <ul class="profile-dropdown onhover-show-div p-20">
-            <li><a href="/users/profile"><i data-feather="user"></i>{{__('_partials/_header.edit')}}</a></li>
+            <li><a href="/user/profile"><i data-feather="user"></i>{{__('_partials/_header.edit')}}</a></li>
             <li><a href="/login"><i data-feather="lock"></i>{{__('_partials/_header.lock')}}</a></li>
             <li><a href="/settings"><i data-feather="settings"></i>{{__('_partials/_header.settings')}}</a></li>
-            <li><a href="/logout"><i data-feather="log-out"></i>{{__('_partials/_header.logout')}}</a></li>
+            <li><a href="{{ route('logout') }}"
+                   onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <i data-feather="log-out"></i> {{ __('_partials/_header.logout') }}
+              </a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+              </form>
+            </li>
           </ul>
         </li>
       </ul>

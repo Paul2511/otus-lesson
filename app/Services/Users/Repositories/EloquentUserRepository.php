@@ -7,7 +7,8 @@ namespace App\Services\Users\Repositories;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Hash;
 
 class EloquentUserRepository
 {
@@ -24,6 +25,11 @@ class EloquentUserRepository
         $qb->with($with);
 
         return $qb->paginate($perPage);
+    }
+
+    public function findUserByEmail(string $email): User
+    {
+        return User::where('email', $email)->first();
     }
 
     public function updateUserById(int $id, $request): User
@@ -65,6 +71,7 @@ class EloquentUserRepository
 
     public function createUser(array $data): User
     {
+        $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
 
         return $user;
@@ -72,9 +79,8 @@ class EloquentUserRepository
 
     public function deleteUserById(int $id): int
     {
-       return User::destroy($id);
-
-
+        return User::destroy($id);
     }
+
 
 }

@@ -12,11 +12,16 @@ final class AdminRoutesProvider
 {
     public function registerRoutes()
     {
-        Route::get('admin/dashboard', AdminDashboardIndexController::class)->name(AdminRoutes::ADMIN_DASHBOARD);
+        Route::redirect('admin', 'admin/dashboard');
+        Route::view('admin/profile', AdminRoutes::ADMIN_PROFILE)->name('profile');
+        Route::get('admin/dashboard', AdminDashboardIndexController::class)
+            ->name(AdminRoutes::ADMIN_DASHBOARD)
+            ->middleware('auth','admin');
         //Admin Routes
         Route::group([
             'prefix' => 'admin',
             'as' => 'admin.',
+            'middleware' => ['auth', 'admin'],
         ], function () {
             Route::resources([
                 'users' => AdminUsersController::class,

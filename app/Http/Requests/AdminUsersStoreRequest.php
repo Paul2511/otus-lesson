@@ -10,8 +10,9 @@ class AdminUsersStoreRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'password' => 'string|min:8',
             'email' => 'required|email',
-            'phone' => 'required|digits:10',
+            'phone' => 'required',
         ];
     }
 

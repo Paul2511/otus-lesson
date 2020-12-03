@@ -17,15 +17,15 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('inn');
-            $table->string('first_name',50);
-            $table->string('last_name',50);
-            $table->string('middle_name',50)->nullable();
-            $table->string('affilated_company',50)->nullable();
-            $table->string('position',50)->nullable();
-            $table->unsignedBigInteger('phone')->unique();
+            $table->unsignedBigInteger('inn')->nullable();
+            $table->string('first_name',255);
+            $table->string('last_name',255)->nullable();
+            $table->string('middle_name',255)->nullable();
+            $table->string('affilated_company',255)->nullable();
+            $table->string('position',255)->nullable();
+            $table->unsignedBigInteger('phone')->unique()->nullable();
             $table->string('email')->unique();
-            $table->string('password',200);
+            $table->string('password',255);
             $table->unsignedInteger('otp')->nullable();
             $table->unsignedTinyInteger('status')->default(User::STATUS_ACTIVE);
             $table->timestamp('email_verified_at')->nullable();
@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
                 ->nullable()
                 ->constrained('roles')
                 ->onDelete('set null');
+
         });
     }
     /**

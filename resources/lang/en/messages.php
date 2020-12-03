@@ -156,6 +156,7 @@ return [
          "admin" => "Admin",
          "sendEmail" => "Send Email",
          "createUser" => "Save",
+         "mustActive" => "You must be active to login",
 
 
 ],

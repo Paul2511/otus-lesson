@@ -24,7 +24,7 @@ class AdminUsersUpdateRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email',
-            'phone' => 'required|digits:10',
+            'phone' => 'required',
         ];
     }
 
