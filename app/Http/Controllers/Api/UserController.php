@@ -42,7 +42,7 @@ class UserController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $result = $this->usersService->getUser($id);
+        $result = $this->usersService->findUser($id);
         return response()->json($result);
     }
 

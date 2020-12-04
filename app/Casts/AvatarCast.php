@@ -4,15 +4,20 @@
 namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-
+use App\Helpers\BaseHelper;
 
 class AvatarCast implements CastsAttributes
 {
     public function get($model, $key, $value, $attributes)
     {
+        /**
+         * Comment: Самое удобное место для этой логики здесь.
+                    Тут можно избежать ошибок и быть увернным в результате
+         */
         if (!$value) {
+            //Только вот такой рефракторинг:
             $result = [
-                'src'=>'/images/no-avatar.jpg'
+                'src'=>BaseHelper::getUserDefaultAvatar()
             ];
         }
         else {

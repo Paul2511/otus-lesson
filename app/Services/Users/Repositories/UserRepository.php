@@ -7,26 +7,19 @@ use App\Models\User;
 
 class UserRepository
 {
-    public function getUser(int $id): User
+    public function findUser(int $id): User
     {
         return User::findOrFail($id);
     }
 
 
-    public function getUserWithDetail(int $id): User
+    public function findUserWithDetail(int $id): User
     {
         return User::whereId($id)->with('detail')->firstOrFail();
     }
 
-    public function setUserWithDetail(User $user, array $data): User
+    public function setUser(User $user, array $data): bool
     {
-        $detail = $user->detail;
-
-        $detail->fill($data['detail'])->save();
-        $user->fill($data)->save();
-
-        $user->fresh();
-
-        return $user;
+        return $user->fill($data)->save();
     }
 }

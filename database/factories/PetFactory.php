@@ -6,6 +6,7 @@ use App\Models\Pet;
 use App\Models\PetType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use App\Services\Pets\Helpers\PetLabelsHelper;
 
 class PetFactory extends Factory
 {
@@ -32,7 +33,7 @@ class PetFactory extends Factory
             return abort(500);
         }
 
-        $sex = $this->faker->randomElement(array_keys(Pet::sexLabels()));
+        $sex = $this->faker->randomElement(array_keys(PetLabelsHelper::sexLabels()));
 
         //Для генерации клички подключаем свой фейкер
         $this->faker->addProvider(new \App\Fakers\AnimalNameProvider($this->faker));

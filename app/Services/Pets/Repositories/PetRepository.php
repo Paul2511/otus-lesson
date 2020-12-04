@@ -15,7 +15,7 @@ class PetRepository
     /**
      * @return Pet[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getPets(int $userId = null)
+    public function getPets(?int $userId = null)
     {
         $query = Pet::query();
         if ($userId) {
@@ -25,14 +25,12 @@ class PetRepository
     }
 
     /**
-     * @param int $id
+     * @param Pet $pet
      * @return bool|null
      * @throws \Exception
      */
-    public function deletePet(int $id)
+    public function deletePet(Pet $pet)
     {
-        $pet = $this->getPet($id);
-
         return $pet->delete();
     }
 }

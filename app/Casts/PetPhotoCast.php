@@ -5,6 +5,7 @@ namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use App\Models\Pet;
+use App\Helpers\BaseHelper;
 
 class PetPhotoCast implements CastsAttributes
 {
@@ -14,7 +15,7 @@ class PetPhotoCast implements CastsAttributes
             if (!$value) {
                 $type = $model->petType->slug;
                 $result = [
-                    'src'=>"/images/{$type}-photo.jpg"
+                    'src'=>BaseHelper::getPetDefaultPhoto($type)
                 ];
             }
             else {

@@ -6,7 +6,7 @@ namespace App\Services;
 
 class BaseService
 {
-    public function success(array $data = [], array $message = null): array
+    public function success(?array $data = [], ?array $message = null): array
     {
         if (!$message) {
             $message = [

@@ -5,33 +5,47 @@ namespace App\Services\Users;
 
 use App\Services\Users\Repositories\UserRepository;
 use App\Services\BaseService;
+use App\Services\Users\Handlers\UpdateUserHandler;
+use App\Services\Users\Helpers\UserLabelsHelper;
 class UserService extends BaseService
 {
     /**
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var UpdateUserHandler
+     */
+    private $updateUserHandler;
+    /**
+     * @var UserLabelsHelper
+     */
+    private $userLabelsHelper;
 
     public function __construct(
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UpdateUserHandler $updateUserHandler,
+        UserLabelsHelper $userLabelsHelper
     )
     {
         $this->userRepository = $userRepository;
+        $this->updateUserHandler = $updateUserHandler;
+        $this->userLabelsHelper = $userLabelsHelper;
     }
 
-    public function getUser(int $id): array
+    public function findUser(int $id): array
     {
-        $user = $this->userRepository->getUserWithDetail($id);
+        $user = $this->userRepository->findUserWithDetail($id);
 
-        return ['user'=>$user->toArray()];
+        $userArray = $this->userLabelsHelper->toArray($user);
+
+        return ['user'=>$userArray];
     }
 
     public function setUser(int $id, $data): array
     {
-        $user = $this->userRepository->getUser($id);
-
-        $newUser = $this->userRepository->setUserWithDetail($user, $data);
-
-        return $this->success(['user'=>$newUser]);
+        $user = $this->updateUserHandler->handle($id, $data);
+        $userArray = $this->userLabelsHelper->toArray($user);
+        return $this->success(['user'=>$userArray]);
     }
 }

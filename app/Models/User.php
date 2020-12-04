@@ -12,8 +12,6 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use App\Casts\Phone;
 use Illuminate\Database\Eloquent\Builder;
-use App\Helpers\UtilsHelper;
-use phpDocumentor\Reflection\Types\Self_;
 
 /**
  * App\Models\User
@@ -91,15 +89,6 @@ class User extends Authenticatable
     const STATUS_ACTIVE = 10;
     const STATUS_NOT_ACTIVE = 20;
 
-    private static array $roleLabels;
-
-    private static array $statusLabels;
-
-    private static array $statusColors = [
-        self::STATUS_ACTIVE => 'success',
-        self::STATUS_NOT_ACTIVE => 'danger'
-    ];
-
     protected $fillable = [
         'email', 'password', 'role', 'status'
     ];
@@ -121,11 +110,7 @@ class User extends Authenticatable
 
 
     protected $appends = [
-        'phoneFormat',
-        'roleLabel',
-        'statusLabel',
-        'statusColor',
-        'statusLabels'
+        'phoneFormat'
     ];
 
     /**
@@ -214,40 +199,6 @@ class User extends Authenticatable
     public function getPhoneFormatAttribute()
     {
         return Phone::formatPhone($this->attributes['phone']);
-    }
-
-    public function getRoleLabelAttribute()
-    {
-        $labels = self::roleLabels();
-        return $labels[$this->role] ?? '';
-    }
-
-    public function getStatusLabelsAttribute()
-    {
-        return self::statusLabels();
-    }
-
-    public function getStatusLabelAttribute()
-    {
-        $labels = self::statusLabels();
-        return $labels[$this->status] ?? '';
-    }
-
-    public function getStatusColorAttribute()
-    {
-        return self::$statusColors[$this->status] ?? '';
-    }
-
-    public static function roleLabels(): array
-    {
-        if (isset(self::$roleLabels)) return self::$roleLabels;
-        return self::$roleLabels = UtilsHelper::getLangLabels(static::class, 'role');
-    }
-
-    public static function statusLabels(): array
-    {
-        if (isset(self::$statusLabels)) return self::$statusLabels;
-        return self::$statusLabels = UtilsHelper::getLangLabels(static::class, 'status');
     }
 
 }

@@ -22,8 +22,8 @@ class PetController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $userId = $request['user_id'] ?? null;
-        $result = $this->petService->getPets($userId);
+        $userId = $request->get('user_id', null);
+        $result = $this->petService->getUserPets($userId);
         return response()->json($result);
     }
 
