@@ -14,27 +14,27 @@ class TodoService{
         $this->deleteTodoHandler = $deleteTodoHandler;
 	}
 
-	public createTodo($request)
+	public function createTodo($request)
 	{
 		$this->createTodoHandler->handle($request);
 	}
 	
-	public updateTodo($data, $id)
+	public function updateTodo($data, $id)
 	{
 		$this->updateTodoHandler->handle($data, $id);
 	}
 	
-	public deleteTodo($id)
+	public function deleteTodo($id)
 	{
 		$this->deleteTodoHandler->handle($id);
 	}
 	
-	public giveMeAllTodo()
+	public function giveMeAllTodo()
 	{
 		return $this->giveMeAllTodoHandler->handle();
 	}
 
-	public giveMeTodo($id)
+	public function giveMeTodo($id)
 	{
 		return $this->giveMeTodoHandler->handle($id);
 	}

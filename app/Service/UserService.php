@@ -17,27 +17,27 @@ class UserService{
         $this->giveMeAllUserHandler = $giveMeAllUserHandler;
 	}
 
-	public createUser($request)
+	public function createUser($request)
 	{
 		$this->createUserHandler->handle($request);
 	}
 	
-	public updateUser($request, $id)
+	public function updateUser($request, $id)
 	{
 		$this->updateUserHandler->handle($request, $id);
 	}
 	
-	public deleteUser($id)
+	public function deleteUser($id)
 	{
 		$this->deleteUserHandler->handle($id);
 	}
 	
-	public giveMeAllUser()
+	public function giveMeAllUser()
 	{
 		return $this->giveMeAllUserHandler->handle();
 	}
 
-	public giveMeUser($id)
+	public function giveMeUser($id)
 	{
 		return $this->giveMeUserHandler->handle($id);
 	}
