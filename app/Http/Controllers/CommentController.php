@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
+use App\Service\CommentService;
 
 class CommentController extends Controller
 {
-    public function __construct(Comment $com)
+    protected $commentService;
+
+    public function __construct(CommentService $commentService)
     {
-        $this->model = new Repository($com);
+        $this->commentService = $commentService;
     }
     /**
      * Display a listing of the resource.
@@ -46,7 +48,7 @@ class CommentController extends Controller
             'text' => 'required'
         ]);
 
-        $this->model->create($request->only($this->model->getModel()->fillable));
+        $this->commentService->createTodo($request);
         return redirect()->back();
     }
 
@@ -86,7 +88,7 @@ class CommentController extends Controller
             'task_id' => 'required',
             'text' => 'required'
         ]);
-        $this->model->update($request->only($this->model->getModel()->fillable), $id);
+        $this->commentService->updateTodo($request, $id);
         return redirect()->back();
     }
 
@@ -98,7 +100,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $this->model->delete($id);
+        $this->commentService->deleteTodo($id);
         return redirect()->back();
     }
 }

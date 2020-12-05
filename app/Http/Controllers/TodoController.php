@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
+use App\Service\TodoService;
 
 class TodoController extends Controller
 {
-	public function __construct(Todo $todo)
+    protected $todoService;
+
+	public function __construct(TodoService $todoService)
 	{
-		$this->model = new Repository($todo);
+		$this->todoService = $todoService;
 	}
     /**
      * Display a listing of the resource.
@@ -45,7 +47,7 @@ class TodoController extends Controller
            	'name' => 'required'
        	]);
 
-    	$this->model->create($request->only($this->model->getModel()->fillable));
+    	$this->todoService->createTodo($request);
         return redirect()->back();
     }
 
@@ -82,9 +84,9 @@ class TodoController extends Controller
     public function update(Request $request)
     {
     	if($request->query_type == "to_done"){
-        	$todos = $this->model->update(["status" => 1], $request->todo_done);
+        	$this->todoService->updateTodo(["status" => 1], $request->todo_done);
     	} else if($request->query_type == "to_work"){
-    		$todos = $this->model->update(["status" => 0], $request->todo_to_work);
+    		$this->todoService->updateTodo(["status" => 0], $request->todo_to_work);
     	}
     	return redirect()->back();   	
     }
@@ -97,7 +99,7 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        $this->model->delete($id);
+        $this->todoService->deleteTodo($id);
         return redirect()->back();
     }
 }

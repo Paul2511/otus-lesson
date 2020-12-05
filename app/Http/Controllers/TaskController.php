@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
+use App\Service\TaskService;
 
 class TaskController extends Controller
 {
-    public function __construct(Task $task)
+   protected $taskService;
+
+    public function __construct(TaskService $taskService)
     {
-        $this->model = new Repository($task);
+        $this->taskService = $taskService;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +22,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = $this->model->all();
+        $tasks = $this->taskService->giveMeAllTask();
         return view("tasks", ["tasks" => $tasks]);
     }
 
@@ -46,7 +49,8 @@ class TaskController extends Controller
         ]);
 
         // create record and pass in only fields that are fillable
-        return $this->model->create($request->only($this->model->getModel()->fillable));
+        $this->taskService->createTask($request);
+        return redirect()->back();
     }
 
     /**
@@ -57,7 +61,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = $this->model->show($id);
+        $task = $this->taskService->giveMeTask($id);
         return view("task_detailed", ["task" => $task]);
     }
 
@@ -69,7 +73,7 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $task = $this->model->show($id);
+        $task = $this->taskService->giveMeTask($id);
         return view("task_edit", ["task" => $task]);
     }
 
@@ -86,7 +90,7 @@ class TaskController extends Controller
             'name' => 'required|max:255',
         ]);
 
-        $this->model->update($request->only($this->model->getModel()->fillable), $id);
+        $this->taskService->updateTask($request, $id);
 
         return redirect()->back();
     }
@@ -99,7 +103,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $this->model->delete($id);
+        $this->taskService->deleteTask($id);
         return redirect()->back();
     }
 }

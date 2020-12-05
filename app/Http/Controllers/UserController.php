@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
+use App\Service\UserService;
 
 class UserController extends Controller
 {
-	protected $model;
+	protected $userService;
 
-	public function __construct(User $user)
+	public function __construct(UserService $userService)
 	{
-		$this->model = new Repository($user);
+        $this->userService = $userService;
 	}
 
     /**
@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-    	$users = $this->model->all();
+    	$users =$this->userService->giveMeAllUser();
         return view("users", ['users' => $users]);
     }
 
@@ -61,7 +61,8 @@ class UserController extends Controller
         	throw Exception("invalid role");
     	}
        	// create record and pass in only fields that are fillable
-       	return $this->model->create($request->only($this->model->getModel()->fillable));
+        $this->userService->createUser($request);
+        return redirect()->back();
     }
 
     /**
@@ -72,7 +73,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    	$user = $this->model->show($id);
+    	$user = $this->userService->giveMeUser($id);
         return view("lk", ["user" => $user]);
     }
 
@@ -84,7 +85,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-    	$user = $this->model->show($id);
+    	$user = $this->userService->giveMeUser($id);
         return view("user_edit", ["user" => $user]);
     }
 
@@ -104,10 +105,7 @@ class UserController extends Controller
            	'role' => 'required',
            	'email' =>'required|unique:users,id,'.$id
        	]);
-
-        $this->model->update($request->only($this->model->getModel()->fillable), $id);
-
-       	//return $this->model->find($id);
+        $this->userService->updateUser($request, $id);
        	return redirect()->route('user.show', ['user' => $id]);
     }
 
@@ -119,7 +117,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-    	$this->model->delete($id);
+    	$this->userService->deleteUser($id);
         return redirect()->back();
     }
 

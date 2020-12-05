@@ -1,17 +1,15 @@
 <?php 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Todo;
 
-class Repository implements RepositoryInterface
+class EloquentTodoRepository implements RepositoryInterface
 {
     // model property on class instances
     protected $model;
 
-    // Constructor to bind model to repo
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
+    public function __construct(){
+        $this->model = new Todo();
     }
 
     // Get all instances of model

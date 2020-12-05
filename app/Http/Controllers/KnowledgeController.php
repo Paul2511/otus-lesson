@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Knowledge;
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
+use App\Service\KnowledgeService;
 
 class KnowledgeController extends Controller
 {
-    public function __construct(Knowledge $knowl)
+    protected $knowledgeService;
+
+    public function __construct(KnowledgeService $knowledgeService)
     {
-        $this->model = new Repository($knowl);
+        $this->knowledgeService = $knowledgeService;
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +21,7 @@ class KnowledgeController extends Controller
      */
     public function index()
     {
-        $knowledges = $this->model->all();
+        $knowledges = $this->knowledgeService->giveMeAllKnowledge();
         return view("knowledges", ['knowls' => $knowledges]);
     }
 
@@ -48,7 +50,7 @@ class KnowledgeController extends Controller
             "data" => 'required'
         ]);
 
-        $this->model->create($request->only($this->model->getModel()->fillable));
+        $this->knowledgeService->createKnowledge($request);
         return redirect()->back();
     }
 
@@ -60,7 +62,7 @@ class KnowledgeController extends Controller
      */
     public function show($id)
     {
-        $knowl = $this->model->show($id);
+        $knowl = $this->knowledgeService->giveMeKnowledge($id);
         return view("knowledge_detailed", ["knowl" => $knowl]);
     }
 
@@ -72,7 +74,7 @@ class KnowledgeController extends Controller
      */
     public function edit($id)
     {
-        $knowl = $this->model->show($id);
+        $knowl = $this->KnowledgeService->giveMeKnowledge($id);
         return view("knowledge_edit", ["knowl" => $knowl]);
     }
 
@@ -92,7 +94,7 @@ class KnowledgeController extends Controller
             "data" => 'required'
         ]);
 
-        $this->model->update($request->only($this->model->getModel()->fillable), $id);
+        $this->knowledgeService->updateKnowledge($request, $id);
         return redirect()->back();
     }
 
@@ -104,7 +106,7 @@ class KnowledgeController extends Controller
      */
     public function destroy($id)
     {
-        $this->model->delete($id);
+        $this->knowledgeService->deleteKnowledge($id);
         return redirect()->back();
     }
 }

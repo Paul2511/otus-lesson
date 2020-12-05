@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
+use App\Service\ClientService;
 
 class ClientController extends Controller
-{
-     public function __construct(Client $client)
+{   
+    protected $clientService;
+
+    public function __construct(ClientService $clientService)
     {
-        $this->model = new Repository($client);
+        $this->clientService = $clientService;
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +21,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = $this->model->all();
+        $clients = $this->clientService->giveMeAllClient();
         return view("clients", ["clients" => $clients]);
     }
 
@@ -41,7 +43,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $this->model->create($request->only($this->model->getModel()->fillable));
+        $this->clientService->createClient($request);
         return redirect()->back();
     }
 
@@ -53,7 +55,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = $this->model->show($id);
+        $client = $this->clientService->giveMeClient($id);
         return view("client_detailed", ["client" => $client]);
     }
 
@@ -65,7 +67,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $client = $this->model->show($id); 
+        $client = $this->clientService->giveMeClient($id); 
         return view("client_edit", ['client' => $client]);
     }
 
@@ -78,7 +80,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->model->update($request->only($this->model->getModel()->fillable), $id);
+        $this->clientService->updateClient($request, $id);
         return redirect()->back();
     }
 
@@ -88,9 +90,9 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $id)
+    public function destroy($id)
     {
-        $this->model->delete($id);
+        $this->clientService->deleteClient($id);
         return redirect()->back();
     }
 }
