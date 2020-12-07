@@ -32,6 +32,25 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 - Подбор для нового студента максимально подходящей ему группы;
 - Поиск замены преподавателя из «свободных» преподавателей.
 
+## Установка
+
+Перед запуском вам необходимо установить все зависимости и собрать фронт.
+
+```console
+npm i
+npm run production
+```
+
+## Возможности
+
+### Frontend статичные страницы
+
+* О нас(`\about`);
+* Политика конф-ти(`\policy`);
+* Авторизация(`\login`);
+* Регистрация(`\signup`);
+* Профиль(`\profile`);.
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
