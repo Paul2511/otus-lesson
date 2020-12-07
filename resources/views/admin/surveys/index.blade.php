@@ -22,7 +22,7 @@
                         <th scope="col">Name</th>
                         <th scope="col" colspan="3" class="text-right">
 
-                            <a href="{{ route(AdminSurveysRoutes::SURVEYS_CREATE) }}">Создать новый опрос</a>
+                            <a href="{{ AdminRoutes::surveysCreate() }}">Создать новый опрос</a>
 
                         </th>
                     </tr>
@@ -31,17 +31,15 @@
 
                     @foreach($surveys as $survey)
                         <tr>
-                            <th scope="row">
-                                {{ $survey->id }}
-                            </th>
+                            <th scope="row">{{ $survey->id }}</th>
                             <td>{{ $survey->name }}</td>
                             <td class="text-right">
                                 <a class="btn btn-primary"
-                                   href="{{ route(AdminSurveysRoutes::SURVEYS_SHOW, $survey) }}">View</a>
+                                   href="{{ AdminRoutes::surveysShow($survey) }}">View</a>
                             </td>
                             <td class="text-right">
                                 <a class="btn btn-primary"
-                                   href="{{ route(AdminSurveysRoutes::SURVEYS_EDIT, $survey) }}">Edit</a>
+                                   href="{{ AdminRoutes::surveysEdit($survey) }}">Edit</a>
                             </td>
                             <td class="text-right">
                                 @include("admin.surveys.deleteButton")
@@ -50,7 +48,7 @@
                         <tr>
                             <td colspan="1"></td>
                             <td colspan="1">
-                                <a href="{{ route(AdminSurveysRoutes::QUESTIONS_INDEX, $survey) }}">Посмотреть вопросы</a>
+                                <a href="{{ AdminRoutes::questionsIndex($survey) }}">Посмотреть вопросы</a>
                             </td>
                         </tr>
                     @endforeach

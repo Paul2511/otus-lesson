@@ -18,6 +18,10 @@ class CreateSurveysTable extends Migration
             $table->id();
             $table->timestamps();
 
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+
             $table->text('name');
             $table->longText('text')->nullable();
             $table->string('picture')->nullable();

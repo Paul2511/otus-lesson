@@ -12,9 +12,13 @@
     @include("components.first_screen")
 
     <div class="container py-5 d-flex flex-column flex-grow-1">
+        <div class="text-right">
+            @include("admin.surveys.deleteButton")
+        </div>
+
         {!! Form::open($formOpenOptions) !!}
 
-        <p><a href="{{ route('admin.surveys.index')  }}">@lang("messages.go_back")</a></p>
+        <p><a href="{{ AdminRoutes::surveysIndex()  }}">@lang("messages.go_back")</a></p>
 
         <table class="table">
             <thead>
@@ -53,9 +57,6 @@
                 <td>
                     <div class="d-inline-flex">
                         {{ Form::submit(__('messages.form_submit'), ['class' => 'btn btn-primary']) }}
-                    </div>
-                    <div class="d-inline-flex">
-                        @include("admin.surveys.deleteButton")
                     </div>
                 </td>
             </tr>

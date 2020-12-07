@@ -20,6 +20,7 @@ class CreateQuestionsTable extends Migration
             $table->timestamps();
 
             $table->foreignId('survey_id')
+                ->unsigned()
                 ->constrained()
                 ->onDelete('cascade');
 

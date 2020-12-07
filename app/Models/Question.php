@@ -2,34 +2,39 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 
 /**
  * App\Models\Question
  *
- * @property int                             $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int                             $survey_id
- * @property string                          $name
- * @property string                          $type
- * @property string|null                     $text
- * @property array|null                      $pictures
- * @property-read \App\Models\Survey         $survey
- * @method static \Illuminate\Database\Eloquent\Builder|Question newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Question newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Question query()
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question wherePictures($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereSurveyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereText($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
+ * @property int                      $id
+ * @property Carbon|null              $created_at
+ * @property Carbon|null              $updated_at
+ * @property int                      $survey_id
+ * @property string                   $name
+ * @property string                   $type
+ * @property string|null              $text
+ * @property array|null               $pictures
+ * @property-read Survey              $survey
+ * @method static Builder|Question newModelQuery()
+ * @method static Builder|Question newQuery()
+ * @method static Builder|Question query()
+ * @method static Builder|Question whereCreatedAt($value)
+ * @method static Builder|Question whereId($value)
+ * @method static Builder|Question whereName($value)
+ * @method static Builder|Question wherePictures($value)
+ * @method static Builder|Question whereSurveyId($value)
+ * @method static Builder|Question whereText($value)
+ * @method static Builder|Question whereType($value)
+ * @method static Builder|Question whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read Collection|Answer[] $answer
+ * @property-read int|null            $answer_count
  */
 class Question extends BaseModel
 {

@@ -15,7 +15,7 @@
     <div class="container py-5 d-flex flex-column flex-grow-1">
         <div class="row">
             <div class="col-12">
-                <p><a href="{{ route(AdminSurveysRoutes::SURVEYS_INDEX)  }}">@lang("messages.go_back")</a></p>
+                <p><a href="{{ AdminRoutes::surveysIndex()  }}">@lang("messages.go_back")</a></p>
 
                 <table class="table">
                     <thead>
@@ -24,7 +24,7 @@
                         <th scope="col">Name</th>
                         <th scope="col" colspan="3" class="text-right">
 
-                            <a href="{{ route(AdminSurveysRoutes::QUESTIONS_CREATE, $survey) }}">Создать новый вопрос</a>
+                            <a href="{{ AdminRoutes::questionsCreate($survey) }}">Создать новый вопрос</a>
 
                         </th>
                     </tr>
@@ -35,6 +35,15 @@
                         <tr>
                             <td>{{ $question->id }}</td>
                             <td>{{ $question->name }}</td>
+
+                            <td class="text-right">
+                                <a class="btn btn-primary"
+                                   href="{{ AdminRoutes::questionsShow($survey, $question) }}">View</a>
+                            </td>
+                            <td class="text-right">
+                                <a class="btn btn-primary"
+                                   href="{{ AdminRoutes::questionsEdit($survey, $question) }}">Edit</a>
+                            </td>
                         </tr>
                     @empty
                         <tr>

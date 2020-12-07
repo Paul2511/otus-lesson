@@ -13,8 +13,8 @@
 
     <div class="container py-5 d-flex flex-column flex-grow-1">
         <p class="flex justify-content-between">
-            <a href="{{ route('admin.surveys.index')  }}">&larr; Назад</a>
-            <a href="{{ route(AdminSurveysRoutes::SURVEYS_EDIT, $survey)  }}">Редактировать</a>
+            <a href="{{ AdminRoutes::surveysIndex()  }}">&larr; Назад</a>
+            <a href="{{ AdminRoutes::surveysEdit($survey)  }}">Редактировать</a>
         </p>
 
         <table class="table">

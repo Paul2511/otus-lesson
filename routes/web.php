@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\Routes\Provider\SurveysRoutesProvider;
+use App\Services\Routes\Providers\Admin\AdminRoutesProvider;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,4 +39,4 @@ Route::get('/dev/register', function () {
 })
     ->name('register');
 
-app(SurveysRoutesProvider::class)->register();
+app(AdminRoutesProvider::class)->register();

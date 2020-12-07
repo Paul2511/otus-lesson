@@ -13,9 +13,13 @@
     @include("components.first_screen")
 
     <div class="container py-5 d-flex flex-column flex-grow-1">
+        <div class="text-right">
+            @include("admin.questions.deleteButton")
+        </div>
+
         {!! Form::open($formOpenOptions) !!}
 
-        <p><a href="{{ route(AdminSurveysRoutes::QUESTIONS_INDEX, $survey)  }}">@lang("messages.go_back")</a></p>
+        <p><a href="{{ AdminRoutes::questionsIndex($survey) }}">@lang("messages.go_back")</a></p>
 
         <table class="table">
             <thead>
@@ -27,13 +31,13 @@
 
             <tbody>
             <tr>
-                <td>Заголовок опроса</td>
+                <td>Заголовок вопроса</td>
                 <td>
                     {{ Form::input('text', 'name', $question->name, ['class' => 'form-control']) }}
                 </td>
             </tr>
             <tr>
-                <td>Текст опроса</td>
+                <td>Текст вопроса</td>
                 <td>
                     {{ Form::textarea('text', $question->text, ['class' => 'form-control']) }}
                 </td>
@@ -44,14 +48,12 @@
                     <div class="d-inline-flex">
                         {{ Form::submit(__('messages.form_submit'), ['class' => 'btn btn-primary']) }}
                     </div>
-                    <div class="d-inline-flex">
-                        @include("admin.questions.deleteButton")
-                    </div>
                 </td>
             </tr>
             </tbody>
         </table>
 
         {!! Form::close() !!}
+
     </div>
 @endsection

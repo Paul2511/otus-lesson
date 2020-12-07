@@ -5,24 +5,29 @@ namespace Database\Seeders;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Survey;
-use Database\Factories\QuestionFactory;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 
 class SurveySeeder extends Seeder
 {
     public function run()
     {
-        Survey::factory()
-            ->times(30)
-            ->has(
-                Question::factory()
-                    ->has(Answer::factory()->count(4))
-                    ->count(15)
-            )
-            ->create();
+        $users = User::factory(3)->create();
+
+        foreach ($users as $user) {
+            Survey::factory()
+                ->times(10)
+                ->has(
+                    Question::factory()
+                        ->has(Answer::factory()->count(4))
+                        ->count(15)
+                )
+                ->create(
+                    [
+                        'user_id' => $user->id,
+                    ]
+                );
+        }
     }
 }
