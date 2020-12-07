@@ -36,7 +36,7 @@ class DictionaryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
@@ -45,10 +45,7 @@ class DictionaryController extends Controller
         $dictionary->user_id = Auth::id();
         $dictionary->save();
 
-        return response()->json([
-            'status' => 'ok',
-            'id'     => $dictionary->id,
-        ]);
+        return redirect(route('dictionaries.index'));
     }
 
     /**
@@ -96,7 +93,7 @@ class DictionaryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Dictionary $dictionary
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy(Dictionary $dictionary)
     {
@@ -113,6 +110,6 @@ class DictionaryController extends Controller
 
         $dictionary->delete();
 
-        return 'Dictionary ' . $dictionary->id . ' with all words and contexts has been successfully deleted';
+        return redirect(route('dictionaries.index'));
     }
 }

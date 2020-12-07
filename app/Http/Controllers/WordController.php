@@ -31,8 +31,8 @@ class WordController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
@@ -49,16 +49,13 @@ class WordController extends Controller
         $context->postfix = '';
         $context->save();
 
-        return response()->json([
-            'status' => 'ok',
-            'id'     => $word->id,
-        ]);
+        return redirect(route('dictionaries.show', [$request->dictionary_id]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Word  $word
+     * @param \App\Models\Word $word
      * @return \Illuminate\Http\Response
      */
     public function show(Word $word)
@@ -69,7 +66,7 @@ class WordController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Word  $word
+     * @param \App\Models\Word $word
      * @return \Illuminate\Http\Response
      */
     public function edit(Word $word)
@@ -80,8 +77,8 @@ class WordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Word  $word
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Word $word
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Word $word)
@@ -92,15 +89,18 @@ class WordController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Word  $word
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Word $word
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy(Word $word)
     {
-        Context::where('word_id',$word->id)
+        Context::where('word_id', $word->id)
             ->delete();
+
+        $dictionary_id = $word->dictionary_id;
+
         $word->delete();
 
-        return 'Word ' . $word->id . ' with all contexts has been successfully deleted';
+        return redirect(route('dictionaries.show', [$dictionary_id]));
     }
 }
