@@ -17,7 +17,7 @@ class DictionaryController extends Controller
     public function index()
     {
         $dictionaries = Dictionary::with('words')
-            ->get();
+            ->paginate(10);
 
         return view('dictionaries')->with('dictionaries', $dictionaries);
     }
@@ -61,7 +61,7 @@ class DictionaryController extends Controller
     {
         $words = Word::where('dictionary_id', $dictionary->id)
             ->with('contexts')
-            ->paginate(5);
+            ->paginate(10);
 
         return view('dictionary')->with([
             'dictionary' => $dictionary,

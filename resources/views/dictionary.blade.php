@@ -66,7 +66,9 @@
         @endforeach
     </div>
 
-    @include('blocks.pagination')
+    <div class="container mt-3">
+        {{ $words->links() }}
+    </div>
 
     @include('blocks.forms.new-word', ['dictionary_id' => $dictionary->id])
 @endsection
