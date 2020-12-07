@@ -11,9 +11,8 @@ class CreateCommentHandler implements HandlerInterface
 		$this->commentRepository = $commentRepository;
 	}
 
-    public function handle(Request $request)
+    public function handle($data)
     {
-    	$data = $request->only($this->commentRepository->getModel()->fillable);
     	return $this->commentRepository->create($data);
     }
 }

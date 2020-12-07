@@ -11,9 +11,8 @@ class CreateClientHandler implements HandlerInterface
 		$this->clientRepository = $clientRepository;
 	}
 
-    public function handle(Request $request)
+    public function handle($data)
     {
-    	$data = $request->only($this->clientRepository->getModel()->fillable);
     	return $this->clientRepository->create($data);
     }
 }

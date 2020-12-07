@@ -11,9 +11,8 @@ class UpdateCommentHandler implements HandlerInterface
 		$this->commentRepository = $commentRepository;
 	}
 
-    public function handle(Request $request, $id)
-    {
-    	$data = $request->only($this->commentRepository->getModel()->fillable);
+    public function handle($data, $id)
+   	{
     	return $this->commentRepository->update($data, $id);
     }
 }

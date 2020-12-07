@@ -11,9 +11,8 @@ class UpdateTaskHandler implements HandlerInterface
 		$this->taskRepository = $userRepository;
 	}
 
-    public function handle(Request $request, $id)
+    public function handle($data, $id)
     {
-    	$data = $request->only($this->taskRepository->getModel()->fillable);
     	return $this->taskRepository->update($data, $id);
     }
 }

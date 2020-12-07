@@ -46,8 +46,8 @@ class TodoController extends Controller
     		'task_id' => 'required',
            	'name' => 'required'
        	]);
-
-    	$this->todoService->createTodo($request);
+        $data = $request->only(["name", "status", "task_id"]);
+    	$this->todoService->createTodo($data);
         return redirect()->back();
     }
 

@@ -22,7 +22,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = $this->clientService->giveMeAllClient();
-        return view("clients", ["clients" => $clients]);
+        return view("client.index", ["clients" => $clients]);
     }
 
     /**
@@ -32,7 +32,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view("client_create");
+        return view("client.create");
     }
 
     /**
@@ -43,7 +43,8 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $this->clientService->createClient($request);
+        $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service", "user_id"]);
+        $this->clientService->createClient($data);
         return redirect()->back();
     }
 
@@ -56,7 +57,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = $this->clientService->giveMeClient($id);
-        return view("client_detailed", ["client" => $client]);
+        return view("client.show", ["client" => $client]);
     }
 
     /**
@@ -68,7 +69,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = $this->clientService->giveMeClient($id); 
-        return view("client_edit", ['client' => $client]);
+        return view("client.edit", ['client' => $client]);
     }
 
     /**
@@ -80,7 +81,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->clientService->updateClient($request, $id);
+        $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service", "user_id"]);
+        $this->clientService->updateClient($data, $id);
         return redirect()->back();
     }
 

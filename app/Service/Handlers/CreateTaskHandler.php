@@ -11,9 +11,8 @@ class CreateTaskHandler implements HandlerInterface
 		$this->taskRepository = $taskRepository;
 	}
 
-    public function handle(Request $request)
+    public function handle($data)
     {
-    	$data = $request->only($this->taskRepository->getModel()->fillable);
     	return $this->taskRepository->create($data);
     }
 }

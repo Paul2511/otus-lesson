@@ -48,7 +48,8 @@ class CommentController extends Controller
             'text' => 'required'
         ]);
 
-        $this->commentService->createTodo($request);
+        $data = $request->only(["text", "user_id", "task_id"]);
+        $this->commentService->createTodo($data);
         return redirect()->back();
     }
 
@@ -88,7 +89,9 @@ class CommentController extends Controller
             'task_id' => 'required',
             'text' => 'required'
         ]);
-        $this->commentService->updateTodo($request, $id);
+
+        $data = $request->only(["text", "user_id", "task_id"]);
+        $this->commentService->updateTodo($data, $id);
         return redirect()->back();
     }
 

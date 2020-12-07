@@ -11,9 +11,8 @@ class CreateKnowledgeHandler implements HandlerInterface
 		$this->knowledgeRepository = $knowledgeRepository;
 	}
 
-    public function handle(Request $request)
+    public function handle($data)
     {
-    	$data = $request->only($this->knowledgeRepository->getModel()->fillable);
     	return $this->knowledgeRepository->create($data);
     }
 }

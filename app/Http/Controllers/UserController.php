@@ -22,8 +22,8 @@ class UserController extends Controller
      */
     public function index()
     {
-    	$users =$this->userService->giveMeAllUser();
-        return view("users", ['users' => $users]);
+    	$users =$this->userService->getUsers();
+        return view("user.index", ['users' => $users]);
     }
 
     /**
@@ -34,7 +34,7 @@ class UserController extends Controller
     public function create()
     {
     	if(!Auth::check()){
-    		return view("registration");
+    		return view("user.create");
     	}
     	return redirect()->back();
     }
@@ -61,7 +61,16 @@ class UserController extends Controller
         	throw Exception("invalid role");
     	}
        	// create record and pass in only fields that are fillable
-        $this->userService->createUser($request);
+        $data = $request->only([
+            'name',
+            'last_name',
+            'patronymic',
+            'email',
+            'password',
+            'role',
+            'skills'
+        ]);
+        $this->userService->createUser($data);
         return redirect()->back();
     }
 
@@ -73,8 +82,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    	$user = $this->userService->giveMeUser($id);
-        return view("lk", ["user" => $user]);
+    	$user = $this->userService->getUser($id);
+        return view("user.show", ["user" => $user]);
     }
 
     /**
@@ -85,8 +94,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-    	$user = $this->userService->giveMeUser($id);
-        return view("user_edit", ["user" => $user]);
+    	$user = $this->userService->getUser($id);
+        return view("user.edit", ["user" => $user]);
     }
 
     /**
@@ -105,7 +114,16 @@ class UserController extends Controller
            	'role' => 'required',
            	'email' =>'required|unique:users,id,'.$id
        	]);
-        $this->userService->updateUser($request, $id);
+        $data = $request->only([
+            'name',
+            'last_name',
+            'patronymic',
+            'email',
+            'password',
+            'role',
+            'skills'
+        ]);
+        $this->userService->updateUser($data, $id);
        	return redirect()->route('user.show', ['user' => $id]);
     }
 
@@ -129,7 +147,7 @@ class UserController extends Controller
     }
     public function login(){
     	if(!Auth::check()){
-    		return view("login");
+    		return view("user.login");
     	}
     	return redirect()->back();
     }

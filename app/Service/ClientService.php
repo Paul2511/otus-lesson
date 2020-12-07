@@ -17,14 +17,14 @@ class UserService{
         $this->giveMeAllClientHandler = $giveMeAllClientHandler;
 	}
 
-	public function createClient($request)
+	public function createClient($data)
 	{
-		$this->createClientHandler->handle($request);
+		$this->createClientHandler->handle($data);
 	}
 	
-	public function updateClient($request, $id)
+	public function updateClient($data, $id)
 	{
-		$this->updateClientHandler->handle($request, $id);
+		$this->updateClientHandler->handle($data, $id);
 	}
 	
 	public function deleteClient($id)
@@ -32,12 +32,12 @@ class UserService{
 		$this->deleteClientHandler->handle($id);
 	}
 	
-	public function giveMeAllClient()
+	public function getClients()
 	{
 		return $this->giveMeAllClientHandler->handle();
 	}
 
-	public function giveMeClient($id)
+	public function getClient($id)
 	{
 		return $this->giveMeClientHandler->handle($id);
 	}

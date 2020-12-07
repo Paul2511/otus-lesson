@@ -17,14 +17,14 @@ class TaskService{
         $this->giveMeAllTaskHandler = $giveMeAllTaskHandler;
 	}
 
-	public function createTask($request)
+	public function createTask($data)
 	{
-		$this->createTaskHandler->handle($request);
+		$this->createTaskHandler->handle($data);
 	}
 	
-	public function updateTask($request, $id)
+	public function updateTask($data, $id)
 	{
-		$this->updateTaskHandler->handle($request, $id);
+		$this->updateTaskHandler->handle($data, $id);
 	}
 	
 	public function deleteTask($id)
@@ -32,12 +32,12 @@ class TaskService{
 		$this->deleteTaskHandler->handle($id);
 	}
 	
-	public function giveMeAllTask()
+	public function getTasks()
 	{
 		return $this->giveMeAllTaskHandler->handle();
 	}
 
-	public function giveMeTask($id)
+	public function getTask($id)
 	{
 		return $this->giveMeTaskHandler->handle($id);
 	}

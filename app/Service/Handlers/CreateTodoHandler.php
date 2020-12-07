@@ -11,9 +11,8 @@ class CreateTodoHandler implements HandlerInterface
 		$this->todoRepository = $todoRepository;
 	}
 
-    public function handle(Request $request)
+    public function handle($data)
     {
-    	$data = $request->only($this->todoRepository->getModel()->fillable);
     	return $this->todoRepository->create($data);
     }
 }

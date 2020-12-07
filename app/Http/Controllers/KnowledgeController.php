@@ -21,8 +21,8 @@ class KnowledgeController extends Controller
      */
     public function index()
     {
-        $knowledges = $this->knowledgeService->giveMeAllKnowledge();
-        return view("knowledges", ['knowls' => $knowledges]);
+        $knowledges = $this->knowledgeService->getKnowledges();
+        return view("knowledge.index", ['knowls' => $knowledges]);
     }
 
     /**
@@ -32,7 +32,7 @@ class KnowledgeController extends Controller
      */
     public function create()
     {
-        return view("knowledge_create");
+        return view("knowledge.create");
     }
 
     /**
@@ -50,7 +50,8 @@ class KnowledgeController extends Controller
             "data" => 'required'
         ]);
 
-        $this->knowledgeService->createKnowledge($request);
+        $data = $request->only(['name', 'description', 'data', 'user_id']);
+        $this->knowledgeService->createKnowledge($data);
         return redirect()->back();
     }
 
@@ -62,8 +63,8 @@ class KnowledgeController extends Controller
      */
     public function show($id)
     {
-        $knowl = $this->knowledgeService->giveMeKnowledge($id);
-        return view("knowledge_detailed", ["knowl" => $knowl]);
+        $knowl = $this->knowledgeService->getKnowledge($id);
+        return view("knowledge.show", ["knowl" => $knowl]);
     }
 
     /**
@@ -74,8 +75,8 @@ class KnowledgeController extends Controller
      */
     public function edit($id)
     {
-        $knowl = $this->KnowledgeService->giveMeKnowledge($id);
-        return view("knowledge_edit", ["knowl" => $knowl]);
+        $knowl = $this->KnowledgeService->getKnowledge($id);
+        return view("knowledge.edit", ["knowl" => $knowl]);
     }
 
     /**
@@ -94,7 +95,8 @@ class KnowledgeController extends Controller
             "data" => 'required'
         ]);
 
-        $this->knowledgeService->updateKnowledge($request, $id);
+        $data = $request->only(['name', 'description', 'data', 'user_id']);
+        $this->knowledgeService->updateKnowledge($data, $id);
         return redirect()->back();
     }
 

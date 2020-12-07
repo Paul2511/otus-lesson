@@ -14,28 +14,18 @@ class TodoService{
         $this->deleteCommentCommentHandler = $deleteCommentHandler;
 	}
 
-	public function createComment($request)
+	public function createComment($data)
 	{
-		$this->createCommentHandler->handle($request);
+		$this->createCommentHandler->handle($data);
 	}
 	
-	public function updateTodo($request, $id)
+	public function updateComment($data, $id)
 	{
-		$this->updateCommentHandler->handle($request, $id);
+		$this->updateCommentHandler->handle($data, $id);
 	}
 	
-	public function deleteTodo($id)
+	public function deleteComment($id)
 	{
 		$this->deleteCommentHandler->handle($id);
-	}
-	
-	public function giveMeAllTodo()
-	{
-		return $this->giveMeAllCommentHandler->handle();
-	}
-
-	public function giveMeTodo($id)
-	{
-		return $this->giveMeCommentHandler->handle($id);
 	}
 }

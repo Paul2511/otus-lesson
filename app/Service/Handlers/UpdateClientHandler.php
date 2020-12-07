@@ -11,9 +11,8 @@ class UpdateClientHandler implements HandlerInterface
 		$this->clientRepository = $clientRepository;
 	}
 
-    public function handle(Request $request, $id)
+    public function handle($data, $id)
     {
-    	$data = $request->only($this->clientRepository->getModel()->fillable);
     	return $this->clientRepository->update($data, $id);
     }
 }

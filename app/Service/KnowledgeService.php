@@ -17,14 +17,14 @@ class TaskService{
         $this->giveMeAllKnowledgeHandler = $giveMeAllKnowledgeHandler;
 	}
 
-	public function createKnowledge($request)
+	public function createKnowledge($data)
 	{
-		$this->createKnowledgeHandler->handle($request);
+		$this->createKnowledgeHandler->handle($data);
 	}
 	
-	public function updateKnowledge($request, $id)
+	public function updateKnowledge($data, $id)
 	{
-		$this->updateKnowledgeHandler->handle($request, $id);
+		$this->updateKnowledgeHandler->handle($data, $id);
 	}
 	
 	public function deleteKnowledge($id)
@@ -32,12 +32,12 @@ class TaskService{
 		$this->deleteKnowledgeHandler->handle($id);
 	}
 	
-	public function giveMeAllKnowledge()
+	public function getKnowledges()
 	{
 		return $this->giveMeAllKnowledgeHandler->handle();
 	}
 
-	public function giveMeKnowledge($id)
+	public function getKnowledge($id)
 	{
 		return $this->giveMeKnowledgeHandler->handle($id);
 	}

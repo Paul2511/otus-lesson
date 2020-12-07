@@ -22,8 +22,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = $this->taskService->giveMeAllTask();
-        return view("tasks", ["tasks" => $tasks]);
+        $tasks = $this->taskService->getTasks();
+        return view("task.index", ["tasks" => $tasks]);
     }
 
     /**
@@ -33,7 +33,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view("task_create");
+        return view("task.create");
     }
 
     /**
@@ -49,7 +49,8 @@ class TaskController extends Controller
         ]);
 
         // create record and pass in only fields that are fillable
-        $this->taskService->createTask($request);
+        $data = $request->only(["name", "description", "status"]);
+        $this->taskService->createTask($data);
         return redirect()->back();
     }
 
@@ -61,8 +62,8 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = $this->taskService->giveMeTask($id);
-        return view("task_detailed", ["task" => $task]);
+        $task = $this->taskService->getTask($id);
+        return view("task.show", ["task" => $task]);
     }
 
     /**
@@ -73,8 +74,8 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $task = $this->taskService->giveMeTask($id);
-        return view("task_edit", ["task" => $task]);
+        $task = $this->taskService->getTask($id);
+        return view("task.edit", ["task" => $task]);
     }
 
     /**
@@ -90,7 +91,8 @@ class TaskController extends Controller
             'name' => 'required|max:255',
         ]);
 
-        $this->taskService->updateTask($request, $id);
+        $data = $request->only(["name", "description", "status"]);
+        $this->taskService->updateTask($data, $id);
 
         return redirect()->back();
     }

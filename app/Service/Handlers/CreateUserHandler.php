@@ -11,9 +11,8 @@ class CreateUserHandler implements HandlerInterface
 		$this->userRepository = $userRepository;
 	}
 
-    public function handle(Request $request)
+    public function handle($data)
     {
-    	$data = $request->only($this->userRepository->getModel()->fillable);
-    	return $this->userRepository->create($data);
+      	return $this->userRepository->create($data);
     }
 }

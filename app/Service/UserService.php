@@ -17,12 +17,12 @@ class UserService{
         $this->giveMeAllUserHandler = $giveMeAllUserHandler;
 	}
 
-	public function createUser($request)
+	public function createUser($data)
 	{
 		$this->createUserHandler->handle($request);
 	}
 	
-	public function updateUser($request, $id)
+	public function updateUser($data, $id)
 	{
 		$this->updateUserHandler->handle($request, $id);
 	}
@@ -32,12 +32,12 @@ class UserService{
 		$this->deleteUserHandler->handle($id);
 	}
 	
-	public function giveMeAllUser()
+	public function getUsers()
 	{
 		return $this->giveMeAllUserHandler->handle();
 	}
 
-	public function giveMeUser($id)
+	public function getUser($id)
 	{
 		return $this->giveMeUserHandler->handle($id);
 	}
