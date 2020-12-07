@@ -22,10 +22,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
 
 Route::get('/', function () {
     return view('main');
-});
+})
+    ->name('main');
 
-Route::resource('/dictionaries', DictionaryController::class);
-Route::resource('/words', WordController::class);
+Route::resource('/dictionaries', DictionaryController::class)
+    ->name('index', 'dictionaries.index')
+    ->name('show', 'dictionaries.show')
+    ->name('store', 'dictionaries.store')
+    ->name('destroy', 'dictionaries.destroy');
+Route::resource('/words', WordController::class)
+    ->name('index', 'words.index')
+    ->name('show', 'words.show')
+    ->name('store', 'words.store')
+    ->name('destroy', 'words.destroy');
 
 Route::get('/training', function () {
     return view('training');

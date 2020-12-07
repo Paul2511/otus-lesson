@@ -5,7 +5,7 @@
                 <div class="card-header">{{ __('Добавить слово') }}</div>
 
                 <div class="card-body">
-                    <form action="/words"
+                    <form action="{{ route('words.store') }}"
                           method="POST">
                         @csrf
                         <input type="hidden"

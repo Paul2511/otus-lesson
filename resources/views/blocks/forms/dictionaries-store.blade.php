@@ -5,7 +5,7 @@
                 <div class="card-header">{{ __('Добавить словарь') }}</div>
 
                 <div class="card-body">
-                    <form action="/dictionaries"
+                    <form action="{{ route('dictionaries.store') }}"
                           method="POST">
                         @csrf
                         <div class="form-group">
