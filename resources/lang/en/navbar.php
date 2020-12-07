@@ -4,6 +4,7 @@ return [
 
     'Profile' => 'My Profile',
     'Users' => 'Users',
+    'users' => 'Users',
     'Sign_out' => 'Sign Out',
     'Dashboard' => 'Dashboard',
     'Records' => 'Records',
@@ -22,5 +23,7 @@ return [
     'About' => 'About us',
     'About Us' => 'About us',
     'Login' => 'Log in',
+    'Edit' => 'Edit user',
+    'Create' => 'Edit user',
 
 ];

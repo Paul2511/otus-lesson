@@ -4,12 +4,12 @@
 
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
-                    <a href="/home">
+                    <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_DASHBOARD}}">
                         <img src="{{asset('storage/img/90x90.png')}}" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="/home" class="nav-link"> SMARTER </a>
+                    <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_DASHBOARD}}" class="nav-link"> SMARTER </a>
                 </li>
             </ul>
 
@@ -38,7 +38,7 @@
                     <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                         <div class="">
                             <div class="dropdown-item">
-                                <a href="/users/profile">
+                                <a href="{{ route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_SHOW,['user' => 1])}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round" class="feather feather-user">
@@ -87,7 +87,7 @@
 
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <x-app-breadcrumbs page-name="{{$page_name}}" category-name="{{$category_name}}"/>
+                                <x-app-breadcrumbs page-name="{{$page_name ?? ''}}" category-name="{{$category_name ?? ''}}"/>
                             </ol>
                         </nav>
 

@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
+
 class AppBreadcrumbs extends Component
 {
     public $page_name;
@@ -41,6 +42,9 @@ class AppBreadcrumbs extends Component
         elseif ($this->page_name === 'about_us') :
             $name_p = trans('navbar.'. $page);
             return  '<li class="breadcrumb-item"><a href="javascript:void(0);">'. $name_p  .'</a></li>';
+        elseif ($this->category_name === 'users' && $this->page_name === 'index') :
+            $name_c = trans('navbar.'. $category);
+            return  '<li class="breadcrumb-item"><a href="javascript:void(0);">'. $name_c  .'</a></li>';
         else :
             $name_c = trans('navbar.'. $category);
 

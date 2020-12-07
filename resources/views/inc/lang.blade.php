@@ -13,13 +13,15 @@
         @endswitch
     </a>
     <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
-        <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="{{asset('storage/img/ru.png')}}"
+        <a class="dropdown-item d-flex ru" href="javascript:void(0);"><img src="{{asset('storage/img/ru.png')}}"
                                                                         class="flag-width" alt="flag"> <span
                 class="align-self-center">&nbsp;Русский</span></a>
-        <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="{{asset('storage/img/uk.png')}}"
+        <a class="dropdown-item d-flex en" href="javascript:void(0);"><img src="{{asset('storage/img/uk.png')}}"
                                                                         class="flag-width" alt="flag"> <span
                 class="align-self-center">&nbsp;English</span></a>
     </div>
 </div>
+
+
 
 

@@ -6,13 +6,21 @@
 
             <ul class="list-unstyled menu-categories" id="accordionExample">
                     <li class="menu {{ ($category_name === 'dashboard') ? 'active' : '' }}">
-                        <a href="/home" data-active="{{ ($category_name === 'dashboard') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'dashboard') ? 'true' : 'false' }}" class="dropdown-toggle">
+                        <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_DASHBOARD}}" data-active="{{ ($category_name === 'dashboard') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'dashboard') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                 <span> @lang('navbar.Dashboard')</span>
                             </div>
                         </a>
                     </li>
+                <li class="menu {{ ($category_name === 'users') ? 'active' : '' }}">
+                    <a href="{{route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_INDEX) }}" data-active="{{ ($category_name === 'users') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'users') ? 'true' : 'false' }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span> @lang('navbar.Users')</span>
+                        </div>
+                    </a>
+                </li>
 
                     <li class="menu {{ ($category_name === 'records') ? 'active' : '' }}">
                         <a href="#record" data-active="{{ ($category_name === 'records') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'records') ? 'true' : 'false' }}" class="dropdown-toggle">
@@ -26,10 +34,10 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'records') ? 'show' : '' }}" id="record" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'simple') ? 'active' : '' }}">
-                                <a href="/records/simple">@lang('navbar.Simple')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_SIMPLE_RECORDS}}">@lang('navbar.Simple')</a>
                             </li>
                             <li class="{{ ($page_name === 'advanced') ? 'active' : '' }}">
-                                <a href="/records/advanced">@lang('navbar.Advanced')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_ADVANCED_RECORDS}}">@lang('navbar.Advanced')</a>
                             </li>
                         </ul>
                     </li>
@@ -45,10 +53,10 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'statistic') ? 'show' : '' }}" id="statistic" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'online') ? 'active' : '' }}">
-                                <a href="/statistic/online">@lang('navbar.Online')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_STATISTIC_ONLINE}}">@lang('navbar.Online')</a>
                             </li>
                             <li class="{{ ($page_name === 'efficiency') ? 'active' : '' }}">
-                                <a href="/statistic/efficiency">@lang('navbar.Efficiency')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_STATISTIC_EFFICIENCY}}">@lang('navbar.Efficiency')</a>
                             </li>
                         </ul>
                     </li>
@@ -64,24 +72,24 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'reports') ? 'show' : '' }}" id="reports" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'stat') ? 'active' : '' }}">
-                                <a href="/reports/stat">@lang('navbar.Stat')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_STAT}}">@lang('navbar.Stat')</a>
                             </li>
                             <li class="{{ ($page_name === 'service') ? 'active' : '' }}">
-                                <a href="/reports/service">@lang('navbar.Service')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_SERVICE}}">@lang('navbar.Service')</a>
                             </li>
                             <li class="{{ ($page_name === 'processed-calls') ? 'active' : '' }}">
-                                <a href="/reports/processed-calls">@lang('navbar.Processed-calls')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_PROCESSED_CALLS}}">@lang('navbar.Processed-calls')</a>
                             </li>
                             <li class="{{ ($page_name === 'balance') ? 'active' : '' }}">
-                                <a href="/reports/balance">@lang('navbar.Balance')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_BALANCE}}">@lang('navbar.Balance')</a>
                             </li>
                             <li class="{{ ($page_name === 'quotas') ? 'active' : '' }}">
-                                <a href="/reports/quotas">@lang('navbar.Quotas')</a>
+                                <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_QUOTAS}}">@lang('navbar.Quotas')</a>
                             </li>
                         </ul>
                     </li>
                     <li class="menu {{ ($category_name === 'about-us') ? 'active' : '' }}">
-                        <a href="/about" data-active="{{ ($category_name === 'about') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'about') ? 'true' : 'false' }}" class="dropdown-toggle">
+                        <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_ABOUT}}" data-active="{{ ($category_name === 'about') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'about') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                 <span>@lang('navbar.About')</span>

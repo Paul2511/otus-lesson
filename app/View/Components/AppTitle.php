@@ -28,9 +28,11 @@ class AppTitle extends Component
         $admin_name = '| SMARTER';
 
         if ($this->page_name === 'home') :
-            echo  trans('navbar.Dashboard');
+            echo  trans('navbar.Dashboard') . $admin_name;
         elseif ($this->page_name === 'auth_default') :
-            echo  trans('navbar.Login');
+            echo  trans('navbar.Login') . $admin_name;
+        elseif ($this->page_name === 'index') :
+            echo  trans('navbar.Users'). $admin_name;
         else :
             echo  trans('navbar.'. ucfirst($this->page_name)) . $admin_name;
         endif;

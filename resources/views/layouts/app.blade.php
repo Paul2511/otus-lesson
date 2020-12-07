@@ -13,7 +13,7 @@
     <link rel="icon" type="image/x-icon" href="{{asset('storage/img/90x90.png')}}"/>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-
+    <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
     <!-- Styles -->
     @include('inc.styles')
     @yield('styles')
@@ -52,5 +52,6 @@
 
     @include('inc.scripts')
     @yield('scripts')
+
 </body>
 </html>

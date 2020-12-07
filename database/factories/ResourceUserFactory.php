@@ -33,7 +33,6 @@ class ResourceUserFactory extends Factory
 
         return [
             'user_id'   => $data['user'], 'resource_id' => $data['resource'],
-            'is_active' => rand(0, 1),
         ];
     }
 

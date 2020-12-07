@@ -63,6 +63,46 @@ return [
             ]) : [],
         ],
 
+        'qsiq' => [
+            'driver'   => 'mysql',
+            'host'     => env('DB_HOST_QSIQ'),
+            'port'     => env('DB_PORT_QSIQ'),
+            'database' => env('DB_DATABASE_QSIQ'),
+            'username' => env('DB_USERNAME_QSIQ'),
+            'password' => env('DB_PASSWORD_QSIQ'),
+            'charset'  => 'utf8',
+        ],
+
+        'qsiqkz' => [
+            'driver'   => 'mysql',
+            'host'     => env('DB_HOST_QSIQKZ'),
+            'port'     => env('DB_PORT_QSIQKZ'),
+            'database' => env('DB_DATABASE_QSIQ'),
+            'username' => env('DB_USERNAME_QSIQ'),
+            'password' => env('DB_PASSWORD_QSIQ'),
+            'charset'  => 'utf8',
+        ],
+
+        'sod' => [
+            'driver'   => 'mysql',
+            'host'     => env('DB_HOST_SOD'),
+            'port'     => env('DB_PORT_SOD'),
+            'database' => env('DB_DATABASE_SOD'),
+            'username' => env('DB_USERNAME_SOD'),
+            'password' => env('DB_PASSWORD_SOD'),
+            'charset'  => 'utf8',
+        ],
+
+        'sod3' => [
+            'driver'   => 'mysql',
+            'host'     => env('DB_HOST_SOD3'),
+            'port'     => env('DB_PORT_SOD3'),
+            'database' => env('DB_DATABASE_SOD'),
+            'username' => env('DB_USERNAME_SOD'),
+            'password' => env('DB_PASSWORD_SOD'),
+            'charset'  => 'utf8',
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
