@@ -5,12 +5,18 @@
                 <div class="card-header">{{ __('Добавить слово') }}</div>
 
                 <div class="card-body">
-                    <form>
+                    <form action="/words"
+                          method="POST">
+                        @csrf
+                        <input type="hidden"
+                               name="dictionary_id"
+                               value="{{ $dictionary_id }}">
                         <div class="form-group">
                             <label for="foreignWord">{{ __('Слово на иностранном языке') }}</label>
                             <input type="text"
                                    class="form-control"
                                    id="foreignWord"
+                                   name="value"
                                    placeholder="{{ __('Введите слово') }}">
                         </div>
 
@@ -19,6 +25,7 @@
                             <input type="text"
                                    class="form-control"
                                    id="translationWord"
+                                   name="translation"
                                    placeholder="{{ __('Введите перевод') }}">
                         </div>
 
@@ -28,6 +35,7 @@
                                    class="form-control mt-1"
                                    id=""
                                    aria-describedby="contextWordHelp"
+                                   name="context"
                                    placeholder="{{ __('Введите контекст') }}">
                             <input type="text"
                                    class="form-control mt-1"

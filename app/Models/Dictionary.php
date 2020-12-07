@@ -24,6 +24,11 @@ class Dictionary extends Model
         return $this->hasMany('App\Models\Word');
     }
 
+    public function contexts()
+    {
+        return $this->hasManyThrough('App\Models\Context', 'App\Models\Word');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

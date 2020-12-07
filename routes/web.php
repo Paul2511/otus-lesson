@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DictionaryController;
+use App\Http\Controllers\WordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,13 +24,8 @@ Route::get('/', function () {
     return view('main');
 });
 
-Route::get('/dictionaries', function () {
-    return view('dictionaries');
-});
-
-Route::get('/dictionary', function () {
-    return view('dictionary');
-});
+Route::resource('/dictionaries', DictionaryController::class);
+Route::resource('/words', WordController::class);
 
 Route::get('/training', function () {
     return view('training');

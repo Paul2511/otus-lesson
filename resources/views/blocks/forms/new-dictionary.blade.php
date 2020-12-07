@@ -5,12 +5,15 @@
                 <div class="card-header">{{ __('Добавить словарь') }}</div>
 
                 <div class="card-body">
-                    <form>
+                    <form action="/dictionaries"
+                          method="POST">
+                        @csrf
                         <div class="form-group">
-                            <label for="foreignWord">{{ __('Название словаря') }}</label>
+                            <label for="dictionaryName">{{ __('Название словаря') }}</label>
                             <input type="text"
                                    class="form-control"
-                                   id="foreignWord"
+                                   id="dictionaryName"
+                                   name="name"
                                    placeholder="{{ __('Введите название') }}">
                         </div>
 
