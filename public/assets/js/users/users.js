@@ -26,7 +26,7 @@ $(document).ready(function() {
 
     addBtn();
 
-    $('.block-user').click(function(event) {
+    $('.dataTable').on('click','.block-user', function () {
         $.ajax({
             type: 'POST',
             beforeSend: function (xhr) { // Add this line
@@ -56,8 +56,7 @@ $(document).ready(function() {
             }
         });
     });
-
-    $('.unblock-user').click(function(event) {
+    $('.dataTable').on('click','.unblock-user', function () {
         $.ajax({
             type: 'POST',
             beforeSend: function (xhr) { // Add this line

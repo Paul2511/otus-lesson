@@ -50,6 +50,7 @@
     <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
     <script src="{{asset('plugins/select2/custom-select2.js')}}"></script>
     <script src="{{asset('plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-multiselect/bootstrap-multiselect.min.js')}}"></script>
     @endsection
 @section('content')
     @include('inc.modals.modal-project')

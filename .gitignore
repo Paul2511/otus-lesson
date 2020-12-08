@@ -12,8 +12,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 *.xml
-*.xml
 .idea/deployment.xml
 .idea/workspace.xml
-.idea/workspace.xml
-*.xml
+
+storage/logs/laravel.log

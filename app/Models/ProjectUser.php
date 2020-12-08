@@ -28,6 +28,9 @@ class ProjectUser extends Model
     use HasFactory;
     protected $table = 'project_user';
 
+    protected $fillable = [
+        'project',
+    ];
     public function user(){
         return $this->belongsTo(User::class);
     }

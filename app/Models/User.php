@@ -51,6 +51,7 @@ class User extends Authenticatable
     protected $fillable = [
         'full_name',
         'email',
+        'phone',
         'password',
         'is_admin',
         'is_active',
@@ -75,5 +76,9 @@ class User extends Authenticatable
 
     public function project_user(){
         return $this->hasMany(ProjectUser::class);
+    }
+
+    public function resources(){
+        return $this->belongsToMany(Resource::class);
     }
 }

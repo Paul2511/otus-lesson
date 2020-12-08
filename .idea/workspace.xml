@@ -2,77 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0c7eb76-2034-4b28-afc7-ce7aa4c6e0f9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Laravel.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Queues/AdminQueuesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Resources/AdminResourcesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Users/AdminUsersController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/AboutController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/AdvancedRecordsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/BalanceReportController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/DashboardController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/EfficiencyStatisticController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/OnlineStatisticController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/ProcessedCallsReportController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/QuotasReportController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/ServiceReportController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/SimpleRecordsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/StatReportController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/AdminUsersStoreRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/AdminUsersUpdateRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/BaseFormRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Queue.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Handlers/ActiveUserHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Handlers/CreateUserHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Handlers/GetUsersHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Handlers/ShowUserHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Handlers/UpdateUserHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Queues/QueuesService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Queues/Repositories/EloquentQueueRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Resources/Repositories/EloquentResourceRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Resources/ResourcesService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Routes/Providers/Admin/AdminRoutes.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Routes/Providers/Admin/AdminRoutesProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Routes/Providers/Sources/SourcesRoutes.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Routes/Providers/Sources/SourcesRoutesProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Users/Repositories/EloquentUserRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/Users/UsersService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bootstrap/cache/packages.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bootstrap/cache/services.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_26_141403_add_description_resources_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_26_141405_add_phone_users_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/120x120.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/1280x857.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/175x115.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/200x200.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/300x300.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/350x250.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/400x168.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/400x300.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/509x343.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/600x300.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/640x426.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/90x90.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/ab-1.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/arrow-down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/bg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/ca.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/contact-us-map-pin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/de.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/faq.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/fr.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/jp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/app/public/img/mindset.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/sessions/MNmHB7cYZewJxHPH1hFKYIX9ewe65pEnaEnUJRSq" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ProjectUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProjectUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ResourceUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ResourceUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/users/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/users/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/user_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/user_edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +219,7 @@
       <workItem from="1605162217737" duration="173904000" />
       <workItem from="1606739476876" duration="8382000" />
       <workItem from="1606900231123" duration="7211000" />
-      <workItem from="1606990521199" duration="36025000" />
+      <workItem from="1606990521199" duration="37237000" />
     </task>
     <servers />
   </component>
@@ -336,11 +275,11 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="463" y="170" key="SettingsEditor/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1605257488847" />
-    <state x="110" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1607347536608">
+    <state x="110" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1607349298703">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="-1810" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607346286668" />
-    <state x="110" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607347536608" />
+    <state x="110" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607349298703" />
     <state x="-1903" y="112" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1607348091986">
       <screen x="-1920" y="0" width="1920" height="1050" />
     </state>
@@ -354,11 +293,11 @@
       <screen x="-1920" y="0" width="1920" height="1050" />
     </state>
     <state x="-1532" y="0" width="1548" height="1009" key="dock-window-1/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1606736453660" />
-    <state x="667" y="281" width="586" height="488" key="find.popup" timestamp="1607343648456">
+    <state x="667" y="281" width="586" height="488" key="find.popup" timestamp="1607410097339">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="-1253" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1605516324168" />
-    <state x="667" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607343648456" />
+    <state x="-1253" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607407983120" />
+    <state x="667" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607410097339" />
     <state x="2587" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605020328364" />
     <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1604839296284">
       <screen x="1920" y="0" width="1920" height="1050" />
