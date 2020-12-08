@@ -1,0 +1,55 @@
+<?php
+
+
+namespace App\Services\Users;
+
+
+use App\Models\User;
+use App\Services\Users\Handlers\UserCreateHandler;
+use App\Services\Users\Handlers\UserDeleteHandler;
+use App\Services\Users\Handlers\UserUpdateHandler;
+
+class UsersService
+{
+    /**
+     * @var UserCreateHandler
+     */
+    private $createHandler;
+    /**
+     * @var UserUpdateHandler
+     */
+    private $updateHandler;
+    /**
+     * @var UserDeleteHandler
+     */
+    private $deleteHandler;
+
+    public function __construct(UserCreateHandler $createHandler, UserUpdateHandler $updateHandler,UserDeleteHandler $deleteHandler)
+    {
+        $this->createHandler = $createHandler;
+        $this->updateHandler = $updateHandler;
+        $this->deleteHandler = $deleteHandler;
+    }
+
+    /**
+     * @param array $data
+     */
+    public function createByArray(array $data): void
+    {
+        $this->createHandler->handle($data);
+    }
+
+    /**
+     * @param User $user
+     * @param array $data
+     */
+    public function updateByArray(User $user, array $data): void
+    {
+        $this->updateHandler->handle($user, $data);
+    }
+
+    public function delete(User $user): void
+    {
+        $this->deleteHandler->handle($user);
+    }
+}

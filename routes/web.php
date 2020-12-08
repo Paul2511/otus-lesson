@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use \App\Services\Routes\CMS\CMSRoutesProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::get('/profile',function(){
     return view('frontEnd.profile');
 });
 
+app(CMSRoutesProvider::class)->boot();
