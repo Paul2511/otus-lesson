@@ -74,6 +74,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+
         // to Admin dashboard
         if ($user->isAdmin() || $user->isManager()) {
             return redirect(route(AdminRoutes::ADMIN_DASHBOARD));

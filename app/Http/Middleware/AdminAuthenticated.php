@@ -21,12 +21,12 @@ class AdminAuthenticated
         if( Auth::check() )
         {
             // if user is not admin take him to his dashboard
-            if ( Auth::user()->isUser()  ) {
+            if ( Auth::user()->isUser() ) {
                 return redirect(route(UserRoutes::USER_DASHBOARD));
             }
 
             // allow admin to proceed with request
-            else if ( Auth::user()->isAdmin() || Auth::user()->isManager() ) {
+            else if ( Auth::user()->isAdmin() || Auth::user()->isManager()) {
                 return $next($request);
             }
         }

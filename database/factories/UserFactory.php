@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
+use App\Models\Role;
 use App\Models\UserStatus;
 use Hash;
 use Carbon\Carbon;
@@ -26,16 +28,16 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'inn' => User::factory(),
+            'inn' => Company::factory(),
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'middle_name' => $this->faker->firstName,
             'position' => $this->faker->jobTitle,
             'affilated_company' => $this->faker->company,
-            'phone' => $this->faker->unique()->numberBetween(9990000000,9999999999),
-            'email' => $this->faker->unique()->safeEmail,
+            'phone' => $this->faker->numberBetween(9990000000,9999999999),
+            'email' => $this->faker->safeEmail,
             'password' => Hash::make('password'),
-            'otp' => $this->faker->unique()->numberBetween(1000,9999),
+            'otp' => $this->faker->numberBetween(1000,9999),
             'status' => $this->faker->randomElement([
                 User::STATUS_INACTIVE,
                 User::STATUS_ACTIVE,
@@ -46,6 +48,7 @@ class UserFactory extends Factory
             'remember_token' => Hash::make('token'),
             'created_at' => now(),
             'updated_at' => now(),
+            'role_id' => $this->faker->numberBetween(1,3),
         ];
     }
 }

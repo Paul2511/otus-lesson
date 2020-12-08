@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Services\Auth\AuthService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -31,15 +32,23 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    /**
+     * @var AuthService
+     */
+    private AuthService $authService;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param AuthService $authService
      */
-    public function __construct()
+    public function __construct
+    (
+        AuthService $authService
+    )
     {
         $this->middleware('guest');
+        $this->authService = $authService;
     }
 
     /**
@@ -73,7 +82,7 @@ class RegisterController extends Controller
         ]
         );
 
-        $user->roles()->attach(Role::where('name',Role::ROLE_ADMIN)->first());
+        $this->authService->assignRole(Role::ROLE_USER, $user);
 
         return $user;
     }

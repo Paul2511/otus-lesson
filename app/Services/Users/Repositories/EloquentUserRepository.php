@@ -15,7 +15,7 @@ class EloquentUserRepository
     public function searchWithCompanyRoleRelation(int $perPage): LengthAwarePaginator
     {
         return $this->search($perPage, [
-            'roles', 'companies'
+            'role', 'companies'
         ]);
     }
 
@@ -55,8 +55,8 @@ class EloquentUserRepository
 
     public function attachRoleToUser(array $data, $user): User
     {
-        $role_id = Role::whereName($data['role'])->get('id');
-        $user->roles()->sync($role_id);
+        $roleId = $this->findRoleByName($data['role']);
+        $user->role()->associate($roleId)->save();
 
         return $user;
     }
@@ -80,6 +80,13 @@ class EloquentUserRepository
     public function deleteUserById(int $id): int
     {
         return User::destroy($id);
+    }
+
+    public function findRoleByName(int $roleName)
+    {
+       $roleId = Role::whereName($roleName)->firstOrFail('id');
+
+       return $roleId;
     }
 
 

@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
                 ->nullable()
                 ->constrained('roles')
                 ->onDelete('set null');
-
+           
         });
     }
     /**

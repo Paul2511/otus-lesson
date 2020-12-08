@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\User;
 use App\Models\UserStatus;
 use DB;
@@ -31,7 +33,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->times(10)->create();
+        User::factory()->times(10)->create()
+            ->each(function($user){
+            $user->role->name = Role::ROLE_USER,
+        });
     }
 
 

@@ -2,7 +2,7 @@
         <th scope="row">{{ $user->id }}</th>
         <td>{{ $user->first_name.' '.$user->last_name  }}</td>
         <td>{{ $user->position }}</td>
-        <td>{{ __("messages.rolesConst.".$user->roles->max()->name)}}</td>
+        <td>{{ __("messages.rolesConst.".$user->role->name)}}</td>
         <td>{{ __("messages.users.index.statusConst.".$user->status) }}</td>
         <td>{{ $user->companies->first()->name ?? ''}}</td>
         <td>{{ $user->created_at->format('d.m.Y')}}</td>

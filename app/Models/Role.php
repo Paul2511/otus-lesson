@@ -35,7 +35,7 @@ class Role extends Model
         'name',
     ];
 
-    public function ability()
+    public function abilities()
     {
         return $this->belongsTo(
             Ability::class,
@@ -48,14 +48,22 @@ class Role extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class)
-            ->using(RoleUser::class);
+        return $this->hasMany(User::class,'role_id','id');
     }
 
-    public function role()
+    public function isAdmin(): bool
     {
-        return $this->hasOne(Ability::class)
-            ->using(AbilityRole::class);
+        return $this->name === Role::ROLE_ADMIN;
+    }
+
+    public function isManager(): bool
+    {
+        return $this->name === Role::ROLE_MANAGER;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->name === Role::ROLE_USER;
     }
 
 }

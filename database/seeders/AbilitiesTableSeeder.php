@@ -25,7 +25,8 @@ class AbilitiesTableSeeder extends Seeder
             ],
             [User::class => [
                 Ability::VIEW_ANY,
-                Ability::VIEW
+                Ability::VIEW,
+                Ability::DELETE
             ],
             ],
         ];

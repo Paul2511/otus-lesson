@@ -8,17 +8,21 @@ use App\Http\Requests\AdminUsersStoreRequest;
 use App\Http\Requests\AdminUsersUpdateRequest;
 use App\Models\User;
 use App\Policies\Ability;
+use App\Services\Users\Repositories\EloquentUserRepository;
 use App\Services\UsersService;
 
 final class AdminUsersController extends AdminBaseController
 {
     private UsersService $usersService;
+    private EloquentUserRepository $eloquentUserRepository;
 
     public function __construct(
-        UsersService $usersService
+        UsersService $usersService,
+        EloquentUserRepository $eloquentUserRepository
     )
     {
         $this->usersService = $usersService;
+        $this->eloquentUserRepository = $eloquentUserRepository;
     }
 
     public function index()
@@ -51,7 +55,9 @@ final class AdminUsersController extends AdminBaseController
     public function show($id)
     {
         $this->authorize(Ability::VIEW, User::class);
-        $user = $this->usersService->findUser($id);
+        $user = $this->eloquentUserRepository->findUserByIdWithRelations($id, [
+            'role', 'companies'
+        ]);
 
         return response()->json($user);
     }

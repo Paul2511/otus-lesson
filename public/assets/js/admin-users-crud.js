@@ -27,7 +27,7 @@ $(document).ready(function ($) {
             $('#affilatedCompany').val(data.affilated_company);
             $('#position').val(data.position);
             $('#status').val(data.status);
-            $('#role').val(data.roles[0].name);
+            $('#role').val(data.role.name);
             $('#btn-save').val("update");
             $('#userEditorModal').modal('show');
         })

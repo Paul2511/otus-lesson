@@ -48,10 +48,10 @@ class DatabaseSeeder extends Seeder
                     'user_id' => $user->id,
                     'inn' => $company->inn]);
                 //Seeding role_user pivot table
-                DB::table('role_user')->insert([
-                    'user_id' => $user->id,
-                    'role_id' => rand(1,3)
-                ]);
+//                DB::table('role_user')->insert([
+//                    'user_id' => $user->id,
+//                    'role_id' => rand(1,3)
+//                ]);
             }
         }
         foreach (Role::all() as $role) {

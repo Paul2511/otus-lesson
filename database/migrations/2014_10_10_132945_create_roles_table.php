@@ -20,7 +20,6 @@ class CreateRolesTable extends Migration
                 ->default(Role::ROLE_USER);
         });
     }
-
     /**
      * Reverse the migrations.
      *

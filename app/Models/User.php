@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\Auth\AuthService;
+use App\Services\Users\Repositories\EloquentUserRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -81,7 +83,8 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'affilated_company'
+        'affilated_company',
+        'role_id',
     ];
 
     /**
@@ -104,11 +107,9 @@ class User extends Authenticatable
         'email_verified_at',
     ];
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class)
-            ->using(RoleUser::class);
-
+        return $this->belongsTo(Role::class,'role_id','id');
     }
 
     public function companies()
@@ -122,16 +123,6 @@ class User extends Authenticatable
             'inn');
     }
 
-    public function isDeleted(): bool
-    {
-        return $this->status === self::STATUS_DELETED;
-    }
-
-    public function isPending(): bool
-    {
-        return $this->status === self::STATUS_PENDING;
-    }
-
     public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
@@ -142,24 +133,38 @@ class User extends Authenticatable
         return $this->status === self::STATUS_INACTIVE;
     }
 
-    public function getRole()
+    public function isDeleted(): bool
     {
-        return Auth::user()->roles->first()->name;
+        return $this->status === self::STATUS_DELETED;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === self::STATUS_PENDING;
     }
 
     public function isAdmin(): bool
     {
-        return Auth::user()->getRole() == Role::ROLE_ADMIN;
+        if (!$this->role) {
+            return false;
+        }
+        return $this->role->isAdmin();
     }
 
     public function isManager(): bool
     {
-        return Auth::user()->getRole() == Role::ROLE_MANAGER;
+        if (!$this->role) {
+            return false;
+        }
+        return $this->role->isManager();
     }
 
     public function isUser(): bool
     {
-        return Auth::user()->getRole() == Role::ROLE_USER;
+        if (!$this->role) {
+            return false;
+        }
+        return $this->role->isUser();
     }
 
 }
