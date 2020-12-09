@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class PromoCode
+ * @package App\Models
+ */
+
 class PromoCode extends Model
 {
     use HasFactory;

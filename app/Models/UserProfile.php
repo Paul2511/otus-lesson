@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class UserProfile
+ * @package App\Models
+ */
+
 class UserProfile extends Model
 {
     use HasFactory;

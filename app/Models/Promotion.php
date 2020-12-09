@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Promotion
+ * @package App\Models
+ */
+
 class Promotion extends Model
 {
     use HasFactory;
@@ -17,7 +22,7 @@ class Promotion extends Model
     ];
 
     protected $casts = [
-    	'validate' = 'datetime',
+    	'validate' => 'datetime',
     ];
 
     public function user(){

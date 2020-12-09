@@ -28,3 +28,5 @@ Route::get('/profile', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
+app(\App\Services\Routes\Providers\Admin\AdminRoutesProvider::class)->register();
