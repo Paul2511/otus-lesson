@@ -26,13 +26,13 @@ class AuthService
 
     public function hasUserAbility(User $user, string $model, string $ability): bool
     {
-        if ($user->isAdmin() && $user->isActive()) {
+        if (!$user->isActive()) {
+            return false;
+        }
+        if ($user->isAdmin()) {
             return true;
         }
         if (!$user->isManager()) {
-            return false;
-        }
-        if (!$user->isActive()) {
             return false;
         }
 

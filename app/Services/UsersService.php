@@ -13,6 +13,7 @@ use App\Services\Handlers\UpdateUserHandler;
 use App\Services\Users\Repositories\EloquentUserRepository;
 use App\Services\Users\Translators\UserRolesTranslator;
 use App\Services\Users\Translators\UserStatusesTranslator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class UsersService
@@ -25,6 +26,7 @@ class UsersService
     private $updateUserHandler;
     private $deleteUserHandler;
     private $eloquentUserRepository;
+
 
     /**
      * UsersService constructor.
@@ -81,10 +83,10 @@ class UsersService
         return $this->paginateUsersHandler->handle($perPage);
     }
 
-    public function findUser(int $id)
+    public function findUserWithRelations(int $id): User
     {
         return $this->eloquentUserRepository->findUserByIdWithRelations($id, [
-            'roles', 'companies'
+            'role', 'companies'
         ]);
     }
 

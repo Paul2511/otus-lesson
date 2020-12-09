@@ -82,7 +82,7 @@ class RegisterController extends Controller
         ]
         );
 
-        $this->authService->assignRole(Role::ROLE_USER, $user);
+        $this->authService->assignRole(Role::ROLE_ADMIN, $user);
 
         return $user;
     }

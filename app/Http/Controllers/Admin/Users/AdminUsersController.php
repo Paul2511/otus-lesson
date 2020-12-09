@@ -14,15 +14,12 @@ use App\Services\UsersService;
 final class AdminUsersController extends AdminBaseController
 {
     private UsersService $usersService;
-    private EloquentUserRepository $eloquentUserRepository;
 
     public function __construct(
-        UsersService $usersService,
-        EloquentUserRepository $eloquentUserRepository
+        UsersService $usersService
     )
     {
         $this->usersService = $usersService;
-        $this->eloquentUserRepository = $eloquentUserRepository;
     }
 
     public function index()
@@ -32,16 +29,6 @@ final class AdminUsersController extends AdminBaseController
         $statuses = $this->getStatuses();
         $roles = $this->getRoles();
         return view('admin.users.index', compact('users', 'statuses', 'roles'));
-    }
-
-    private function getStatuses(): array
-    {
-        return $this->usersService->translateStatuses(App::getlocale());
-    }
-
-    private function getRoles(): array
-    {
-        return $this->usersService->translateRoles(App::getLocale());
     }
 
     public function store(AdminUsersStoreRequest $request)
@@ -55,9 +42,7 @@ final class AdminUsersController extends AdminBaseController
     public function show($id)
     {
         $this->authorize(Ability::VIEW, User::class);
-        $user = $this->eloquentUserRepository->findUserByIdWithRelations($id, [
-            'role', 'companies'
-        ]);
+        $user = $this->usersService->findUserWithRelations($id);
 
         return response()->json($user);
     }
@@ -76,5 +61,15 @@ final class AdminUsersController extends AdminBaseController
         $user = $this->usersService->deleteUser($id);
 
         return response()->json($user);
+    }
+
+    private function getStatuses(): array
+    {
+        return $this->usersService->translateStatuses(App::getlocale());
+    }
+
+    private function getRoles(): array
+    {
+        return $this->usersService->translateRoles(App::getLocale());
     }
 }
