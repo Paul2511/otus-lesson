@@ -27,7 +27,7 @@ class EloquentUserRepository
         return $qb->paginate($perPage);
     }
 
-    public function findUserByEmail(string $email): User
+    public function findUserByEmail(string $email): ?User
     {
         return User::where('email', $email)->first();
     }
@@ -77,9 +77,12 @@ class EloquentUserRepository
         return $user;
     }
 
-    public function deleteUserById(int $id): int
+    public function deleteUserById(int $id): User
     {
-        return User::destroy($id);
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return $user;
     }
 
     public function findRoleByName(int $roleName)
@@ -87,6 +90,11 @@ class EloquentUserRepository
        $roleId = Role::whereName($roleName)->firstOrFail('id');
 
        return $roleId;
+    }
+
+    public function getUserIds(): array
+    {
+        return User::where('id' ,'>' ,0)->pluck('id')->toArray();
     }
 
 

@@ -17,6 +17,7 @@ final class AdminRoutes
     const ADMIN_USERS_SHOW = 'admin.users.show';
     const ADMIN_USERS_STORE = 'admin.users.store';
     const ADMIN_USERS_UPDATE = 'admin.users.update';
+    const ADMIN_USERS_DELETE = 'admin.users.destroy';
 
     const ADMIN_COMPANIES_INDEX = 'admin.companies.index';
     const ADMIN_COMPANIES_CREATE = 'admin.companies.create';

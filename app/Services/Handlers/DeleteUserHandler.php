@@ -24,7 +24,5 @@ class DeleteUserHandler
     public function handle(int $id)
     {
         return $this->eloquentUserRepository->deleteUserById($id);
-
-
     }
 }

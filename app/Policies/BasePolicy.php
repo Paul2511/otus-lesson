@@ -27,7 +27,7 @@ abstract class BasePolicy
         if ( ($user->isAdmin() && $user->isActive()) ) {
             return true;
         }
-        if ( !$user->isManager()&& $user->isActive() ) {
+        if ( !$user->isManager() && $user->isActive() ) {
             return false;
         }
     }

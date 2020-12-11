@@ -90,6 +90,14 @@ class UserPolicy extends BasePolicy
             Ability::DELETE);
     }
 
+    public function store(User $user)
+    {
+        return $this->authService->hasUserAbility(
+            $user,
+            User::class,
+            Ability::STORE);
+    }
+
     /**
      * Determine whether the user can restore the model.
      *
@@ -111,6 +119,9 @@ class UserPolicy extends BasePolicy
      */
     public function forceDelete(User $user)
     {
-
+        return $this->authService->hasUserAbility(
+            $user,
+            User::class,
+            Ability::STORE);
     }
 }
