@@ -33,13 +33,14 @@ class PetService extends BaseService
         $this->petLabelsHelper = $petLabelsHelper;
     }
 
-    public function getUserPets(?int $userId = null): array
+    public function getUserPets(int $userId): array
     {
         $pets = $this->petRepository->getPets($userId);
         $result = $pets->map(function (Pet $pet){
             return $this->petLabelsHelper->toArray($pet);
         });
-        return ['pets'=>$result];
+
+        return $this->setData(['pets'=>$result])->success()->getData();
     }
 
     public function deletePet(int $id): array
@@ -47,4 +48,5 @@ class PetService extends BaseService
         $result = $this->petDeleteHandler->handler($id);
         return ['success'=>$result];
     }
+
 }

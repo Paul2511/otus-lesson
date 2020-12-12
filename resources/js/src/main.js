@@ -16,10 +16,12 @@ import Vuesax from 'vuesax'
 
 Vue.use(Vuesax)
 
-
 // axios
 import axios from './axios.js'
 Vue.prototype.$http = axios
+
+// API Calls
+import './http/requests'
 
 // Filters
 import './filters/filters.js'
@@ -30,7 +32,7 @@ import '../themeConfig.js'
 
 
 // ACL
-//import acl from './acl/acl'
+import acl from './acl/acl'
 
 
 // Globally Registered Components
@@ -47,6 +49,17 @@ import store from './store/store'
 
 // i18n
 import i18n from './i18n/i18n'
+
+// VeeValidate
+//import VeeValidate from 'vee-validate'
+//Vue.use(VeeValidate)
+
+//import { Validator } from 'vee-validate';
+//import veeValidateDict from './i18n/veeValidateDict.json';
+//const dict = veeValidateDict.ru;
+
+//Validator.localize('ru', dict);
+
 
 // Vuejs - Vue wrapper for hammerjs
 import { VueHammer } from 'vue2-hammer'
@@ -68,6 +81,6 @@ new Vue({
   router,
   store,
   i18n,
-  //acl,
+  acl,
   render: h => h(App)
 }).$mount('#app')

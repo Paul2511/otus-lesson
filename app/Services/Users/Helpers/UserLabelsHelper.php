@@ -9,6 +9,11 @@ use App\Services\Interfaces\LabelsHelperInterface;
 class UserLabelsHelper implements LabelsHelperInterface
 {
     /**
+     * @var User
+     */
+    private $model;
+
+    /**
      * @var array
      */
     private static $roleLabels;
@@ -17,6 +22,7 @@ class UserLabelsHelper implements LabelsHelperInterface
      * @var
      */
     private static $statusLabels;
+
 
     private static array $statusColors = [
         User::STATUS_ACTIVE => 'success',
@@ -35,24 +41,24 @@ class UserLabelsHelper implements LabelsHelperInterface
         return self::$statusLabels = UtilsHelper::getLangLabels(User::class, 'status');
     }
 
-    private static function currentStatusLabel($status): string
+    public static function currentStatusLabel($status): string
     {
         $labels = self::statusLabels();
         return $labels[$status] ?? '';
     }
 
-    private static function currentRoleLabel($role): string
+    public static function currentRoleLabel($role): string
     {
         $labels = self::roleLabels();
         return $labels[$role] ?? '';
     }
 
     /**
-     * @param User $user
      * @return array
      */
-    public function getLabels($user)
+    public function getLabels()
     {
+        $user = $this->model;
         return [
             'roleLabel'=>self::currentRoleLabel($user->role),
             'statusLabels'=>self::statusLabels(),
@@ -67,8 +73,9 @@ class UserLabelsHelper implements LabelsHelperInterface
      */
     public function toArray($user)
     {
+        $this->model = $user;
         $data = $user->toArray();
-        $labels = $this->getLabels($user);
+        $labels = $this->getLabels();
 
         return array_merge($data, $labels);
     }

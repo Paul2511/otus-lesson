@@ -15,5 +15,8 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'wrongAuth' => 'Wrong login or password',
+    'notToken' => 'You are not authorized',
+    'accessDenied' => 'You do not have permission to perform this action'
 
 ];

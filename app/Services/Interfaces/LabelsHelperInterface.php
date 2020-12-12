@@ -7,10 +7,9 @@ namespace App\Services\Interfaces;
 interface LabelsHelperInterface
 {
     /**
-     * @param mixed $model
      * @return array
      */
-    public function getLabels($model);
+    public function getLabels();
 
     /**
      * @param mixed $model

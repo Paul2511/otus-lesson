@@ -1,5 +1,5 @@
 <template>
-    <div class="vx-row">
+    <div class="vx-row" @keyup.enter="save" @keyup.esc="cancel">
 
         <!-- Information - Col 1 -->
         <div class="vx-col flex-1" id="account-info-col-1">
@@ -29,7 +29,6 @@
         </div>
 
         <!-- /Information - Col 1 -->
-
         <!-- Information - Col 2 -->
         <div class="vx-col flex-1" id="account-info-col-2">
             <table>
@@ -40,11 +39,14 @@
                 <tr>
                     <td class="font-semibold">Email</td>
                     <td>
-                        <vs-input type="email" v-model="user.email" :danger="!!errors.email" val-icon-danger="icon-x" val-icon-pack="feather"/>
-                        <span class="text-danger text-xs" v-show="!!errors.email">{{ errors.email | arr2str }}</span>
+                        {{ user.email }}
+                        <template v-if="0">
+                            <vs-input type="email" v-model="user.email" :danger="!!errors.email" val-icon-danger="icon-x" val-icon-pack="feather"/>
+                            <span class="text-danger text-xs" v-show="!!errors.email">{{ errors.email | arr2str }}</span>
+                        </template>
                     </td>
                 </tr>
-                <tr>
+                <tr v-if="canAdmin">
                     <td class="font-semibold">Статус</td>
                     <td>
                         <vs-select v-model="user.status" class="w-full" :danger="!!errors.status" val-icon-danger="icon-x" val-icon-pack="feather">
@@ -54,7 +56,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr v-if="canAdmin">
                     <td class="font-semibold">Роль</td>
                     <td>{{ user.roleLabel }}</td>
                 </tr>
@@ -99,23 +101,27 @@
             save() {
                 this.$vs.loading();
                 Vue.set(this.user, 'detail', this.detail);
-                this.$store.dispatch('updateUserInfo', this.user)
-                    .then(res => {
-                        if (res.data.success) {
-                            if (!!res.data.message) {
-                                this.$vs.notify({title:res.data.message.title, text: res.data.message.text, color: 'success', iconPack: 'feather', icon:'icon-check'});
-                            }
-                            this.cancel();
 
-                        } else {
-                            this.errors = res.data.errors ? res.data.errors : [];
-                            this.$vs.notify({title: this.$t('Error'), text: res.data.message, color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'});
+                this.$store.dispatch('updateUser', this.user)
+                    .then(res => {
+                        if (!!res.data.message) {
+                            this.$vs.notify({title:res.data.message.title, text: res.data.message.text, color: 'success', iconPack: 'feather', icon:'icon-check'});
                         }
+                        this.$emit('set', res.data.user);
                     })
                     .catch(err => {
-                        this.$vs.notify({title: this.$t('Error'), text: this.$t('ErrorResponse'), color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
+                        this.errors = err.response.data.errors ? err.response.data.errors : [];
+                        this.$vs.notify({
+                            title: this.$t('Error'),
+                            text: err.response.data.message || this.$t('ErrorResponse'),
+                            color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
                     })
                     .finally(() => (this.$vs.loading.close()));
+            }
+        },
+        computed: {
+            canAdmin() {
+                return this.$acl.check('canAdmin')
             }
         }
     }

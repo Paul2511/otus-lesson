@@ -16,6 +16,7 @@
 
 <script>
     import themeConfig from '@/../themeConfig.js'
+    import jwt from '@/http/requests/auth/jwt/index.js'
 
     export default {
         data() {
@@ -58,7 +59,20 @@
             }
         },
         mounted() {
-            this.toggleClassInBody(themeConfig.theme)
+
+            let theme = themeConfig.theme;
+            if (this.$acl.check('client')) {
+                theme = 'light'
+            } else {
+                if (this.$acl.check('spec')) {
+                    theme = 'semi-dark'
+                } else {
+                    if (this.$acl.check('manager')) {
+                        theme = 'dark'
+                    }
+                }
+            }
+            this.toggleClassInBody(theme)
             this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)
 
             const vh = window.innerHeight * 0.01
@@ -66,6 +80,8 @@
             document.documentElement.style.setProperty('--vh', `${vh}px`)
         },
         async created() {
+            jwt.init()
+
             const dir = this.$vs.rtl ? 'rtl' : 'ltr'
             document.documentElement.setAttribute('dir', dir)
 

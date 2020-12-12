@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use App\Casts\Phone;
 use Illuminate\Database\Eloquent\Builder;
@@ -61,30 +59,26 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|User          client()
  * @method static Builder|User          spec()
  * @property-read bool                  $isAdmin
- * @property-read bool                  $isClient
+ * @property-read bool                  $isManager
  * @property-read bool                  $phoneFormat
  *
  * @property-read Collection|Pet[]      $pets
- * @property-read Collection|UserDetail $detail
+ * @property-read Collection|UserDetail $userDetail
  * @property-read Collection|Lead[]     $leads
  * @property-read Collection|Lead[]     $managerLeads
  * @property-read Collection|Request[]  $requests
  * @property-read Collection|Request[]  $specRequests
  * @property-read Collection|Comment[]  $commentsByUser
  */
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto;
-    use HasTeams;
     use Notifiable;
-    use TwoFactorAuthenticatable;
-
-    const ROLE_CLIENT = 10;
-    const ROLE_SPEC = 20;
-    const ROLE_MANAGER = 30;
-    const ROLE_ADMIN = 40;
+    const ROLE_CLIENT = 'client';
+    const ROLE_SPEC = 'spec';
+    const ROLE_MANAGER = 'manager';
+    const ROLE_ADMIN = 'admin';
 
     const STATUS_ACTIVE = 10;
     const STATUS_NOT_ACTIVE = 20;
@@ -100,7 +94,8 @@ class User extends Authenticatable
         'two_factor_secret',
         'created_at',
         'updated_at',
-        'name'
+        'name',
+        'userDetail'
     ];
 
     protected $casts = [
@@ -124,7 +119,7 @@ class User extends Authenticatable
     /**
      * Подробная информация о клиенте/специалисте
      */
-    public function detail()
+    public function userDetail()
     {
         return $this->hasOne(UserDetail::class);
     }
@@ -186,14 +181,9 @@ class User extends Authenticatable
         return $query->where('role', self::ROLE_SPEC);
     }
 
-    public function getIsAdminAttribute()
+    public function getDetailAttribute()
     {
-        return $this->attributes['role'] === self::ROLE_ADMIN;
-    }
-
-    public function getIsClientAttribute()
-    {
-        return $this->attributes['role'] === self::ROLE_CLIENT;
+        return $this->userDetail()->first()->toArray();
     }
 
     public function getPhoneFormatAttribute()
@@ -201,4 +191,23 @@ class User extends Authenticatable
         return Phone::formatPhone($this->attributes['phone']);
     }
 
+    public function getIsAdminAttribute()
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function getIsManagerAttribute()
+    {
+        return $this->role === self::ROLE_MANAGER;
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

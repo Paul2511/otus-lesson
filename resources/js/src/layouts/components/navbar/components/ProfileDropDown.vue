@@ -1,54 +1,34 @@
 <template>
-    <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.detail && activeUserInfo.detail.displayName">
+    <div class="the-navbar__user-meta flex items-center"
+         v-if="activeUserInfo.detail && activeUserInfo.detail.displayName">
 
         <div class="text-right leading-tight hidden sm:block">
             <p class="font-semibold">{{ activeUserInfo.detail.displayName }}</p>
-            <small>{{ activeUserInfo.displaySpec }}</small>
+            <small>{{ activeUserInfo.detail.displaySpec }}</small>
         </div>
 
         <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
 
             <div class="con-img ml-3">
-                <img v-if="activeUserInfo.detail.avatar && activeUserInfo.detail.avatar.previewPath" key="onlineImg" :src="activeUserInfo.detail.avatar.previewPath" alt="user-img"
+                <img v-if="activeUserInfo.detail.avatar && activeUserInfo.detail.avatar.previewPath" key="onlineImg"
+                     :src="activeUserInfo.detail.avatar.previewPath" alt="user-img"
                      width="40" height="40" class="rounded-full shadow-md cursor-pointer block"/>
-                <vs-avatar color="primary" v-else />
+                <vs-avatar color="primary" v-else/>
             </div>
 
             <vs-dropdown-menu class="vx-navbar-dropdown">
-                <ul style="min-width: 9rem">
+                <ul>
 
-                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
+                    <li @click="$router.push('/cabinet/pets').catch(() => {})" class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
                         <feather-icon icon="UserIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Profile</span>
-                    </li>
-
-                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
-                        <feather-icon icon="MailIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Inbox</span>
-                    </li>
-
-                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
-                        <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Tasks</span>
-                    </li>
-
-                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
-                        <feather-icon icon="MessageSquareIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Chat</span>
-                    </li>
-
-                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
-                        <feather-icon icon="HeartIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Wish List</span>
+                        <span class="ml-2">Мой профиль</span>
                     </li>
 
                     <vs-divider class="m-1"/>
 
-                    <li
-                            class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                            @click="logout">
+                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout">
                         <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Logout</span>
+                        <span class="ml-2">Выход</span>
                     </li>
                 </ul>
             </vs-dropdown-menu>
@@ -64,13 +44,29 @@
             }
         },
         methods: {
+
             logout() {
+                if (localStorage.getItem('accessToken')) {
+                    localStorage.removeItem('accessToken')
+                    this.$router.push('/login').catch(() => {})
+                }
+
+                this.$acl.change('public')
                 localStorage.removeItem('userInfo')
 
-                // This is just for demo Purpose. If user clicks on logout -> redirect
-                this.$router.push('/pages/login').catch(() => {
-                })
             }
         }
     }
 </script>
+
+<style scoped lang="scss">
+    .vx-navbar-dropdown {
+        ul {
+            min-width: 9rem;
+            li {
+                white-space: nowrap;
+            }
+        }
+    }
+
+</style>

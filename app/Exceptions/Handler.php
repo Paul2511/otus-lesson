@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Illuminate\Auth\Access\AuthorizationException;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,8 +47,26 @@ class Handler extends ExceptionHandler
                 'message' => trans('form.validationErrorMessage'),
                 'errors' => $e->errors(),
                 'success' => false
-            ], 200);
+            ], 422);
         }
+
+        if ($e instanceof AccessDeniedHttpException) {
+            return response()->json([
+                'message' => trans('auth.accessDenied'),
+                'success' => false
+            ], 403);
+        }
+
+        if ($e instanceof AuthorizationException) {
+            return response()->json([
+                'message' => trans('auth.wrongAuth'),
+                'errors' => [
+                    'password'=>[trans('auth.wrongAuth')]
+                ],
+                'success' => false
+            ], 401);
+        }
+
         return parent::render($request, $e);
     }
 }

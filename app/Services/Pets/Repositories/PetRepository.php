@@ -7,7 +7,7 @@ use App\Models\Pet;
 class PetRepository
 {
 
-    public function getPet(int $id): Pet
+    public function findPet(int $id): Pet
     {
         return Pet::findOrFail($id);
     }

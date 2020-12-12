@@ -17,8 +17,8 @@ class UserController extends Controller
 
     public function __construct(UserService $usersService)
     {
-
         $this->usersService = $usersService;
+        $this->middleware('auth.jwt:api');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\UtilsHelper;
+use App\Services\Users\Helpers\UserLabelsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,9 +55,6 @@ class UserDetail extends BaseModel
     const CLASSIFIER_SPEC_ALLOWED = 'spec_allowed';
     const CLASSIFIER_SPEC_NOT_ALLOWED = 'spec_not_allowed';
 
-    private static array $classifierClientLabels;
-
-    private static array $classifierSpecLabels;
 
     public $commentType = 'userDetail';
 
@@ -74,9 +72,9 @@ class UserDetail extends BaseModel
     ];
 
 
-    protected $appends = [
+    /*protected $appends = [
         'fio', 'shortFio', 'displayName'
-    ];
+    ];*/
 
     public function user()
     {
@@ -102,54 +100,4 @@ class UserDetail extends BaseModel
     }
 
 
-    /**
-     * Возвращает полное ФИО
-     */
-    public function getFioAttribute(): string
-    {
-        $lastName = $this->lastname?$this->lastname.' ':'';
-        $firstName = $this->firstname?$this->firstname.' ':'';
-        $middleName = $this->middlename ?? '';
-        return trim($lastName . $firstName . $middleName);
-    }
-
-    public function getDisplayNameAttribute(): string
-    {
-        $lastName = $this->lastname?$this->lastname.' ':'';
-        $firstName = $this->firstname?$this->firstname.' ':'';
-        $result = trim($lastName . $firstName);
-
-        if (empty($result)) {
-            $user = $this->user;
-            $result = ucfirst($user->getRoleLabelAttribute());
-        }
-
-        return $result;
-    }
-
-    /**
-     * Возвращает сокращенное ФИО: Иванов И.И.
-     */
-    public function getShortFioAttribute(): string
-    {
-        $firstName = $this->firstname ? mb_substr($this->firstname, 0, 1).'.' : null;
-        $middleName = $this->middlename ? mb_substr($this->middlename, 0, 1).'.' : null;
-        $fio = trim(implode(' ', [$this->lastname, $firstName, $middleName]));
-        $fio = preg_replace('~\s+~', ' ', $fio);
-
-        return $fio ? $fio : null;
-    }
-
-
-    public static function classifierClientLabels(): array
-    {
-        if (isset(self::$classifierClientLabels)) return self::$classifierClientLabels;
-        return self::$classifierClientLabels = UtilsHelper::getLangLabels(static::class, ['classifier', 'client']);
-    }
-
-    public static function classifierSpecLabels(): array
-    {
-        if (isset(self::$classifierSpecLabels)) return self::$classifierSpecLabels;
-        return self::$classifierSpecLabels = UtilsHelper::getLangLabels(static::class, ['classifier', 'spec']);
-    }
 }

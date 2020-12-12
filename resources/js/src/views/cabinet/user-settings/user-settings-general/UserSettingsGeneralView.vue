@@ -24,7 +24,6 @@
                 </tr>
             </table>
         </div>
-
         <!-- /Information - Col 1 -->
 
         <!-- Information - Col 2 -->
@@ -38,7 +37,7 @@
                     <td class="font-semibold">Email</td>
                     <td>{{ user.email }}</td>
                 </tr>
-                <tr>
+                <tr v-if="canAdmin">
                     <td class="font-semibold">Статус</td>
                     <td>
                         <vs-chip :color="user.statusColor">
@@ -46,7 +45,7 @@
                         </vs-chip>
                     </td>
                 </tr>
-                <tr>
+                <tr v-if="canAdmin">
                     <td class="font-semibold">Роль</td>
                     <td>{{ user.roleLabel }}</td>
                 </tr>
@@ -80,6 +79,11 @@
         methods: {
             edit() {
                 this.$emit('edit');
+            }
+        },
+        computed: {
+            canAdmin() {
+                return this.$acl.check('canAdmin')
             }
         }
     }

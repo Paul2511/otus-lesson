@@ -24,7 +24,7 @@ class PetDeleteHandler
      */
     public function handler(int $id)
     {
-        $pet = $this->petRepository->getPet($id);
+        $pet = $this->petRepository->findPet($id);
         try {
             return $this->petRepository->deletePet($pet);
         } catch (\Exception $e) {

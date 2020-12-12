@@ -15,7 +15,8 @@ class AddColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->smallInteger('role')->unsigned()->default(User::ROLE_CLIENT);
+            //$table->smallInteger('role')->unsigned()->default(User::ROLE_CLIENT);
+            $table->string('role', 10)->default(User::ROLE_CLIENT);
             $table->smallInteger('status')->unsigned()->default(User::STATUS_ACTIVE);
             $table->string('phone', 15)->nullable();
         });

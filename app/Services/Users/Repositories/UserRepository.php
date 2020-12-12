@@ -15,7 +15,7 @@ class UserRepository
 
     public function findUserWithDetail(int $id): User
     {
-        return User::whereId($id)->with('detail')->firstOrFail();
+        return User::whereId($id)->with('userDetail')->firstOrFail();
     }
 
     public function setUser(User $user, array $data): bool

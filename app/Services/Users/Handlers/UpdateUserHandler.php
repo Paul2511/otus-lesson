@@ -28,8 +28,7 @@ class UpdateUserHandler
     public function handle(int $id, array $data): User
     {
         $user = $this->userRepository->findUser($id);
-        $detail = $user->detail;
-
+        $detail = $user->userDetail;
         if (
             $this->userRepository->setUser($user, $data)
             &&
@@ -38,8 +37,7 @@ class UpdateUserHandler
         {
             $user->fresh();
         }
-        else
-            {
+        else {
             //todo: репорт ошибки
         }
 

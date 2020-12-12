@@ -1,11 +1,10 @@
 <template>
     <div id="page-user-view">
         <vx-card no-shadow>
-            <div v-if="isLoading" class="loading-block"><div class="loading-inner"></div></div>
-            <div v-else>
+            <div v-if="!!user">
                 <vx-card title="Основные данные" class="mb-base">
                     <user-settings-general-view :user="user" @edit="edit" v-if="!editing" />
-                    <user-settings-general-edit v-if="editing" :user-info="user" @cancel="cancel" />
+                    <user-settings-general-edit v-if="editing" :user-info="user" @cancel="cancel" @set="setUser" />
                 </vx-card>
             </div>
         </vx-card>
@@ -21,19 +20,23 @@
         },
         data() {
             return {
-                editing: false
-            }
-        },
-        mounted(){
-            if (this.isLoading) {
-                this.$vs.loading({
-                    container: '.loading-inner',
-                    type:'point'
-                });
+                editing: false,
+                user: null
             }
         },
         created() {
-            this.$store.dispatch('getUserInfo');
+            this.$vs.loading();
+            this.$store.dispatch('getUser', this.appUser.id)
+                .then(res => {
+                    this.user = res.data.user;
+                })
+                .catch(err => {
+                    this.$vs.notify({
+                        title: this.$t('Error'),
+                        text: err.response.data.message || this.$t('ErrorResponse'),
+                        color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
+                })
+                .finally(() => (this.$vs.loading.close()));
         },
         methods: {
             edit() {
@@ -41,14 +44,15 @@
             },
             cancel() {
                 this.editing = false;
+            },
+            setUser(user) {
+                this.user = user;
+                this.editing = false;
             }
         },
         computed: {
-            user() {
+            appUser() {
                 return this.$store.state.AppActiveUser
-            },
-            isLoading() {
-                return !this.user.id;
             }
         }
     }

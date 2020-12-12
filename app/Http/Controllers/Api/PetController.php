@@ -18,42 +18,15 @@ class PetController extends Controller
     )
     {
         $this->petService = $petService;
+        $this->middleware('auth.jwt:api');
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(int $userId): JsonResponse
     {
-        $userId = $request->get('user_id', null);
         $result = $this->petService->getUserPets($userId);
         return response()->json($result);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(int $id): JsonResponse
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * @param $id

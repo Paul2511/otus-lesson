@@ -33,7 +33,7 @@ class UserUpdateRequest extends ApiRequest
     {
         return [
             'email' => ['required', 'email'],
-            'role' => ['required', 'integer', Rule::in(array_keys(UserLabelsHelper::roleLabels()))],
+            'role' => ['required', Rule::in(array_keys(UserLabelsHelper::roleLabels()))],
             'status' => ['required', 'integer', Rule::in(array_keys(UserLabelsHelper::statusLabels()))],
             'lastname' => ['string', 'nullable'],
             'firstname' => ['string' ,'nullable'],

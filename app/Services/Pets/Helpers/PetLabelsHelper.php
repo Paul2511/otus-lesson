@@ -10,6 +10,11 @@ class PetLabelsHelper implements LabelsHelperInterface
 {
 
     /**
+     * @var Pet
+     */
+    private $model;
+
+    /**
      * @var array
      */
     private static $sexLabels;
@@ -27,11 +32,11 @@ class PetLabelsHelper implements LabelsHelperInterface
     }
 
     /**
-     * @param Pet $pet
      * @return array
      */
-    public function getLabels($pet)
+    public function getLabels()
     {
+        $pet = $this->model;
         return [
             'sexLabels'=>self::sexLabels(),
             'sexLabel'=>self::currentSexLabel($pet->sex)
@@ -44,8 +49,9 @@ class PetLabelsHelper implements LabelsHelperInterface
      */
     public function toArray($pet)
     {
+        $this->model = $pet;
         $data = $pet->toArray();
-        $labels = $this->getLabels($pet);
+        $labels = $this->getLabels();
 
         return array_merge($data, $labels);
     }

@@ -1,6 +1,5 @@
 <?php
 
-use Laravel\Jetstream\Features;
 
 return [
 
@@ -29,9 +28,7 @@ return [
     */
 
     'features' => [
-        // Features::profilePhotos(),
-        // Features::api(),
-        Features::teams(),
+
     ],
 
 ];

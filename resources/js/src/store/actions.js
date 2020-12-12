@@ -6,7 +6,7 @@
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
-import axios from 'axios'
+import axios from '@/axios.js'
 
 const actions = {
 
@@ -47,24 +47,29 @@ const actions = {
     // User/Account
     // /////////////////////////////////////////////
 
-    getUserInfo({commit}) {
-        if (!this.state.AppActiveUser.id) {
-            axios.get('/api/users/7')
-                .then((response) => {
-                    commit('SET_USER_INFO', response.data.user)
-                })
-                .catch((error) => {
-                    this.$vs.notify({title: this.$t('Error'), text: this.$t('ErrorResponse'), color: 'danger'})
-                })
-        }
+    updateUserInfo ({ commit }, payload) {
+        commit('UPDATE_USER_INFO', payload)
     },
-
-    updateUserInfo({ commit }, user) {
+    updateUserRole ({ dispatch }, payload) {
+        payload.aclChangeRole(payload.role)
+        dispatch('updateUserInfo', {role: payload.role})
+    },
+    getUser({commit}, userId) {
+        return new Promise((resolve, reject) => {
+            axios.get('/api/users/'+userId)
+                .then((response) => {
+                    commit('UPDATE_USER_INFO', response.data.user)
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        })
+    },
+    updateUser({ commit }, user) {
         return new Promise((resolve, reject) => {
             axios.post('/api/users/'+user.id, {data: user, _method: 'patch'})
                 .then((response) => {
                     if (response.data.success) {
-                        commit('SET_USER_INFO', response.data.user);
+                        commit('UPDATE_USER_INFO', response.data.user)
                     }
                     resolve(response);
                 })
@@ -77,13 +82,14 @@ const actions = {
     // /////////////////////////////////////////////
     getUserPets({ commit }, userId) {
         return new Promise((resolve, reject) => {
-            axios.get('/api/pets/?user_id='+userId)
+            axios.get('/api/pets/user/'+userId)
                 .then((response) => {
                     resolve(response);
                 })
                 .catch((error) => { reject(error) })
         });
     },
+
     deletePet({ commit }, petId) {
         return new Promise((resolve, reject) => {
             axios.delete('/api/pets/'+petId)

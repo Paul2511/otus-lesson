@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AccessUser;
+use App\Http\Middleware\AccessUserPet;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -57,6 +59,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.jwt'  =>  \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
@@ -64,6 +67,16 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class
     ];
+
+    protected $middlewarePriority = [
+        \App\Http\Middleware\Authenticate::class,
+        \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        \Illuminate\Auth\Middleware\Authorize::class,
+        AccessUser::class,
+        AccessUserPet::class
+    ];
+
 }

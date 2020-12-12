@@ -61,7 +61,7 @@
             }
         },
         created() {
-            const userId = this.user && this.user.id ? this.user.id : 7;
+            const userId = this.user.id;
 
             this.$store.dispatch('getUserPets', userId)
                 .then(res => {
@@ -70,7 +70,7 @@
                 .catch(err => {
                     this.$vs.notify({
                         title: this.$t('Error'),
-                        text: this.$t('ErrorResponse'),
+                        text: err.response.data.message || this.$t('ErrorResponse'),
                         color: 'danger',
                         iconPack: 'feather',
                         icon: 'icon-alert-circle'
@@ -79,6 +79,7 @@
                 .finally(() => (this.isLoading = false));
         },
         methods: {
+
             removePet(pet) {
                 let _this = this;
                 this.$vs.dialog({
@@ -98,19 +99,13 @@
                 this.$vs.loading();
                 this.$store.dispatch('deletePet', pet.id)
                     .then(res => {
-                        if (res.data.success) {
-                            if (!!res.data.message) {
-                                this.$vs.notify({title:res.data.message.title, text: res.data.message.text, color: 'success', iconPack: 'feather', icon:'icon-check'});
-                            }
-
-                            this.pets.splice(this.pets.indexOf(pet), 1);
-
-                        } else {
-                            this.$vs.notify({title: this.$t('Error'), text: res.data.message, color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'});
-                        }
+                        this.pets.splice(this.pets.indexOf(pet), 1);
                     })
                     .catch(err => {
-                        this.$vs.notify({title: this.$t('Error'), text: this.$t('ErrorResponse'), color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
+                        this.$vs.notify({
+                            title: this.$t('Error'),
+                            text: err.response.data.message || this.$t('ErrorResponse'),
+                            color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
                     })
                     .finally(() => (this.$vs.loading.close()));
             }
@@ -119,6 +114,9 @@
         computed: {
             user() {
                 return this.$store.state.AppActiveUser
+            },
+            canAdmin() {
+                return this.$acl.check('canAdmin')
             }
         },
     }
