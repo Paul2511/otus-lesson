@@ -23,7 +23,7 @@ class UserController extends Controller
     public function index()
     {
     	$users =$this->userService->getUsers();
-        return view("user.index", ['users' => $users]);
+        return view("users.index", ['users' => $users]);
     }
 
     /**
@@ -34,7 +34,7 @@ class UserController extends Controller
     public function create()
     {
     	if(!Auth::check()){
-    		return view("user.create");
+    		return view("users.create");
     	}
     	return redirect()->back();
     }
@@ -83,7 +83,7 @@ class UserController extends Controller
     public function show($id)
     {
     	$user = $this->userService->getUser($id);
-        return view("user.show", ["user" => $user]);
+        return view("mysqlnd_qc_set_user_handlers(get_hash, find_query_in_cache, return_to_cache, add_query_to_cache_if_not_exists, query_is_select, update_query_run_time_stats, get_stats, clear_cache).show", ["user" => $user]);
     }
 
     /**
@@ -95,7 +95,7 @@ class UserController extends Controller
     public function edit($id)
     {
     	$user = $this->userService->getUser($id);
-        return view("user.edit", ["user" => $user]);
+        return view("users.edit", ["user" => $user]);
     }
 
     /**
@@ -124,7 +124,7 @@ class UserController extends Controller
             'skills'
         ]);
         $this->userService->updateUser($data, $id);
-       	return redirect()->route('user.show', ['user' => $id]);
+       	return redirect()->route('users.show', ['user' => $id]);
     }
 
     /**
@@ -142,12 +142,12 @@ class UserController extends Controller
     public function authenticate(Request $request){
     	$credentials = $request->only("email","password");
     	if(Auth::attempt($credentials)){
-    		return redirect()->route('user.show', ['user' => Auth::id()]);
+    		return redirect()->route('users.show', ['user' => Auth::id()]);
     	}
     }
     public function login(){
     	if(!Auth::check()){
-    		return view("user.login");
+    		return view("users.login");
     	}
     	return redirect()->back();
     }

@@ -24,19 +24,19 @@ class EloquentClientRepository implements RepositoryInterface
     }
 
     // update record in the database
-    public function update(array $data, $id)
+    public function update(array $data, int $id)
     {
-        if(is_array($id)){
-            $records = $this->model->find($id);
-            foreach($records as $theRecord){
-                $theRecord->update($data);
-            }
-            return $records;  
-        }
         $record = $this->model->find($id);
         return $record->update($data);
     }
-
+    //update several records
+    public function updateSeveral(array $data, array $id){
+    	$records = $this->model->find($id);
+        foreach($records as $theRecord){
+        	$theRecord->update($data);
+        }
+        return $records;
+    }
     // remove record from the database
     public function delete($id)
     {
@@ -47,24 +47,5 @@ class EloquentClientRepository implements RepositoryInterface
     public function show($id)
     {
         return $this->model->findOrFail($id);
-    }
-
-    // Get the associated model
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    // Set the associated model
-    public function setModel($model)
-    {
-        $this->model = $model;
-        return $this;
-    }
-
-    // Eager load database relationships
-    public function with($relations)
-    {
-        return $this->model->with($relations);
     }
 }

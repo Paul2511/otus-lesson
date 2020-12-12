@@ -11,8 +11,8 @@ class UpdateTodoHandler implements HandlerInterface
 		$this->todoRepository = $todoRepository;
 	}
 
-    public function handle(array $data, int $id)
+    public function handle(array $data, array $id)
     {
-    	return $this->todoRepository->update($data, $id);
+    	return $this->todoRepository->updateSeveral($data, $id);
     }
 }

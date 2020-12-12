@@ -11,7 +11,7 @@ class UpdateKnowledgeHandler implements HandlerInterface
 		$this->knowledgeRepository = $knowledgeRepository;
 	}
 
-    public function handle($data, $id)
+    public function handle($data, int $id)
     {
     	return $this->knowledgeRepository->update($data, $id);
     }

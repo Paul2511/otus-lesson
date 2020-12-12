@@ -23,7 +23,7 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = $this->taskService->getTasks();
-        return view("task.index", ["tasks" => $tasks]);
+        return view("tasks.index", ["tasks" => $tasks]);
     }
 
     /**
@@ -33,7 +33,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view("task.create");
+        return view("tasks.create");
     }
 
     /**
@@ -63,7 +63,7 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = $this->taskService->getTask($id);
-        return view("task.show", ["task" => $task]);
+        return view("tasks.show", ["task" => $task]);
     }
 
     /**
@@ -75,7 +75,7 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = $this->taskService->getTask($id);
-        return view("task.edit", ["task" => $task]);
+        return view("tasks.edit", ["task" => $task]);
     }
 
     /**

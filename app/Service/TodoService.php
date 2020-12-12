@@ -1,16 +1,16 @@
 <?php
 namespace App\Service;
-use App\Service\Handlers\{CreateTodoHandler, UpdateTodoHandler, DeleteTodoHandler};
+use App\Service\Handlers\{CreateTodoHandler, UpdateSeveralTodoHandler, DeleteTodoHandler};
 
 class TodoService{
 	protected $createTodoHandler;
-    protected $updateTodoHandler;
+    protected $updateSeveralTodoHandler;
     protected $deleteTodoHandler;
 
-	public function __construct(CreateTodoHandler $createTodoHandler, UpdateTodoHandler $updateTodoHandler, DeleteTodoHandler $deleteTodoHandler)
+	public function __construct(CreateTodoHandler $createTodoHandler, UpdateSeveralTodoHandler $updateSeveralTodoHandler, DeleteTodoHandler $deleteTodoHandler)
 	{
         $this->createTodoHandler = $createTodoHandler;
-        $this->updateTodoHandler = $updateTodoHandler;
+        $this->updateSeveralTodoHandler = $updateSeveralTodoHandler;
         $this->deleteTodoHandler = $deleteTodoHandler;
 	}
 
@@ -19,9 +19,9 @@ class TodoService{
 		$this->createTodoHandler->handle($data);
 	}
 	
-	public function updateTodo($data, $id)
+	public function updateTodos($data, $id)
 	{
-		$this->updateTodoHandler->handle($data, $id);
+		$this->updateSeveralTodoHandler->handle($data, $id);
 	}
 	
 	public function deleteTodo($id)

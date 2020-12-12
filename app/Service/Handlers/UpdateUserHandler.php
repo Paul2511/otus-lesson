@@ -11,7 +11,7 @@ class UpdateUserHandler implements HandlerInterface
 		$this->userRepository = $userRepository;
 	}
 
-    public function handle($data, $id)
+    public function handle($data, int $id)
     {
     	return $this->userRepository->update($data, $id);
     }

@@ -84,9 +84,9 @@ class TodoController extends Controller
     public function update(Request $request)
     {
     	if($request->query_type == "to_done"){
-        	$this->todoService->updateTodo(["status" => 1], $request->todo_done);
+        	$this->todoService->updateTodos(["status" => 1], $request->todo_done);
     	} else if($request->query_type == "to_work"){
-    		$this->todoService->updateTodo(["status" => 0], $request->todo_to_work);
+    		$this->todoService->updateTodos(["status" => 0], $request->todo_to_work);
     	}
     	return redirect()->back();   	
     }

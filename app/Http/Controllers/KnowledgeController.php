@@ -22,7 +22,7 @@ class KnowledgeController extends Controller
     public function index()
     {
         $knowledges = $this->knowledgeService->getKnowledges();
-        return view("knowledge.index", ['knowls' => $knowledges]);
+        return view("knowledges.index", ['knowls' => $knowledges]);
     }
 
     /**
@@ -32,7 +32,7 @@ class KnowledgeController extends Controller
      */
     public function create()
     {
-        return view("knowledge.create");
+        return view("knowledges.create");
     }
 
     /**
@@ -64,7 +64,7 @@ class KnowledgeController extends Controller
     public function show($id)
     {
         $knowl = $this->knowledgeService->getKnowledge($id);
-        return view("knowledge.show", ["knowl" => $knowl]);
+        return view("knowledges.show", ["knowl" => $knowl]);
     }
 
     /**
@@ -76,7 +76,7 @@ class KnowledgeController extends Controller
     public function edit($id)
     {
         $knowl = $this->KnowledgeService->getKnowledge($id);
-        return view("knowledge.edit", ["knowl" => $knowl]);
+        return view("knowledges.edit", ["knowl" => $knowl]);
     }
 
     /**
