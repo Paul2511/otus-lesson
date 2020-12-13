@@ -62,6 +62,22 @@ return [
             'level' => env('LOG_LEVEL', 'critical'),
         ],
 
+        'slackWarn' => [
+            'driver' => 'slack',
+            'url' => env('LOG_SLACK_WARN_WEBHOOK_URL'),
+            'username' => 'Laravel Warning',
+            'emoji' => ':warning:',
+            'level' => env('LOG_LEVEL', 'critical'),
+        ],
+
+        'slackErr' => [
+            'driver' => 'slack',
+            'url' => env('LOG_SLACK_ERR_WEBHOOK_URL'),
+            'username' => 'Laravel Error',
+            'emoji' => ':skull_and_crossbones:',
+            'level' => env('LOG_LEVEL', 'critical'),
+        ],
+
         'papertrail' => [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),

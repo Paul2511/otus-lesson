@@ -39,4 +39,8 @@ Route::get('/dev/register', function () {
 })
     ->name('register');
 
+Route::get('/error', function () {
+    return 1/0;
+});
+
 app(AdminRoutesProvider::class)->register();
