@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -32,6 +34,11 @@ class AdminBaseController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+
+    public function getCurrentUser(): User
+    {
+        return Auth::user() ?: new User;
     }
 
 }

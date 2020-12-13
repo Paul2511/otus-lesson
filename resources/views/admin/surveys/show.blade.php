@@ -14,7 +14,9 @@
     <div class="container py-5 d-flex flex-column flex-grow-1">
         <p class="flex justify-content-between">
             <a href="{{ AdminRoutes::surveysIndex()  }}">&larr; Назад</a>
-            <a href="{{ AdminRoutes::surveysEdit($survey)  }}">Редактировать</a>
+            @if ($canUpdate)
+                <a href="{{ AdminRoutes::surveysEdit($survey)  }}">Редактировать</a>
+            @endif
         </p>
 
         <table class="table">

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Surveys;
 
 use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Survey;
+use App\Policies\Permission;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
 use App\Services\Surveys\Repositories\EloquentSurveyRepository;
+use Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use View as ViewFacade;
@@ -13,6 +15,8 @@ use View as ViewFacade;
 
 class AdminSurveysController extends AdminBaseController
 {
+    private $model = Survey::class;
+
     /**
      * @var EloquentSurveyRepository
      */
@@ -25,11 +29,14 @@ class AdminSurveysController extends AdminBaseController
 
     public function index(): View
     {
-        // TODO: Добавить работу с текущим пользователем
+        $this->authorize(Permission::VIEW_ANY, $this->model);
+        $user = $this->getCurrentUser();
 
         ViewFacade::share(
             [
-                'surveys' => $this->eloquentSurveyRepository->searchByUserId(1, static::DEFAULT_PAGE_SIZE),
+                'surveys'   => $this->eloquentSurveyRepository->searchForCurrentUser(),
+                'user'      => $user,
+                'canCreate' => $user->can(Permission::CREATE, $this->model),
             ]
         );
 
@@ -38,9 +45,12 @@ class AdminSurveysController extends AdminBaseController
 
     public function show(Survey $survey)
     {
+        $this->authorize(Permission::VIEW, $survey);
+
         ViewFacade::share(
             [
-                'survey' => $survey,
+                'survey'    => $survey,
+                'canUpdate' => $this->getCurrentUser()->can(Permission::UPDATE, $survey),
             ]
         );
 
@@ -49,6 +59,8 @@ class AdminSurveysController extends AdminBaseController
 
     public function edit(Survey $survey): View
     {
+        $this->authorize(Permission::UPDATE, $survey);
+
         ViewFacade::share(
             [
                 'formOpenOptions' =>
@@ -65,6 +77,8 @@ class AdminSurveysController extends AdminBaseController
 
     public function create()
     {
+        $this->authorize(Permission::CREATE, $this->model);
+
         ViewFacade::share(
             [
                 'formOpenOptions' =>
@@ -73,7 +87,7 @@ class AdminSurveysController extends AdminBaseController
                         'method' => 'POST',
                     ],
 
-                'survey' => $this->eloquentSurveyRepository->createNew(),
+                'survey' => new Survey,
             ]
         );
 
@@ -82,6 +96,8 @@ class AdminSurveysController extends AdminBaseController
 
     public function store(Request $request)
     {
+        $this->authorize(Permission::CREATE, $this->model);
+
         $survey = $this->eloquentSurveyRepository->store($request->all());
 
         return $this->showElementIfCreatedOrGoBack(
@@ -94,6 +110,8 @@ class AdminSurveysController extends AdminBaseController
 
     public function update(Request $request, Survey $survey)
     {
+        $this->authorize(Permission::UPDATE, $survey);
+
         $this->eloquentSurveyRepository->update($survey, $request->all());
 
         return redirect(AdminRoutes::surveysEdit($survey));
@@ -101,6 +119,8 @@ class AdminSurveysController extends AdminBaseController
 
     public function destroy(Survey $survey)
     {
+        $this->authorize(Permission::DELETE, $survey);
+
         $this->eloquentSurveyRepository->delete($survey);
 
         return redirect(AdminRoutes::surveysIndex());

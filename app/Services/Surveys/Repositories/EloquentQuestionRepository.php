@@ -28,7 +28,7 @@ class EloquentQuestionRepository extends EloquentBaseRepository
         return $query::paginate($query, $perPage);
     }
 
-    public function findBySurveyOrFail(Survey $survey, int $id)
+    public function findBySurveyOrFail(Survey $survey, int $id): Question
     {
         return $this->findBySurveyIdOrFail($survey->id, $id);
     }
@@ -43,11 +43,6 @@ class EloquentQuestionRepository extends EloquentBaseRepository
     public function findById(int $id): Question
     {
         return Question::find($id)->get();
-    }
-
-    public function createNew(): Question
-    {
-        return new Question;
     }
 
     public function store(array $data, Survey $survey): Question
@@ -66,9 +61,9 @@ class EloquentQuestionRepository extends EloquentBaseRepository
         return $question;
     }
 
-    public function delete(Question $survey)
+    public function delete(Question $question)
     {
-        $survey->delete();
+        $question->delete();
     }
 
 }
