@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\Services\Helpers\RequestLogger;
 
 class AdminBaseController extends Controller
 {
