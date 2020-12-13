@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Services\Helpers\RequestLogger;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -38,6 +39,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Localization::class,
+            \App\Http\Middleware\RequestLog::class,
         ],
 
         'api' => [
@@ -65,5 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\AdminAuthenticated::class,
         'user'  => \App\Http\Middleware\UserAuthenticated::class,
+        'log' =>  \App\Http\Middleware\RequestLog::class,
     ];
 }

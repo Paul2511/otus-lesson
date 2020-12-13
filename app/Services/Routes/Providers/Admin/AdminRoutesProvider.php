@@ -21,7 +21,7 @@ final class AdminRoutesProvider
         Route::group([
             'prefix' => 'admin',
             'as' => 'admin.',
-            'middleware' => ['auth', 'admin'],
+            'middleware' => ['auth', 'admin' , 'log'],
         ], function () {
             Route::resources([
                 'users' => AdminUsersController::class,

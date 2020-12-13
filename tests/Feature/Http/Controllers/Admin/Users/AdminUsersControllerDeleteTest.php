@@ -45,7 +45,7 @@ class AdminUsersControllerDeleteTest extends TestCase
         $user = UsersGenerator::generateActiveUser();
         $response = $this->actingAs($user)->delete(
             route(AdminRoutes::ADMIN_USERS_DELETE,
-            $this->setRandomUser()));
+            $this->getRandomUserId()));
 
         $response->assertStatus(302)
             ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
@@ -58,7 +58,7 @@ class AdminUsersControllerDeleteTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->setRandomUser()));
+                $this->getRandomUserId()));
 
         $response->assertStatus(302)
             ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
@@ -78,7 +78,7 @@ class AdminUsersControllerDeleteTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->setRandomUser()));
+                $this->getRandomUserId()));
 
         $response->assertStatus(403);
     }
@@ -95,7 +95,7 @@ class AdminUsersControllerDeleteTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->setRandomUser()));
+                $this->getRandomUserId()));
 
         $response->assertStatus(200);
     }
@@ -112,7 +112,7 @@ class AdminUsersControllerDeleteTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->setRandomUser()));
+                $this->getRandomUserId()));
 
         $response->assertStatus(403);
     }
@@ -146,13 +146,13 @@ class AdminUsersControllerDeleteTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->setRandomUser()));
+                $this->getRandomUserId()));
 
         $response->assertStatus(200);
 
     }
 
-    public function setRandomUser(): int
+    private function getRandomUserId(): int
     {
         $userIds = $this->getEloquentUserRepository()->getUserIds();
 
