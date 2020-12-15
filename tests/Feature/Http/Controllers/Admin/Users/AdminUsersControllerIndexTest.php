@@ -23,11 +23,12 @@ class AdminUsersControllerIndexTest extends TestCase
     // Users
     public function testIndexNotAuthenticatedUsers()
     {
-        $response = $this->get(route(AdminRoutes::ADMIN_USERS_INDEX));
+        $response = $this->get(route(AdminRoutes::ADMIN_USERS_INDEX, app()->getLocale()));
 
         $response->assertStatus(302)
-            ->assertRedirect(route('login'));
+            ->assertRedirect(route('login', app()->getLocale()));
     }
+
     /**
      * @group http
      * @group users
@@ -36,11 +37,12 @@ class AdminUsersControllerIndexTest extends TestCase
     public function testIndexAsActiveUser()
     {
         $user = UsersGenerator::generateActiveUser();
-        $response = $this->actingAs($user)->get(route(AdminRoutes::ADMIN_USERS_INDEX));
+        $response = $this->actingAs($user)->get(route(AdminRoutes::ADMIN_USERS_INDEX, app()->getLocale()));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
+
     /**
      * @group http
      * @group users
@@ -53,6 +55,7 @@ class AdminUsersControllerIndexTest extends TestCase
 
         $this->assertFalse($user->can('view', User::class));
     }
+
     /**
      * @group http
      * @group users
@@ -62,10 +65,10 @@ class AdminUsersControllerIndexTest extends TestCase
     {
         $user = UsersGenerator::generateInactiveUser();
         $response = $this->actingAs($user)
-            ->get(route(AdminRoutes::ADMIN_USERS_INDEX));
+            ->get(route(AdminRoutes::ADMIN_USERS_INDEX, app()->getLocale()));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));;
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));;
     }
     /**
      * @group http
@@ -77,10 +80,11 @@ class AdminUsersControllerIndexTest extends TestCase
     {
         $user = UsersGenerator::generateInactiveManager();
         $response = $this->actingAs($user)
-            ->get(route(AdminRoutes::ADMIN_USERS_INDEX));
+            ->get(route(AdminRoutes::ADMIN_USERS_INDEX, app()->getLocale()));
 
         $response->assertStatus(403);
     }
+
     /**
      * @group http
      * @group users
@@ -90,10 +94,11 @@ class AdminUsersControllerIndexTest extends TestCase
     {
         $user = UsersGenerator::generateActiveManager();
         $response = $this->actingAs($user)
-            ->get(route(AdminRoutes::ADMIN_USERS_INDEX));
+            ->get(route(AdminRoutes::ADMIN_USERS_INDEX, app()->getLocale()));
 
         $response->assertStatus(200);
     }
+
     /**
      * @group http
      * @group users
@@ -106,6 +111,7 @@ class AdminUsersControllerIndexTest extends TestCase
 
         $this->assertTrue($user->can('view', User::class));
     }
+
     /**
      * @group http
      * @group users
@@ -128,10 +134,11 @@ class AdminUsersControllerIndexTest extends TestCase
     {
         $user = UsersGenerator::generateActiveAdmin();
         $response = $this->actingAs($user)
-            ->get(route(AdminRoutes::ADMIN_USERS_INDEX));
+            ->get(route(AdminRoutes::ADMIN_USERS_INDEX, app()->getLocale()));
 
         $response->assertStatus(200);
     }
+
     /**
      * @group http
      * @group users
@@ -141,10 +148,11 @@ class AdminUsersControllerIndexTest extends TestCase
     {
         $user = UsersGenerator::generateInactiveAdmin();
         $response = $this->actingAs($user)
-            ->get(route(AdminRoutes::ADMIN_USERS_INDEX));
+            ->get(route(AdminRoutes::ADMIN_USERS_INDEX, app()->getLocale()));
 
         $response->assertStatus(403);
     }
+
     /**
      * @group http
      * @group users
@@ -157,6 +165,7 @@ class AdminUsersControllerIndexTest extends TestCase
 
         $this->assertFalse($user->can('view', User::class));
     }
+
     /**
      * @group http
      * @group users
@@ -169,6 +178,7 @@ class AdminUsersControllerIndexTest extends TestCase
 
         $this->assertFalse($user->can('viewAny', User::class));
     }
+
     /**
      * @group http
      * @group users
@@ -181,6 +191,7 @@ class AdminUsersControllerIndexTest extends TestCase
 
         $this->assertTrue($user->can('view', User::class));
     }
+
     /**
      * @group http
      * @group users

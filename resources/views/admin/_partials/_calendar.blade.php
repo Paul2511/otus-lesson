@@ -6,8 +6,11 @@
         <div class="col-xl-6 col-xs-12 col-md-6 col-sm-6">
           <div class="cal-info text-center">
             <h2>{{ Date::createFromDate(2020, 11, 28)->format('d') }}</h2>
-            <div class="d-inline-block mt-2"><span class="b-r-dark pr-3">{{ Date::createFromDate(2020, 11, 28)->format('M') }}</span><span class="pl-3">{{ Date::createFromDate(2020, 11, 28)->format('Y') }}</span></div>
-            <p class="mt-4 f-16 text-muted">{{ __('pages/dashboard.estimated')}}</p>
+            <div class="d-inline-block mt-2">
+              <span class="b-r-dark pr-3">{{ Date::createFromDate(2020, 11, 28)->format('M') }}</span>
+              <span class="pl-3">{{ Date::createFromDate(2020, 11, 28)->format('Y') }}</span>
+            </div>
+            <p class="mt-4 f-16 text-muted">{{ __('messages.pages.dashboard.estimated')}}</p>
           </div>
         </div>
         <div class="col-xl-6 col-xs-12 col-md-6 col-sm-6">

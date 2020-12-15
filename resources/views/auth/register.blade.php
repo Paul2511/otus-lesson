@@ -17,7 +17,7 @@
               <h4 class="text-center mb-4">{{ Str::upper(__('messages.auth.register')) }}</h4>
               <h6 class="text-center">{{ __('messages.auth.newEnter') }}</h6>
               {{-- Register form starts --}}
-              {!! Form::open(['route' => 'register','method' => 'post','class' => 'theme-form']) !!}
+              {!! Form::open(['route' => ['register', 'locale'=>App::getLocale()],'method' => 'post','class' => 'theme-form']) !!}
                 <div class="form-row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -69,7 +69,7 @@
                       {!! Form::submit( Str::ucfirst(__('messages.auth.signup')),['class' => 'btn btn-primary btn-block'] ) !!}
                   </div>
                   <div class="col-sm-8">
-                    <div class="text-left mt-4 m-l-30">{{ __('messages.auth.already') }} <a class="btn-link text-capitalize" href="{{route('login')}}">{{ __('messages.auth.login') }}</a></div>
+                    <div class="text-left mt-4 m-l-30">{{ __('messages.auth.already') }} <a class="btn-link text-capitalize" href="{{route('login', app()->getLocale())}}">{{ __('messages.auth.login') }}</a></div>
                   </div>
                 </div>
                 {!! Form::close() !!}

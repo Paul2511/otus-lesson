@@ -14,9 +14,12 @@ use Tests\TestCase;
 
 class AdminUsersControllerUpdateTest extends TestCase
 {
-    private function getEloquentUserRepository(): EloquentUserRepository
+
+    public function testUpdateGetRequestNotAuthenticatedUsers()
     {
-        return app(EloquentUserRepository::class);
+        $response = $this->get(route(AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), 1]));
+        $response->assertStatus(302)
+            ->assertRedirect(route('login', app()->getLocale()));
     }
     /**
      * @group http
@@ -25,15 +28,6 @@ class AdminUsersControllerUpdateTest extends TestCase
      */
 
     // Users
-    public function testUpdateGetRequestNotAuthenticatedUsers()
-    {
-
-        $response = $this->get(route(AdminRoutes::ADMIN_USERS_UPDATE, 1));
-
-        $response->assertStatus(302)
-            ->assertRedirect(route('login'));
-    }
-
     /**
      * @group http
      * @group users
@@ -46,10 +40,10 @@ class AdminUsersControllerUpdateTest extends TestCase
         $userUpdateData = UsersGenerator::generateUpdateUserData();
 
         $response = $this->actingAs($user)->patch(route(
-            AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']), Arr::except($userUpdateData,'id'));
+            AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]), Arr::except($userUpdateData, 'id'));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
 
     /**
@@ -64,12 +58,12 @@ class AdminUsersControllerUpdateTest extends TestCase
         $userUpdateData = UsersGenerator::generateUpdateUserData();
 
         $response = $this->actingAs($user)->patch(route(
-            AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']), Arr::except($userUpdateData,'id'));
+            AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]), Arr::except($userUpdateData, 'id'));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
-//    Managers
+
     /**
      * @group http
      * @group users
@@ -82,10 +76,11 @@ class AdminUsersControllerUpdateTest extends TestCase
         $userUpdateData = UsersGenerator::generateUpdateUserData();
 
         $response = $this->actingAs($user)->patch(route(
-            AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']), Arr::except($userUpdateData,'id'));
+            AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]), Arr::except($userUpdateData, 'id'));
 
         $response->assertStatus(403);
     }
+//    Managers
 
     /**
      * @group http
@@ -99,11 +94,11 @@ class AdminUsersControllerUpdateTest extends TestCase
         $userUpdateData = UsersGenerator::generateUpdateUserData();
 
         $response = $this->actingAs($user)->patch(route(
-            AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']), Arr::except($userUpdateData,'id'));
+            AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]), Arr::except($userUpdateData, 'id'));
 
         $response->assertStatus(403);
     }
-//    Admins
+
     /**s
      * @group http
      * @group users
@@ -116,10 +111,11 @@ class AdminUsersControllerUpdateTest extends TestCase
         $userUpdateData = UsersGenerator::generateUpdateUserData();
 
         $response = $this->actingAs($user)->patch(route(
-            AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']), Arr::except($userUpdateData,'id'));
+            AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]), Arr::except($userUpdateData, 'id'));
 
         $response->assertStatus(403);
     }
+//    Admins
 
     /**
      * @group http
@@ -134,7 +130,7 @@ class AdminUsersControllerUpdateTest extends TestCase
         $emptyUserUpdateData = [];
 
         $response = $this->actingAs($user)->patch(route(
-            AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']), $emptyUserUpdateData);
+            AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]), $emptyUserUpdateData);
 
         $response->assertStatus(302);
     }
@@ -153,7 +149,7 @@ class AdminUsersControllerUpdateTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patchJson(route(AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']),
+            ->patchJson(route(AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]),
                 $invalidUserStoreData,
                 ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
@@ -172,17 +168,22 @@ class AdminUsersControllerUpdateTest extends TestCase
         $user = UsersGenerator::generateActiveAdmin();
         $userUpdateData = UsersGenerator::generateUpdateUserData();
         $userNewData = $userUpdateData;
-        $userNewData = Arr::set($userNewData,'email',Str::random(10).'@gmail.com');
+        $userNewData = Arr::set($userNewData, 'email', Str::random(10) . '@gmail.com');
 
         $response = $this
             ->actingAs($user)
-            ->patch(route(AdminRoutes::ADMIN_USERS_UPDATE, $userUpdateData['id']),
-                Arr::except($userNewData,['id']));
+            ->patch(route(AdminRoutes::ADMIN_USERS_UPDATE, [app()->getLocale(), $userUpdateData['id']]),
+                Arr::except($userNewData, ['id']));
 
         $response->assertStatus(200);
         $updatedUser = $this->getEloquentUserRepository()->findUserByEmail($userNewData['email']);
 
         $this->assertNotNull($updatedUser);
         $this->assertNotEquals($userUpdateData['email'], $updatedUser['email']);
+    }
+
+    private function getEloquentUserRepository(): EloquentUserRepository
+    {
+        return app(EloquentUserRepository::class);
     }
 }

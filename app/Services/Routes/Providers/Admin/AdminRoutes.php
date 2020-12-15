@@ -6,7 +6,7 @@ namespace App\Services\Routes\Providers\Admin;
 
 final class AdminRoutes
 {
-    const ADMIN_DASHBOARD = 'admin.dashboard';
+    const ADMIN_DASHBOARD = 'dashboard';
     const ADMIN_AUTH_LOGS = 'admin.auth';
     const ADMIN_IMPORTS = 'admin.imports';
     const ADMIN_PROFILE = 'admin.profile';

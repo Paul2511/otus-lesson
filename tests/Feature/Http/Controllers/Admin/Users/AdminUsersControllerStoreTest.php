@@ -13,9 +13,13 @@ use Tests\TestCase;
 
 class AdminUsersControllerStoreTest extends TestCase
 {
-    private function getEloquentUserRepository(): EloquentUserRepository
+
+    public function testStoreGetRequestNotAuthenticatedUsers()
     {
-        return app(EloquentUserRepository::class);
+        $response = $this->get(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()));
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('login', app()->getLocale()));
     }
     /**
      * @group http
@@ -24,14 +28,6 @@ class AdminUsersControllerStoreTest extends TestCase
      */
 
     // Users
-    public function testStoreGetRequestNotAuthenticatedUsers()
-    {
-        $response = $this->get(route(AdminRoutes::ADMIN_USERS_STORE));
-
-        $response->assertStatus(302)
-            ->assertRedirect(route('login'));
-    }
-
     /**
      * @group http
      * @group users
@@ -41,10 +37,10 @@ class AdminUsersControllerStoreTest extends TestCase
     public function testStoreGetRequestAsActiveUser()
     {
         $user = UsersGenerator::generateActiveUser();
-        $response = $this->actingAs($user)->get(route(AdminRoutes::ADMIN_USERS_STORE));
+        $response = $this->actingAs($user)->get(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
 
     /**
@@ -56,10 +52,10 @@ class AdminUsersControllerStoreTest extends TestCase
     public function testStoreGetRequestAsInactiveUser()
     {
         $user = UsersGenerator::generateInactiveUser();
-        $response = $this->actingAs($user)->get(route(AdminRoutes::ADMIN_USERS_STORE));
+        $response = $this->actingAs($user)->get(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
 
     /**
@@ -74,10 +70,10 @@ class AdminUsersControllerStoreTest extends TestCase
         $userStoreData = UsersGenerator::generateUserData();
         $response = $this
             ->actingAs($user)
-            ->post(route(AdminRoutes::ADMIN_USERS_STORE), $userStoreData);
+            ->post(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()), $userStoreData);
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
 
     /**
@@ -92,12 +88,12 @@ class AdminUsersControllerStoreTest extends TestCase
         $userStoreData = UsersGenerator::generateUserData();
         $response = $this
             ->actingAs($user)
-            ->post(route(AdminRoutes::ADMIN_USERS_STORE), $userStoreData);
+            ->post(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()), $userStoreData);
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
-//    Managers
+
     /**
      * @group http
      * @group users
@@ -110,10 +106,11 @@ class AdminUsersControllerStoreTest extends TestCase
         $userStoreData = UsersGenerator::generateUserData();
         $response = $this
             ->actingAs($user)
-            ->post(route(AdminRoutes::ADMIN_USERS_STORE), $userStoreData);
+            ->post(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()), $userStoreData);
 
         $response->assertStatus(403);
     }
+//    Managers
 
     /**
      * @group http
@@ -127,11 +124,11 @@ class AdminUsersControllerStoreTest extends TestCase
         $userStoreData = UsersGenerator::generateUserData();
         $response = $this
             ->actingAs($user)
-            ->post(route(AdminRoutes::ADMIN_USERS_STORE), $userStoreData);
+            ->post(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()), $userStoreData);
 
         $response->assertStatus(403);
     }
-//    Admins
+
     /**s
      * @group http
      * @group users
@@ -144,10 +141,11 @@ class AdminUsersControllerStoreTest extends TestCase
         $userStoreData = UsersGenerator::generateUserData();
         $response = $this
             ->actingAs($user)
-            ->post(route(AdminRoutes::ADMIN_USERS_STORE), $userStoreData);
+            ->post(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()), $userStoreData);
 
         $response->assertStatus(403);
     }
+//    Admins
 
     /**
      * @group http
@@ -161,7 +159,7 @@ class AdminUsersControllerStoreTest extends TestCase
         $userStoreData = [];
         $response = $this
             ->actingAs($user)
-            ->post(route(AdminRoutes::ADMIN_USERS_STORE), $userStoreData);
+            ->post(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()), $userStoreData);
 
         $response->assertStatus(302);
     }
@@ -180,7 +178,7 @@ class AdminUsersControllerStoreTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->postJson(route(AdminRoutes::ADMIN_USERS_STORE),
+            ->postJson(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()),
                 $invalidUserStoreData,
                 ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
@@ -199,12 +197,17 @@ class AdminUsersControllerStoreTest extends TestCase
         $userStoreData = UsersGenerator::generateUserData();
         $response = $this
             ->actingAs($user)
-            ->post(route(AdminRoutes::ADMIN_USERS_STORE), $userStoreData);
+            ->post(route(AdminRoutes::ADMIN_USERS_STORE, app()->getLocale()), $userStoreData);
 
         $response->assertStatus(200);
         $createdUser = $this->getEloquentUserRepository()->findUserByEmail($userStoreData['email']);
 
         $this->assertNotNull($createdUser);
         $this->assertEquals($userStoreData['email'], $createdUser['email']);
+    }
+
+    private function getEloquentUserRepository(): EloquentUserRepository
+    {
+        return app(EloquentUserRepository::class);
     }
 }

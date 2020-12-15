@@ -11,13 +11,15 @@ final class UserRoutesProvider
 {
     public function registerRoutes()
     {
-        Route::get('dashboard', UserDashboardIndexController::class)
+        Route::get('{locale}/dashboard', UserDashboardIndexController::class)
             ->name(UserRoutes::USER_DASHBOARD)
-            ->middleware('auth', 'user');
+            ->middleware('auth', 'user', 'log');
         //Admin Routes
         Route::group([
+            'prefix' => '{locale}/',
+            'where' => ['locale' => '[a-zA-Z]{2}'],
             'as' => 'user.',
-            'middleware' => ['auth', 'user'],
+            'middleware' => ['auth', 'user', 'log'],
         ], function () {
             Route::redirect('/', UserRoutes::USER_DASHBOARD);
             Route::view('profile', UserRoutes::USER_PROFILE)->name('profile');

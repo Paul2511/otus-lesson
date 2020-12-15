@@ -7,9 +7,9 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/date-picker.css')}}">
 @endsection
 
-@section('breadcrumb-title', __('pages/dashboard.dashboard'))
+@section('breadcrumb-title', __('messages.pages.dashboard.dashboard'))
 @section('breadcrumb-item')
-<li class="breadcrumb-item active"> {{__('pages/dashboard.dashboard')}}</li>
+<li class="breadcrumb-item active"> {{__('messages.pages.dashboard.dashboard')}}</li>
 @endsection
 
 @section('body')

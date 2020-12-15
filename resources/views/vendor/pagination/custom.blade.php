@@ -3,9 +3,9 @@
     <ul class="pagination pagination-primary pull-right">
 
         @if ($paginator->onFirstPage())
-            <li class="page-item disabled"><span class="page-link">← {{ __('_partials/_paginate.previous') }}</span></li>
+            <li class="page-item disabled"><span class="page-link">← {{ __('messages._paginate.previous') }}</span></li>
         @else
-            <li><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">← {{ __('_partials/_paginate.previous') }}</a></li>
+            <li><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">← {{ __('messages._paginate.previous') }}</a></li>
         @endif
 
 
@@ -32,9 +32,9 @@
 
 
         @if ($paginator->hasMorePages())
-            <li class="page-item"><a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">{{ __('_partials/_paginate.next') }} →</a></li>
+            <li class="page-item"><a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">{{ __('messages._paginate.next') }} →</a></li>
         @else
-            <li class="page-item disabled"><span class="page-link">{{ __('_partials/_paginate.next') }} →</span></li>
+            <li class="page-item disabled"><span class="page-link">{{ __('messages._paginate.next') }} →</span></li>
         @endif
     </ul>
     </nav>

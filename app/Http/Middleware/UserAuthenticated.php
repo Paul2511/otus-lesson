@@ -22,7 +22,7 @@ class UserAuthenticated
         {
             // if user admin take him to his dashboard
             if ( Auth::user()->isAdmin() || Auth::user()->isManager() ) {
-                return redirect(route(AdminRoutes::ADMIN_DASHBOARD));
+                return redirect(route(AdminRoutes::ADMIN_DASHBOARD, ['locale' => \App::getLocale()]));
             }
 
             // allow user to proceed with request

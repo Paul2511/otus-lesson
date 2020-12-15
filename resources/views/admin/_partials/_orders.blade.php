@@ -2,7 +2,7 @@
 <div class="col-xl-6 xl-100">
   <div class="card">
     <div class="card-header">
-      <h5>{{ Str::upper(trans_choice('pages/dashboard.orders', 4)) }}</h5>
+      <h5>{{ Str::upper(trans_choice('messages.pages.dashboard.orders', 4)) }}</h5>
       <div class="card-header-right">
         <ul class="list-unstyled card-option">
           <li><i class="icofont icofont-simple-left"></i></li>
@@ -18,17 +18,17 @@
         <table class="table table-bordernone">
           <thead>
             <tr>
-              <th scope="col">{{ Str::upper(__('pages/dashboard.details')) }}</th>
-              <th scope="col">{{ Str::upper(__('pages/dashboard.quantity')) }}</th>
-              <th scope="col">{{ Str::upper(__('pages/dashboard.status')) }}</th>
+              <th scope="col">{{ Str::upper(__('messages.pages.dashboard.details')) }}</th>
+              <th scope="col">{{ Str::upper(__('messages.pages.dashboard.quantity')) }}</th>
+              <th scope="col">{{ Str::upper(__('messages.pages.dashboard.status')) }}</th>
             </tr>
           </thead>
           <tbody>
             @for ($i = 0; $i < 4; $i++)
             <tr>
-              <td class="fit">{{ __('pages/dashboard.lorem') }}</td>
+              <td class="fit">{{ __('messages.pages.dashboard.lorem') }}</td>
               <td class="fit digits text-center">1</td>
-              <td class="fit font-primary">{{ __('pages/dashboard.pending') }}</td>
+              <td class="fit font-primary">{{ __('messages.pages.dashboard.pending') }}</td>
             </tr>
             @endfor
           </tbody>

@@ -1,13 +1,13 @@
 @extends('admin.layouts.master')
 
-@section('title', Str::ucfirst(__('users/index.users')))
+@section('title', Str::ucfirst(__('messages.users.index.users')))
 
 @section('style')
 @endsection
 
-@section('breadcrumb-title', __('users/index.users') )
+@section('breadcrumb-title', __('messages.users.index.users') )
 @section('breadcrumb-item')
-    <li class="breadcrumb-item active">{{ __('users/index.users')}}</li>
+    <li class="breadcrumb-item active">{{ __('messages.users.index.users')}}</li>
 @endsection
 {{-- Add new User button starts --}}
 @section('bookmark')
@@ -15,7 +15,7 @@
         <div class="bookmark pull-right">
             @can(\App\Policies\Ability::CREATE, \App\Models\User::class)
             <button class="btn btn-success btn m-2" id="btn-add" name="btn-add">
-                <span class="fa fa-plus"></span> {{ __('pages/users.add')}}
+                <span class="fa fa-plus"></span> {{ __('messages.pages.users.add')}}
             </button>
             @endcan
         </div>

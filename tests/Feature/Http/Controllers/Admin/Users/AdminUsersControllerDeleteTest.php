@@ -14,9 +14,13 @@ use Tests\TestCase;
 class AdminUsersControllerDeleteTest extends TestCase
 {
 
-    private function getEloquentUserRepository(): EloquentUserRepository
+
+    public function testDeleteGetRequestNotAuthenticatedUsers()
     {
-        return app(EloquentUserRepository::class);
+        $response = $this->get(route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(), 1]));
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('login', app()->getLocale()));
     }
 
     /**
@@ -26,14 +30,6 @@ class AdminUsersControllerDeleteTest extends TestCase
      */
 
     // Users
-    public function testDeleteGetRequestNotAuthenticatedUsers()
-    {
-        $response = $this->get(route(AdminRoutes::ADMIN_USERS_DELETE, 1));
-
-        $response->assertStatus(302)
-            ->assertRedirect(route('login'));
-    }
-
     /**
      * @group http
      * @group users
@@ -44,28 +40,40 @@ class AdminUsersControllerDeleteTest extends TestCase
     {
         $user = UsersGenerator::generateActiveUser();
         $response = $this->actingAs($user)->delete(
-            route(AdminRoutes::ADMIN_USERS_DELETE,
-            $this->getRandomUserId()));
+            route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(),
+                $this->getRandomUserId()]));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
 
+    private function getRandomUserId(): int
+    {
+        $userIds = $this->getEloquentUserRepository()->getUserIds();
+
+        return Arr::random($userIds);
+    }
+
+    private function getEloquentUserRepository(): EloquentUserRepository
+    {
+        return app(EloquentUserRepository::class);
+    }
+
+
+//    Managers
 
     public function testDeleteRequestAsInactiveUser()
     {
         $user = UsersGenerator::generateInactiveUser();
         $response = $this
             ->actingAs($user)
-            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->getRandomUserId()));
+            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(),
+                $this->getRandomUserId()]));
 
         $response->assertStatus(302)
-            ->assertRedirect(route(UserRoutes::USER_DASHBOARD));
+            ->assertRedirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
     }
 
-
-//    Managers
     /**
      * @group http
      * @group users
@@ -77,11 +85,13 @@ class AdminUsersControllerDeleteTest extends TestCase
         $user = UsersGenerator::generateInactiveManager();
         $response = $this
             ->actingAs($user)
-            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->getRandomUserId()));
+            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(),
+                    $this->getRandomUserId()]
+            ));
 
         $response->assertStatus(403);
     }
+//    Admins
 
     /**
      * @group http
@@ -94,12 +104,12 @@ class AdminUsersControllerDeleteTest extends TestCase
         $user = UsersGenerator::generateActiveManager();
         $response = $this
             ->actingAs($user)
-            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->getRandomUserId()));
+            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(),
+                $this->getRandomUserId()]));
 
         $response->assertStatus(200);
     }
-//    Admins
+
     /**s
      * @group http
      * @group users
@@ -111,8 +121,8 @@ class AdminUsersControllerDeleteTest extends TestCase
         $user = UsersGenerator::generateInactiveAdmin();
         $response = $this
             ->actingAs($user)
-            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->getRandomUserId()));
+            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(),
+                $this->getRandomUserId()]));
 
         $response->assertStatus(403);
     }
@@ -128,11 +138,10 @@ class AdminUsersControllerDeleteTest extends TestCase
         $user = UsersGenerator::generateActiveAdmin();
         $response = $this
             ->actingAs($user)
-            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE, 0));
+            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(), 0]));
 
         $response->assertStatus(404);
     }
-
 
     /**
      * @group http
@@ -145,18 +154,11 @@ class AdminUsersControllerDeleteTest extends TestCase
         $user = UsersGenerator::generateActiveAdmin();
         $response = $this
             ->actingAs($user)
-            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE,
-                $this->getRandomUserId()));
+            ->delete(route(AdminRoutes::ADMIN_USERS_DELETE, [app()->getLocale(),
+                $this->getRandomUserId()]));
 
         $response->assertStatus(200);
 
-    }
-
-    private function getRandomUserId(): int
-    {
-        $userIds = $this->getEloquentUserRepository()->getUserIds();
-
-        return Arr::random($userIds);
     }
 
 }

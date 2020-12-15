@@ -1,15 +1,15 @@
 @extends('admin.layouts.master')
 
-@section('title', __('pages/dashboard.adminDashboard'))
+@section('title', __('messages.pages.dashboard.adminDashboard'))
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/prism.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/date-picker.css')}}">
 @endsection
 
-@section('breadcrumb-title', __('pages/dashboard.adminDashboard'))
+@section('breadcrumb-title', __('messages.pages.dashboard.adminDashboard'))
 @section('breadcrumb-item')
-<li class="breadcrumb-item active"> {{ __('pages/dashboard.adminDashboard') }}</li>
+<li class="breadcrumb-item active"> {{ __('messages.pages.dashboard.adminDashboard') }}</li>
 @endsection
 
 @section('body')

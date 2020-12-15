@@ -6,7 +6,7 @@ namespace App\Services\Routes\Providers\User;
 
 final class UserRoutes
 {
-    const USER_DASHBOARD = 'dashboard';
+    const USER_DASHBOARD = '/dashboard';
     const USER_PROFILE = 'users.profile';
     const USER_AUTH_LOGS = 'user.auth';
     const USER_IMPORTS = 'user.imports';

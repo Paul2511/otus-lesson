@@ -10,17 +10,19 @@
       <div><img class="img-60 rounded-circle" src="{{asset('assets/images/user/1.jpg')}}" alt="#">
 {{--        <div class="profile-edit"><a href="/users/profile"><i data-feather="edit"></i></a></div>--}}
       </div>
-      <h6 class="mt-3 f-14">{{ __('_partials/_sidebar.company') }}</h6>
-      <p>{{ __('_partials/_sidebar.name') }}</p>
-      <p><small>{{ __('_partials/_sidebar.position') }}</small></p>
+      <h6 class="mt-3 f-14">{{ __('messages._sidebar.company') }}</h6>
+      <p>{{ __('messages._sidebar.name') }}</p>
+      <p><small>{{ __('messages._sidebar.position') }}</small></p>
     </div>
     <ul class="sidebar-menu">
-      <li><a class="sidebar-header" href="{{route(\App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_DASHBOARD)}}"><i data-feather="home"></i><span>{{ __('pages/dashboard.dashboard')}}</span></a></li>
-      <li><a class="sidebar-header" href="{{route(\App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_INDEX)}}" ><i data-feather="user"></i><span>{{ __('_partials/_sidebar.users')}}</span></a></li>
-      <li><a class="sidebar-header" href="#" ><i data-feather="file"></i><span>{{ __('_partials/_sidebar.orders')}}</span></a></li>
-      <li><a class="sidebar-header" href="#" ><i data-feather="book"></i><span>{{ __('_partials/_sidebar.documents')}}</span></a></li>
-      <li><a class="sidebar-header" href="#" ><i data-feather="credit-card"></i><span>{{ __('_partials/_sidebar.payments')}}</span></a></li>
-      <li><a class="sidebar-header" href="#" ><i data-feather="mail"></i><span>{{ __('_partials/_sidebar.contacts')}}</span></a></li>
+      <li><a class="sidebar-header" href="{{ route(\App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_DASHBOARD,
+['locale' => App::getLocale()]) }}"><i data-feather="home"></i><span>{{ __('messages.pages.dashboard.dashboard')}}</span></a></li>
+      <li><a class="sidebar-header" href="{{ route(\App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_INDEX,
+['locale' => App::getLocale()]) }}" ><i data-feather="user"></i><span>{{ __('messages._sidebar.users')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="file"></i><span>{{ __('messages._sidebar.orders')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="book"></i><span>{{ __('messages._sidebar.documents')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="credit-card"></i><span>{{ __('messages._sidebar.payments')}}</span></a></li>
+      <li><a class="sidebar-header" href="#" ><i data-feather="mail"></i><span>{{ __('messages._sidebar.contacts')}}</span></a></li>
     </ul>
   </div>
 </div>

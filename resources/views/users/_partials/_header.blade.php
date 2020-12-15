@@ -19,32 +19,38 @@
         <li class="onhover-dropdown"><a class="txt-dark" href="#">
             <h6>{{ App::isLocale('en') ? "EN" : "RU" }}</h6></a>
           <ul class="language-dropdown onhover-show-div p-20">
-            <li><a href="{{ url('locale/en') }}" data-lng="en"><i class="flag-icon flag-icon-is"></i>{{__('_partials/_header.english')}}</a></li>
-            <li><a href="{{ url('locale/ru') }}" data-lng="ru"><i class="flag-icon flag-icon-ru"></i>{{__('_partials/_header.russian')}}</a></li>
+            <li><a href=" {{ route(Route::currentRouteName(), 'en') }} " data-lng="en">
+                <i class="flag-icon flag-icon-is"></i>{{__('messages._header.english')}}
+              </a>
+            </li>
+            <li><a href="{{ route(Route::currentRouteName(), 'ru') }}" data-lng="ru">
+                <i class="flag-icon flag-icon-ru"></i>{{__('messages._header.russian')}}
+              </a>
+            </li>
           </ul>
         </li>
         {{-- Language dropdown --}}
         {{-- Notification dropdown--}}
         <li class="onhover-dropdown"><i data-feather="bell"></i><span class="dot"></span>
           <ul class="notification-dropdown onhover-show-div">
-            <li>{{__('_partials/_header.notifications')}} <span class="badge badge-pill badge-primary pull-right">3</span></li>
+            <li>{{__('messages._header.notifications')}} <span class="badge badge-pill badge-primary pull-right">3</span></li>
             <li>
               <div class="media">
                 <div class="media-body">
-                  <h6 class="mt-0"><span><i class="shopping-color" data-feather="shopping-bag"></i></span>{{__('_partials/_header.orderIsReady')}}<small class="pull-right">9:00 AM</small></h6>
-                  <p class="mb-0">{{__('_partials/_header.lorem')}}</p>
+                  <h6 class="mt-0"><span><i class="shopping-color" data-feather="shopping-bag"></i></span>{{__('messages._header.orderIsReady')}}<small class="pull-right">9:00 AM</small></h6>
+                  <p class="mb-0">{{__('messages._header.lorem')}}</p>
                 </div>
               </div>
             </li>
             <li>
               <div class="media">
                 <div class="media-body">
-                  <h6 class="mt-0 txt-success"><span><i class="download-color font-success" data-feather="download"></i></span>{{__('_partials/_header.documentRecieved')}}<small class="pull-right">2:30 PM</small></h6>
-                  <p class="mb-0">{{__('_partials/_header.lorem')}}</p>
+                  <h6 class="mt-0 txt-success"><span><i class="download-color font-success" data-feather="download"></i></span>{{__('messages._header.documentRecieved')}}<small class="pull-right">2:30 PM</small></h6>
+                  <p class="mb-0">{{__('messages._header.lorem')}}</p>
                 </div>
               </div>
             </li>
-            <li class="bg-light txt-dark"><a href="#">{{__('_partials/_header.allNotifications')}}</a></li>
+            <li class="bg-light txt-dark"><a href="#">{{__('messages._header.allNotifications')}}</a></li>
           </ul>
         </li>
         <li class="onhover-dropdown">
@@ -52,12 +58,12 @@
           <div class="media align-items-center"><img class="align-self-center pull-right img-50 rounded-circle" src="{{asset('assets/images/dashboard/user.png')}}" alt="header-user">
           </div>
           <ul class="profile-dropdown onhover-show-div p-20">
-            <li><a href="/user/profile"><i data-feather="user"></i>{{__('_partials/_header.edit')}}</a></li>
-            <li><a href="/login"><i data-feather="lock"></i>{{__('_partials/_header.lock')}}</a></li>
-            <li><a href="/settings"><i data-feather="settings"></i>{{__('_partials/_header.settings')}}</a></li>
+            <li><a href="profile"><i data-feather="user"></i>{{__('messages._header.edit')}}</a></li>
+            <li><a href="login"><i data-feather="lock"></i>{{__('messages._header.lock')}}</a></li>
+            <li><a href="settings"><i data-feather="settings"></i>{{__('messages._header.settings')}}</a></li>
             <li><a href="{{ route('logout') }}"
                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                <i data-feather="log-out"></i> {{ __('_partials/_header.logout') }}
+                <i data-feather="log-out"></i> {{ __('messages._header.logout') }}
               </a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
@@ -78,7 +84,7 @@
     </script>
     <script id="empty-template" type="text/x-handlebars-template">
 
-      <div class="EmptyMessage">  {{__('_partials/_header.emptyMessage') }} </div>
+      <div class="EmptyMessage">  {{__('messages._header.emptyMessage') }} </div>
     </script>
   </div>
 </div>

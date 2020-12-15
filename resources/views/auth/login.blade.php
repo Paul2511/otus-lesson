@@ -19,7 +19,7 @@
                 <h6>{{__('messages.auth.enter') }}</h6>
               </div>
                 {{-- Login form opens--}}
-                {!! Form::open(['route' => 'login','method' => 'post', 'class' => 'theme-form']) !!}
+                {!! Form::open(['route' => ['login', 'locale'=>App::getLocale()],'method' => 'post', 'class' => 'theme-form']) !!}
                 <div class="form-group">
                   {!! Form::label('email', __('messages.auth.yourEmail'), ['class' => 'col-form-label pt-0']) !!}
                   {!! Form::email('email', '', ['class' => 'form-control'.($errors->has('email') ? ' is-invalid' : null), 'required']) !!}
@@ -50,7 +50,7 @@
 
                 {!! Form::close() !!}
                 {{-- Login form closes--}}
-              <div class="text-center mt-4"><a class="txt-dark" href="{{ route('password.request') }}">{{ __('messages.auth.forgot') }}</a></div>
+              <div class="text-center mt-4"><a class="txt-dark" href="{{ route('password.request', app()->getLocale()) }}">{{ __('messages.auth.forgot') }}</a></div>
             </div>
           </div>
         </div>

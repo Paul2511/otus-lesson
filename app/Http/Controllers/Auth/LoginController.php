@@ -77,10 +77,10 @@ class LoginController extends Controller
 
         // to Admin dashboard
         if ($user->isAdmin() || $user->isManager()) {
-            return redirect(route(AdminRoutes::ADMIN_DASHBOARD));
+            return redirect(route(AdminRoutes::ADMIN_DASHBOARD, app()->getLocale()));
         } // to User dashboard
         else if ($user->isUser()) {
-            return redirect(route(UserRoutes::USER_DASHBOARD));
+            return redirect(route(UserRoutes::USER_DASHBOARD, app()->getLocale()));
         }
 
         abort(404);

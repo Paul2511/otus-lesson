@@ -12,11 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
-Route::get('locale/{locale}', function ($locale){
-    Session::put('locale', $locale);
-    return redirect()->back();
+Route::get('/', function () {
+    return redirect(app()->getLocale());
 });
+Route::prefix('{locale}')->group(function () {
+    Auth::routes();
+});
+//Auth::routes();
+//Route::get('locale/{locale}', function ($locale){
+//    Session::put('locale', $locale);
+//    return redirect()->back();
+//});
 
 // Users Route Group
 app(\App\Services\Routes\Providers\User\UserRoutesProvider::class)->registerRoutes();
