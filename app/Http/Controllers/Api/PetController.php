@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pet;
+use App\Models\User;
 use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
 use App\Services\Pets\PetService;
@@ -19,23 +21,31 @@ class PetController extends Controller
     {
         $this->petService = $petService;
         $this->middleware('auth.jwt:api');
+
+        //Один метод вместо $this->authorize
+        $this->authorizeResource(Pet::class, 'pet');
     }
 
-    public function index(int $userId): JsonResponse
+    /**
+     * @param User $user
+     * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function index(User $user): JsonResponse
     {
-        $result = $this->petService->getUserPets($userId);
+        $result = $this->petService->getUserPets($user->id);
         return response()->json($result);
     }
 
 
     /**
-     * @param $id
+     * @param Pet $pet
      * @return JsonResponse
-     * @throws \Exception
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy($id)
+    public function destroy(Pet $pet)
     {
-        $result = $this->petService->deletePet($id);
+        $result = $this->petService->deletePet($pet);
         return response()->json($result);
     }
 }

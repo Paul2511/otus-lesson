@@ -59,8 +59,17 @@ const router = new Router({
                         rule: 'client'
                     }
                 },
+                {
+                    path: '/cabinet/requests',
+                    name: 'requests',
+                    component: () => import('./views/cabinet/pets/Pets.vue'),
+                    meta: {
+                        rule: 'spec'
+                    }
+                },
             ],
         },
+        
         // =============================================================================
         // FULL PAGE LAYOUTS
         // =============================================================================

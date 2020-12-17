@@ -48,5 +48,12 @@ export default [
         iconPack: "material-icons",
         icon: "pets",
         i18n: "myPets",
+    },
+    {
+        url: "/cabinet/requests",
+        name: "Requests",
+        slug: "Requests",
+        icon: "CalendarIcon",
+        i18n: "myRequests"
     }
 ]

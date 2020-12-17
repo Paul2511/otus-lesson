@@ -6,6 +6,8 @@ namespace App\Services\Auth;
 use App\Services\BaseService;
 use App\Services\Users\UserService;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Validation\UnauthorizedException;
+
 class AuthService extends BaseService
 {
 
@@ -28,17 +30,18 @@ class AuthService extends BaseService
         $token = null;
 
         if (!$token = auth()->attempt($credentials)) {
-            throw new AuthorizationException();
+            throw new UnauthorizedException();
         } else {
             $userId = auth()->user()->getAuthIdentifier();
 
             $user = $this->userService->findUser($userId);
             $userData = $user['user'];
 
-            $result = $this->setData([
+            $result = [
                 'accessToken' => $token,
-                'userData' => $userData
-            ])->success()->getData();
+                'userData' => $userData,
+                'success' => true
+            ];
         }
 
         return $result;

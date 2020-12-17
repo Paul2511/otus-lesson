@@ -7,6 +7,7 @@ use App\Http\Requests\User\UserUpdateRequest;
 use Illuminate\Http\Request;
 use App\Services\Users\UserService;
 use \Illuminate\Http\JsonResponse;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -19,6 +20,9 @@ class UserController extends Controller
     {
         $this->usersService = $usersService;
         $this->middleware('auth.jwt:api');
+
+        //Один метод вместо $this->authorize
+        $this->authorizeResource(User::class, 'user');
     }
 
     /**
@@ -40,18 +44,18 @@ class UserController extends Controller
     /**
      * Отображение одного пользователя
      */
-    public function show(int $id): JsonResponse
+    public function show(User $user): JsonResponse
     {
-        $result = $this->usersService->findUser($id);
+        $result = $this->usersService->findUser($user->id);
         return response()->json($result);
     }
 
     /**
      * Обновление данных профиля конкретного пользователя
      */
-    public function update(UserUpdateRequest $request, int $id): JsonResponse
+    public function update(UserUpdateRequest $request, User $user): JsonResponse
     {
-        $result = $this->usersService->setUser($id, $request->getFromData());
+        $result = $this->usersService->setUser($user->id, $request->getFromData());
         return response()->json($result);
     }
 

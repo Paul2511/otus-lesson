@@ -49,7 +49,10 @@ class UserService extends BaseService
         $detailArray = $this->detailLabelsHelper->toArray($detail);
         $userArray['detail'] = $detailArray;
 
-        return $this->setData(['user'=>$userArray])->success()->getData();
+        return [
+            'user'=>$userArray,
+            'success'=>true
+        ];
     }
 
     public function setUser(int $id, $data): array
@@ -61,8 +64,14 @@ class UserService extends BaseService
         $detailArray = $this->detailLabelsHelper->toArray($detail);
         $userArray['detail'] = $detailArray;
 
-        $result = $this->setData(['user'=>$userArray])->success()->saveMessage()->getData();
-
-        return $result;
+        $message = [
+            'title'=>trans('form.message.successTitle'),
+            'text'=>trans('form.message.successText')
+        ];
+        return [
+            'user'=>$userArray,
+            'success'=>true,
+            'message'=>$message
+        ];
     }
 }

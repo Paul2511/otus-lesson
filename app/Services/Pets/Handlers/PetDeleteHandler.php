@@ -4,6 +4,7 @@
 namespace App\Services\Pets\Handlers;
 
 use App\Services\Pets\Repositories\PetRepository;
+use App\Models\Pet;
 class PetDeleteHandler
 {
     /**
@@ -19,12 +20,11 @@ class PetDeleteHandler
     }
 
     /**
-     * @param int $id
+     * @param Pet $pet
      * @return bool|null
      */
-    public function handler(int $id)
+    public function handler(Pet $pet)
     {
-        $pet = $this->petRepository->findPet($id);
         try {
             return $this->petRepository->deletePet($pet);
         } catch (\Exception $e) {

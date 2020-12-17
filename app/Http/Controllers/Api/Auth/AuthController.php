@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UserUpdateRequest;
 use \Illuminate\Http\JsonResponse;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Services\Auth\AuthService;

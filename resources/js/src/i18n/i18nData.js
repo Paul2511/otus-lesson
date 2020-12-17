@@ -139,6 +139,7 @@ export default {
         userSettingsGeneral: 'General',
         userSettingsChangePassword: 'Change Password',
         myPets: 'My pets',
+        myRequests: 'My requests'
     },
     ru: {
         Dashboard: 'Рабочий стол',
@@ -159,5 +160,6 @@ export default {
         ErrorResponse: 'При выполнении запроса произошла ошибка',
         userSettingsGeneral: 'Основное',
         userSettingsChangePassword: 'Сменить пароль',
+        myRequests: 'Мои заявки'
     }
 }

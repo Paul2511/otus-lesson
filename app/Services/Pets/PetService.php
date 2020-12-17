@@ -40,12 +40,15 @@ class PetService extends BaseService
             return $this->petLabelsHelper->toArray($pet);
         });
 
-        return $this->setData(['pets'=>$result])->success()->getData();
+        return [
+            'pets' => $result,
+            'success' => true
+        ];
     }
 
-    public function deletePet(int $id): array
+    public function deletePet(Pet $pet): array
     {
-        $result = $this->petDeleteHandler->handler($id);
+        $result = $this->petDeleteHandler->handler($pet);
         return ['success'=>$result];
     }
 

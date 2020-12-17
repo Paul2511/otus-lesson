@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Pet;
 use App\Models\User;
+use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PetPolicy
@@ -26,7 +27,9 @@ class PetPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        $authUser = Auth::user();
+        $userId = $authUser->getAuthIdentifier();
+        return $userId == $user->id;
     }
 
     /**
