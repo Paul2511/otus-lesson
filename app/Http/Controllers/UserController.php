@@ -83,7 +83,7 @@ class UserController extends Controller
     public function show($id)
     {
     	$user = $this->userService->getUser($id);
-        return view("mysqlnd_qc_set_user_handlers(get_hash, find_query_in_cache, return_to_cache, add_query_to_cache_if_not_exists, query_is_select, update_query_run_time_stats, get_stats, clear_cache).show", ["user" => $user]);
+        return view("users.show", ["user" => $user]);
     }
 
     /**
