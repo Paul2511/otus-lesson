@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class EloquentQueueRepository
 {
-
     public function getList($connection): array
     {
         return Queue::on($connection)

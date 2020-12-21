@@ -7,7 +7,7 @@ namespace App\Services\Handlers;
 use App\Services\Users\Repositories\EloquentUserRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class ActiveUserHandler
+class ActivateUserHandler
 {
     /**
      * @var EloquentUserRepository
