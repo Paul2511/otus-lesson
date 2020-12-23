@@ -30,6 +30,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Survey whereText($value)
  * @method static Builder|Survey whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $user_id
+ * @property-read \App\Models\User $user
+ * @method static Builder|Survey whereUserId($value)
  */
 class Survey extends BaseModel
 {

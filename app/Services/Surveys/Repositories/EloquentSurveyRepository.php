@@ -6,13 +6,26 @@ namespace App\Services\Surveys\Repositories;
 
 use App\Models\Survey;
 use App\Models\User;
+use Auth;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 
 class EloquentSurveyRepository extends EloquentBaseRepository
 {
 
-    public function searchByUserId(int $userId, ?int $perPage): LengthAwarePaginator
+    public function searchForCurrentUser(?int $perPage = null): LengthAwarePaginator
+    {
+        $user = Auth::user();
+        if (!$user) abort(403);
+
+        if ($user->can('viewTotallyAny', Survey::class)) {
+            return $this->search($perPage);
+        }
+
+        return $this->searchByUserId($user->id, $perPage);
+    }
+
+    public function searchByUserId(int $userId, ?int $perPage = null): LengthAwarePaginator
     {
         $query = Survey::query();
 
@@ -21,11 +34,11 @@ class EloquentSurveyRepository extends EloquentBaseRepository
         return $this->paginate($query, $perPage);
     }
 
-    public function search(?int $perPage): LengthAwarePaginator
+    public function search(?int $perPage = null): LengthAwarePaginator
     {
         $query = Survey::query();
 
-        return $query::paginate($query, $perPage);
+        return $this->paginate($query, $perPage);
     }
 
     public function findById(int $id): Survey
@@ -33,17 +46,14 @@ class EloquentSurveyRepository extends EloquentBaseRepository
         return Survey::find($id)->get();
     }
 
-    public function createNew(): Survey
-    {
-        return new Survey;
-    }
-
     public function store(array $data): Survey
     {
+        $user = Auth::user();
+        if (!$user) abort(403);
+
         $survey = new Survey($data);
 
-        // TODO: реализовать работу с юзерами
-        $survey->user()->associate(User::first());
+        $survey->user()->associate($user);
 
         $survey->save();
 

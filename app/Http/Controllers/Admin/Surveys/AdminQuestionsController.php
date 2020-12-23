@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Surveys;
 
 use App\Http\Controllers\Admin\AdminBaseController;
+use App\Models\Question;
 use App\Models\Survey;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
 use App\Services\Surveys\Repositories\EloquentQuestionRepository;
@@ -47,7 +48,7 @@ class AdminQuestionsController extends AdminBaseController
                     ],
 
                 'survey'   => $survey,
-                'question' => $this->eloquentQuestionRepository->createNew(),
+                'question' => new Question,
             ]
         );
 
