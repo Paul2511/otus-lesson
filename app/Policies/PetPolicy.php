@@ -6,10 +6,20 @@ use App\Models\Pet;
 use App\Models\User;
 use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
-
+use Illuminate\Http\Request;
 class PetPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * @var Request
+     */
+    private $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
 
     public function before(User $user, $ability)
     {
@@ -27,9 +37,10 @@ class PetPolicy
      */
     public function viewAny(User $user)
     {
-        $authUser = Auth::user();
-        $userId = $authUser->getAuthIdentifier();
-        return $userId == $user->id;
+        /** @var User $requestUser */
+        $requestUser = $this->request->route()->parameter('user');
+
+        return $requestUser->id == $user->id;
     }
 
     /**

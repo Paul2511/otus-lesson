@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition()
     {
         //Предустанавливаем всем фейковым пользователям один пароль
-        $password = '12345';
+        $password = env('USER_TEST_PASSWORD');
         $hash = Hash::make($password);
 
         //Добавляем свой формат на номер телефона

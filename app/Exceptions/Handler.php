@@ -2,12 +2,17 @@
 
 namespace App\Exceptions;
 
+use App\Http\RouteNames;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -38,7 +43,22 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        //
+        $this->renderable(function (NotFoundHttpException $e, Request $request) {
+
+            $routeName = $request->route()->getName();
+
+            if ($routeName && array_key_exists($routeName, RouteNames::$notFound)) {
+                $who = RouteNames::$notFound[$routeName];
+                $message = trans($who.'.notFound');
+            } else {
+                $message = $e->getMessage();
+            }
+
+            return response()->json([
+                'message' => $message,
+                'success' => false
+            ], 404);
+        });
     }
 
     public function render($request, Throwable $e)
@@ -66,6 +86,13 @@ class Handler extends ExceptionHandler
                 ],
                 'success' => false
             ], 403);
+        }
+
+        if ($e instanceof UnauthorizedHttpException) {
+            return response()->json([
+                'message' => trans('auth.wrongToken'),
+                'success' => false
+            ], 401);
         }
 
         return parent::render($request, $e);

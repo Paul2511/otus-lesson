@@ -55,6 +55,7 @@ const actions = {
         dispatch('updateUserInfo', {role: payload.role})
     },
     getUser({commit}, userId) {
+
         return new Promise((resolve, reject) => {
             axios.get('/api/users/'+userId)
                 .then((response) => {
@@ -64,9 +65,9 @@ const actions = {
                 .catch((error) => { reject(error) })
         })
     },
-    updateUser({ commit }, user) {
+    updateUser({ commit }, data) {
         return new Promise((resolve, reject) => {
-            axios.post('/api/users/'+user.id, {data: user, _method: 'patch'})
+            axios.post('/api/users/'+data.userId, {data: data.data, _method: 'patch'})
                 .then((response) => {
                     if (response.data.success) {
                         commit('UPDATE_USER_INFO', response.data.user)

@@ -18,7 +18,7 @@ class AuthController extends Controller
         AuthService $authService
     )
     {
-        $this->middleware('auth:api', ['except' => ['login', 'registration', 'refresh']]);
+        $this->middleware('auth.jwt:api', ['except' => ['login', 'registration']]);
         $this->authService = $authService;
     }
 

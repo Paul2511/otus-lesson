@@ -67,6 +67,7 @@
             }
         },
         mounted() {
+            this.$vs.loading.close();
             if (this.$store.state.auth.isUserLoggedIn()) {
                 this.$router.push('cabinet')
             }

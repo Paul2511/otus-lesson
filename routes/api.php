@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PetController;
 use App\Http\Controllers\Api\Auth\AuthController;
-
+use App\Http\RouteNames;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,16 +28,24 @@ Route::group([
 Route::group([
     'prefix' => 'users',
 ], function () {
-    Route::get('/{user}', [UserController::class, 'show']);
-    Route::patch('/{user}', [UserController::class, 'update']);
+    Route::get('/{user}', [UserController::class, 'show'])->name(RouteNames::GET_USER);
+    Route::patch('/{user}', [UserController::class, 'update'])->name(RouteNames::UPDATE_USER);
 });
 
 Route::group([
     'prefix' => 'pets',
 ], function () {
-    Route::get('/user/{user}', [PetController::class, 'index']);
-    Route::delete('/{pet}', [PetController::class, 'destroy']);
+    Route::get('/user/{user}', [PetController::class, 'index'])->name(RouteNames::GET_USER_PETS);
+    Route::delete('/{pet}', [PetController::class, 'destroy'])->name(RouteNames::DELETE_PET);
 });
 
+
+//Вместо fallback
+Route::any('{any}', function(){
+    return response()->json([
+        'success'    => false,
+        'message'   => trans('main.urlNotFound'),
+    ], 404);
+})->where('any', '.*');
 
 

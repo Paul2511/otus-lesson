@@ -6,5 +6,6 @@ return [
     'roleManager' => 'Manager',
     'roleAdmin' => 'Admin',
     'statusActive' => 'Active',
-    'statusNotActive' => 'Blocked'
+    'statusNotActive' => 'Blocked',
+    'notFound' => 'User not found'
 ];

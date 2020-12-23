@@ -31,10 +31,29 @@ class UserUpdateRequest extends ApiRequest
 
     public function rules(): array
     {
+        $data = $this->validationData();
+        $method = strtolower($this->method());
+
         return [
-            'email' => ['required', 'email'],
-            'role' => ['required', Rule::in(array_keys(UserLabelsHelper::roleLabels()))],
-            'status' => ['required', 'integer', Rule::in(array_keys(UserLabelsHelper::statusLabels()))],
+            'email' => [
+                'email',
+                Rule::requiredIf(function () use ($data, $method) {
+                    return array_key_exists('email', $data) || $method !== 'patch';
+                })
+            ],
+            'role' => [
+                Rule::in(array_keys(UserLabelsHelper::roleLabels())),
+                Rule::requiredIf(function () use ($data, $method) {
+                    return array_key_exists('role', $data) || $method !== 'patch';
+                })
+            ],
+            'status' => [
+                'integer',
+                Rule::in(array_keys(UserLabelsHelper::statusLabels())),
+                Rule::requiredIf(function () use ($data, $method) {
+                    return array_key_exists('status', $data) || $method !== 'patch';
+                })
+            ],
             'lastname' => ['string', 'nullable'],
             'firstname' => ['string' ,'nullable'],
             'middlename' => ['string','nullable']

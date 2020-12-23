@@ -1,6 +1,8 @@
 import axios from '../../../axios/index.js'
 import store from '../../../../store/store.js'
 
+import router from '@/router'
+
 // Token Refresh
 let isAlreadyFetchingAccessToken = false
 let subscribers = []
@@ -45,6 +47,12 @@ export default {
                             localStorage.setItem('accessToken', req.data)
                             onAccessTokenFetched(req.data)
                         })
+                } else {
+                    if (localStorage.getItem('accessToken')) {
+                        localStorage.removeItem('accessToken');
+                    }
+                    localStorage.removeItem('userInfo');
+                    router.push('/login').catch(() => {})
                 }
 
                 const retryOriginalRequest = new Promise((resolve) => {

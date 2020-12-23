@@ -29,7 +29,7 @@ class PetFactory extends Factory
         /** @var PetType|null $petType */
         $petType = PetType::orderByRaw('RAND()')->where('id', '!=', 1)->take(1)->first();
 
-        if (!$user || !$petType) {
+        if (!$user) {
             return abort(500);
         }
 
