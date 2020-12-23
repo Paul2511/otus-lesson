@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleAndPermission\CreatePermissionRequest;
 use App\Http\Requests\RoleAndPermission\UpdatePermissionRequest;
 use App\Services\Permissions\PermissionsServices;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
+
 
 class PermissionController extends Controller
 {
@@ -17,28 +19,29 @@ class PermissionController extends Controller
         $this->permissionsServices = $permissionsServices;
     }
 
-    public function index()
+    public function index(): View
     {
-        return $this->permissionsServices->getPermission();
+        $permissions = $this->permissionsServices->getPermissions();
+
+        return view('pages.cms.permissions.index', compact('permissions'));
     }
 
-    public function store(CreatePermissionRequest $request)
+    public function store(CreatePermissionRequest $request): Model
     {
-        $this->permissionsServices->storePermission($request->toArray());
+        return $this->permissionsServices->storePermission($request->toArray());
     }
 
-
-    public function show(int $id)
+    public function show(int $id): Model
     {
         return $this->permissionsServices->findPermission($id);
     }
 
-    public function update(UpdatePermissionRequest $request, int $id)
+    public function update(UpdatePermissionRequest $request, int $id): bool
     {
         return $this->permissionsServices->updatePermission($request->toArray(), $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): bool
     {
         return $this->permissionsServices->deletePermission($id);
     }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleAndPermission\CreateRoleRequest;
 use App\Http\Requests\RoleAndPermission\UpdateRoleRequest;
 use App\Services\Roles\RolesServices;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -17,28 +19,28 @@ class RoleController extends Controller
         $this->rolesServices = $rolesServices;
     }
 
-    public function index()
+    public function index(): View
     {
-        return $this->rolesServices->getRoles();
+        $roles = $this->rolesServices->getRoles();
+        return view('pages.cms.roles.index', compact('roles'));
     }
 
-    public function store(CreateRoleRequest $request)
+    public function store(CreateRoleRequest $request): Model
     {
         return $this->rolesServices->storeRole($request->toArray());
     }
 
-
-    public function show($id)
+    public function show($id): Model
     {
         return $this->rolesServices->findRole($id);
     }
 
-    public function update(UpdateRoleRequest $request, int $id)
+    public function update(UpdateRoleRequest $request, int $id): bool
     {
         return $this->rolesServices->updateRole($request->toArray(), $id);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): bool
     {
         return $this->rolesServices->deleteRole($id);
     }

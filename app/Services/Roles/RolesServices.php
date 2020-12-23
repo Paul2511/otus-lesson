@@ -8,49 +8,42 @@ use App\Services\Roles\Handlers\CreateRoleHandler;
 use App\Services\Roles\Handlers\DeleteRoleHandler;
 use App\Services\Roles\Handlers\UpdateRoleHandler;
 use App\Services\Roles\Repository\EloquentRoleRepository;
+use App\Services\Roles\Repository\Interfaces\EloquentRoleRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 
 class RolesServices
 {
-    private EloquentRoleRepository $eloquentRoleRepository;
-    private CreateRoleHandler $createRoleHandler;
-    private UpdateRoleHandler $updateRoleHandler;
-    private DeleteRoleHandler $deleteRoleHandler;
+    private EloquentRoleRepositoryInterface $eloquentRoleRepository;
 
     public function __construct(
-        EloquentRoleRepository $eloquentRoleRepository,
-        CreateRoleHandler $createRoleHandler,
-        UpdateRoleHandler $updateRoleHandler,
-        DeleteRoleHandler $deleteRoleHandler
+        EloquentRoleRepositoryInterface $eloquentRoleRepository
     )
     {
         $this->eloquentRoleRepository = $eloquentRoleRepository;
-        $this->createRoleHandler = $createRoleHandler;
-        $this->updateRoleHandler = $updateRoleHandler;
-        $this->deleteRoleHandler = $deleteRoleHandler;
     }
 
-    public function getRoles()
+    public function getRoles(): LengthAwarePaginator
     {
         return $this->eloquentRoleRepository->search();
     }
 
-    public function findRole(int $id)
+    public function findRole(int $id): Model
     {
         return $this->eloquentRoleRepository->findOrFail($id);
     }
 
-    public function storeRole(array $data)
+    public function storeRole(array $data): Model
     {
-        return $this->createRoleHandler->create($data);
+        return $this->eloquentRoleRepository->create($data);
     }
 
-    public function updateRole(array $data, int $id)
+    public function updateRole(array $data, int $id): bool
     {
-        $model = $this->findRole($id);
         return $this->updateRoleHandler->updateRole($data, $model);
     }
 
-    public function deleteRole(int $id)
+    public function deleteRole(int $id): bool
     {
         $model = $this->findRole($id);
         return $this->deleteRoleHandler->deleteRole($model);
