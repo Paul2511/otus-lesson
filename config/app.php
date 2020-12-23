@@ -1,5 +1,6 @@
 <?php
 
+use App\Policies\Permission;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
 
 
@@ -230,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'AdminRoutes' => AdminRoutes::class,
+        'Permission' => Permission::class,
 
     ],
 

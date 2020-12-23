@@ -16,31 +16,54 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('/', function () {
     return view('pages.welcome');
-});
+})
+    ->name('home');
 
 Route::get('/contacts', function () {
     return view('pages.contacts');
 })
     ->name('contacts');
 
-/* TODO: Заменить страницами, созданными через скаффолдинг  */
-Route::get('/dev/login', function () {
-    return view('pages.login');
-})
-    ->name('login');
 
-Route::get('/dev/register', function () {
-    return view('pages.register');
-})
-    ->name('register');
+Route::prefix('debug')
+    ->as('debug.')
+    ->middleware('auth')
+    ->group(
+        function () {
+            Route::get('error', function () {
+                return 1 / 0;
+            });
 
-Route::get('/error', function () {
-    return 1/0;
-});
+            Route::get('admin', function () {
+                Auth::user()->role = \App\Models\User::ROLE_ADMIN;
+                Auth::user()->save();
+
+                dump(Auth::user());
+                // return redirect()->back();
+            });
+
+            Route::get('default', function () {
+                Auth::user()->role = \App\Models\User::ROLE_DEFAULT;
+                Auth::user()->save();
+
+                dump(Auth::user());
+                // return redirect()->back();
+            });
+
+            Route::get('moderator', function () {
+                Auth::user()->role = \App\Models\User::ROLE_MODERATOR;
+                Auth::user()->save();
+
+                dump(Auth::user());
+                // return redirect()->back();
+            });
+        }
+    );
+
 
 app(AdminRoutesProvider::class)->register();

@@ -22,7 +22,9 @@
                         <th scope="col">Name</th>
                         <th scope="col" colspan="3" class="text-right">
 
-                            <a href="{{ AdminRoutes::surveysCreate() }}">Создать новый опрос</a>
+                            @if ($canCreate)
+                                <a href="{{ AdminRoutes::surveysCreate() }}">Создать новый опрос</a>
+                            @endif
 
                         </th>
                     </tr>
@@ -35,20 +37,24 @@
                             <td>{{ $survey->name }}</td>
                             <td class="text-right">
                                 <a class="btn btn-primary"
-                                   href="{{ AdminRoutes::surveysShow($survey) }}">View</a>
+                                   href="{{ AdminRoutes::surveysShow($survey) }}">@lang("View")</a>
                             </td>
                             <td class="text-right">
-                                <a class="btn btn-primary"
-                                   href="{{ AdminRoutes::surveysEdit($survey) }}">Edit</a>
+                                @if ($user->can(Permission::UPDATE, $survey))
+                                    <a class="btn btn-primary"
+                                       href="{{ AdminRoutes::surveysEdit($survey) }}">@lang("Edit")</a>
+                                @endif
                             </td>
                             <td class="text-right">
-                                @include("admin.surveys.deleteButton")
+                                @if ($user->can(Permission::DELETE, $survey))
+                                    @include("admin.surveys.deleteButton")
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td colspan="1"></td>
                             <td colspan="1">
-                                <a href="{{ AdminRoutes::questionsIndex($survey) }}">Посмотреть вопросы</a>
+                                <a href="{{ AdminRoutes::questionsIndex($survey) }}">@lang("Посмотреть вопросы")</a>
                             </td>
                         </tr>
                     @endforeach
