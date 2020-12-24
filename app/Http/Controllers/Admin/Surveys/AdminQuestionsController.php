@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Question;
 use App\Models\Survey;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
+use App\Services\Surveys\QuestionsService;
 use App\Services\Surveys\Repositories\EloquentQuestionRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -15,14 +16,11 @@ use View as ViewFacade;
 class AdminQuestionsController extends AdminBaseController
 {
 
-    /**
-     * @var EloquentQuestionRepository
-     */
-    private $eloquentQuestionRepository;
+    private QuestionsService $questionsService;
 
-    public function __construct(EloquentQuestionRepository $eloquentQuestionRepository)
+    public function __construct(QuestionsService $questionsService)
     {
-        $this->eloquentQuestionRepository = $eloquentQuestionRepository;
+        $this->questionsService = $questionsService;
     }
 
     public function index(Survey $survey)
@@ -30,7 +28,7 @@ class AdminQuestionsController extends AdminBaseController
         ViewFacade::share(
             [
                 'survey'    => $survey,
-                'questions' => $this->eloquentQuestionRepository->searchBySurveyId($survey->id),
+                'questions' => $this->questionsService->eloquentQuestionRepository->searchBySurveyId($survey->id),
             ]
         );
 
@@ -57,7 +55,7 @@ class AdminQuestionsController extends AdminBaseController
 
     public function store(Request $request, Survey $survey)
     {
-        $question = $this->eloquentQuestionRepository->store($request->all(), $survey);
+        $question = $this->questionsService->createFromArray($request->all(), $survey);
 
         return $this->showElementIfCreatedOrGoBack(
             $question->id ?? 0,
@@ -69,7 +67,7 @@ class AdminQuestionsController extends AdminBaseController
 
     public function show(Survey $survey, int $questionId): View
     {
-        $question = $this->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
+        $question = $this->questionsService->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
 
         ViewFacade::share(
             [
@@ -83,7 +81,7 @@ class AdminQuestionsController extends AdminBaseController
 
     public function edit(Survey $survey, int $questionId)
     {
-        $question = $this->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
+        $question = $this->questionsService->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
 
         ViewFacade::share(
             [
@@ -103,16 +101,15 @@ class AdminQuestionsController extends AdminBaseController
 
     public function update(Request $request, Survey $survey, int $questionId)
     {
-        $question = $this->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
-        $this->eloquentQuestionRepository->update($question, $request->all());
+        $question = $this->questionsService->updateByIdFromArray($survey, $questionId, $request->all());
 
         return redirect(AdminRoutes::questionsEdit($survey, $question));
     }
 
     public function destroy(Survey $survey, int $questionId)
     {
-        $question = $this->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
-        $this->eloquentQuestionRepository->delete($question);
+        $question = $this->questionsService->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
+        $this->questionsService->eloquentQuestionRepository->delete($question);
 
         return redirect(AdminRoutes::questionsIndex($survey));
     }
