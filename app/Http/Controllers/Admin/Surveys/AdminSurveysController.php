@@ -7,6 +7,7 @@ use App\Models\Survey;
 use App\Policies\Permission;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
 use App\Services\Surveys\Repositories\EloquentSurveyRepository;
+use App\Services\Surveys\SurveysService;
 use Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -17,14 +18,11 @@ class AdminSurveysController extends AdminBaseController
 {
     private $model = Survey::class;
 
-    /**
-     * @var EloquentSurveyRepository
-     */
-    private $eloquentSurveyRepository;
+    private SurveysService $surveysService;
 
-    public function __construct(EloquentSurveyRepository $eloquentSurveyRepository)
+    public function __construct(SurveysService $surveysService)
     {
-        $this->eloquentSurveyRepository = $eloquentSurveyRepository;
+        $this->surveysService = $surveysService;
     }
 
     public function index(): View
@@ -34,7 +32,7 @@ class AdminSurveysController extends AdminBaseController
 
         ViewFacade::share(
             [
-                'surveys'   => $this->eloquentSurveyRepository->searchForCurrentUser(),
+                'surveys'   => $this->surveysService->eloquentSurveyRepository->searchForCurrentUser(),
                 'user'      => $user,
                 'canCreate' => $user->can(Permission::CREATE, $this->model),
             ]
@@ -98,7 +96,7 @@ class AdminSurveysController extends AdminBaseController
     {
         $this->authorize(Permission::CREATE, $this->model);
 
-        $survey = $this->eloquentSurveyRepository->store($request->all());
+        $survey = $this->surveysService->createFromArray($request->all());
 
         return $this->showElementIfCreatedOrGoBack(
             $survey->id ?? 0,
@@ -112,7 +110,7 @@ class AdminSurveysController extends AdminBaseController
     {
         $this->authorize(Permission::UPDATE, $survey);
 
-        $this->eloquentSurveyRepository->update($survey, $request->all());
+        $this->surveysService->eloquentSurveyRepository->update($survey, $request->all());
 
         return redirect(AdminRoutes::surveysEdit($survey));
     }
@@ -121,7 +119,7 @@ class AdminSurveysController extends AdminBaseController
     {
         $this->authorize(Permission::DELETE, $survey);
 
-        $this->eloquentSurveyRepository->delete($survey);
+        $this->surveysService->eloquentSurveyRepository->delete($survey);
 
         return redirect(AdminRoutes::surveysIndex());
     }
