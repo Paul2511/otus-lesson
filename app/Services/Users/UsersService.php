@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Services\Users\Handlers\UserCreateHandler;
 use App\Services\Users\Handlers\UserDeleteHandler;
 use App\Services\Users\Handlers\UserUpdateHandler;
+use App\Services\Users\Repositories\UserStatusRepository;
+use App\Services\Users\Repositories\UserTypeRepository;
 
 class UsersService
 {
@@ -23,12 +25,22 @@ class UsersService
      * @var UserDeleteHandler
      */
     private $deleteHandler;
+    /**
+     * @var UserStatusRepository
+     */
+    private $statusRepository;
+    /**
+     * @var UserTypeRepository
+     */
+    private $typeRepository;
 
-    public function __construct(UserCreateHandler $createHandler, UserUpdateHandler $updateHandler,UserDeleteHandler $deleteHandler)
+    public function __construct(UserCreateHandler $createHandler, UserUpdateHandler $updateHandler, UserDeleteHandler $deleteHandler, UserStatusRepository $statusRepository, UserTypeRepository $typeRepository)
     {
         $this->createHandler = $createHandler;
         $this->updateHandler = $updateHandler;
         $this->deleteHandler = $deleteHandler;
+        $this->statusRepository = $statusRepository;
+        $this->typeRepository = $typeRepository;
     }
 
     /**
@@ -51,5 +63,21 @@ class UsersService
     public function delete(User $user): void
     {
         $this->deleteHandler->handle($user);
+    }
+
+    /**
+     * @return array
+     */
+    public function getTypeUsers(): array
+    {
+        return $this->typeRepository->getTypes();
+    }
+
+    /**
+     * @return array
+     */
+    public function getStatusUsers(): array
+    {
+        return $this->statusRepository->getStatuses();
     }
 }

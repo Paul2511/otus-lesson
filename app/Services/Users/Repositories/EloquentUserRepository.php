@@ -17,30 +17,6 @@ class EloquentUserRepository
         $this->user = $user;
     }
 
-    /**
-     * @return array
-     */
-    public function getTypes(): array
-    {
-        return [
-            $this->user::TYPE_ADMIN => __('users.type-admin'),
-            $this->user::TYPE_MANAGER => __('users.type-manager'),
-            $this->user::TYPE_USER => __('users.type-user'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getStatuses(): array
-    {
-        return [
-            $this->user::STATUS_DELETED => __('users.status-deleted'),
-            $this->user::STATUS_LOCKED => __('users.status-locked'),
-            $this->user::STATUS_INACTIVE => __('users.status-inactive'),
-            $this->user::STATUS_ACTIVE => __('users.status-active'),
-        ];
-    }
 
     /**
      * @param array $data
