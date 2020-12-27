@@ -43,12 +43,10 @@ class UsersService
         $this->typeRepository = $typeRepository;
     }
 
-    /**
-     * @param array $data
-     */
-    public function createByArray(array $data): void
+
+    public function createByArray(array $data): ?User
     {
-        $this->createHandler->handle($data);
+        return $this->createHandler->handle($data);
     }
 
     /**

@@ -18,7 +18,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="exampleInputEmail1">@lang('base.email')</label>
-                        <input type="email" class="form-control" id="email" placeholder="@lang('base.email')" value="{{ old('email') }}">
+                        <input type="email" class="form-control" id="email" placeholder="@lang('base.email')" name="email" value="{{ old('email') }}">
                         @if ($errors->has('email'))
                             <div class="alert alert-danger">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">@lang('base.password')</label>
-                        <input type="password" class="form-control" id="password" placeholder="@lang('base.password')" value="{{ old('password') }}">
+                        <input type="password" class="form-control" id="password" placeholder="@lang('base.password')" name="password" value="{{ old('password') }}">
                         @if ($errors->has('password'))
                             <div class="alert alert-danger">
                                 <strong>{{ $errors->first('password') }}</strong>

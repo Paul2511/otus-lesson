@@ -20,10 +20,11 @@ class EloquentUserRepository
 
     /**
      * @param array $data
+     * @return User|null
      */
-    public function createByArray(array $data): void
+    public function createByArray(array $data): ?User
     {
-        $this->user->create($data);
+        return $this->user->create($data);
     }
 
     /**

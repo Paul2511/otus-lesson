@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\CMS;
 
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\CMS\Controller;
 
 class DashboardController extends Controller
 {

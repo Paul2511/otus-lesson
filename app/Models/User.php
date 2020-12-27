@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property PlanUser[] $planUsers
  * @property PlanUser[] $planUsersOwner
  */
-class User extends Model
+class User extends Authenticate
 {
     use HasFactory;
 
@@ -99,5 +100,26 @@ class User extends Model
     public function planUsers(): HasMany
     {
         return $this->hasMany(Plan::class);
+    }
+
+    /**
+     * @return bool
+     */
+    final public function isAdmin():bool {
+        return $this->type === self::TYPE_ADMIN;
+    }
+
+    /**
+     * @return bool
+     */
+    final public function isUser():bool {
+        return $this->type === self::TYPE_USER;
+    }
+
+    /**
+     * @return bool
+     */
+    final public function isManager():bool {
+        return $this->type === self::TYPE_MANAGER;
     }
 }

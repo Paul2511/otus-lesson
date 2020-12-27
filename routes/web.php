@@ -19,6 +19,6 @@ Auth::routes();
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/profile',function(){
     return view('frontEnd.profile');
-});
+})->name('profile');
 
 app(CMSRoutesProvider::class)->boot();

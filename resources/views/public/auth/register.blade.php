@@ -19,7 +19,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="first_name">@lang('base.first_name')</label>
-                        <input type="text" class="form-control" id="first_name" placeholder="@lang('base.first_name')" value="{{ old('first_name') }}">
+                        <input type="text" class="form-control" id="first_name" placeholder="@lang('base.first_name')" name="first_name" value="{{ old('first_name') }}">
                         @if ($errors->has('first_name'))
                             <div class="alert alert-danger">
                                 <strong>{{ $errors->first('first_name') }}</strong>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label for="last_name">@lang('base.last_name')</label>
-                        <input type="text" class="form-control" id="last_name" placeholder="@lang('base.last_name')" value="{{ old('last_name') }}">
+                        <input type="text" class="form-control" id="last_name" placeholder="@lang('base.last_name')" name="last_name" value="{{ old('last_name') }}">
                         @if ($errors->has('last_name'))
                             <div class="alert alert-danger">
                                 <strong>{{ $errors->first('last_name') }}</strong>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email">@lang('base.email')</label>
-                        <input type="email" class="form-control" id="email" placeholder="@lang('base.email')" value="{{ old('email') }}">
+                        <input type="email" class="form-control" id="email" placeholder="@lang('base.email')" name="email" value="{{ old('email') }}">
                         @if ($errors->has('email'))
                             <div class="alert alert-danger">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">@lang('base.password')</label>
-                        <input type="password" class="form-control" id="password" placeholder="@lang('base.password')" value="{{ old('password') }}">
+                        <input type="password" class="form-control" id="password" placeholder="@lang('base.password')" name="password" value="{{ old('password') }}">
                         @if ($errors->has('password'))
                             <div class="alert alert-danger">
                                 <strong>{{ $errors->first('password') }}</strong>
@@ -55,10 +55,10 @@
                     </div>
                     <div class="form-group">
                         <label for="password_repeat">@lang('base.password_repeat')</label>
-                        <input type="password" class="form-control" id="password_repeat" placeholder="@lang('base.password_repeat')" value="{{ old('password_repeat') }}">
+                        <input type="password" class="form-control" id="password_confirmation" placeholder="@lang('base.password_confirmation')" name="password_confirmation" value="{{ old('password_confirmation') }}">
                         @if ($errors->has('password_repeat'))
                             <div class="alert alert-danger">
-                                <strong>{{ $errors->first('password_repeat') }}</strong>
+                                <strong>{{ $errors->first('password_confirmation') }}</strong>
                             </div>
                         @endif
                     </div>

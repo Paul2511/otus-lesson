@@ -4,6 +4,7 @@
 namespace App\Services\Users\Handlers;
 
 
+use App\Models\User;
 use App\Services\Users\Repositories\EloquentUserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -21,12 +22,14 @@ class UserCreateHandler
         $this->repository = $repository;
     }
 
+
     /**
      * @param array $data
+     * @return User|null
      */
-    public function handle(array $data): void
+    public function handle(array $data): ?User
     {
-        $data['password'] = Hash::make(Str::random(12));
-        $this->repository->createByArray($data);
+        $data['password'] = ($data['password']) ?: Hash::make(Str::random(12));
+        return $this->repository->createByArray($data);
     }
 }

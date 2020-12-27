@@ -12,7 +12,7 @@ final class CMSRoutesProvider
 {
     public function boot(): void
     {
-        Route::group(['prefix' => CMSRoutes::CMS_BASE_PREFIX], function () {
+        Route::group(['prefix' => CMSRoutes::CMS_BASE_PREFIX,'middleware'=>'auth'], function () {
 
             Route::get('/',[DashboardController::class,'index'])->name(CMSRoutes::CMS_DASHBOARD_INDEX);
 
