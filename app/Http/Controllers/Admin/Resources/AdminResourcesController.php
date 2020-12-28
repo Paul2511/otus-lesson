@@ -4,24 +4,24 @@ namespace App\Http\Controllers\Admin\Resources;
 
 use App\Http\Controllers\Controller;
 use App\Services\Resources\Repositories\EloquentResourceRepository;
+use App\Services\Resources\ResourcesService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AdminResourcesController extends Controller
 {
-    private EloquentResourceRepository $eloquentResourceRepository;
+    private ResourcesService $resourcesService;
+
     public function __construct(
-        EloquentResourceRepository $eloquentResourceRepository
-    )
-    {
-        $this->eloquentResourceRepository = $eloquentResourceRepository;
+        ResourcesService $resourcesService
+    ) {
+        $this->resourcesService = $resourcesService;
     }
 
-
-    public function __invoke():JsonResponse
+    public function __invoke(): JsonResponse
     {
-        $resources = $this->eloquentResourceRepository->getList();
-        return response()->json(['resources'=>$resources]);
+        $resources = $this->resourcesService->getList();
+        return response()->json(['resources' => $resources]);
     }
 
 }
