@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PetController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\FileController;
 use App\Http\RouteNames;
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,12 @@ Route::group([
     Route::delete('/{pet}', [PetController::class, 'destroy'])->name(RouteNames::DELETE_PET);
 });
 
+
+Route::group([
+    'prefix' => 'files'
+], function () {
+    Route::post('upload-image', [FileController::class, 'uploadImage']);
+});
 
 //Вместо fallback
 Route::any('{any}', function(){

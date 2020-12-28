@@ -5,6 +5,7 @@ namespace App\Services\Pets\Handlers;
 
 use App\Services\Pets\Repositories\PetRepository;
 use App\Models\Pet;
+use App\Helpers\LogHelper;
 class PetDeleteHandler
 {
     /**
@@ -26,9 +27,20 @@ class PetDeleteHandler
     public function handler(Pet $pet)
     {
         try {
-            return $this->petRepository->deletePet($pet);
+            $result = $this->petRepository->deletePet($pet);
+
+            LogHelper::pet("Удален питомец #{$pet->id}", [
+                'userId'=>auth()->user()->getAuthIdentifier()
+            ]);
+
+            return $result;
         } catch (\Exception $e) {
-            //todo репорт ошибки
+
+            LogHelper::slack("Ошибка удаления питомца #{$pet->id}", [
+                'userId'=>auth()->user()->getAuthIdentifier(),
+                'error'=>$e->getMessage()
+            ]);
+
             return false;
         }
 

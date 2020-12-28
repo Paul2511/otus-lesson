@@ -5,19 +5,16 @@ namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use App\Helpers\BaseHelper;
-
+use App\Helpers\UploadHelper;
 class AvatarCast implements CastsAttributes
 {
+
     public function get($model, $key, $value, $attributes)
     {
-        /**
-         * Comment: Самое удобное место для этой логики здесь.
-                    Тут можно избежать ошибок и быть увернным в результате
-         */
         if (!$value) {
-            //Только вот такой рефракторинг:
             $result = [
-                'src'=>BaseHelper::getUserDefaultAvatar()
+                'src'=>BaseHelper::getUserDefaultAvatar(),
+                'type'=>UploadHelper::TYPE_DEFAULT
             ];
         }
         else {
@@ -29,8 +26,11 @@ class AvatarCast implements CastsAttributes
 
     public function set($model, $key, $value, $attributes)
     {
-        if (!$value || !isset($value['previewPath'])) {
+        if (!$value || !isset($value['src']) || $value['src'] === BaseHelper::getUserDefaultAvatar()) {
             $value = null;
+        } else {
+            $value['type'] = UploadHelper::TYPE_USER;
+            $value = json_encode($value, JSON_UNESCAPED_UNICODE);
         }
         return $value;
     }

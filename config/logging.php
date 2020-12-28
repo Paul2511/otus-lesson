@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily'],
             'ignore_exceptions' => false,
         ],
 
@@ -45,6 +45,20 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'pet' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/pet.log'),
+            'level' => env('info'),
+            'days' => 14,
+        ],
+
+        'auth' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/auth.log'),
+            'level' => env('info'),
+            'days' => 14,
         ],
 
         'daily' => [
@@ -59,7 +73,8 @@ return [
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
-            'level' => env('LOG_LEVEL', 'critical'),
+            //'level' => env('LOG_LEVEL', 'critical'),
+            'level' => env('error'),
         ],
 
         'papertrail' => [

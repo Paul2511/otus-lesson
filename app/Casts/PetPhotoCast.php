@@ -3,6 +3,7 @@
 
 namespace App\Casts;
 
+use App\Helpers\UploadHelper;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use App\Models\Pet;
 use App\Helpers\BaseHelper;
@@ -15,7 +16,8 @@ class PetPhotoCast implements CastsAttributes
             if (!$value) {
                 $type = $model->petType->slug;
                 $result = [
-                    'src'=>BaseHelper::getPetDefaultPhoto($type)
+                    'src'=>BaseHelper::getPetDefaultPhoto($type),
+                    'type'=>UploadHelper::TYPE_DEFAULT
                 ];
             }
             else {
@@ -29,9 +31,16 @@ class PetPhotoCast implements CastsAttributes
 
     public function set($model, $key, $value, $attributes)
     {
-        if (!$value || !isset($value['previewPath'])) {
-            $value = null;
+        if ($model instanceof Pet) {
+            $type = $model->petType->slug;
+            if (!$value || !isset($value['src']) || $value['src']===BaseHelper::getPetDefaultPhoto($type)) {
+                $value = null;
+            } else {
+                $value['type'] = UploadHelper::TYPE_USER;
+                $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+            }
         }
+
         return $value;
     }
 

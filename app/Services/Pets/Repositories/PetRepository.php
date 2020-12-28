@@ -31,6 +31,9 @@ class PetRepository
      */
     public function deletePet(Pet $pet)
     {
+        //Использую для тестирования логов в слэке:
+        //throw new \Exception('Тест логгирования ошибки');
+
         return $pet->delete();
     }
 }

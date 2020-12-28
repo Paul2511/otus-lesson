@@ -56,7 +56,8 @@ class UserUpdateRequest extends ApiRequest
             ],
             'lastname' => ['string', 'nullable'],
             'firstname' => ['string' ,'nullable'],
-            'middlename' => ['string','nullable']
+            'middlename' => ['string','nullable'],
+            'avatar' => ['array']
         ];
     }
 }

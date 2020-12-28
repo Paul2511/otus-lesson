@@ -6,7 +6,8 @@ namespace App\Services\Users\Handlers;
 use App\Models\User;
 use App\Services\Users\Repositories\UserDetailRepository;
 use App\Services\Users\Repositories\UserRepository;
-use Illuminate\Auth\Access\AuthorizationException;
+
+use App\Helpers\LogHelper;
 
 class UpdateUserHandler
 {
@@ -35,13 +36,27 @@ class UpdateUserHandler
         $detail = $user->userDetail;
 
         $result = true;
+        $isLogged = false;
 
         $newUser = $data;
         $newDetail = $data['detail'] ?? null;
 
         if ($newDetail) {
             unset($newUser['detail']);
-            $result = $this->userDetailRepository->setUserDetail($detail, $newDetail);
+
+            try {
+                $result = $this->userDetailRepository->setUserDetail($detail, $newDetail);
+            } catch (\Exception $e) {
+
+                LogHelper::slack("Ошибка обновления user detail #{$user->id}", [
+                    'userId'=>auth()->user()->getAuthIdentifier(),
+                    'error'=>$e->getMessage(),
+                    'detailData'=>$newDetail
+                ]);
+                $isLogged = true;
+                $result = false;
+            }
+
         }
 
         if ($result && count($newUser)) {
@@ -54,13 +69,27 @@ class UpdateUserHandler
                 \Gate::authorize('update-user-system-fields');
             }
 
-            $result = $this->userRepository->setUser($user, $newUser);
+            try {
+                $result = $this->userRepository->setUser($user, $newUser);
+            } catch (\Exception $e) {
+
+                LogHelper::slack("Ошибка обновления user #{$user->id}", [
+                    'userId'=>auth()->user()->getAuthIdentifier(),
+                    'error'=>$e->getMessage(),
+                    'userData'=>$newUser
+                ]);
+                $isLogged = true;
+                $result = false;
+            }
         }
         if ($result) {
             $user->fresh();
-        }
-        else {
-            //todo: репорт ошибки
+        } elseif (!$isLogged) {
+            LogHelper::slack("Ошибка обновления пользователя #{$user->id}", [
+                'userId'=>auth()->user()->getAuthIdentifier(),
+                'error'=>$e->getMessage(),
+                'data'=>$data
+            ]);
         }
 
         return $user;

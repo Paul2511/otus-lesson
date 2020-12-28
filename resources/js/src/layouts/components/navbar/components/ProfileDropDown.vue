@@ -10,8 +10,8 @@
         <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
 
             <div class="con-img ml-3">
-                <img v-if="activeUserInfo.detail.avatar && activeUserInfo.detail.avatar.previewPath" key="onlineImg"
-                     :src="activeUserInfo.detail.avatar.previewPath" alt="user-img"
+                <img v-if="activeUserInfo.detail.avatar && activeUserInfo.detail.avatar.type !== 'default'" key="onlineImg"
+                     :src="activeUserInfo.detail.avatar.src" alt="user-img"
                      width="40" height="40" class="rounded-full shadow-md cursor-pointer block"/>
                 <vs-avatar color="primary" v-else/>
             </div>

@@ -101,6 +101,29 @@ const actions = {
         });
     },
 
+
+    // /////////////////////////////////////////////
+    // Files
+    // /////////////////////////////////////////////
+    //Загрузка одного изображения
+    uploadImage({ commit }, formData) {
+        return new Promise((resolve, reject) => {
+            axios.post(
+                '/api/files/upload-image',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    }
+
+
 };
 
 export default actions

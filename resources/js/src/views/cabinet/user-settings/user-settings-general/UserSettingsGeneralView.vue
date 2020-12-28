@@ -3,7 +3,7 @@
         <!-- Avatar Col -->
         <div class="vx-col" id="avatar-col">
             <div class="img-container mb-4">
-                <img :src="user.detail.avatar.src" class="rounded w-full" />
+                <img :src="user.detail.avatar.src" class="rounded h-32 w-32" />
             </div>
         </div>
 
@@ -57,7 +57,7 @@
         </div>
         <!-- /Information - Col 2 -->
 
-        <div class="vx-col w-full flex" id="account-manage-buttons">
+        <div class="vx-col w-full flex mt-4" id="account-manage-buttons">
             <vs-button icon-pack="feather" icon="icon-edit" class="mr-4" @click.native="edit">Редактировать</vs-button>
         </div>
     </div>
