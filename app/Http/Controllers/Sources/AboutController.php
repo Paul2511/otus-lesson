@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Sources;
 use App\Http\Controllers\Controller;
 use View;
 
-class AboutController extends Controller
+class AboutController extends ResourceController
 {
-    public function __construct()
-    {
-    }
     public function __invoke()
     {
         View::share([

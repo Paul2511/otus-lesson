@@ -12,6 +12,6 @@ class AdminRoutes
     const ADMIN_USERS_SHOW = 'users.show';
     const ADMIN_USERS_STORE = 'users.store';
     const ADMIN_USERS_UPDATE = 'users.update';
-    const ADMIN_USERS_ACTIVE = 'users.active';
+    const ADMIN_USERS_ACTIVATE = 'users.activate';
 
 }

@@ -1,4 +1,4 @@
-    <!doctype html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -49,12 +49,13 @@
                         <div class="form-content">
 
                             <h1 class=""> @lang('auth.login') <a href="https://smter.ru/"><span class="brand-name">SMARTER</span></a></h1>
+                            <h6 id="error_message" style="text-align: center;font-size: 14px;color: red;"></h6>
                             <form class="text-left">
                                 <div class="form">
-
+{{--                                    <input name="_token" type="hidden" value="{{ csrf_token() }}">--}}
                                     <div id="username-field" class="field-wrapper input">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                        <input id="username" name="username" type="text" class="form-control" placeholder=" @lang('auth.username') ">
+                                        <input id="email" name="email" type="text" class="form-control" placeholder=" @lang('auth.username') ">
                                     </div>
 
                                     <div id="password-field" class="field-wrapper input mb-2">
@@ -70,7 +71,7 @@
                                             </label>
                                         </div>
                                         <div class="field-wrapper">
-                                            <button type="button" class="btn btn-primary" value=""> @lang('auth.log_in')</button>
+                                            <button type="button" class="btn btn-primary" id="login" value=""> @lang('auth.log_in')</button>
                                         </div>
 
                                     </div>
@@ -78,7 +79,7 @@
                                     <div class="field-wrapper text-center keep-logged-in">
                                         <div class="n-chk new-checkbox checkbox-outline-secondary">
                                             <label class="new-control new-checkbox checkbox-outline-secondary">
-                                                <input type="checkbox" class="new-control-input">
+                                                <input type="checkbox" class="new-control-input" id="remember" name="remember">
                                                 <span class="new-control-indicator"></span>@lang('auth.keep')
                                             </label>
                                         </div>
@@ -107,15 +108,41 @@
     <!--  END CONTENT PART  -->
 
 </div>
-<!-- END MAIN CONTAINER -->
 
 {{--@include('inc.scripts')--}}
 <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
 <script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/authentication/form-1.js')}}"></script>
+<!-- END MAIN CONTAINER -->
+<script>
+    jQuery(document).ready(function ($) {
+        $('#login').click(function (e) {
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var remember = $('#remember').val();
+            $.ajax({
+                type: 'POST',
+                beforeSend: function (xhr) { // Add this line
+                    xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
+                },  // Add this line
+                url: '/login',
+                data: {email: email, password: password, remember:remember },
+                dataType: 'json',
+                success: function (respond) {
+                  window.location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#error_message').html(jqXHR.responseJSON.message);
+                }
+            });
+        });
+
+    });
+</script>
 </body>
 </html>
+
 
 
 

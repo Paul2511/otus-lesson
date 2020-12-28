@@ -5,8 +5,11 @@ namespace App\Services\Users;
 
 
 use App\Models\User;
-use App\Services\Handlers\ActiveUserHandler;
+use App\Services\Handlers\ActivateUserHandler;
+use App\Services\Handlers\CheckUserPasswordHandler;
+use App\Services\Handlers\CheckUserPermissionHandler;
 use App\Services\Handlers\CreateUserHandler;
+use App\Services\Handlers\FindUserByEmailHandler;
 use App\Services\Handlers\GetUsersHandler;
 use App\Services\Handlers\ShowUserHandler;
 use App\Services\Handlers\UpdateUserHandler;
@@ -20,23 +23,30 @@ class UsersService
     private $showUserHandler;
     private $getUsersHandler;
     private $updateUserHandler;
-    private $activeUserHandler;
-
-
+    private $activateUserHandler;
+    private $findUserByEmailHandler;
+    private $checkUserActiveAndPassword;
+    private $checkUserPermissionHandler;
 
     public function __construct(
         CreateUserHandler $createUserHandler,
         GetUsersHandler $getUsersHandler,
         ShowUserHandler $showUserHandler,
         UpdateUserHandler $updateUserHandler,
-        ActiveUserHandler $activeUserHandler
+        ActivateUserHandler $activateUserHandler,
+        FindUserByEmailHandler $findUserByEmailHandler,
+        CheckUserPasswordHandler $checkUserActiveAndPassword,
+        CheckUserPermissionHandler $checkUserPermissionHandler
 
     ) {
         $this->createUserHandler = $createUserHandler;
         $this->showUserHandler = $showUserHandler;
         $this->getUsersHandler = $getUsersHandler;
         $this->updateUserHandler = $updateUserHandler;
-        $this->activeUserHandler = $activeUserHandler;
+        $this->activateUserHandler = $activateUserHandler;
+        $this->findUserByEmailHandler = $findUserByEmailHandler;
+        $this->checkUserActiveAndPassword = $checkUserActiveAndPassword;
+        $this->checkUserPermissionHandler = $checkUserPermissionHandler;
     }
 
     public function getResourceIds(int $id): array
@@ -66,7 +76,6 @@ class UsersService
         return $projects;
     }
 
-
     public function createUser(array $data): User
     {
         return $this->createUserHandler->handle($data);
@@ -77,9 +86,30 @@ class UsersService
         return $this->updateUserHandler->handle($id, $data);
     }
 
-    public function activeUser(int $userId, array $data)
+    public function activateUser(int $userId, array $data)
     {
-        return $this->activeUserHandler->handle($userId, $data['is_active']);
+        return $this->activateUserHandler->handle($userId, $data['is_active']);
     }
+
+    public function findUserByEmail(string $email): ?User
+    {
+        return $this->findUserByEmailHandler->handle($email);
+    }
+
+    public function checkUserActiveAndPassword(User $user, $password): ?User
+    {
+        return $this->checkUserActiveAndPassword->handle($user, $password);
+    }
+
+    public function updateAuthData(User $user)
+    {
+        return $this->updateUserHandler->handle($user->id, [ 'last_visit' => date('Y-m-d H:i:s')]);
+    }
+
+    public function hasUserPermission(User $user, int $resource_id): bool
+    {
+        return $this->checkUserPermissionHandler->handle($user, $resource_id);
+    }
+
 
 }

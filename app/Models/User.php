@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Database\Seeders\ProjectUserTableSeeder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use function PHPUnit\Framework\returnArgument;
+
 /**
  * App\Models\User
  *
@@ -49,17 +53,23 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'full_name',
         'email',
-        'phone',
         'password',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
+        'full_name',
         'is_admin',
         'is_active',
+        'last_visit',
+        'remember_token',
+        'phone'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
     ];
 
     protected $casts = [
@@ -80,5 +90,13 @@ class User extends Authenticatable
 
     public function resources(){
         return $this->belongsToMany(Resource::class);
+    }
+
+    public function isAdmin(){
+        return $this->is_admin;
+    }
+
+    public function hasPermission(int $resource_id):bool {
+        return $this->resources()->where('resources.id',$resource_id)->count() > 0;
     }
 }

@@ -4,6 +4,7 @@
 namespace App\Services\Users\Repositories;
 
 
+use App\Models\Resource;
 use App\Models\User;
 use App\Models\ProjectUser;
 use Illuminate\Database\Eloquent\Collection;
@@ -86,7 +87,9 @@ class EloquentUserRepository
 
     public function attachResourcesToUser($user, $data): User
     {
-        $user->resources()->sync($data['resources']);
+        if (!empty($data['resources'])) {
+            $user->resources()->sync($data['resources']);
+        }
         return $user;
     }
 
@@ -120,5 +123,15 @@ class EloquentUserRepository
         $user = $this->findById($id);
         $user->is_active = $is_active;
         return $user->save();
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        return User::where('email',$email)->first();
+    }
+
+    public function checkPermission(User $user, int $resource_id): bool
+    {
+        return $user->hasPermission($resource_id);
     }
 }

@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Sources;
-use App\Http\Controllers\Controller;
+
 use View;
 
-class DashboardController extends Controller
+class DashboardController extends ResourceController
 {
-    public function __construct()
-    {
-    }
     public function __invoke()
     {
         View::share([

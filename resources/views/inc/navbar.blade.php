@@ -38,7 +38,7 @@
                     <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                         <div class="">
                             <div class="dropdown-item">
-                                <a href="{{ route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_SHOW,['user' => 1])}}">
+                                <a href="{{ route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_SHOW,['user' => Auth::id()])}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round" class="feather feather-user">
@@ -47,7 +47,7 @@
                                     </svg> @lang('navbar.Profile')</a>
                             </div>
                             <div class="dropdown-item">
-                                <a href="">
+                                <a href="" id="logout">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round" class="feather feather-log-out">
@@ -97,4 +97,25 @@
         </header>
     </div>
     <!--  END NAVBAR  -->
+
+        <script>
+            jQuery(document).ready(function ($) {
+            $('#logout').click(function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/logout',
+                    data: {},
+                    dataType: 'json',
+                    success: function (respond) {
+                        window.location.reload();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        window.location.reload();
+                    }
+                });
+            });
+
+        });
+    </script>
+
 

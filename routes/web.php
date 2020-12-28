@@ -16,20 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-Route::get('/login', function() {
-    $data = [
-        'category_name' => 'auth',
-        'page_name' => 'auth_default',
-        'has_scrollspy' => 0,
-        'scrollspy_offset' => '',
-    ];
-    return view('pages.authentication.auth_login')->with($data);
-})->name('login');
-
-
-
 app(AdminRoutesProvider::class)->register();
 app(SourcesRoutesProvider::class)->register();
 

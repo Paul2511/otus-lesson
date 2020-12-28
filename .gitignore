@@ -16,3 +16,7 @@ yarn-error.log
 .idea/workspace.xml
 
 storage/logs/laravel.log
+*.log
+storage/logs/laravel.log
+storage/logs/laravel.log
+*.log

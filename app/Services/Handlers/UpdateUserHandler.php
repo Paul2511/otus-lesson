@@ -1,10 +1,9 @@
 <?php
 
-
 namespace App\Services\Handlers;
 
-
 use App\Services\Users\Repositories\EloquentUserRepository;
+use Illuminate\Support\Facades\Hash;
 
 class UpdateUserHandler
 {
@@ -26,6 +25,9 @@ class UpdateUserHandler
      */
     public function handle(int $id, array $data)
     {
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
         $user = $this->eloquentUserRepository->updateUserById($id, $data);
         $user = $this->eloquentUserRepository->attachProjectsToUser($user, $data);
         $user = $this->eloquentUserRepository->attachResourcesToUser($user, $data);

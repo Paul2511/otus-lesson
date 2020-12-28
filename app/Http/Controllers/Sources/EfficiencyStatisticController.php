@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Sources;
-use App\Http\Controllers\Controller;
+
+use App\Policies\Permissions;
+use App\Services\Resources\Resources;
+use Illuminate\Support\Facades\Gate;
 use View;
 
-class EfficiencyStatisticController extends Controller
+class EfficiencyStatisticController extends ResourceController
 {
-    public function __construct()
+
+    public function view()
     {
-    }
-    public function __invoke()
-    {
+        Gate::authorize(Permissions::VIEW_SOURCE, Resources::STATISTIC_EFFICIENCY);
         View::share([
             'category_name' => 'statistic',
             'page_name' => 'efficiency',

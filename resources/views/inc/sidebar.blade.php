@@ -13,6 +13,7 @@
                             </div>
                         </a>
                     </li>
+                @if (Auth::user()->is_admin)
                 <li class="menu {{ ($category_name === 'users') ? 'active' : '' }}">
                     <a href="{{route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_INDEX) }}" data-active="{{ ($category_name === 'users') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'users') ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">
@@ -21,7 +22,7 @@
                         </div>
                     </a>
                 </li>
-
+                @endif
                     <li class="menu {{ ($category_name === 'records') ? 'active' : '' }}">
                         <a href="#record" data-active="{{ ($category_name === 'records') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'records') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="">
@@ -32,13 +33,19 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </div>
                         </a>
+
+
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'records') ? 'show' : '' }}" id="record" data-parent="#accordionExample">
+                            @if (in_array(\App\Services\Resources\Resources::SIMPLE_RECORDS,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'simple') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_SIMPLE_RECORDS}}">@lang('navbar.Simple')</a>
                             </li>
+                            @endif
+                                @if (in_array(\App\Services\Resources\Resources::ADVANCED_RECORDS,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'advanced') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_ADVANCED_RECORDS}}">@lang('navbar.Advanced')</a>
                             </li>
+                                @endif
                         </ul>
                     </li>
                     <li class="menu {{ ($category_name === 'statistic') ? 'active' : '' }}">
@@ -52,12 +59,16 @@
                             </div>
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'statistic') ? 'show' : '' }}" id="statistic" data-parent="#accordionExample">
+                            @if (in_array(\App\Services\Resources\Resources::STATISTIC_ONLINE,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'online') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_STATISTIC_ONLINE}}">@lang('navbar.Online')</a>
                             </li>
+                            @endif
+                                @if (in_array(\App\Services\Resources\Resources::STATISTIC_EFFICIENCY,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'efficiency') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_STATISTIC_EFFICIENCY}}">@lang('navbar.Efficiency')</a>
                             </li>
+                                @endif
                         </ul>
                     </li>
                     <li class="menu {{ ($category_name === 'reports') ? 'active' : '' }}">
@@ -71,21 +82,31 @@
                             </div>
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'reports') ? 'show' : '' }}" id="reports" data-parent="#accordionExample">
+                            @if (in_array(\App\Services\Resources\Resources::REPORT_STAT,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'stat') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_STAT}}">@lang('navbar.Stat')</a>
                             </li>
+                            @endif
+                            @if (in_array(\App\Services\Resources\Resources::REPORT_SERVICE,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'service') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_SERVICE}}">@lang('navbar.Service')</a>
                             </li>
+                             @endif
+                             @if (in_array(\App\Services\Resources\Resources::REPORT_PROCESSED_CALLS,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'processed-calls') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_PROCESSED_CALLS}}">@lang('navbar.Processed-calls')</a>
                             </li>
+                            @endif
+                            @if (in_array(\App\Services\Resources\Resources::REPORT_BALANCE,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'balance') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_BALANCE}}">@lang('navbar.Balance')</a>
                             </li>
+                            @endif
+                            @if (in_array(\App\Services\Resources\Resources::REPORT_QUOTAS,app(\App\Services\Users\UsersService::class)->getResourceIds(Auth::id())))
                             <li class="{{ ($page_name === 'quotas') ? 'active' : '' }}">
                                 <a href="/{{App\Services\Routes\Providers\Sources\SourcesRoutes::SOURCES_REPORT_QUOTAS}}">@lang('navbar.Quotas')</a>
                             </li>
+                            @endif
                         </ul>
                     </li>
                     <li class="menu {{ ($category_name === 'about-us') ? 'active' : '' }}">

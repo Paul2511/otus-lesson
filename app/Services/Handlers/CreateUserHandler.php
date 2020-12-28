@@ -5,6 +5,7 @@ namespace App\Services\Handlers;
 
 
 use App\Services\Users\Repositories\EloquentUserRepository;
+use Illuminate\Support\Facades\Hash;
 
 class CreateUserHandler
 {
@@ -23,6 +24,9 @@ class CreateUserHandler
 
     public function handle($data)
     {
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
         $user = $this->eloquentUserRepository->createUser($data);
         $user = $this->eloquentUserRepository->attachProjectsToUser($user, $data);
         $user = $this->eloquentUserRepository->attachResourcesToUser($user, $data);

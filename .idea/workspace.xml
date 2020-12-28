@@ -2,15 +2,57 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0c7eb76-2034-4b28-afc7-ce7aa4c6e0f9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Laravel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Laravel.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ProjectUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProjectUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ResourceUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ResourceUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.phpstorm.meta.php" beforeDir="false" afterPath="$PROJECT_DIR$/.phpstorm.meta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ide_helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/_ide_helper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Users/AdminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Users/AdminUsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ConfirmPasswordController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/AboutController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/AboutController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/AdvancedRecordsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/AdvancedRecordsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/BalanceReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/BalanceReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/EfficiencyStatisticController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/EfficiencyStatisticController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/OnlineStatisticController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/OnlineStatisticController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/ProcessedCallsReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/ProcessedCallsReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/QuotasReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/QuotasReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/ServiceReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/ServiceReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/SimpleRecordsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/SimpleRecordsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Sources/StatReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Sources/StatReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Handlers/ActiveUserHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Handlers/ActivateUserHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Handlers/CreateUserHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Handlers/CreateUserHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Handlers/UpdateUserHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Handlers/UpdateUserHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Routes/Providers/Admin/AdminRoutes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Routes/Providers/Admin/AdminRoutes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Routes/Providers/Admin/AdminRoutesProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Routes/Providers/Admin/AdminRoutesProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Routes/Providers/Sources/SourcesRoutesProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Routes/Providers/Sources/SourcesRoutesProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Users/Repositories/EloquentUserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Users/Repositories/EloquentUserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Users/UsersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Users/UsersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/users/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/users/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/user_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/user_edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_11_142222_create_resource_user_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_11_142222_create_resource_user_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/UsersTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/UsersTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ru/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ru/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/inc/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/inc/navbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/inc/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/inc/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/authentication/auth_login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/authentication/auth_login.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/cache/data/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/MNmHB7cYZewJxHPH1hFKYIX9ewe65pEnaEnUJRSq" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,9 +62,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="Laravel" />
@@ -156,21 +196,27 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
       <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
-      <path value="$PROJECT_DIR$/vendor/maximebf/debugbar" />
-      <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
-      <path value="$PROJECT_DIR$/vendor/symfony/debug" />
+      <path value="$PROJECT_DIR$/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/vendor/pragmarx/google2fa" />
+      <path value="$PROJECT_DIR$/vendor/laravel/fortify" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
     </include_path>
   </component>
   <component name="ProjectId" id="1jsLzjM65fNODl1SPWNXDuM7XZW" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/js/users" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Policies" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -178,19 +224,20 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Learning\Homestead\laravel.test\Laravel\resources\views\inc\modals" />
-      <recent name="D:\Learning\Homestead\laravel.test\Laravel\app\Http\Controllers\Admin\Users" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Learning\Homestead\laravel.test\Laravel\app\Policies" />
       <recent name="D:\Learning\Homestead\laravel.test\Laravel\public\assets\js\users" />
       <recent name="D:\Learning\Homestead\laravel.test\Laravel\resources\views\pages\users" />
       <recent name="D:\Learning\Homestead\laravel.test\Laravel\app\Services\Handlers" />
       <recent name="D:\Learning\Homestead\laravel.test\Laravel\app\Services\Routes\Providers" />
-      <recent name="D:\Learning\Homestead\laravel.test\Laravel\app\Http\Controllers\Sources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Learning\Homestead\laravel.test\Laravel\resources\views\inc\modals" />
+      <recent name="D:\Learning\Homestead\laravel.test\Laravel\app\Http\Controllers\Admin\Users" />
     </key>
   </component>
   <component name="RunManager">
@@ -226,82 +273,8 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="540" y="182" key="#CLI_Interpreters" timestamp="1605257468513">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="540" y="182" key="#CLI_Interpreters/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1605257468513" />
-    <state x="552" y="186" key="#Inspections" timestamp="1606716792529">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="552" y="186" key="#Inspections/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1606716792529" />
-    <state x="734" y="335" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606652580101">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="734" y="335" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1606652580101" />
-    <state x="2654" y="335" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1604821763818" />
-    <state x="705" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607259585541">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-1215" y="100" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1606289549840" />
-    <state x="705" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607259585541" />
-    <state x="1015" y="272" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1607341518373">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-905" y="272" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1605443652038" />
-    <state x="1015" y="272" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607341518373" />
-    <state x="657" y="210" width="620" height="629" key="#phpunit.xml" timestamp="1605534792531">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="657" y="210" width="620" height="629" key="#phpunit.xml/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1605534792531" />
-    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog" timestamp="1605785814281">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1605785814281" />
-    <state x="745" y="283" key="FileChooserDialogImpl" timestamp="1606993108537">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="745" y="283" key="FileChooserDialogImpl/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1606993108537" />
-    <state x="640" y="359" key="NewPhpClassDialog" timestamp="1607340582427">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="640" y="359" key="NewPhpClassDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607340582427" />
-    <state x="794" y="456" key="NewPhpFileDialog" timestamp="1605786534314">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="794" y="456" key="NewPhpFileDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1605786534314" />
-    <state x="2714" y="456" key="NewPhpFileDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1604820549669" />
-    <state x="463" y="170" key="SettingsEditor" timestamp="1605257488847">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="463" y="170" key="SettingsEditor/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1605257488847" />
-    <state x="110" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1607349298703">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-1810" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607346286668" />
-    <state x="110" y="96" width="1736" height="866" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607349298703" />
-    <state x="-1903" y="112" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1607348091986">
-      <screen x="-1920" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-1903" y="112" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607348091986" />
-    <state x="-1252" y="352" key="com.intellij.ide.util.TipDialog" timestamp="1605100966058">
-      <screen x="-1920" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-1252" y="352" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1605100966058" />
-    <state x="2588" y="352" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1604669562716" />
-    <state x="-1532" y="0" width="1548" height="1009" key="dock-window-1" timestamp="1606736453660">
-      <screen x="-1920" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-1532" y="0" width="1548" height="1009" key="dock-window-1/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1606736453660" />
-    <state x="667" y="281" width="586" height="488" key="find.popup" timestamp="1607410097339">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-1253" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607407983120" />
-    <state x="667" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607410097339" />
-    <state x="2587" y="281" width="586" height="488" key="find.popup/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605020328364" />
-    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1604839296284">
-      <screen x="1920" y="0" width="1920" height="1050" />
-    </state>
-    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1604839296284" />
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -17,10 +17,14 @@ final class AdminRoutesProvider
 
     public function register()
     {
-        Route::resource('users', AdminUsersController::class);
-        Route::post('users/active/{id}', [AdminUsersController::class, 'active'])->name( AdminRoutes::ADMIN_USERS_ACTIVE);
-        Route::post('resources', AdminResourcesController::class);
-        Route::post('queues', AdminQueuesController::class);
+        Route::group([
+            'middleware' => 'auth'
+        ], function () {
+            Route::resource('users', AdminUsersController::class);
+            Route::post('users/activate/{id}', [AdminUsersController::class, 'active'])->name( AdminRoutes::ADMIN_USERS_ACTIVATE);
+            Route::post('resources', AdminResourcesController::class);
+            Route::post('queues', AdminQueuesController::class);
+        });
 
     }
 

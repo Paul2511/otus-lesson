@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Routes\Providers\Sources\SourcesRoutes;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = SourcesRoutes::SOURCES_DASHBOARD;
 
     /**
      * The controller namespace for the application.
