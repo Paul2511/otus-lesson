@@ -9,33 +9,21 @@
 ========================================================================================== -->
 
 
-<template functional>
+<template>
     <footer class="the-footer flex-wrap justify-between" :class="classes">
-        <div v-if="0">
-            <p>
-                <span>COPYRIGHT &copy;</span>
-                <span>{{ new Date().getFullYear() }} </span>
-                <a href="https://1.envato.market/vuexy_admin" target="_blank" rel="nofollow">Pixinvent</a>
-                <span class="hidden sm:inline-block">, All rights Reserved</span>
-            </p>
-            <span class="md:flex hidden items-center">
-            <span>Hand-crafted & Made with</span>
-            <feather-icon icon="HeartIcon" svgClasses="stroke-current text-danger w-6 h-6" class="ml-2" />
-        </span>
-        </div>
         <p>
-            <span>Разработано в качестве проектной работы для OTUS</span>
+            <span>{{ $t('main.copyright') }}</span>
         </p>
     </footer>
 </template>
 
 <script>
-export default {
-  name: 'the-footer',
-  props: {
-    classes: {
-      type: String
+    export default {
+        name: 'the-footer',
+        props: {
+            classes: {
+                type: String
+            }
+        }
     }
-  }
-}
 </script>

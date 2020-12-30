@@ -15,14 +15,14 @@ class SpecializationsTableSeeder extends Seeder
     public function run()
     {
         DB::table('specializations')->insert([
-            ['slug'=>'unknown', 'title'=>'Не определено'],
-            ['slug'=>'therapist', 'title'=>'Терапевт'],
-            ['slug'=>'surgeon', 'title'=>'Хирург'],
-            ['slug'=>'traumatologist', 'title'=>'Травматолог'],
-            ['slug'=>'cardiologist', 'title'=>'Кардиолог'],
-            ['slug'=>'dermatologist', 'title'=>'Дерматолог'],
-            ['slug'=>'dentist', 'title'=>'Стоматолог'],
-            ['slug'=>'groomer', 'title'=>'Грумер']
+            ['slug'=>'unknown', 'title_ru'=>'Не определено', 'title_en'=>'Unknown'],
+            ['slug'=>'therapist', 'title_ru'=>'Терапевт', 'title_en'=>'Therapist'],
+            ['slug'=>'surgeon', 'title_ru'=>'Хирург', 'title_en'=>'Surgeon'],
+            ['slug'=>'traumatologist', 'title_ru'=>'Травматолог', 'title_en'=>'Traumatologist'],
+            ['slug'=>'cardiologist', 'title_ru'=>'Кардиолог', 'title_en'=>'Cardiologist'],
+            ['slug'=>'dermatologist', 'title_ru'=>'Дерматолог', 'title_en'=>'Dermatologist'],
+            ['slug'=>'dentist', 'title_ru'=>'Стоматолог', 'title_en'=>'Dentist'],
+            ['slug'=>'groomer', 'title_ru'=>'Грумер', 'title_en'=>'Groomer']
         ]);
     }
 }

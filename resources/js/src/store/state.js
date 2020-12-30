@@ -64,6 +64,11 @@ const is_touch_device = () => {
     return mq(query);
 }
 
+let appParams = window.appParams;
+const storageLocale = localStorage.getItem('purrLocale') || null;
+if (!!appParams.locale && !storageLocale) {
+    localStorage.setItem('purrLocale', appParams.locale);
+}
 
 // /////////////////////////////////////////////
 // State
@@ -89,6 +94,7 @@ const state = {
     // Can be used to get current window with
     // Note: Above breakpoint state is for internal use of sidebar & navbar component
     windowWidth: null,
-}
+    appParams: window.appParams
+};
 
 export default state

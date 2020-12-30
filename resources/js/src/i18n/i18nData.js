@@ -1,4 +1,15 @@
-// en, de, fr, pt
+import ruMain from './data/ru/ru-main';
+import ruButtons from './data/ru/ru-buttons';
+import ruDashboard from './data/ru/ru-dashboard';
+import ruUser from './data/ru/ru-user';
+import ruPet from './data/ru/ru-pet';
+
+import enMain from './data/en/en-main';
+import enButtons from './data/en/en-buttons';
+import enDashboard from './data/en/en-dashboard';
+import enUser from './data/en/en-user';
+import enPet from './data/en/en-pet';
+
 export default {
     en: {
         Dashboard: 'Dashboard',
@@ -139,7 +150,12 @@ export default {
         userSettingsGeneral: 'General',
         userSettingsChangePassword: 'Change Password',
         myPets: 'My pets',
-        myRequests: 'My requests'
+        myRequests: 'My requests',
+        main: enMain,
+        buttons: enButtons,
+        dashboard: enDashboard,
+        user: enUser,
+        pet: enPet
     },
     ru: {
         Dashboard: 'Рабочий стол',
@@ -160,6 +176,11 @@ export default {
         ErrorResponse: 'При выполнении запроса произошла ошибка',
         userSettingsGeneral: 'Основное',
         userSettingsChangePassword: 'Сменить пароль',
-        myRequests: 'Мои заявки'
+        myRequests: 'Мои заявки',
+        main: ruMain,
+        buttons: ruButtons,
+        dashboard: ruDashboard,
+        user: ruUser,
+        pet: ruPet
     }
 }

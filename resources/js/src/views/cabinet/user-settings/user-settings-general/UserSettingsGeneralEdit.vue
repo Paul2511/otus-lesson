@@ -17,7 +17,7 @@
                             {{ changeAvatarLabel }}
                         </vs-button>
 
-                        <vs-button v-if="showAvatarDelete" @click="deleteAvatar" type="border" color="danger">Удалить аватар</vs-button>
+                        <vs-button v-if="showAvatarDelete" @click="deleteAvatar" type="border" color="danger">{{ $t('user.deleteAvatar') }}</vs-button>
 
                         <p class="text-danger text-xs" v-show="!!errors.file">{{ errors.file | arr2str }}</p>
 
@@ -32,21 +32,21 @@
             <div class="vx-col flex-1" id="account-info-col-1">
                 <table>
                     <tr>
-                        <td class="font-semibold">Фамилия</td>
+                        <td class="font-semibold">{{ $t('user.lastname') }}</td>
                         <td>
                             <vs-input @change="setDetailData('lastname')" v-model="detail.lastname" :danger="!!errors.lastname" val-icon-danger="icon-x" val-icon-pack="feather" />
                             <span class="text-danger text-xs" v-show="!!errors.lastname">{{ errors.lastname | arr2str }}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="font-semibold">Имя</td>
+                        <td class="font-semibold">{{ $t('user.firstname') }}</td>
                         <td>
                             <vs-input @change="setDetailData('firstname')" v-model="detail.firstname" :danger="!!errors.firstname" val-icon-danger="icon-x" val-icon-pack="feather"/>
                             <span class="text-danger text-xs" v-show="!!errors.firstname">{{ errors.firstname | arr2str }}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="font-semibold">Отчество</td>
+                        <td class="font-semibold">{{ $t('user.middlename') }}</td>
                         <td>
                             <vs-input @change="setDetailData('middlename')" v-model="detail.middlename" :danger="!!errors.middlename" val-icon-danger="icon-x" val-icon-pack="feather"/>
                             <span class="text-danger text-xs" v-show="!!errors.middlename">{{ errors.middlename | arr2str }}</span>
@@ -60,11 +60,11 @@
             <div class="vx-col flex-1" id="account-info-col-2">
                 <table>
                     <tr>
-                        <td class="font-semibold">Телефон</td>
+                        <td class="font-semibold">{{ $t('user.phone') }}</td>
                         <td>{{ user.phoneFormat }}</td>
                     </tr>
                     <tr>
-                        <td class="font-semibold">Email</td>
+                        <td class="font-semibold">{{ $t('user.email') }}</td>
                         <td>
                             {{ user.email }}
                             <template v-if="0">
@@ -74,7 +74,7 @@
                         </td>
                     </tr>
                     <tr v-if="canAdmin">
-                        <td class="font-semibold">Статус</td>
+                        <td class="font-semibold">{{ $t('user.status') }}</td>
                         <td>
                             <vs-select @change="setUserData('status')" v-model="user.status" class="w-full" :danger="!!errors.status" val-icon-danger="icon-x" val-icon-pack="feather">
                                 <vs-select-item :key="index" :value="index" :text="item" v-for="(item,index) in user.statusLabels" class="w-full" />
@@ -84,11 +84,11 @@
                     </tr>
 
                     <tr v-if="canAdmin">
-                        <td class="font-semibold">Роль</td>
+                        <td class="font-semibold">{{ $t('user.role') }}</td>
                         <td>{{ user.roleLabel }}</td>
                     </tr>
                     <tr v-if="!!user.detail.specialization">
-                        <td class="font-semibold">Специализация</td>
+                        <td class="font-semibold">{{ $t('user.specialization') }}</td>
                         <td>{{ user.detail.specialization.name }}</td>
                     </tr>
                 </table>
@@ -96,8 +96,12 @@
             <!-- /Information - Col 2 -->
 
             <div class="vx-col w-full flex mt-4">
-                <vs-button @click.native="save" :disabled="!userData && !detailData || uploading" icon-pack="feather" color="success" icon="icon-save" class="mr-4">Сохранить</vs-button>
-                <vs-button type="border" @click.native="cancel">Отмена</vs-button>
+                <vs-button @click.native="save" :disabled="!userData && !detailData || uploading" icon-pack="feather" color="success" icon="icon-save" class="mr-4">
+                    {{ $t('buttons.save') }}
+                </vs-button>
+                <vs-button type="border" @click.native="cancel">
+                    {{ $t('buttons.cancel') }}
+                </vs-button>
             </div>
         </div>
     </div>
@@ -119,11 +123,7 @@
                 errors: [],
                 userData: null,
                 detailData: null,
-                uploading: false,
-                defaultAvatar: {
-                    src: '/images/no-avatar.jpg',
-                    type: 'default'
-                }
+                uploading: false
             }
         },
         methods: {
@@ -221,9 +221,9 @@
             changeAvatarLabel() {
                 const avatar = this.detail.avatar;
                 if (!avatar.type || avatar.type === 'default') {
-                    return 'Загрузить аватар';
+                    return this.$t('user.uploadAvatar');
                 }
-                return 'Сменить аватар';
+                return this.$t('user.changeAvatar');
             },
             showAvatarDelete() {
                 const avatar = this.detail.avatar;
@@ -231,6 +231,10 @@
                     return false;
                 }
                 return true;
+            },
+            defaultAvatar() {
+                let params = this.$store.state.appParams;
+                return params.defaultAvatar;
             }
         }
     }

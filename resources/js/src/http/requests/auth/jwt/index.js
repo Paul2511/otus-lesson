@@ -17,16 +17,20 @@ function addSubscriber(callback) {
 
 export default {
     init() {
-
         axios.interceptors.request.use(function (config) {
-            const accessToken = localStorage.getItem('accessToken') || null
-            if (!!accessToken)
-            config.headers = {
-                'Authorization': `Bearer ${accessToken}`
+            const accessToken = localStorage.getItem('accessToken') || null;
+            config.headers = {};
+            if (!!accessToken) {
+                config.headers['Authorization'] = `Bearer ${accessToken}`;
             }
+
+            const currentLocale = store.getters.currentLocale;
+            if (!!currentLocale) {
+                config.headers['Accept-Language'] = currentLocale;
+            }
+
             return config;
         }, function (error) {
-
             return Promise.reject(error);
         });
 
@@ -52,7 +56,8 @@ export default {
                         localStorage.removeItem('accessToken');
                     }
                     localStorage.removeItem('userInfo');
-                    router.push('/login').catch(() => {})
+                    router.push('/login').catch(() => {
+                    })
                 }
 
                 const retryOriginalRequest = new Promise((resolve) => {

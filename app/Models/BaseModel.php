@@ -28,4 +28,17 @@ class BaseModel extends Model
     {
         return $this->hasMany(Comment::class, 'row_id')->where('type', $this->commentType);
     }
+
+
+    public function translateAttribute(string $attribute, ?string $default=''): string
+    {
+        $locale = \App::currentLocale();
+        $attr = $attribute . '_'.$locale;
+
+        if (isset($this->{$attr}) && !empty($this->{$attr})) {
+            return $this->{$attr};
+        }
+
+        return $default;
+    }
 }

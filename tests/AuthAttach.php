@@ -100,11 +100,4 @@ trait AuthAttach
         return $this;
     }
 
-    //Общая вспомогательная функция для отладки
-    protected function ddResponse(TestResponse $response)
-    {
-        $content = $response->getContent();
-        dd(json_decode($content, true));
-    }
-
 }

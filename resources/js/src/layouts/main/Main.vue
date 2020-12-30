@@ -76,7 +76,7 @@
                                             <div @click="$router.push('/cabinet/pets').catch(() => {})" class="flex items-center">
                                                 <feather-icon icon="UserIcon" class="inline-block mr-2"
                                                               svgClasses="w-4 h-4"/>
-                                                <span>Мой профиль</span>
+                                                <span>{{ $t('main.myProfile') }}</span>
                                             </div>
                                         </vs-dropdown-item>
 
@@ -86,7 +86,7 @@
                                             <div @click="logout" class="flex items-center">
                                                 <feather-icon icon="LogOutIcon" class="inline-block mr-2"
                                                               svgClasses="w-4 h-4"/>
-                                                <span>Выход</span>
+                                                <span>{{ $t('main.exit') }}</span>
                                             </div>
                                         </vs-dropdown-item>
 
@@ -237,7 +237,8 @@
         created() {
             const color = this.navbarColor === '#fff' && this.isThemeDark ? '#10163a' : this.navbarColor
             this.updateNavbarColor(color)
-            this.setNavMenuVisibility(this.$store.state.mainLayoutType)
+            this.setNavMenuVisibility(this.$store.state.mainLayoutType);
+            //console.log(this.$t('Login'));
         }
     }
 

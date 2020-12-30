@@ -25,6 +25,19 @@
     <div id="app">
     </div>
 
+    <?php
+    $data = $data ?? [];
+    $data = json_encode($data);
+    $data = preg_replace("_\\\_", "\\\\\\", $data);
+    $data = preg_replace("/\"/", "\\\"", $data);
+    ?>
+
+    @if(isset($data))
+        <script>
+            window.appParams = JSON.parse("{!!$data!!}");
+        </script>
+    @endif
+
     <script src="{{ asset(mix('js/app.js')) }}"></script>
 
   </body>

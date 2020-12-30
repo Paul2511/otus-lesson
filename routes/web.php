@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
-
+use App\Http\Middleware\WebApplicationData;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,12 +14,10 @@ use App\Http\Controllers\ApplicationController;
 |
 */
 
-/*Route::get('/{any}', function ($any = null) {
-    return view('application');
-})->where('any', '.*');*/
 
-
-Route::get('/{any}', ApplicationController::class)->where('any', '.*');
+Route::get('/{any}', ApplicationController::class)
+    ->where('any', '.*')
+    ->middleware(WebApplicationData::class);
 
 
 

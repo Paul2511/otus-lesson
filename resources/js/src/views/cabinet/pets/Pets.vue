@@ -1,7 +1,8 @@
 <template>
     <div id="my-pets">
-
-        <vs-button color="warning" type="gradient" class="mb-4 shadow-lg" icon="add_circle">Добавить питомца</vs-button>
+        <vs-button color="warning" class="mb-4 shadow-lg" icon="add_circle">
+            {{ $t('pet.addPet') }}
+        </vs-button>
         <vx-card no-shadow>
             <div v-if="isLoading" class="loading-block">
                 <div class="loading-inner"></div>
@@ -18,22 +19,26 @@
                                         </a>
                                         <vs-dropdown-menu>
                                             <vs-dropdown-item @click="removePet(pet)">
-                                                Удалить
+                                                {{ $t('buttons.delete') }}
                                             </vs-dropdown-item>
                                         </vs-dropdown-menu>
                                     </vs-dropdown>
                                 </template>
                                 <img :src="pet.photo.src" alt="content-img" class="responsive rounded-lg">
                                 <div class="flex justify-between flex-wrap">
-                                    <vs-button icon="assignment" class="mt-4 mr-2 shadow-md" type="gradient" color="#7367F0" gradient-color-secondary="#CE9FFC">Анкета</vs-button>
-                                    <vs-button icon="assignment_turned_in" class="mt-4 shadow-md" type="gradient" color="success">Карта</vs-button>
+                                    <vs-button icon="assignment" class="mt-4 mr-2 shadow-md" type="gradient" color="#7367F0" gradient-color-secondary="#CE9FFC">
+                                        {{ $t('pet.questionary') }}
+                                    </vs-button>
+                                    <vs-button icon="assignment_turned_in" class="mt-4 shadow-md" type="gradient" color="success">
+                                        {{ $t('pet.card') }}
+                                    </vs-button>
                                 </div>
                             </vx-card>
                         </div>
                     </template>
                     <template v-else>
                         <vs-alert color="dark" active="true">
-                            У вас пока не добавлено ни одного питомца
+                            {{ $t('pet.noPets') }}
                         </vs-alert>
                     </template>
 
@@ -85,10 +90,10 @@
                 this.$vs.dialog({
                     type: 'confirm',
                     color:'danger',
-                    title: 'Подтвердите удаление',
-                    text: 'Вы уверены, что хотите удалить из системы питомца '+pet.name+'?',
-                    acceptText: 'Удалить',
-                    cancelText: 'Отмена',
+                    title: this.$t('main.confirmDelete'),
+                    text: this.$t('pet.confirmDelete', {name: pet.name}),
+                    acceptText: this.$t('buttons.delete'),
+                    cancelText: this.$t('buttons.cancel'),
                     buttonsHidden: true,
                     accept:function () {
                         _this.acceptRemove(pet);

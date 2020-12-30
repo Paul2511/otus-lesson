@@ -15,9 +15,9 @@ class PetTypesTableSeeder extends Seeder
     public function run()
     {
         DB::table('pet_types')->insert([
-            ['slug'=>'unknown', 'title'=>'Не определено'],
-            ['slug'=>'cat', 'title'=>'Кошка'],
-            ['slug'=>'dog', 'title'=>'Собака']
+            ['slug'=>'unknown', 'title_ru'=>'Не определено', 'title_en'=>'Unknown'],
+            ['slug'=>'cat', 'title_ru'=>'Кошка', 'title_en'=>'Cat'],
+            ['slug'=>'dog', 'title_ru'=>'Собака', 'title_en'=>'Dog']
         ]);
     }
 }

@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Specialization
  *
  * @property int $id
  * @property string $slug
+ * @property string $title_ru
+ * @property string $title_en
  * @property string $title
  * @method static Builder|Specialization newModelQuery()
  * @method static Builder|Specialization newQuery()
@@ -23,16 +24,24 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property-read Collection|UserDetail[] $userDetails
  */
-class Specialization extends Model
+class Specialization extends BaseModel
 {
     use HasFactory;
 
     protected $fillable = [
-        'slug', 'title'
+        'slug', 'title_ru', 'title_en'
+    ];
+
+    protected $appends = [
+        'title'
     ];
 
     public function userDetails()
     {
         return $this->hasMany(UserDetail::class);
+    }
+
+    public function getTitleAttribute() {
+        return $this->translateAttribute('title', $this->slug);
     }
 }

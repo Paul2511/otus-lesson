@@ -2,7 +2,7 @@
     <div id="page-user-view">
         <vx-card no-shadow>
             <div v-if="!!user">
-                <vx-card title="Основные данные" class="mb-base">
+                <vx-card :title="$t('user.general')" class="mb-base">
                     <user-settings-general-view :user="user" @edit="edit" v-if="!editing" />
                     <user-settings-general-edit v-if="editing" :user-info="user" @cancel="cancel" @set="setUser" />
                 </vx-card>
@@ -10,6 +10,7 @@
         </vx-card>
     </div>
 </template>
+
 
 <script>
     import UserSettingsGeneralView from './user-settings-general/UserSettingsGeneralView.vue'
@@ -57,6 +58,7 @@
         }
     }
 </script>
+
 <style lang="scss">
     #avatar-col {
         width: 10rem;

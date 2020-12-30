@@ -3,7 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-
+use App\Http\Middleware\Localize;
 class Kernel extends HttpKernel
 {
     /**
@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\ForceJsonResponse::class,
+            Localize::class
         ],
     ];
 
@@ -52,24 +53,24 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        //'auth' => \App\Http\Middleware\Authenticate::class,
+        //'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.jwt'  =>  \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        //'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        //'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        //'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class
     ];
 
     protected $middlewarePriority = [
-        \App\Http\Middleware\Authenticate::class,
-        \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        //\App\Http\Middleware\Authenticate::class,
+        //\Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
-        \Illuminate\Auth\Middleware\Authorize::class
+        //\Illuminate\Auth\Middleware\Authorize::class
     ];
 
 }

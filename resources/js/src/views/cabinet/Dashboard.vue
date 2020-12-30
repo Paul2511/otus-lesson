@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h4>Это первая страница</h4>
+		<h4>{{ $t('dashboard.intro') }}</h4>
 	</div>
-
 </template>
