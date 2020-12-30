@@ -8,4 +8,6 @@
 <div class="nav-item"><a href="/contacts">Контакты</a></div>
 @if(!Auth::check())
 <div class="nav-item"><a href="{{route('user.login')}}">Login</a></div>
+@else
+<div class="nav-item"><a href="{{route('user.logout')}}">Logout</a></div>
 @endif

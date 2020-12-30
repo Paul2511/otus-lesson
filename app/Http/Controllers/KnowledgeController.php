@@ -21,8 +21,17 @@ class KnowledgeController extends Controller
      */
     public function index()
     {
-        $knowledges = $this->knowledgeService->getKnowledges();
-        return view("knowledges.index", ['knowls' => $knowledges]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            if($authUser->can("viewAny", Knowledge::class)){
+                $knowledges = $this->knowledgeService->getKnowledges();
+                return view("knowledges.index", ['knowls' => $knowledges]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -32,7 +41,16 @@ class KnowledgeController extends Controller
      */
     public function create()
     {
-        return view("knowledges.create");
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            if($authUser->can("create", Knowledge::class)){
+                return view("knowledges.create");
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -43,16 +61,25 @@ class KnowledgeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'user_id' => 'required',
-            'name' => 'required',
-            'description' => 'required',
-            "data" => 'required'
-        ]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            if($authUser->can("create", Knowledge::class)){
+                $this->validate($request, [
+                    'user_id' => 'required',
+                    'name' => 'required',
+                    'description' => 'required',
+                    "data" => 'required'
+                ]);
 
-        $data = $request->only(['name', 'description', 'data', 'user_id']);
-        $this->knowledgeService->createKnowledge($data);
-        return redirect()->back();
+                $data = $request->only(['name', 'description', 'data', 'user_id']);
+                $this->knowledgeService->createKnowledge($data);
+                return redirect()->back();
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -63,8 +90,17 @@ class KnowledgeController extends Controller
      */
     public function show($id)
     {
-        $knowl = $this->knowledgeService->getKnowledge($id);
-        return view("knowledges.show", ["knowl" => $knowl]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            $knowl = $this->knowledgeService->getKnowledge($id);
+            if($authUser->can("view", $knowl)){
+                return view("knowledges.show", ["knowl" => $knowl]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -75,8 +111,17 @@ class KnowledgeController extends Controller
      */
     public function edit($id)
     {
-        $knowl = $this->KnowledgeService->getKnowledge($id);
-        return view("knowledges.edit", ["knowl" => $knowl]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            $knowl = $this->knowledgeService->getKnowledge($id);
+            if($authUser->can("update", $knowl)){
+                return view("knowledges.edit", ["knowl" => $knowl]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -88,16 +133,26 @@ class KnowledgeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'user_id' => 'required',
-            'name' => 'required',
-            'description' => 'required',
-            "data" => 'required'
-        ]);
+        if(\Auth::check()){
+            $this->validate($request, [
+                'user_id' => 'required',
+                'name' => 'required',
+                'description' => 'required',
+                "data" => 'required'
+            ]);
 
-        $data = $request->only(['name', 'description', 'data', 'user_id']);
-        $this->knowledgeService->updateKnowledge($data, $id);
-        return redirect()->back();
+            $data = $request->only(['name', 'description', 'data', 'user_id']);
+            $authUser = \Auth::user();
+            $updatingKnowledge = $this->knowledgeService->getKnowledge($id);
+            if($authUser->can("update", $updatingKnowledge)){
+                $this->knowledgeService->updateKnowledge($data, $id);
+                return redirect()->back();
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -108,7 +163,17 @@ class KnowledgeController extends Controller
      */
     public function destroy($id)
     {
-        $this->knowledgeService->deleteKnowledge($id);
-        return redirect()->back();
+        if(Auth::check()){
+            $authUser = \Auth::user();
+            $updatingKnowledge = $this->knowledgeService->getKnowledge($id);
+            if($authUser->can("delete", $updatingKnowledge)){
+                $this->knowledgeService->deleteKnowledge($id);
+                return redirect()->back();
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 }

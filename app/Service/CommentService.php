@@ -2,7 +2,7 @@
 namespace App\Service;
 use App\Service\Handlers\{CreateCommentHandler, UpdateCommentHandler, DeleteCommentHandler};
 
-class TodoService{
+class CommentService{
 	protected $createCommentHandler;
     protected $updateCommentHandler;
     protected $deleteCommentHandler;

@@ -8,7 +8,7 @@ class UpdateTaskHandler implements HandlerInterface
 	private $taskRepository;
 
 	public function __construct(EloquentTaskRepository $taskRepository){
-		$this->taskRepository = $userRepository;
+		$this->taskRepository = $taskRepository;
 	}
 
     public function handle($data, int $id)

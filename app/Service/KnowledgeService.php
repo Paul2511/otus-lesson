@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 use App\Service\Handlers\{CreateKnowledgeHandler, UpdateKnowledgeHandler, DeleteKnowledgeHandler, GiveMeKnowledgeHandler, GiveMeAllKnowledgeHandler};
-class TaskService{
+class KnowledgeService{
 	protected $createKnowledgeHandler;
     protected $updateKnowledgeHandler;
     protected $deleteKnowledgeHandler;

@@ -21,9 +21,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-    	$users =$this->userService->getUsers();
-        return view("users.index", ['users' => $users]);
+    {    
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            if($authUser->can("viewAny", User::class)){
+                $users =$this->userService->getUsers();
+                return view("users.index", ['users' => $users]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -33,7 +42,12 @@ class UserController extends Controller
      */
     public function create()
     {
-    	if(!Auth::check()){
+        $authUser = \Auth::user();
+        $role = '';
+        if($authUser != null){
+            $role = $authUser->role;
+        }
+    	if(!\Auth::check() || $role == 'admin'){
     		return view("users.create");
     	}
     	return redirect()->back();
@@ -70,7 +84,10 @@ class UserController extends Controller
             'role',
             'skills'
         ]);
-        $this->userService->createUser($data);
+        $newUser = $this->userService->createUser($data);
+        if(!\Auth::check()){
+            \Auth::loginUsingId($newUser->id);
+        }
         return redirect()->back();
     }
 
@@ -82,8 +99,17 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    	$user = $this->userService->getUser($id);
-        return view("users.show", ["user" => $user]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            $user = $this->userService->getUser($id);
+            if($authUser->can("view", $user)){
+                return view("users.show", ["user" => $user]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -93,9 +119,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-    	$user = $this->userService->getUser($id);
-        return view("users.edit", ["user" => $user]);
+    {   
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            $user = $this->userService->getUser($id);
+            if($authUser->can("update", $user)){
+                return view("users.edit", ["user" => $user]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -107,24 +142,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-    	$this->validate($request, [
-           	'name' => 'required|max:255',
-           	'last_name' => 'required|max:255',
-           	'patronymic' => 'required',
-           	'role' => 'required',
-           	'email' =>'required|unique:users,id,'.$id
-       	]);
-        $data = $request->only([
-            'name',
-            'last_name',
-            'patronymic',
-            'email',
-            'password',
-            'role',
-            'skills'
-        ]);
-        $this->userService->updateUser($data, $id);
-       	return redirect()->route('users.show', ['user' => $id]);
+        if(\Auth::check()){
+        	$this->validate($request, [
+               	'name' => 'required|max:255',
+               	'last_name' => 'required|max:255',
+               	'patronymic' => 'required',
+               	'role' => 'required',
+               	'email' =>'required|unique:users,id,'.$id
+           	]);
+            $data = $request->only([
+                'name',
+                'last_name',
+                'patronymic',
+                'email',
+                'password',
+                'role',
+                'skills'
+            ]);
+            $authUser = \Auth::user();
+            $updatingUser = $this->userService->getUser($id);
+            if($authUser->can("update", $updatingUser)){
+                $this->userService->updateUser($data, $id);
+           	    return redirect()->route('users.show', ['user' => $id]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -135,20 +180,39 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-    	$this->userService->deleteUser($id);
-        return redirect()->back();
+        if(Auth::check()){
+            $authUser = \Auth::user();
+            $updatingUser = $this->userService->getUser($id);
+            if($authUser->can("delete", $updatingUser)){
+                $this->userService->deleteUser($id);
+                return redirect()->back();
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request)
+    {
     	$credentials = $request->only("email","password");
-    	if(Auth::attempt($credentials)){
+        $credentials["password"] = \Hash::make($credentials["password"]);
+    	if(\Auth::attempt($credentials)){
     		return redirect()->route('users.show', ['user' => Auth::id()]);
     	}
     }
-    public function login(){
-    	if(!Auth::check()){
+
+    public function login()
+    {
+    	if(!\Auth::check()){
     		return view("users.login");
     	}
     	return redirect()->back();
+    }
+
+    public function logout()
+    {
+        \Auth::logout();
     }
 }

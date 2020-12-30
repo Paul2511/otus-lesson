@@ -22,8 +22,17 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = $this->taskService->getTasks();
-        return view("tasks.index", ["tasks" => $tasks]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            if($authUser->can("viewAny", Task::class)){
+                $tasks = $this->taskService->getTasks();
+                return view("tasks.index", ["tasks" => $tasks]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -33,7 +42,11 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view("tasks.create");
+        if(\Auth::check()){
+            return view("tasks.create");
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -44,14 +57,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-        ]);
+        if(\Auth::check()){
+            $this->validate($request, [
+                'name' => 'required|max:255',
+            ]);
 
-        // create record and pass in only fields that are fillable
-        $data = $request->only(["name", "description", "status"]);
-        $this->taskService->createTask($data);
-        return redirect()->back();
+            // create record and pass in only fields that are fillable
+            $data = $request->only(["name", "description", "status"]);
+            $this->taskService->createTask($data);
+            return redirect()->back();
+        } else{
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -62,8 +79,17 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = $this->taskService->getTask($id);
-        return view("tasks.show", ["task" => $task]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            $task = $this->taskService->getTask($id);
+            if($authUser->can("view", $task)){
+                return view("tasks.show", ["task" => $task]);
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -74,8 +100,13 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $task = $this->taskService->getTask($id);
-        return view("tasks.edit", ["task" => $task]);
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            $task = $this->taskService->getTask($id);
+            if($authUser->can("update", $task)){
+                return view("tasks.edit", ["task" => $task]);
+            }
+        }
     }
 
     /**
@@ -87,14 +118,23 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-        ]);
+        if(\Auth::check()){
+            $this->validate($request, [
+                'name' => 'required|max:255',
+            ]);
 
-        $data = $request->only(["name", "description", "status"]);
-        $this->taskService->updateTask($data, $id);
-
-        return redirect()->back();
+            $data = $request->only(["name", "description", "status"]);
+            $authUser = \Auth::user();
+            $updatingTask = $this->taskService->getTask($id);
+            if($authUser->can("update", $updatingTask)){
+                $this->taskService->updateTask($data, $id);
+                return redirect()->back();
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -105,7 +145,17 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $this->taskService->deleteTask($id);
-        return redirect()->back();
+        if(Auth::check()){
+            $authUser = \Auth::user();
+            $updatingTask = $this->taskService->getTask($id);
+            if($authUser->can("delete", $updatingTask)){
+                $this->taskService->deleteTask($id);
+                return redirect()->back();
+            } else {
+                return "Can't";
+            }
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 }

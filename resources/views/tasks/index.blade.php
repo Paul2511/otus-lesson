@@ -7,10 +7,12 @@
 	<div class="container">
 		<div class="row">
 			@foreach($tasks as $task)
-		    <div class="col-sm">
-		      <a href="{{route('task.show', ['task' => $task->id])}}">{{$task->name}}</a>
-		    </div>
-		    <div class="w-100"></div>
+				@can("view", $task)
+			    <div class="col-sm">
+			      <a href="{{route('task.show', ['task' => $task->id])}}">{{$task->name}}</a>
+			    </div>
+			    <div class="w-100"></div>
+			    @endcan
 		    @endforeach
 	 	 </div>
 	</div>
