@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @property int $id
  * @property string $slug
- * @property string $title_ru
- * @property string $title_en
  * @method static Builder|PetType newModelQuery()
  * @method static Builder|PetType newQuery()
  * @method static Builder|PetType query()
@@ -27,13 +25,17 @@ class PetType extends BaseModel
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'slug', 'title_ru', 'title_en'
+        'slug'
     ];
 
     protected $appends = [
         'title'
     ];
+
+    public $translateType = Translate::TYPE_PET_TYPE;
 
     public function pets()
     {
@@ -41,6 +43,6 @@ class PetType extends BaseModel
     }
 
     public function getTitleAttribute() {
-        return $this->translateAttribute('title', $this->slug);
+        return $this->translateAttribute($this->slug);
     }
 }

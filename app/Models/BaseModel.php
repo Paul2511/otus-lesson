@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\BaseModel
  *
  * @property-read Collection|Comment[]  $comments
+ * @property-read Collection|Translate[]    $translates
  *
  */
 
@@ -20,6 +21,14 @@ class BaseModel extends Model
      */
     public $commentType = '';
 
+
+    /**
+     * Имя типа для модели транслита.
+     * Устанавливается в тех моделях, где предусмотрены поля на разных языках
+     * @var string
+     */
+    public $translateType = '';
+
     /**
      * Список комментариев
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -29,14 +38,24 @@ class BaseModel extends Model
         return $this->hasMany(Comment::class, 'row_id')->where('type', $this->commentType);
     }
 
+    /**
+     * Модель перевода
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function translates()
+    {
+        return $this->hasMany(Translate::class, 'row_id')->where('type', $this->translateType);
+    }
 
-    public function translateAttribute(string $attribute, ?string $default=''): string
+    public function translateAttribute(?string $default=''): string
     {
         $locale = \App::currentLocale();
-        $attr = $attribute . '_'.$locale;
 
-        if (isset($this->{$attr}) && !empty($this->{$attr})) {
-            return $this->{$attr};
+        /** @var Translate $translate */
+        $translate = $this->translates->where('locale', $locale)->first();
+
+        if ($translate) {
+            return $translate->value;
         }
 
         return $default;

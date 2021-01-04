@@ -2,11 +2,20 @@
 
 namespace Database\Seeders;
 
+use App\Models\PetType;
+use App\Models\Translate;
 use Illuminate\Database\Seeder;
-use DB;
+use App\Services\Localise\Locale;
 
 class PetTypesTableSeeder extends Seeder
 {
+
+    private static $data = [
+        ['slug'=>'unknown', 'ru'=>'Не определено', 'en'=>'Unknown'],
+        ['slug'=>'cat', 'ru'=>'Кошка', 'en'=>'Cat'],
+        ['slug'=>'dog', 'ru'=>'Собака', 'en'=>'Dog']
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -14,10 +23,18 @@ class PetTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('pet_types')->insert([
-            ['slug'=>'unknown', 'title_ru'=>'Не определено', 'title_en'=>'Unknown'],
-            ['slug'=>'cat', 'title_ru'=>'Кошка', 'title_en'=>'Cat'],
-            ['slug'=>'dog', 'title_ru'=>'Собака', 'title_en'=>'Dog']
-        ]);
+        foreach (self::$data as $item) {
+            $petType = PetType::create(['slug'=>$item['slug']]);
+            foreach (Locale::$availableLocales as $locale) {
+                if (isset($item[$locale])) {
+                    Translate::create([
+                        'type'=>Translate::TYPE_PET_TYPE,
+                        'row_id'=>$petType->id,
+                        'locale'=>$locale,
+                        'value'=>$item[$locale]
+                    ]);
+                }
+            }
+        }
     }
 }

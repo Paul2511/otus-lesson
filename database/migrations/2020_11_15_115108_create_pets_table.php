@@ -15,14 +15,13 @@ class CreatePetsTable extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger( 'pet_type_id')->default(1);
+            $table->unsignedBigInteger( 'pet_type_id')->default(null);
             $table->unsignedBigInteger('client_id');
             $table->string('name');
             $table->smallInteger('age')->unsigned()->nullable();
             $table->string('bread')->nullable();
-            $table->smallInteger('sex')->unsigned()->nullable();
+            $table->string('sex', 10)->nullable();
             $table->json('photo')->nullable();
-            $table->json('manager_comments')->nullable();
             $table->timestamps();
 
             $table->index('pet_type_id');

@@ -19,13 +19,12 @@ class CreateRequestsTable extends Migration
             $table->string('type', 50);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('created_by');
-            $table->text('manager_comment');
+            $table->text('body');
             $table->unsignedBigInteger('team_id')->nullable();
             $table->text('address')->nullable();
             $table->timestamp('date_time');
             $table->smallInteger('status')->default(10);
             $table->text('cancel_reason')->nullable();
-            $table->text('user_comment')->nullable();
             $table->timestamps();
 
             $table->index('client_id');

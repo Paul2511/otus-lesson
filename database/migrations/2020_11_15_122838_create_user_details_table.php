@@ -22,7 +22,6 @@ class CreateUserDetailsTable extends Migration
             $table->string('classifier')->nullable();
             $table->unsignedBigInteger('specialization_id')->nullable();
             $table->json('avatar')->nullable();
-            $table->json('manager_comments')->nullable();
             $table->timestamps();
 
             $table->index('user_id');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropColumnInLeadsTable extends Migration
+class CreateTranslatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class DropColumnInLeadsTable extends Migration
      */
     public function up()
     {
-        Schema::table('leads', function (Blueprint $table) {
-            $table->dropColumn('manager_comment');
+        Schema::create('translates', function (Blueprint $table) {
+            $table->id();
+            $table->string('type', 50);
+            $table->unsignedBigInteger('row_id');
+            $table->string('locale', 4);
+            $table->string('value');
         });
     }
 
@@ -25,8 +29,6 @@ class DropColumnInLeadsTable extends Migration
      */
     public function down()
     {
-        Schema::table('leads', function (Blueprint $table) {
-            $table->text('manager_comment')->nullable()->after('manager_id');
-        });
+        Schema::dropIfExists('translates');
     }
 }

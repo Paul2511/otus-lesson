@@ -21,7 +21,6 @@ class CreateLeadsTable extends Migration
             $table->string('external_phone', 20)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('manager_id')->nullable();
-            $table->text('manager_comment')->nullable();
             $table->timestamps();
 
             $table->index('user_id');
