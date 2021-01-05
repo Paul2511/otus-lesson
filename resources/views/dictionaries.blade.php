@@ -22,7 +22,7 @@
                 <div>
                     <button type="button" class="btn btn-primary">{{ __('Начать тренировку') }}</button>
 
-                    @include('blocks.forms.destroy', ['link' => route('dictionaries.destroy', [$dictionary->id])])
+                    @include('blocks.forms.destroy', ['link' => route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_DESTROY, [$dictionary->id])])
                 </div>
             </div>
         @endforeach

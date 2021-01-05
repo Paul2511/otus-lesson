@@ -6,6 +6,7 @@ use App\Models\Dictionary;
 use App\Models\Word;
 use App\Services\Dictionaries\DictionaryDestroyService;
 use App\Services\Dictionaries\DictionaryStoreService;
+use App\Services\Dictionaries\Providers\Routes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +46,7 @@ class DictionaryController extends Controller
     {
         DictionaryStoreService::store($request->name, Auth::id());
 
-        return redirect(route('dictionaries.index'));
+        return redirect(route(Routes::DICTIONARIES_INDEX));
     }
 
     /**
@@ -99,6 +100,6 @@ class DictionaryController extends Controller
     {
         DictionaryDestroyService::destroyDictionaryWithRelations($dictionary);
 
-        return redirect(route('dictionaries.index'));
+        return redirect(route(Routes::DICTIONARIES_INDEX));
     }
 }

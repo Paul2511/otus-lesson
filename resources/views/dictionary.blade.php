@@ -4,7 +4,7 @@
     @include('blocks.breadcrumb', [
         'links' => [
             __('Домой') => route('home'),
-            __('Словари') => route('dictionaries.index'),
+            __('Словари') => route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX),
             ],
         'current' => $dictionary->name
     ])
@@ -35,7 +35,7 @@
                             </svg>
                         </button>
 
-                        @include('blocks.forms.destroy', ['link' => route('words.destroy', [$word->id])])
+                        @include('blocks.forms.destroy', ['link' => route(\App\Services\Words\Providers\Routes::WORDS_DESTROY, [$word->id])])
                     </div>
                 </div>
 

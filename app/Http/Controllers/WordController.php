@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Word;
-use App\Models\Context;
 use App\Services\Contexts\ContextStoreService;
+use App\Services\Dictionaries\Providers\Routes;
 use App\Services\Words\WordDestroyService;
 use App\Services\Words\WordStoreService;
 use Illuminate\Http\Request;
@@ -47,7 +47,7 @@ class WordController extends Controller
             ContextStoreService::store($word_id, '', $request->context, '');
         }
 
-        return redirect(route('dictionaries.show', [$request->dictionary_id]));
+        return redirect(route(Routes::DICTIONARIES_SHOW, [$request->dictionary_id]));
     }
 
     /**
@@ -96,6 +96,6 @@ class WordController extends Controller
 
         WordDestroyService::destroyWithRelations($word);
 
-        return redirect(route('dictionaries.show', [$dictionary_id]));
+        return redirect(route(Routes::DICTIONARIES_SHOW, [$dictionary_id]));
     }
 }

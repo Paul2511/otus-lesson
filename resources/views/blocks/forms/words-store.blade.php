@@ -5,7 +5,7 @@
                 <div class="card-header">{{ __('Добавить слово') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ route('words.store') }}"
+                    <form action="{{ route(\App\Services\Words\Providers\Routes::WORDS_STORE) }}"
                           method="POST">
                         @csrf
                         <input type="hidden"
