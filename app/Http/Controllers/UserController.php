@@ -23,13 +23,9 @@ class UserController extends Controller
     public function index()
     {    
         if(\Auth::check()){
-            $authUser = \Auth::user();
-            if($authUser->can("viewAny", User::class)){
-                $users =$this->userService->getUsers();
-                return view("users.index", ['users' => $users]);
-            } else {
-                return "Can't";
-            }
+            $this->authorize(User::VIEW_ANY, User::class);
+            $users = $this->userService->getUsers();
+            return view("users.index", ['users' => $users]);
         } else {
             return redirect()->route('user.login');
         }
@@ -47,7 +43,7 @@ class UserController extends Controller
         if($authUser != null){
             $role = $authUser->role;
         }
-    	if(!\Auth::check() || $role == 'admin'){
+    	if(!\Auth::check() || $role == User::ADMIN){
     		return view("users.create");
     	}
     	return redirect()->back();
@@ -71,7 +67,7 @@ class UserController extends Controller
        	]);
 
         $request->password = Hash::make($request->password);
-        if($request->role != "manager" && $request->role != "developer"){
+        if($request->role != User::MANAGER && $request->role != User::DEVELOPER){
         	throw Exception("invalid role");
     	}
        	// create record and pass in only fields that are fillable
@@ -100,13 +96,9 @@ class UserController extends Controller
     public function show($id)
     {
         if(\Auth::check()){
-            $authUser = \Auth::user();
             $user = $this->userService->getUser($id);
-            if($authUser->can("view", $user)){
-                return view("users.show", ["user" => $user]);
-            } else {
-                return "Can't";
-            }
+            $this->authorize(User::VIEW, $user);
+            return view("users.show", ["user" => $user]);
         } else {
             return redirect()->route('user.login');
         }
@@ -123,11 +115,8 @@ class UserController extends Controller
         if(\Auth::check()){
             $authUser = \Auth::user();
             $user = $this->userService->getUser($id);
-            if($authUser->can("update", $user)){
-                return view("users.edit", ["user" => $user]);
-            } else {
-                return "Can't";
-            }
+            $this->authorize(User::UPDATE, $user);
+            return view("users.edit", ["user" => $user]);
         } else {
             return redirect()->route('user.login');
         }
@@ -159,14 +148,10 @@ class UserController extends Controller
                 'role',
                 'skills'
             ]);
-            $authUser = \Auth::user();
             $updatingUser = $this->userService->getUser($id);
-            if($authUser->can("update", $updatingUser)){
-                $this->userService->updateUser($data, $id);
-           	    return redirect()->route('users.show', ['user' => $id]);
-            } else {
-                return "Can't";
-            }
+            $this->authorize(User::UPDATE, $updatingUser);
+            $this->userService->updateUser($data, $id);
+           	return redirect()->route('users.show', ['user' => $id]);
         } else {
             return redirect()->route('user.login');
         }
@@ -181,14 +166,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         if(Auth::check()){
-            $authUser = \Auth::user();
             $updatingUser = $this->userService->getUser($id);
-            if($authUser->can("delete", $updatingUser)){
-                $this->userService->deleteUser($id);
-                return redirect()->back();
-            } else {
-                return "Can't";
-            }
+            $this->authorize(User::DELETE, $updatingUser);
+            $this->userService->deleteUser($id);
+            return redirect()->back();
         } else {
             return redirect()->route('user.login');
         }
