@@ -5,14 +5,15 @@ namespace App\Services\Dictionaries;
 
 
 use App\Models\Dictionary;
+use Illuminate\Support\Facades\Auth;
 
 class DictionaryStoreService
 {
-    public static function store(string $name, int $user_id): bool
+    public function store(string $name): bool
     {
         $dictionary = new Dictionary();
         $dictionary->name = $name;
-        $dictionary->user_id = $user_id;
+        $dictionary->user_id = Auth::id();
 
         if (!$dictionary->save()) {
             return false;

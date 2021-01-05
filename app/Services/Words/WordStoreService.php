@@ -8,7 +8,7 @@ use App\Models\Word;
 
 class WordStoreService
 {
-    public static function store(int $dictionary_id, string $value, string $translation): int
+    public function store(int $dictionary_id, string $value, string $translation): int
     {
         $word = new Word();
         $word->dictionary_id = $dictionary_id;

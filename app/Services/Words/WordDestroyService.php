@@ -9,10 +9,10 @@ use App\Models\Word;
 
 class WordDestroyService
 {
-    public static function destroyWithRelations(Word $word): bool
+    public function destroyWithRelations(Word $word): bool
     {
-        self::destroyWordContexts($word);
-        self::destroyWord($word);
+        $this->destroyWordContexts($word);
+        $this->destroyWord($word);
 
         return true;
     }

@@ -11,6 +11,21 @@ use Illuminate\Http\Request;
 
 class WordController extends Controller
 {
+    private $wordDestroyService;
+    private $wordStoreService;
+    private $contextStoreService;
+
+    public function __construct(
+        WordDestroyService $wordDestroyService,
+        WordStoreService $wordStoreService,
+        ContextStoreService $contextStoreService
+    )
+    {
+        $this->wordDestroyService = $wordDestroyService;
+        $this->wordStoreService = $wordStoreService;
+        $this->contextStoreService = $contextStoreService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,11 +55,11 @@ class WordController extends Controller
     public function store(Request $request)
     {
         // Добавим слово
-        $word_id = WordStoreService::store($request->dictionary_id, $request->value, $request->translation);
+        $word_id = $this->wordStoreService->store($request->dictionary_id, $request->value, $request->translation);
 
         // Добавим контекст использования слова
         if ($word_id) {
-            ContextStoreService::store($word_id, '', $request->context, '');
+            $this->contextStoreService->store($word_id, '', $request->context, '');
         }
 
         return redirect(route(Routes::DICTIONARIES_SHOW, [$request->dictionary_id]));
@@ -94,7 +109,7 @@ class WordController extends Controller
     {
         $dictionary_id = $word->dictionary_id;
 
-        WordDestroyService::destroyWithRelations($word);
+        $this->wordDestroyService->destroyWithRelations($word);
 
         return redirect(route(Routes::DICTIONARIES_SHOW, [$dictionary_id]));
     }
