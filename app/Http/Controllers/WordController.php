@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Word;
 use App\Models\Context;
+use App\Services\Contexts\ContextStoreService;
+use App\Services\Words\WordDestroyService;
+use App\Services\Words\WordStoreService;
 use Illuminate\Http\Request;
 
 class WordController extends Controller
@@ -36,18 +39,13 @@ class WordController extends Controller
      */
     public function store(Request $request)
     {
-        $word = new Word();
-        $word->dictionary_id = $request->dictionary_id;
-        $word->value = $request->value;
-        $word->translation = $request->translation;
-        $word->save();
+        // Добавим слово
+        $word_id = WordStoreService::store($request->dictionary_id, $request->value, $request->translation);
 
-        $context = new Context();
-        $context->word_id = $word->id;
-        $context->value = $request->context;
-        $context->prefix = '';
-        $context->postfix = '';
-        $context->save();
+        // Добавим контекст использования слова
+        if ($word_id) {
+            ContextStoreService::store($word_id, '', $request->context, '');
+        }
 
         return redirect(route('dictionaries.show', [$request->dictionary_id]));
     }
@@ -94,12 +92,9 @@ class WordController extends Controller
      */
     public function destroy(Word $word)
     {
-        Context::where('word_id', $word->id)
-            ->delete();
-
         $dictionary_id = $word->dictionary_id;
 
-        $word->delete();
+        WordDestroyService::destroyWithRelations($word);
 
         return redirect(route('dictionaries.show', [$dictionary_id]));
     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Dictionary;
 use App\Models\Word;
+use App\Services\Dictionaries\DictionaryDestroyService;
+use App\Services\Dictionaries\DictionaryStoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +19,7 @@ class DictionaryController extends Controller
     public function index()
     {
         $dictionaries = Dictionary::with('words')
+            ->orderByDesc('id')
             ->paginate(10);
 
         return view('dictionaries')->with('dictionaries', $dictionaries);
@@ -40,10 +43,7 @@ class DictionaryController extends Controller
      */
     public function store(Request $request)
     {
-        $dictionary = new Dictionary();
-        $dictionary->name = $request->name;
-        $dictionary->user_id = Auth::id();
-        $dictionary->save();
+        DictionaryStoreService::store($request->name, Auth::id());
 
         return redirect(route('dictionaries.index'));
     }
@@ -97,18 +97,7 @@ class DictionaryController extends Controller
      */
     public function destroy(Dictionary $dictionary)
     {
-        $words = Word::where('dictionary_id', $dictionary->id)
-            ->with('contexts')
-            ->get();
-
-        foreach ($words as $word) {
-            $word->contexts()->delete();
-        }
-
-        Word::where('dictionary_id', $dictionary->id)
-            ->delete();
-
-        $dictionary->delete();
+        DictionaryDestroyService::destroyDictionaryWithRelations($dictionary);
 
         return redirect(route('dictionaries.index'));
     }
