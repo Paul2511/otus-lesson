@@ -10,7 +10,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Casts\Phone;
 use Illuminate\Database\Eloquent\Builder;
-
+use Watson\Rememberable\Rememberable;
+use App\Events\User\UserUpdated;
 /**
  * App\Models\User
  *
@@ -53,6 +54,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|User whereTwoFactorRecoveryCodes($value)
  * @method static Builder|User whereTwoFactorSecret($value)
  * @method static Builder|User whereUpdatedAt($value)
+ * @method static Builder|User remember($seconds, $key=null)
+ * @method static Builder|User flushCache($key)
  * @mixin \Eloquent
  *
  * @method static Builder|User          active()
@@ -75,6 +78,8 @@ class User extends Authenticatable implements JWTSubject
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use Rememberable;
+
     const ROLE_CLIENT = 'client';
     const ROLE_SPEC = 'spec';
     const ROLE_MANAGER = 'manager';
@@ -82,6 +87,8 @@ class User extends Authenticatable implements JWTSubject
 
     const STATUS_ACTIVE = 10;
     const STATUS_NOT_ACTIVE = 20;
+
+    public static $modelName = 'user';
 
     protected $fillable = [
         'email', 'password', 'role', 'status'
@@ -106,6 +113,12 @@ class User extends Authenticatable implements JWTSubject
 
     protected $appends = [
         'phoneFormat'
+    ];
+
+    protected $rememberCachePrefix = 'users';
+
+    protected $dispatchesEvents = [
+        'updated'=>UserUpdated::class
     ];
 
     /**

@@ -35,7 +35,7 @@ class PetService extends BaseService
 
     public function getUserPets(int $userId): array
     {
-        $pets = $this->petRepository->getPets($userId);
+        $pets = $this->petRepository->getPets($userId, true);
         $result = $pets->map(function (Pet $pet){
             return $this->petLabelsHelper->toArray($pet);
         });

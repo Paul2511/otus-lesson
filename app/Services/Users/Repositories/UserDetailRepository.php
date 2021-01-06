@@ -3,13 +3,16 @@
 
 namespace App\Services\Users\Repositories;
 
+use App\Helpers\CacheHelper;
 use App\Models\UserDetail;
-
 class UserDetailRepository
 {
-    public function findUserDetail(int $id): UserDetail
+
+    public function findUserDetailByUserId(int $userId, ?bool $fromCache = false): UserDetail
     {
-        return $this->_model = UserDetail::findOrFail($id);
+        return $fromCache ?
+            CacheHelper::remember(UserDetail::query(), UserDetail::$modelName, $userId)->where('user_id', $userId)->firstOrFail() :
+            UserDetail::whereUserId($userId)->firstOrFail();
     }
 
     public function setUserDetail(UserDetail $userDetail, array $data): bool

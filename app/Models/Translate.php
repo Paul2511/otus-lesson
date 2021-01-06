@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Watson\Rememberable\Rememberable;
+use App\Services\Cache\CacheHelper;
+
 /**
  * App\Models\Translate
  *
@@ -27,6 +30,10 @@ use Illuminate\Database\Eloquent\Builder;
 class Translate extends BaseModel
 {
     use HasFactory;
+
+    use Rememberable;
+
+    protected $rememberCachePrefix = 'translate';
 
     public $timestamps = false;
 

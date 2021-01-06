@@ -20,6 +20,7 @@ return [
 
     'default' => env('CACHE_DRIVER', 'file'),
 
+
     /*
     |--------------------------------------------------------------------------
     | Cache Stores
@@ -100,5 +101,15 @@ return [
     */
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
+
+    //Включение/выключение кэша
+    'enabled' => true,
+
+    //TTL в секундах для разных моделей
+    'ttl' => [
+        \App\Models\User::$modelName=>600,
+        \App\Models\UserDetail::$modelName=>600,
+        \App\Models\Pet::$modelName=>600
+    ]
 
 ];

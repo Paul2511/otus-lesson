@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Events\Pet\PetDeleted;
+use App\Events\Pet\PetUpdated;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use App\Casts\PetPhotoCast;
+use Watson\Rememberable\Rememberable;
 
 /**
  * App\Models\Pet
@@ -33,6 +36,8 @@ use App\Casts\PetPhotoCast;
  * @method static Builder|Pet wherePhoto($value)
  * @method static Builder|Pet whereSex($value)
  * @method static Builder|Pet whereUpdatedAt($value)
+ * @method static Builder|Pet remember($seconds, $key=null)
+ * @method static Builder|Pet flushCache($key)
  * @mixin \Eloquent
  *
  * @property-read Collection|User $client
@@ -41,10 +46,12 @@ use App\Casts\PetPhotoCast;
 class Pet extends BaseModel
 {
     use HasFactory;
+    use Rememberable;
 
     const SEX_MALE = 'male';
     const SEX_FEMALE = 'female';
 
+    protected $rememberCachePrefix = 'pets';
     public $commentType = 'pet';
 
     protected $fillable = [
@@ -62,6 +69,13 @@ class Pet extends BaseModel
 
     protected $appends = [
         'petTypeTitle', 'petTypes'
+    ];
+
+    public static $modelName = 'pet';
+
+    protected $dispatchesEvents = [
+        'updated'=>PetUpdated::class,
+        'deleted'=>PetDeleted::class
     ];
 
     public function client()

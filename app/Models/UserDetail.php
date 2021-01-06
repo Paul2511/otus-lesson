@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Helpers\UtilsHelper;
-use App\Services\Users\Helpers\UserLabelsHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use App\Casts\AvatarCast;
+use Watson\Rememberable\Rememberable;
+use App\Events\UserDetail\UserDetailUpdated;
 
 /**
  * App\Models\UserDetail
@@ -35,6 +35,8 @@ use App\Casts\AvatarCast;
  * @method static Builder|UserDetail whereSpecializationId($value)
  * @method static Builder|UserDetail whereUpdatedAt($value)
  * @method static Builder|UserDetail whereUserId($value)
+ * @method static Builder|UserDetail remember($seconds, $key=null)
+ * @method static Builder|UserDetail flushCache($key)
  * @mixin \Eloquent
  *
  * @method static Builder|UserDetail        clientTarget()
@@ -45,6 +47,7 @@ use App\Casts\AvatarCast;
 class UserDetail extends BaseModel
 {
     use HasFactory;
+    use Rememberable;
 
     const CLASSIFIER_CLIENT_TARGET = 'client_target';
     const CLASSIFIER_CLIENT_SPAM = 'client_spam';
@@ -55,8 +58,11 @@ class UserDetail extends BaseModel
     const CLASSIFIER_SPEC_ALLOWED = 'spec_allowed';
     const CLASSIFIER_SPEC_NOT_ALLOWED = 'spec_not_allowed';
 
+    protected $rememberCachePrefix = 'userDetails';
 
     public $commentType = 'userDetail';
+
+    public static $modelName = 'userDetail';
 
     protected $fillable = [
         'lastname', 'firstname', 'middlename', 'classifier', 'specialization_id', 'avatar'
@@ -71,10 +77,9 @@ class UserDetail extends BaseModel
         'avatar' => AvatarCast::class
     ];
 
-
-    /*protected $appends = [
-        'fio', 'shortFio', 'displayName'
-    ];*/
+    protected $dispatchesEvents = [
+        'updated'=>UserDetailUpdated::class
+    ];
 
     public function user()
     {

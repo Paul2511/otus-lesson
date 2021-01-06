@@ -4,19 +4,23 @@
 namespace App\Services\Users\Repositories;
 
 use App\Models\User;
-
+use App\Helpers\CacheHelper;
 class UserRepository
 {
-    public function findUser(int $id): User
+
+    public function findUser(int $userId, ?bool $fromCache=false): User
     {
-        return User::findOrFail($id);
+        return $fromCache ?
+            CacheHelper::remember(User::query(), User::$modelName, $userId)->findOrFail($userId) :
+            User::findOrFail($userId);
     }
 
 
-    public function findUserWithDetail(int $id): User
+    public function findUserWithDetail(int $userId): User
     {
-        return User::whereId($id)->with('userDetail')->firstOrFail();
+        return User::whereId($userId)->with('userDetail')->firstOrFail();
     }
+
 
     public function setUser(User $user, array $data): bool
     {
