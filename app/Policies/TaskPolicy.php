@@ -34,7 +34,7 @@ class TaskPolicy
         foreach($task->users as $user){
             $arrayUsers[] = $user->id;
         }
-        return in_array($user->id, $arrayUsers) || $user->id == $task->user_id || $user->role == 'admin';
+        return in_array($user->id, $arrayUsers) || $user->id == $task->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -57,7 +57,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        return $user->id == $task->user_id || $user->role == 'admin';
+        return $user->id == $task->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -69,7 +69,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        return $user->id == $task->user_id || $user->role == 'admin';
+        return $user->id == $task->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -81,7 +81,7 @@ class TaskPolicy
      */
     public function restore(User $user, Task $task)
     {
-        return $user->id == $task->user_id || $user->role == 'admin';
+        return $user->id == $task->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -93,6 +93,6 @@ class TaskPolicy
      */
     public function forceDelete(User $user, Task $task)
     {
-        return $user->id == $task->user_id || $user->role == 'admin';
+        return $user->id == $task->user_id || $user->role == User::ADMIN;
     }
 }

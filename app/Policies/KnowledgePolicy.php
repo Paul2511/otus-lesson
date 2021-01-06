@@ -18,7 +18,7 @@ class KnowledgePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role == 'developer' || $user->role == 'admin';
+        return $user->role == 'developer' || $user->role == User::ADMIN;
     }
 
     /**
@@ -30,7 +30,7 @@ class KnowledgePolicy
      */
     public function view(User $user, Knowledge $knowledge)
     {
-        return $user->role == 'developer' || $user->role == 'admin';
+        return $user->role == User::DEVELOPER || $user->role == User::ADMIN;
     }
 
     /**
@@ -41,7 +41,7 @@ class KnowledgePolicy
      */
     public function create(User $user)
     {
-        return $user->role == 'developer' || $user->role == 'admin';
+        return $user->role == User::DEVELOPER || $user->role == User::ADMIN;
     }
 
     /**
@@ -53,7 +53,7 @@ class KnowledgePolicy
      */
     public function update(User $user, Knowledge $knowledge)
     {
-        return $user->id == $knowledge->user_id || $user->role == 'admin';
+        return $user->id == $knowledge->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -65,7 +65,7 @@ class KnowledgePolicy
      */
     public function delete(User $user, Knowledge $knowledge)
     {
-        return $user->id == $knowledge->user_id || $user->role == 'admin';
+        return $user->id == $knowledge->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -77,7 +77,7 @@ class KnowledgePolicy
      */
     public function restore(User $user, Knowledge $knowledge)
     {
-        return $user->id == $knowledge->user_id || $user->role == 'admin';
+        return $user->id == $knowledge->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -89,6 +89,6 @@ class KnowledgePolicy
      */
     public function forceDelete(User $user, Knowledge $knowledge)
     {
-        return $user->id == $knowledge->user_id || $user->role == 'admin';
+        return $user->id == $knowledge->user_id || $user->role == User::ADMIN;
     }
 }

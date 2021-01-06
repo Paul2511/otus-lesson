@@ -18,7 +18,7 @@ class ClientPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role == 'manager' || $user->role == 'admin';
+        return $user->role == User::MANAGER || $user->role == User::ADMIN;
     }
 
     /**
@@ -30,7 +30,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        return $user->role == 'manager' || $user->role == 'admin';
+        return $user->role == User::MANAGER || $user->role == User::ADMIN;
     }
 
     /**
@@ -41,7 +41,7 @@ class ClientPolicy
      */
     public function create(User $user)
     {
-        return $user->role == 'manager' || $user->role == 'admin';
+        return $user->role == User::MANAGER || $user->role == User::ADMIN;
     }
 
     /**
@@ -53,7 +53,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
-        return $user->id == $client->user_id || $user->role == 'admin';
+        return $user->id == $client->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -65,7 +65,7 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client)
     {
-        return $user->id == $client->user_id || $user->role == 'admin';
+        return $user->id == $client->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -77,7 +77,7 @@ class ClientPolicy
      */
     public function restore(User $user, Client $client)
     {
-        return $user->id == $client->user_id || $user->role == 'admin';
+        return $user->id == $client->user_id || $user->role == User::ADMIN;
     }
 
     /**
@@ -89,6 +89,6 @@ class ClientPolicy
      */
     public function forceDelete(User $user, Client $client)
     {
-        return $user->id == $client->user_id || $user->role == 'admin';
+        return $user->id == $client->user_id || $user->role == User::ADMIN;
     }
 }
