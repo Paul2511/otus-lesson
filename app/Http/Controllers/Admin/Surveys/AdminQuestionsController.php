@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Surveys;
 use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Question;
 use App\Models\Survey;
+use App\Policies\Permission;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
 use App\Services\Surveys\QuestionsService;
 use App\Services\Surveys\Repositories\EloquentQuestionRepository;
@@ -15,7 +16,6 @@ use View as ViewFacade;
 
 class AdminQuestionsController extends AdminBaseController
 {
-
     private QuestionsService $questionsService;
 
     public function __construct(QuestionsService $questionsService)
@@ -25,6 +25,8 @@ class AdminQuestionsController extends AdminBaseController
 
     public function index(Survey $survey)
     {
+        $this->authorize(Permission::VIEW, $survey);
+
         ViewFacade::share(
             [
                 'survey'    => $survey,
@@ -37,6 +39,8 @@ class AdminQuestionsController extends AdminBaseController
 
     public function create(Survey $survey)
     {
+        $this->authorize(Permission::UPDATE, $survey);
+
         ViewFacade::share(
             [
                 'formOpenOptions' =>
@@ -55,6 +59,8 @@ class AdminQuestionsController extends AdminBaseController
 
     public function store(Request $request, Survey $survey)
     {
+        $this->authorize(Permission::UPDATE, $survey);
+
         $question = $this->questionsService->createFromArray($request->all(), $survey);
 
         return $this->showElementIfCreatedOrGoBack(
@@ -69,6 +75,8 @@ class AdminQuestionsController extends AdminBaseController
     {
         $question = $this->questionsService->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
 
+        $this->authorize(Permission::VIEW, $survey);
+
         ViewFacade::share(
             [
                 'question' => $question,
@@ -82,6 +90,8 @@ class AdminQuestionsController extends AdminBaseController
     public function edit(Survey $survey, int $questionId)
     {
         $question = $this->questionsService->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
+
+        $this->authorize(Permission::UPDATE, $survey);
 
         ViewFacade::share(
             [
@@ -103,12 +113,16 @@ class AdminQuestionsController extends AdminBaseController
     {
         $question = $this->questionsService->updateByIdFromArray($survey, $questionId, $request->all());
 
+        $this->authorize(Permission::UPDATE, $survey);
+
         return redirect(AdminRoutes::questionsEdit($survey, $question));
     }
 
     public function destroy(Survey $survey, int $questionId)
     {
         $question = $this->questionsService->eloquentQuestionRepository->findBySurveyOrFail($survey, $questionId);
+        $this->authorize(Permission::DELETE, $survey);
+
         $this->questionsService->eloquentQuestionRepository->delete($question);
 
         return redirect(AdminRoutes::questionsIndex($survey));

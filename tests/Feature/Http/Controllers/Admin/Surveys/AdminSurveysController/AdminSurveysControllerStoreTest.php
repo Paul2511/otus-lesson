@@ -1,59 +1,77 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Admin\Surveys;
+namespace Tests\Feature\Http\Controllers\Admin\Surveys\AdminSurveysController;
 
-use App\Models\User;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Generators\SurveyGenerator;
+use Tests\Generators\UsersGenerator;
 use Tests\TestCase;
 
 
-class AdminSurveysControllerTest extends TestCase
+class AdminSurveysControllerStoreTest extends TestCase
 {
-    private $url = AdminRoutes::SURVEYS_INDEX;
+    use RefreshDatabase;
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
+
     public function testAsDefaultUser()
     {
-        $response = $this->get(route($this->url));
+        $response = $this->post(
+            AdminRoutes::surveysStore(),
+            SurveyGenerator::generateRaw()
+        );
 
         $response
             ->assertStatus(302)
             ->assertRedirect(route('login'));
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
+    public function testStoreAsDefaultUser()
+    {
+        $surveyData = ['name' => __METHOD__];
+
+        $response = $this
+            ->actingAs(UsersGenerator::generate())
+            ->post(
+                AdminRoutes::surveysStore(),
+                SurveyGenerator::generateRaw($surveyData)
+            );
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('surveys', $surveyData);
+    }
+
     public function testAsAdmin()
     {
-        $response = $this->get(route($this->url));
+        $surveyData = ['name' => __METHOD__];
 
-        // $this->actingAs(User::factory())
-        $response
-            ->assertStatus(302)
-            ->assertRedirect(route('login'));
+        $response = $this
+            ->actingAs(UsersGenerator::generateAdmin())
+            ->post(
+                AdminRoutes::surveysStore(),
+                SurveyGenerator::generateRaw($surveyData)
+            );
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('surveys', $surveyData);
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testAsModerator()
     {
-        $response = $this->get(route($this->url));
+        $surveyData = ['name' => __METHOD__];
 
-        // $this->actingAs(User::factory())
-        $response
-            ->assertStatus(302)
-            ->assertRedirect(route('login'));
+        $response = $this
+            ->actingAs(UsersGenerator::generateModerator())
+            ->post(
+                AdminRoutes::surveysStore(),
+                SurveyGenerator::generateRaw($surveyData)
+            );
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('surveys', $surveyData);
     }
 
 }

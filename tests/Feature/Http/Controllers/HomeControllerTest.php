@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Admin\Surveys\AdminSurveysController;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Services\Routes\Providers\Admin\AdminRoutes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -8,21 +8,27 @@ use Tests\Generators\UsersGenerator;
 use Tests\TestCase;
 
 
-class AdminSurveysControllerIndexTest extends TestCase
+class HomeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
 
     public function testAsDefaultUser()
     {
-        $response = $this->get(AdminRoutes::surveysIndex());
-
-        $response
-            ->assertStatus(302)
-            ->assertRedirect(route('login'));
+        $this
+            ->get(route('home'))
+            ->assertStatus(200);
     }
 
-    public function testAsUser()
+    public function testError()
+    {
+        $this
+            ->actingAs(UsersGenerator::generate())
+            ->get(route('debug.error'))
+            ->assertStatus(500);
+    }
+
+    /*public function testAsUser()
     {
         $response = $this
             ->actingAs(UsersGenerator::generate())
@@ -47,6 +53,6 @@ class AdminSurveysControllerIndexTest extends TestCase
             ->get(AdminRoutes::surveysCreate());
 
         $response->assertStatus(200);
-    }
+    }*/
 
 }

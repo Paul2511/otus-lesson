@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Services\Routes\Providers\Admin\AdminRoutesProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +20,7 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/', function () {
-    return view('pages.welcome');
-})
-    ->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/contacts', function () {
     return view('pages.contacts');
@@ -37,7 +35,7 @@ Route::prefix('debug')
         function () {
             Route::get('error', function () {
                 return 1 / 0;
-            });
+            })->name('error');
 
             Route::get('admin', function () {
                 Auth::user()->role = \App\Models\User::ROLE_ADMIN;
