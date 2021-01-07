@@ -16,4 +16,4 @@ package-lock.json
 _ide_helper.php
 .phpstorm.meta.php
 
-/public/code-coverage-report
+/public/coverage
