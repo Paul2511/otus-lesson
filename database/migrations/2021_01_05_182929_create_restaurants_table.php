@@ -17,7 +17,7 @@ class CreateRestaurantsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name');
-            $table->integer('rating')->default(0);
+            $table->integer('rating')->default(0)->unsigned();
             $table->integer('sort')->default(100);
             $table->integer('count_comments')->default(0);
             $table->longText('description');
