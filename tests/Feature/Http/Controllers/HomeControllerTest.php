@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Services\Routes\Providers\Admin\AdminRoutes;
+use App\Services\Routes\Providers\PublicRoutes\PublicRoutes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Generators\UsersGenerator;
 use Tests\TestCase;
@@ -16,7 +17,7 @@ class HomeControllerTest extends TestCase
     public function testAsDefaultUser()
     {
         $this
-            ->get(route('home'))
+            ->get(PublicRoutes::home())
             ->assertStatus(200);
     }
 

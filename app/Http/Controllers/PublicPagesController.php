@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class PublicPagesController extends Controller
 {
     public function __construct()
     {
@@ -15,4 +15,11 @@ class HomeController extends Controller
     {
         return view('pages.welcome');
     }
+
+    public function contacts()
+    {
+        return view('pages.contacts');
+    }
+
+
 }
