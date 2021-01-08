@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Specialization;
-use App\Models\Translate;
+use Skachinsky\LocaleTranslator\Models\Translate;
 use App\Services\Localise\Locale;
 use Illuminate\Database\Seeder;
 
@@ -33,7 +33,7 @@ class SpecializationsTableSeeder extends Seeder
             foreach (Locale::$availableLocales as $locale) {
                 if (isset($item[$locale])) {
                     Translate::create([
-                        'type'=>Translate::TYPE_SPECIALIZATION,
+                        'type'=>$specialization->getModelName(),
                         'row_id'=>$specialization->id,
                         'locale'=>$locale,
                         'value'=>$item[$locale]

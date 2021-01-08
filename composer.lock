@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aca9808bce5268c08ccf431f02b13a20",
+    "content-hash": "638a1957ac680654fdf1c6de1bea0482",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2671,6 +2671,60 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "skachinsky/locale-translator",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skachinsky/locale-translator.git",
+                "reference": "bba959ec05036b70ed4ad9c59e5a7de8f09f9aa6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/skachinsky/locale-translator/zipball/bba959ec05036b70ed4ad9c59e5a7de8f09f9aa6",
+                "reference": "bba959ec05036b70ed4ad9c59e5a7de8f09f9aa6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0",
+                "php": "^7.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Skachinsky\\LocaleTranslator\\LocaleTranslatorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Skachinsky\\LocaleTranslator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vasily Skachinsky",
+                    "email": "skachinsky@yandex.ru"
+                }
+            ],
+            "description": "Library for Laravel. For tables from the database, the required field is returned based on the current locale.",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "locale",
+                "translate"
+            ],
+            "support": {
+                "issues": "https://github.com/skachinsky/locale-translator/issues",
+                "source": "https://github.com/skachinsky/locale-translator/tree/v0.1.0"
+            },
+            "time": "2021-01-08T10:39:45+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

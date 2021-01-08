@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\PetType;
-use App\Models\Translate;
+use Skachinsky\LocaleTranslator\Models\Translate;
 use Illuminate\Database\Seeder;
 use App\Services\Localise\Locale;
 
@@ -28,7 +28,7 @@ class PetTypesTableSeeder extends Seeder
             foreach (Locale::$availableLocales as $locale) {
                 if (isset($item[$locale])) {
                     Translate::create([
-                        'type'=>Translate::TYPE_PET_TYPE,
+                        'type'=>$petType->getModelName(),
                         'row_id'=>$petType->id,
                         'locale'=>$locale,
                         'value'=>$item[$locale]

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Skachinsky\LocaleTranslator\LocaleTranslator;
 
 /**
  * App\Models\Specialization
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Specialization extends BaseModel
 {
     use HasFactory;
+    use LocaleTranslator;
 
     public $timestamps = false;
 
@@ -35,7 +37,6 @@ class Specialization extends BaseModel
         'title'
     ];
 
-    public $translateType = Translate::TYPE_SPECIALIZATION;
 
     public function userDetails()
     {

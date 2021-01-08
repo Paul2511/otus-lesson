@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Skachinsky\LocaleTranslator\LocaleTranslator;
 /**
  * App\Models\PetType
  *
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 class PetType extends BaseModel
 {
     use HasFactory;
+    use LocaleTranslator;
 
     public $timestamps = false;
 
@@ -34,8 +36,6 @@ class PetType extends BaseModel
     protected $appends = [
         'title'
     ];
-
-    public $translateType = Translate::TYPE_PET_TYPE;
 
     public function pets()
     {
