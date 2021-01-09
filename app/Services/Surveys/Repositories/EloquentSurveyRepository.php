@@ -12,6 +12,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class EloquentSurveyRepository extends EloquentBaseRepository
 {
+    const DEFAULT_CACHE_TIME = 36000;
 
     public function searchForCurrentUser(?int $perPage = null): LengthAwarePaginator
     {
@@ -27,7 +28,7 @@ class EloquentSurveyRepository extends EloquentBaseRepository
 
     public function searchByUserId(int $userId, ?int $perPage = null): LengthAwarePaginator
     {
-        $query = Survey::query();
+        $query = Survey::query()->remember(static::DEFAULT_CACHE_TIME);
 
         $query->where('user_id', '=', $userId);
 
@@ -36,14 +37,14 @@ class EloquentSurveyRepository extends EloquentBaseRepository
 
     public function search(?int $perPage = null): LengthAwarePaginator
     {
-        $query = Survey::query();
+        $query = Survey::query()->remember(static::DEFAULT_CACHE_TIME);
 
         return $this->paginate($query, $perPage);
     }
 
     public function findById(int $id): Survey
     {
-        return Survey::find($id)->get();
+        return Survey::find($id)->remember(static::DEFAULT_CACHE_TIME)->get();
     }
 
     public function store(array $data): Survey
