@@ -71,9 +71,7 @@ class DictionaryController extends Controller
      */
     public function show(Dictionary $dictionary)
     {
-        if (!Gate::allows('show-dictionary', $dictionary)) {
-            abort(404);
-        }
+        Gate::authorize('show-dictionary', $dictionary);
 
         $words = $this->dictionaryGetService->getDictionaryWords($dictionary->id);
 
@@ -114,9 +112,7 @@ class DictionaryController extends Controller
      */
     public function destroy(Dictionary $dictionary)
     {
-        if (!Gate::allows('destroy-dictionary', $dictionary)) {
-            abort(403);
-        }
+        Gate::authorize('destroy-dictionary', $dictionary);
 
         $this->dictionaryDestroyService->destroyDictionaryWithRelations($dictionary);
 

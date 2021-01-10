@@ -60,9 +60,7 @@ class WordController extends Controller
     {
         $dictionary = Dictionary::findOrFail($request->dictionary_id);
 
-        if (!Gate::allows('store-word', $dictionary)) {
-            abort(403);
-        }
+        Gate::authorize('store-word', $dictionary);
 
         // Добавим слово
         $word_id = $this->wordStoreService->store($dictionary->id, $request->value, $request->translation);
@@ -119,9 +117,7 @@ class WordController extends Controller
     {
         $dictionary = Dictionary::findOrFail($word->dictionary_id);
 
-        if (!Gate::allows('destroy-word', $dictionary)) {
-            abort(403);
-        }
+        Gate::authorize('destroy-word', $dictionary);
 
         $this->wordDestroyService->destroyWithRelations($word);
 
