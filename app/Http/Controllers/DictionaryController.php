@@ -25,6 +25,8 @@ class DictionaryController extends Controller
         $this->dictionaryDestroyService = $dictionaryDestroyService;
         $this->dictionaryStoreService = $dictionaryStoreService;
         $this->dictionaryGetService = $dictionaryGetService;
+
+        $this->middleware('auth');
     }
 
     /**

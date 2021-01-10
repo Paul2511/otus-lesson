@@ -24,6 +24,8 @@ class WordController extends Controller
         $this->wordDestroyService = $wordDestroyService;
         $this->wordStoreService = $wordStoreService;
         $this->contextStoreService = $contextStoreService;
+
+        $this->middleware('auth');
     }
 
     /**
