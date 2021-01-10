@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dictionary;
-use App\Models\Word;
 use App\Services\Dictionaries\DictionaryDestroyService;
 use App\Services\Dictionaries\DictionaryGetService;
 use App\Services\Dictionaries\DictionaryStoreService;
 use App\Services\Dictionaries\Providers\Routes;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class DictionaryController extends Controller
 {
@@ -72,6 +71,10 @@ class DictionaryController extends Controller
      */
     public function show(Dictionary $dictionary)
     {
+        if (!Gate::allows('show-dictionary', $dictionary)) {
+            abort(404);
+        }
+
         $words = $this->dictionaryGetService->getDictionaryWords($dictionary->id);
 
         return view('dictionary')->with([
@@ -111,6 +114,10 @@ class DictionaryController extends Controller
      */
     public function destroy(Dictionary $dictionary)
     {
+        if (!Gate::allows('destroy-dictionary', $dictionary)) {
+            abort(403);
+        }
+
         $this->dictionaryDestroyService->destroyDictionaryWithRelations($dictionary);
 
         return redirect(route(Routes::DICTIONARIES_INDEX));

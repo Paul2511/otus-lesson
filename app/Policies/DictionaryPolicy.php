@@ -9,7 +9,7 @@ use App\Models\User;
 
 class DictionaryPolicy
 {
-    public function showDictionary(User $user, Dictionary $dictionary)
+    public function isOwnDictionary(User $user, Dictionary $dictionary)
     {
         return $user->id === $dictionary->user_id;
     }

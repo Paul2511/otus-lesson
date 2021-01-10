@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dictionary;
 use App\Models\Word;
 use App\Services\Contexts\ContextStoreService;
 use App\Services\Dictionaries\Providers\Routes;
 use App\Services\Words\WordDestroyService;
 use App\Services\Words\WordStoreService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class WordController extends Controller
 {
@@ -56,15 +58,21 @@ class WordController extends Controller
      */
     public function store(Request $request)
     {
+        $dictionary = Dictionary::findOrFail($request->dictionary_id);
+
+        if (!Gate::allows('store-word', $dictionary)) {
+            abort(403);
+        }
+
         // Добавим слово
-        $word_id = $this->wordStoreService->store($request->dictionary_id, $request->value, $request->translation);
+        $word_id = $this->wordStoreService->store($dictionary->id, $request->value, $request->translation);
 
         // Добавим контекст использования слова
         if ($word_id) {
             $this->contextStoreService->store($word_id, '', $request->context, '');
         }
 
-        return redirect(route(Routes::DICTIONARIES_SHOW, [$request->dictionary_id]));
+        return redirect(route(Routes::DICTIONARIES_SHOW, [$dictionary->id]));
     }
 
     /**
@@ -109,10 +117,14 @@ class WordController extends Controller
      */
     public function destroy(Word $word)
     {
-        $dictionary_id = $word->dictionary_id;
+        $dictionary = Dictionary::findOrFail($word->dictionary_id);
+
+        if (!Gate::allows('destroy-word', $dictionary)) {
+            abort(403);
+        }
 
         $this->wordDestroyService->destroyWithRelations($word);
 
-        return redirect(route(Routes::DICTIONARIES_SHOW, [$dictionary_id]));
+        return redirect(route(Routes::DICTIONARIES_SHOW, [$dictionary->id]));
     }
 }

@@ -26,6 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('show-dictionary', [DictionaryPolicy::class, 'showDictionary']);
+        Gate::define('show-dictionary', [DictionaryPolicy::class, 'isOwnDictionary']);
+        Gate::define('destroy-dictionary', [DictionaryPolicy::class, 'isOwnDictionary']);
+
+        Gate::define('store-word', [DictionaryPolicy::class, 'isOwnDictionary']);
+        Gate::define('destroy-word', [DictionaryPolicy::class, 'isOwnDictionary']);
     }
 }

@@ -7,7 +7,6 @@ namespace App\Services\Dictionaries;
 use App\Models\Dictionary;
 use App\Models\Word;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class DictionaryGetService
 {
@@ -28,12 +27,6 @@ class DictionaryGetService
      */
     public function getDictionaryWords(int $dictionary_id)
     {
-        $dictionary = Dictionary::findOrFail($dictionary_id);
-
-        if (! Gate::allows('show-dictionary', $dictionary)) {
-            abort(404);
-        }
-
         return Word::where('dictionary_id', $dictionary_id)
             ->orderByDesc('id')
             ->with('contexts')
