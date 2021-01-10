@@ -1,22 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">{{ __('Домой') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ __('О инструменте') }}</li>
-            </ol>
-        </nav>
-    </div>
-
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">{{ __('Инструмент запоминания иностранных слов') }}</h1>
             <p class="lead text-muted">Поможет вам выучить больше новых слов слова</p>
             <p>
-                <a href="#" class="btn btn-primary my-2">{{ __('Начать тренировку') }}</a>
-                <a href="#" class="btn btn-secondary my-2">{{ __('Добавить слова') }}</a>
+                <a href="{{ route('home') }}" class="btn btn-primary my-2">{{ __('Начать тренировку') }}</a>
+                <a href="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX) }}" class="btn btn-secondary my-2">{{ __('Добавить слова') }}</a>
             </p>
         </div>
     </section>
