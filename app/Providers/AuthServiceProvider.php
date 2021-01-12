@@ -25,7 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $this->registerGates();
+    }
 
+    public function registerGates() {
         Gate::define('show-dictionary', [DictionaryPolicy::class, 'isOwnDictionary']);
         Gate::define('destroy-dictionary', [DictionaryPolicy::class, 'isOwnDictionary']);
 
