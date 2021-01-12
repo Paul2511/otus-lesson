@@ -41,6 +41,10 @@ use Illuminate\Notifications\Notifiable;
  * @property-read \App\Models\Region|null $region
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Advert[] $favorites
  * @property-read int|null $favorites_count
+ * @property \App\Models\Role $role
+ * @property int $region_id
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRegionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  */
 class User extends Authenticatable
 {
@@ -58,7 +62,7 @@ class User extends Authenticatable
         'password',
         'last_login_at',
         'region_id',
-        'role_id',
+        'role',
     ];
 
     /**
@@ -83,7 +87,7 @@ class User extends Authenticatable
 
     public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role');
     }
 
 
@@ -99,6 +103,6 @@ class User extends Authenticatable
 
     public function favorites(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id')->using(AdvertFavourite::class);;
+        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id')->using(AdvertFavourite::class);
     }
 }

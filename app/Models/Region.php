@@ -28,6 +28,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Advert[] $adverts
+ * @property-read int|null $adverts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Region[] $city
+ * @property-read int|null $city_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read int|null $users_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Region[] $children
+ * @property-read int|null $children_count
  */
 class Region extends Model
 {
@@ -50,7 +58,7 @@ class Region extends Model
     }
 
 
-    public function city(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Region::class, 'parent_id');
     }

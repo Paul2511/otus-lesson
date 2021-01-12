@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
             'last_login_at' => now(),
-            'role_id' => Role::ROLE_USER,
+            'role' => Role::ROLE_USER,
             'region_id' => function () {
                 return DB::table('regions')
                         ->whereNotNull('parent_id')

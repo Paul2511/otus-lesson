@@ -21,7 +21,7 @@ class CreateAdvertsTable extends Migration
             $table->string('price');
             $table->string('address');
             $table->integer('status')->default(\App\Models\Advert::STATUS_ACTIVE);
-            $table->integer('is_premium')->default(\App\Models\Advert::STATUS_DEFAULT);
+            $table->integer('is_premium')->default(\App\Models\Advert::PAYMENT_DEFAULT);
             $table->unsignedBigInteger('region_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');

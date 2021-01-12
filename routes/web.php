@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /*Route::get('/', function () {
-    dd(\App\Models\Region::whereNotNull('parent_id')->pluck('id')->toArray());
+    dd(\App\Models\User::whereRole(\App\Models\Role::ROLE_ADMIN)->first());
 });*/
 Route::view('/', 'pages.main.index')->name('page.main');
 Route::view('/about', 'pages.about.index')->name('page.about');

@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::factory()->create([
-            'role_id' => Role::ROLE_ADMIN,
+            'role' => Role::ROLE_ADMIN,
             'email' => 'admin@admin.admin',
             'password' => Hash::make('admin'),
             'region_id' => 4,

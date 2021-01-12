@@ -17,7 +17,7 @@ class AdvertsFavouritesTableSeeder extends Seeder
     public function run()
     {
         for ($i = 1; $i <= 20; $i++) {
-            DB::table('advert_favourites')->insert([
+            DB::table('advert_favorite_user')->insert([
                 'user_id' => DB::table('users')
                     ->inRandomOrder()
                     ->first()->id
