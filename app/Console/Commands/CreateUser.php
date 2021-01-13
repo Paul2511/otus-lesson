@@ -1,8 +1,10 @@
 <?php
+
 /** @noinspection PhpMissingFieldTypeInspection */
 
 namespace App\Console\Commands;
 
+use App\Services\Users\DTO\CreateUserDTO;
 use App\Services\Users\UserCreateService;
 use Illuminate\Console\Command;
 
@@ -27,9 +29,9 @@ class CreateUser extends Command
     private string $userName;
     private string $userEmail;
     private string $userPassword;
-    private bool   $createDummy     = false;
-    private bool   $userIsAdmin     = false;
-    private bool   $userIsModerator = false;
+    private bool $createDummy = false;
+    private bool $userIsAdmin = false;
+    private bool $userIsModerator = false;
 
     public function getUserCreateService(): UserCreateService
     {
@@ -46,11 +48,15 @@ class CreateUser extends Command
         $this->handleUserInput();
         $this->getUserCreateService()
             ->handle(
-                $this->userName,
-                $this->userEmail,
-                $this->userPassword,
-                $this->userIsAdmin,
-                $this->userIsModerator,
+                CreateUserDTO::initFromArray(
+                    [
+                        "name" => $this->userName,
+                        "email" => $this->userEmail,
+                        "password" => $this->userPassword,
+                        "isAdmin" => $this->userIsAdmin,
+                        "isModerator" => $this->userIsModerator,
+                    ]
+                ),
                 $this->createDummy,
             );
     }
