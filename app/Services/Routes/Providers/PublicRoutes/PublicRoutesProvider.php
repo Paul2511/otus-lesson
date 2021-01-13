@@ -18,9 +18,11 @@ class PublicRoutesProvider
 
         Route::middleware(Localization::class)
             ->prefix('{locale}/')
-            ->group(function () {
-                $this->registerLocalizedRoutes();
-            });
+            ->group(
+                function () {
+                    $this->registerLocalizedRoutes();
+                }
+            );
     }
 
     public function defaultRoute()
