@@ -26,4 +26,9 @@ class UserRepository
     {
         return $user->fill($data)->save();
     }
+
+    public function createUser(array $data): User
+    {
+        return User::create($data);
+    }
 }

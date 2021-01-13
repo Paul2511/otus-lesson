@@ -54,6 +54,14 @@ return [
             'days' => 14,
         ],
 
+        'registration' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/registration.log'),
+            'level' => env('info'),
+            'days' => 14,
+        ],
+
+
         'auth' => [
             'driver' => 'daily',
             'path' => storage_path('logs/auth.log'),
@@ -114,6 +122,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'maillog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/mail.log'),
+            'level' => env('info'),
+            'days' => 14,
+        ]
     ],
 
 ];

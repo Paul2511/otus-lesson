@@ -33,12 +33,13 @@ class UserFactory extends Factory
 
         return [
             //'name' => $this->faker->name,
-            'name' => '-', //В нашей системе ФИО распологается в UserDetail
+            'name' => User::EMPTY_NAME, //В нашей системе ФИО распологается в UserDetail
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => $hash,
             'remember_token' => Str::random(10),
-            'phone' => $this->faker->phoneNumber
+            'phone' => $this->faker->phoneNumber,
+            'locale' => \App::currentLocale()
         ];
     }
 }

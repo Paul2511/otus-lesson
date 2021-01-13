@@ -3,32 +3,28 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UserRegisterRequest;
+use App\Models\User;
 use \Illuminate\Http\JsonResponse;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Services\Auth\AuthService;
+use App\Services\Users\UserService;
 
 class AuthController extends Controller
 {
-    /**
-     * @var AuthService
-     */
-    private $authService;
 
-    public function __construct(
-        AuthService $authService
-    )
+    public function __construct()
     {
         $this->middleware('auth.jwt:api', ['except' => ['login', 'registration']]);
-        $this->authService = $authService;
     }
 
     /**
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function login(AuthLoginRequest $request): JsonResponse
+    public function login(AuthLoginRequest $request, AuthService $authService): JsonResponse
     {
         $credentials = $request->only('email', 'password');
-        $result = $this->authService->login($credentials);
+        $result = $authService->login($credentials);
         return response()->json($result);
     }
 
@@ -36,6 +32,14 @@ class AuthController extends Controller
     {
         $newToken = auth()->refresh();
         return response()->json($newToken);
+    }
+
+    public function registration(UserRegisterRequest $request, UserService $userService)
+    {
+        $data = $request->getFromData();
+        $data['role'] = User::ROLE_CLIENT; //жестко зашиваем в клиентском контроллере
+        $result = $userService->registerUser($data);
+        return response()->json($result);
     }
 
 }

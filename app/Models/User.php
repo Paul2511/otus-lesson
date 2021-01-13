@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,6 +13,7 @@ use App\Casts\Phone;
 use Illuminate\Database\Eloquent\Builder;
 use Watson\Rememberable\Rememberable;
 use App\Events\User\UserUpdated;
+use App\Events\User\UserCreated;
 /**
  * App\Models\User
  *
@@ -28,6 +30,7 @@ use App\Events\User\UserUpdated;
  * @property int $role
  * @property int $status
  * @property string|null $phone
+ * @property string $locale
  * @property-read \App\Models\Team $currentTeam
  * @property-read string $profile_photo_url
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
@@ -73,7 +76,7 @@ use App\Events\User\UserUpdated;
  * @property-read Collection|Request[]  $specRequests
  * @property-read Collection|Comment[]  $commentsByUser
  */
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, HasLocalePreference
 {
     use HasApiTokens;
     use HasFactory;
@@ -88,11 +91,21 @@ class User extends Authenticatable implements JWTSubject
     const STATUS_ACTIVE = 10;
     const STATUS_NOT_ACTIVE = 20;
 
+    const EMPTY_NAME = '-';
+
     public static $modelName = 'user';
 
+    /** @var string */
+    public $clientPassword;
+
     protected $fillable = [
-        'email', 'password', 'role', 'status'
+        'email', 'password', 'role', 'status', 'locale'
     ];
+
+    public function preferredLocale()
+    {
+        return $this->locale;
+    }
 
     protected $hidden = [
         'password',
@@ -118,6 +131,7 @@ class User extends Authenticatable implements JWTSubject
     protected $rememberCachePrefix = 'users';
 
     protected $dispatchesEvents = [
+        'created'=>UserCreated::class,
         'updated'=>UserUpdated::class
     ];
 

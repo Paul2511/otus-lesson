@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Cache;
+namespace App\Listeners\UserDetail;
 
 use App\Events\UserDetail\UserDetailEvent;
 use App\Helpers\CacheHelper;

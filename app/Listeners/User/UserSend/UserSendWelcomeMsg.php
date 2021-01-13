@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Listeners\Cache;
+namespace App\Listeners\User\UserSend;
 
 use App\Events\User\UserEvent;
-use App\Helpers\CacheHelper;
-use App\Models\User;
-
-class UserCacheClear
+use App\Notifications\User\UserWelcome;
+class UserSendWelcomeMsg
 {
     /**
      * Create the event listener.
@@ -26,7 +24,6 @@ class UserCacheClear
      */
     public function handle(UserEvent $event)
     {
-        $userId = $event->getUser()->id;
-        User::flushCache(CacheHelper::getKey(User::$modelName, $userId));
+        //
     }
 }

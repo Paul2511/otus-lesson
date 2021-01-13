@@ -65,7 +65,7 @@ class UserDetail extends BaseModel
     public static $modelName = 'userDetail';
 
     protected $fillable = [
-        'lastname', 'firstname', 'middlename', 'classifier', 'specialization_id', 'avatar'
+        'user_id', 'lastname', 'firstname', 'middlename', 'classifier', 'specialization_id', 'avatar'
     ];
 
     protected $hidden = [

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Cache;
+namespace App\Listeners\Pet;
 
 use App\Events\Pet\PetEvent;
 use App\Helpers\CacheHelper;

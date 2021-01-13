@@ -4,14 +4,16 @@ namespace App\Providers;
 
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
-use App\Listeners\Cache\PetCacheClear;
+use App\Events\User\UserCreated;
+use App\Listeners\Pet\PetCacheClear;
+use App\Listeners\User\UserSend\UserSendWelcomeMsg;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\User\UserUpdated;
-use App\Listeners\Cache\UserCacheClear;
+use App\Listeners\User\UserCacheClear;
 use App\Events\UserDetail\UserDetailUpdated;
-use App\Listeners\Cache\UserDetailCacheClear;
+use App\Listeners\UserDetail\UserDetailCacheClear;
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -20,9 +22,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
+        /*Registered::class => [
             SendEmailVerificationNotification::class,
+        ],*/
+
+        UserCreated::class => [
+            UserSendWelcomeMsg::class
         ],
+
         UserUpdated::class => [
             UserCacheClear::class
         ],

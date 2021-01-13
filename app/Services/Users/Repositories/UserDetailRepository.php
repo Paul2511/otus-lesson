@@ -19,4 +19,9 @@ class UserDetailRepository
     {
         return $userDetail->fill($data)->save();
     }
+
+    public function createUserDetail(array $data): UserDetail
+    {
+        return UserDetail::create($data);
+    }
 }
