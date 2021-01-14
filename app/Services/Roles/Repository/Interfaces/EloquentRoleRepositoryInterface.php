@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 interface EloquentRoleRepositoryInterface
 {
+    const DEFAULT_ROLE = 'User';
+
     public function search(): LengthAwarePaginator;
 
     public function findOrFail(int $id): Model;
@@ -18,5 +20,7 @@ interface EloquentRoleRepositoryInterface
     public function update(int $id, array $data): bool;
 
     public function delete(int $id): bool;
+
+    public function getDefaultRole(): Model;
 
 }

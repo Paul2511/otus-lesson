@@ -27,6 +27,7 @@ use Carbon\Carbon;
  * @method static paginate()
  * @method static findOrFail(int $id)
  * @method static create(array $data)
+ * @method static where(string $string, string $title)
  * @property-read Collection|Role[] $permissions
  * @property-read int|null $permissions_count
  */
