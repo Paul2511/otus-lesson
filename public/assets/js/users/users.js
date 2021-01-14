@@ -32,7 +32,7 @@ $(document).ready(function() {
             beforeSend: function (xhr) { // Add this line
                 xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
             },  // Add this line
-            url: 'users/active/' + $(this).data('user'),
+            url: 'users/activate/' + $(this).data('user'),
             data: {is_active: 0},
             dataType: 'json',
             success: function (respond) {
@@ -62,7 +62,7 @@ $(document).ready(function() {
             beforeSend: function (xhr) { // Add this line
                 xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
             },  // Add this line
-            url: 'users/active/' + $(this).data('user'),
+            url: 'users/activate/' + $(this).data('user'),
             data: {is_active: 1},
             dataType: 'json',
             success: function (respond) {

@@ -47,21 +47,21 @@
 
     <!--  BEGIN CONTENT PART  -->
     <div id="content" class="main-content">
-        <div class="container-fluid">
+        <div class="container-fluid" style="text-align: center;">
             <div class="row">
-                <div class="col-md-4 mr-auto mt-5 text-md-left text-center">
-                    <a href="{{ route('home')}}" class="ml-md-5">
-                        <img alt="image-404" src="{{asset('storage/img/90x90.png')}}" class="theme-logo">
+                <div class="col-md-12 mr-auto mt-5 text-md-left text-center" style="text-align: center!important; margin-top: 6rem!important;">
+                    <a href="/" class="ml-md-5" style="margin-left: 0!important;">
+                        <img alt="image-404" src="{{asset('storage/img/90x90.png')}}" class="theme-logo" style="width: 160px;height: 160px; ">
                     </a>
                 </div>
             </div>
         </div>
-        <div class="container-fluid error-content">
+        <div class="container-fluid error-content" style="text-align: center!important;">
             <div class="">
-                <h1 class="error-number">404</h1>
-                <p class="mini-text">Ooops!</p>
-                <p class="error-text mb-4 mt-1">The page you requested was not found!</p>
-                <a href="{{ route('home')}}" class="btn btn-primary mt-5">Go Back</a>
+                <h1 class="error-number" style="font-size: 3.5rem !important;padding-top: 44px;">404</h1>
+                <p class="mini-text" style="font-size: 1.875rem !important;">@lang('errors.Ooops')</p>
+                <p class="error-text mb-4 mt-1" style="font-size: 1.875rem !important;">@lang('errors.Not_found')</p>
+                <a href="/" class="btn btn-primary mt-5">@lang('errors.Back')</a>
             </div>
         </div>
     </div>

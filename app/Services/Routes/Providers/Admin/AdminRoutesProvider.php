@@ -21,7 +21,7 @@ final class AdminRoutesProvider
             'middleware' => 'auth'
         ], function () {
             Route::resource('users', AdminUsersController::class);
-            Route::post('users/activate/{id}', [AdminUsersController::class, 'active'])->name( AdminRoutes::ADMIN_USERS_ACTIVATE);
+            Route::post('users/activate/{id}', [AdminUsersController::class, 'activate'])->name( AdminRoutes::ADMIN_USERS_ACTIVATE);
             Route::post('resources', AdminResourcesController::class);
             Route::post('queues', AdminQueuesController::class);
         });

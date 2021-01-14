@@ -103,7 +103,7 @@
             $('#logout').click(function (e) {
                 $.ajax({
                     type: 'POST',
-                    url: '/logout',
+                    url: '{{App\Services\Routes\Providers\Auth\AuthRoutes::AUTH_LOGOUT}}',
                     data: {},
                     dataType: 'json',
                     success: function (respond) {

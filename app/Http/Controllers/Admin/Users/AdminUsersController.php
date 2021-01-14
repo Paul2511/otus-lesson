@@ -9,7 +9,7 @@ use App\Http\Requests\BaseFormRequest;
 use App\Models\User;
 use App\Policies\Permissions;
 use App\Services\Users\UsersService;
-
+use Illuminate\Http\JsonResponse;
 use View;
 
 class AdminUsersController extends AdminBaseController
@@ -51,18 +51,19 @@ class AdminUsersController extends AdminBaseController
     }
 
 
-    public function store(AdminUsersStoreRequest $request)
+    public function store(AdminUsersStoreRequest $request): JsonResponse
     {
-
         $this->authorize(Permissions::CREATE,User::class);
         $user = $this->usersService->createUser($request->getFormCreateData());
         return response()->json($user);
     }
 
 
+
     public function show(User $user)
     {
         $this->authorize(Permissions::VIEW,$user);
+
         $projects = $this->usersService->getUserProjects($user->id);
         View::share([
             'user'=>$user,
@@ -97,7 +98,7 @@ class AdminUsersController extends AdminBaseController
 
     public function update($userId, AdminUsersUpdateRequest $request)
     {
-        $this->authorize(Permissions::UPDATE,$userId);
+        $this->authorize(Permissions::UPDATE,$this->usersService->findUser($userId));
         $user = $this->usersService->updateUser($userId, $request->getFormUpdateData());
 
         return  response()->json($user);
@@ -105,7 +106,7 @@ class AdminUsersController extends AdminBaseController
 
     public function activate($userId, BaseFormRequest $request)
     {
-        $this->authorize(Permissions::ACTIVATE,$userId);
+        $this->authorize(Permissions::ACTIVATE,$this->usersService->findUser($userId));
         $user = $this->usersService->activateUser($userId, $request->getFormData());
 
         return  response()->json($user);

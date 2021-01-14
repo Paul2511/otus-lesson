@@ -2,36 +2,46 @@
 
 namespace App\Exceptions;
 
+use App\Http\RouteNames;
+
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Throwable;
+
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array
-     */
+
     protected $dontReport = [
-        //
+
     ];
 
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
-     */
     protected $dontFlash = [
         'password',
         'password_confirmation',
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
-     */
     public function register()
     {
-        //
+//        $this->renderable(function (NotFoundHttpException $e, Request $request) {
+//            return response()->view('errors.404', array(), 404);
+//        });
+//
+//
     }
+
+    public function render($request, $exception)
+    {
+        if ($request->isMethod('get') && $exception instanceof NotFoundHttpException) {
+            return response()->view('errors.404', array(), 404);
+        }
+        return parent::render($request, $exception);
+    }
+
 }

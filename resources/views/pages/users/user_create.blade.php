@@ -41,7 +41,7 @@
         let user_resources = [];
         let user_projects = [];
         {{--let user_id = "{{$user->id}}";--}}
-        let route_update = "{{route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_STORE) }}";
+        let route_store = "{{route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_STORE) }}";
         let location_good = "{{route(App\Services\Routes\Providers\Admin\AdminRoutes::ADMIN_USERS_INDEX) }}";
     </script>
     {{-- Components Block UI --}}

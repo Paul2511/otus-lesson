@@ -14,6 +14,7 @@ use App\Services\Handlers\GetUsersHandler;
 use App\Services\Handlers\ShowUserHandler;
 use App\Services\Handlers\UpdateUserHandler;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class UsersService
@@ -52,7 +53,7 @@ class UsersService
     public function getResourceIds(int $id): array
     {
         $resources = [];
-        $resources_user = $this->showUserHandler->handle($id);
+        $resources_user = $this->findUser($id);
         foreach ($resources_user->resource_user->toArray() as $res)
         {
             $resources[] = $res['resource_id'];
@@ -94,6 +95,14 @@ class UsersService
     public function findUserByEmail(string $email): ?User
     {
         return $this->findUserByEmailHandler->handle($email);
+    }
+
+    /**
+     * @return Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function findUser(string $id)
+    {
+        return $this->showUserHandler->handle($id);
     }
 
     public function checkUserActiveAndPassword(User $user, $password): ?User

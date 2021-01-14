@@ -79,7 +79,7 @@
                                     <div class="field-wrapper text-center keep-logged-in">
                                         <div class="n-chk new-checkbox checkbox-outline-secondary">
                                             <label class="new-control new-checkbox checkbox-outline-secondary">
-                                                <input type="checkbox" class="new-control-input" id="remember" name="remember">
+                                                <input type="checkbox" class="new-control-input" id="remember" name="remember" value=1>
                                                 <span class="new-control-indicator"></span>@lang('auth.keep')
                                             </label>
                                         </div>
@@ -117,16 +117,20 @@
 <!-- END MAIN CONTAINER -->
 <script>
     jQuery(document).ready(function ($) {
+        var route_login = '{{route(\App\Services\Routes\Providers\Auth\AuthRoutes::AUTH_LOGIN)}}';
         $('#login').click(function (e) {
             var email = $('#email').val();
             var password = $('#password').val();
-            var remember = $('#remember').val();
+            var remember =0;
+            if($("#remember").prop('checked')) {
+                remember = 1;
+            }
             $.ajax({
                 type: 'POST',
                 beforeSend: function (xhr) { // Add this line
                     xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
                 },  // Add this line
-                url: '/login',
+                url: route_login,
                 data: {email: email, password: password, remember:remember },
                 dataType: 'json',
                 success: function (respond) {

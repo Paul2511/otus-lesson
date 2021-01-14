@@ -37,7 +37,7 @@ $('#save-changes').click(function (e) {
         beforeSend: function (xhr) { // Add this line
             xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
         },  // Add this line
-        url: route_update,
+        url: route_store,
         data: {full_name: full_name, phone:phone, is_admin:is_admin, password: password, email:email, resources: user_resources, projects: user_projects},
         dataType: 'json',
         success: function (respond) {
