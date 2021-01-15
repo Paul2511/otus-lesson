@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Desk;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Services\Columns\ColumnService;
 
 class DeskController extends Controller

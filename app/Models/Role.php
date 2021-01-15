@@ -35,12 +35,15 @@ class Role extends Model
 {
     use HasFactory;
 
+    const ADMIN_ROLE = 'Admin';
+    const USER_ROLE = 'User';
+
     protected $fillable = [
         'title'
     ];
 
     public function permissions()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Permission::class)->using(PermissionRole::class);
     }
 }
