@@ -21,9 +21,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-    	$users =$this->userService->getUsers();
-        return view("users.index", ['users' => $users]);
+    {    
+        if(\Auth::check()){
+            $this->authorize(User::VIEW_ANY, User::class);
+            $users = $this->userService->getUsers();
+            return view("users.index", ['users' => $users]);
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -33,7 +38,12 @@ class UserController extends Controller
      */
     public function create()
     {
-    	if(!Auth::check()){
+        $authUser = \Auth::user();
+        $role = '';
+        if($authUser != null){
+            $role = $authUser->role;
+        }
+    	if(!\Auth::check() || $role == User::ADMIN){
     		return view("users.create");
     	}
     	return redirect()->back();
@@ -57,7 +67,7 @@ class UserController extends Controller
        	]);
 
         $request->password = Hash::make($request->password);
-        if($request->role != "manager" && $request->role != "developer"){
+        if($request->role != User::MANAGER && $request->role != User::DEVELOPER){
         	throw Exception("invalid role");
     	}
        	// create record and pass in only fields that are fillable
@@ -70,7 +80,10 @@ class UserController extends Controller
             'role',
             'skills'
         ]);
-        $this->userService->createUser($data);
+        $newUser = $this->userService->createUser($data);
+        if(!\Auth::check()){
+            \Auth::loginUsingId($newUser->id);
+        }
         return redirect()->back();
     }
 
@@ -82,8 +95,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    	$user = $this->userService->getUser($id);
-        return view("users.show", ["user" => $user]);
+        if(\Auth::check()){
+            $user = $this->userService->getUser($id);
+            $this->authorize(User::VIEW, $user);
+            return view("users.show", ["user" => $user]);
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -93,9 +111,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-    	$user = $this->userService->getUser($id);
-        return view("users.edit", ["user" => $user]);
+    {   
+        if(\Auth::check()){
+            $authUser = \Auth::user();
+            $user = $this->userService->getUser($id);
+            $this->authorize(User::UPDATE, $user);
+            return view("users.edit", ["user" => $user]);
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -107,24 +131,30 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-    	$this->validate($request, [
-           	'name' => 'required|max:255',
-           	'last_name' => 'required|max:255',
-           	'patronymic' => 'required',
-           	'role' => 'required',
-           	'email' =>'required|unique:users,id,'.$id
-       	]);
-        $data = $request->only([
-            'name',
-            'last_name',
-            'patronymic',
-            'email',
-            'password',
-            'role',
-            'skills'
-        ]);
-        $this->userService->updateUser($data, $id);
-       	return redirect()->route('users.show', ['user' => $id]);
+        if(\Auth::check()){
+        	$this->validate($request, [
+               	'name' => 'required|max:255',
+               	'last_name' => 'required|max:255',
+               	'patronymic' => 'required',
+               	'role' => 'required',
+               	'email' =>'required|unique:users,id,'.$id
+           	]);
+            $data = $request->only([
+                'name',
+                'last_name',
+                'patronymic',
+                'email',
+                'password',
+                'role',
+                'skills'
+            ]);
+            $updatingUser = $this->userService->getUser($id);
+            $this->authorize(User::UPDATE, $updatingUser);
+            $this->userService->updateUser($data, $id);
+           	return redirect()->route('users.show', ['user' => $id]);
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -135,20 +165,35 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-    	$this->userService->deleteUser($id);
-        return redirect()->back();
+        if(Auth::check()){
+            $updatingUser = $this->userService->getUser($id);
+            $this->authorize(User::DELETE, $updatingUser);
+            $this->userService->deleteUser($id);
+            return redirect()->back();
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request)
+    {
     	$credentials = $request->only("email","password");
-    	if(Auth::attempt($credentials)){
+        $credentials["password"] = \Hash::make($credentials["password"]);
+    	if(\Auth::attempt($credentials)){
     		return redirect()->route('users.show', ['user' => Auth::id()]);
     	}
     }
-    public function login(){
-    	if(!Auth::check()){
+
+    public function login()
+    {
+    	if(!\Auth::check()){
     		return view("users.login");
     	}
     	return redirect()->back();
+    }
+
+    public function logout()
+    {
+        \Auth::logout();
     }
 }

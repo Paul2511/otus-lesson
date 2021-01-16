@@ -3,7 +3,7 @@ namespace App\Service\Handlers;
 use App\Models\Todo;
 use App\Repositories\EloquentTodoRepository;
 
-class UpdateTodoHandler implements HandlerInterface
+class UpdateSeveralTodoHandler implements HandlerInterface
 {
 	private $userRepository;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
+use App\Models\{Comment, User};
 use Illuminate\Http\Request;
 use App\Service\CommentService;
 

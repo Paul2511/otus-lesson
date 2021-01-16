@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\{Client, User};
 use Illuminate\Http\Request;
 use App\Service\ClientService;
 
@@ -21,8 +21,13 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = $this->clientService->getClients();
-        return view("clients.index", ["clients" => $clients]);
+        if(\Auth::check()){
+            $this->authorize(User::VIEW_ANY, Client::class);
+            $clients = $this->clientService->getClients();
+            return view("clients.index", ["clients" => $clients]);
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -32,7 +37,12 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view("clients.create");
+        if(\Auth::check()){
+            $this->authorize(User::CREATE, Client::class);
+            return view("clients.create");
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -43,9 +53,14 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service", "user_id"]);
-        $this->clientService->createClient($data);
-        return redirect()->back();
+        if(\Auth::check()){
+            $this->authorize(User::CREATE, Client::class);
+            $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service", "user_id"]);
+            $this->clientService->createClient($data);
+            return redirect()->back(); 
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -56,8 +71,13 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = $this->clientService->getClient($id);
-        return view("clients.show", ["client" => $client]);
+        if(\Auth::check()){
+            $client = $this->clientService->getClient($id);
+            $this->authorize(User::VIEW, $client);
+            return view("clients.show", ["client" => $client]);
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -68,8 +88,13 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $client = $this->clientService->getClient($id); 
-        return view("clients.edit", ['client' => $client]);
+        if(\Auth::check()){
+            $client = $this->clientService->getClient($id); 
+            $this->authorize(User::UPDATE, $client);
+            return view("clients.edit", ['client' => $client]);
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -81,9 +106,13 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service", "user_id"]);
-        $this->clientService->updateClient($data, $id);
-        return redirect()->back();
+        if(\Auth::check()){
+            $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service", "user_id"]);
+            $updatingClient = $this->clientService->getClient($id);
+            $this->authorize(User::UPDATE, $updatingClient);
+            $this->clientService->updateClient($data, $id);
+            return redirect()->back();
+        }
     }
 
     /**
@@ -94,7 +123,13 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $this->clientService->deleteClient($id);
-        return redirect()->back();
+        if(Auth::check()){
+            $updatingClient = $this->clientService->getClient($id);
+            $this->authorize(User::DELETE, $updatingKnowledge);
+            $this->clientService->deleteClient($id);
+            return redirect()->back();
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 }

@@ -22,6 +22,7 @@ Route::get('/contacts', function () {
 Route::resource("/user", UserController::class);
 Route::get('/login', [UserController::class, "login"])->name('user.login');
 Route::post('/login', [UserController::class, "authenticate"])->name('user.auth');
+Route::get("/logout", [UserController::class, "logout"])->name('user.logout');
 Route::resource("/task", TaskController::class);
 Route::post("/todo", [TodoController::class, "store"])->name('todo.store');
 Route::put("/todo", [TodoController::class, "update"])->name('todo.update');

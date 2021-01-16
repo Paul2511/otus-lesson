@@ -7,10 +7,12 @@ Knowledges
 	<div class="container">
 		<div class="row">
 			@foreach($knowls as $knowl)
-		    <div class="col-sm">
-		      <a href="{{route('knowledge.show', ['knowledge' => $knowl->id])}}">{{$knowl->name}}</a>
-		    </div>
-		    <div class="w-100"></div>
+				@can("view", $knowl)
+				    <div class="col-sm">
+				      <a href="{{route('knowledge.show', ['knowledge' => $knowl->id])}}">{{$knowl->name}}</a>
+				    </div>
+				    <div class="w-100"></div>
+			    @endcan
 		    @endforeach
 	 	 </div>
 	</div>

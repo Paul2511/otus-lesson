@@ -11,6 +11,15 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    const VIEW_ANY = 'viewAny';
+    const VIEW = 'view';
+    const CREATE = 'create';
+    const UPDATE = 'update';
+    const DELETE = 'delete';
+    const ADMIN = 'admin';
+    const MANAGER = 'manager';
+    const DEVELOPER = 'developer';
+
     /**
      * The attributes that are mass assignable.
      *

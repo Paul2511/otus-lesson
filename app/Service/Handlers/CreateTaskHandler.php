@@ -7,7 +7,7 @@ class CreateTaskHandler implements HandlerInterface
 {
 	private $taskRepository;
 
-	public function __construct(EloquentUserRepository $taskRepository){
+	public function __construct(EloquentTaskRepository $taskRepository){
 		$this->taskRepository = $taskRepository;
 	}
 

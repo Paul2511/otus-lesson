@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 use App\Service\Handlers\{CreateClientHandler, UpdateClientHandler, DeleteClientHandler, GiveMeClientHandler, GiveMeAllClientHandler};
-class UserService{
+class ClientService{
 	protected $createClientHandler;
     protected $updateClientHandler;
     protected $deleteClientHandler;
