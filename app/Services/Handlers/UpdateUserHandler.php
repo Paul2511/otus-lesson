@@ -2,8 +2,10 @@
 
 namespace App\Services\Handlers;
 
+use App\Models\User;
 use App\Services\Users\Repositories\EloquentUserRepository;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UpdateUserHandler
 {
@@ -20,19 +22,20 @@ class UpdateUserHandler
         $this->eloquentUserRepository = $eloquentUserRepository;
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
-     */
+
     public function handle(int $id, array $data)
     {
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
-        $user = $this->eloquentUserRepository->updateUserById($id, $data);
-        $user = $this->eloquentUserRepository->attachProjectsToUser($user, $data);
-        $user = $this->eloquentUserRepository->attachResourcesToUser($user, $data);
-//        $user = $this->eloquentUserRepository->attachSettingsToUser($user, $data);
-
-        return $user;
+        try {
+            $user = $this->eloquentUserRepository->updateUserById($id, $data);
+            $user = $this->eloquentUserRepository->attachProjectsToUser($user, $data);
+            $user = $this->eloquentUserRepository->attachResourcesToUser($user,$data);
+            //        $user = $this->eloquentUserRepository->attachSettingsToUser($user, $data);
+            return $user;
+        } catch (\Exception $e) {
+            Log::channel('slack')->error('Ошибка сохранения пользователя '.$e->getMessage());
+        }
     }
 }

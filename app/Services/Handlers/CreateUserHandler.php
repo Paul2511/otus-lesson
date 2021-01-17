@@ -6,6 +6,7 @@ namespace App\Services\Handlers;
 
 use App\Services\Users\Repositories\EloquentUserRepository;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class CreateUserHandler
 {
@@ -26,11 +27,19 @@ class CreateUserHandler
     {
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
-        }
-        $user = $this->eloquentUserRepository->createUser($data);
-        $user = $this->eloquentUserRepository->attachProjectsToUser($user, $data);
-        $user = $this->eloquentUserRepository->attachResourcesToUser($user, $data);
-//        $user = $this->eloquentUserRepository->attachSettingsToUser($user, $data);
-        return $user;
+
+            try{
+                $user = $this->eloquentUserRepository->createUser($data);
+                $user = $this->eloquentUserRepository->attachProjectsToUser($user, $data);
+                $user = $this->eloquentUserRepository->attachResourcesToUser($user, $data);
+                //        $user = $this->eloquentUserRepository->attachSettingsToUser($user, $data);
+                return $user;
+            } catch (\Exception $e) {
+                Log::channel('slack')->error('Ошибка создания пользователя '. $e->getMessage());
+            }
+}
+
+
+
     }
 }

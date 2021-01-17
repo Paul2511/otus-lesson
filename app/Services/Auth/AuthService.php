@@ -5,6 +5,7 @@ namespace App\Services\Auth;
 use App\Models\User;
 use App\Services\Users\UsersService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AuthService
 {

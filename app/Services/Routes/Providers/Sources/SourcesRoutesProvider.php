@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services\Routes\Providers\Sources;
 
 use App\Http\Controllers\Sources\AboutController;
@@ -18,14 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 final class SourcesRoutesProvider
 {
-    public function __construct()
-    {
-    }
-
     public function register()
     {
         Route::group([
-            'middleware' => 'auth'
+            'middleware' => ['auth','log']
         ], function () {
             Route::get('/', function () {
                 return redirect(SourcesRoutes::SOURCES_DASHBOARD);

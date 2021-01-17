@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
-use App\Models\User;
 use App\Services\Auth\AuthService;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
@@ -25,9 +24,13 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fortify::authenticateUsing(function (Request $request) {
-            return  app(AuthService::class)->login($request);
-        });
+        try {
+            Fortify::authenticateUsing(function (Request $request) {
+                return app(AuthService::class)->login($request);
+            });
+        } catch (\Exception $e) {
+            \Log::channel('slack-critical')->critical($e->getMessage());
+        }
 
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);

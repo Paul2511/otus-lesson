@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily'],
             'ignore_exceptions' => false,
         ],
 
@@ -56,10 +56,11 @@ return [
 
         'slack' => [
             'driver' => 'slack',
-            'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
+            'url' => env('LOG_SLACK_CRITICAL_WEBHOOK_URL'),
+            'username' => 'Laravel critical',
             'emoji' => ':boom:',
-            'level' => env('LOG_LEVEL', 'critical'),
+            'level' => 'debug',
+            'tap' => [\App\Logging\SlackCustomFormatter::class],
         ],
 
         'papertrail' => [
