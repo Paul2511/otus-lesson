@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('about', [\App\Http\Controllers\Main\PageController::class, 'about'])->name('site.about');
+Route::get('policy', [\App\Http\Controllers\Main\PageController::class, 'policy'])->name('site.policy');
+
+Route::get('login', [\App\Http\Controllers\Main\UserController::class, 'login'])->name('user.login');
+Route::get('signup', [\App\Http\Controllers\Main\UserController::class, 'signup'])->name('user.signup');
+Route::get('profile', [\App\Http\Controllers\Main\UserController::class, 'profile'])->name('user.profile');
