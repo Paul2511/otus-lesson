@@ -20,7 +20,7 @@ class AuthLoginTest extends TestCase
      */
     public function testRequiresEmailAndPassword422()
     {
-        $this->json('POST', self::$uri)
+        $this->postJson( self::$uri)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email', 'password']);
     }
@@ -33,7 +33,7 @@ class AuthLoginTest extends TestCase
     {
         $data = ['password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', self::$uri, $data)
+        $this->postJson(self::$uri, $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
     }
@@ -45,7 +45,7 @@ class AuthLoginTest extends TestCase
     {
         $data = ['email' => env('USER_TEST_EMAIL')];
 
-        $this->json('POST', self::$uri, $data)
+        $this->postJson( self::$uri, $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
     }
@@ -55,13 +55,13 @@ class AuthLoginTest extends TestCase
      */
     public function testWrongEmailOrPassword422()
     {
-        UsersGenerator::generatePlain([
-            'email' => 'test@test.ru','is_active'=>1
+        UsersGenerator::generateActivePlainUser([
+            'email' => 'wrong'
         ]);
 
         $data = ['email' => env('USER_TEST_EMAIL'), 'password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', self::$uri, $data)
+        $this->postJson( self::$uri, $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
     }
@@ -71,15 +71,14 @@ class AuthLoginTest extends TestCase
      */
     public function testLoginSuccessfully200()
     {
-        $user = UsersGenerator::generatePlain([
+        $user = UsersGenerator::generateActivePlainUser([
             'email' => env('USER_TEST_EMAIL'), 'password' => Hash::make(env('USER_TEST_PASSWORD')),
-            'is_active' => 1
         ]);
 
         $data = ['email' => env('USER_TEST_EMAIL'), 'password' => env('USER_TEST_PASSWORD')];
         $this->loginAs($user);
 
-        $this->json('POST', self::$uri, $data)->assertStatus(200);
+        $this->postJson( self::$uri, $data)->assertStatus(200);
     }
 
 }

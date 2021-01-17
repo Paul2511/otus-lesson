@@ -11,9 +11,15 @@ class UsersGenerator
     {
         return self::generate(array_merge(['is_admin' => 1], $data));
     }
+
     public static function generatePlain(array $data = [])
     {
         return self::generate($data);
+    }
+
+    public static function generateActivePlainUser(array $data = [])
+    {
+        return self::generate(array_merge(['is_active' => 1], $data));
     }
 
     public static function addResourceForUser(User $user, int $resource_id): User
