@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Watson\Rememberable\Rememberable;
 
 /**
  * App\Models\Model
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
  * @method static Builder|Model query()
  * @mixin \Eloquent
  */
-class Model extends EloquentModel
+abstract class Model extends EloquentModel
 {
-
+    use Rememberable;
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Watson\Rememberable\Rememberable;
 
 /**
  * Class Role
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Role extends Model
 {
-    use HasFactory;
+    use HasFactory, Rememberable;
 
     const ROLE_USER = 0;
     const ROLE_MANAGER = 10;

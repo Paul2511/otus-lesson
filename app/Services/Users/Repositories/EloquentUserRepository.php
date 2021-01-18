@@ -10,19 +10,23 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
+
 class EloquentUserRepository
 {
     public function searchWithCompanyRoleRelation(int $perPage): LengthAwarePaginator
     {
         return $this->search($perPage, [
-            'role', 'companies'
+            'role', 'companies' => function ($q) {
+            $q->remember(config('cache.query_cache_lifetime'));
+        }
         ]);
     }
 
     public function search(int $perPage, array $with = []): LengthAwarePaginator
     {
         $qb = User::query();
-        $qb->with($with);
+        $qb->with($with)
+            ->remember(config('cache.query_cache_lifetime'));
 
         return $qb->paginate($perPage);
     }

@@ -73,7 +73,6 @@ $(document).ready(function ($) {
             success: function (data) {
                 $('#userModalData').trigger("reset");
                 $('#userEditorModal').modal('hide');
-
                 $('#users-table').load(location.href+' #users-table>*','').hide().fadeIn(800);
                 $(this).remove();
             },

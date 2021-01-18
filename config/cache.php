@@ -33,6 +33,10 @@ return [
 
     'stores' => [
 
+        'none' => [
+            'driver' => 'null',
+        ],
+
         'apc' => [
             'driver' => 'apc',
         ],
@@ -65,7 +69,7 @@ return [
             ],
             'servers' => [
                 [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
+                    'host' => env('MEMCACHED_HOST', '0.0.0.0'),
                     'port' => env('MEMCACHED_PORT', 11211),
                     'weight' => 100,
                 ],
@@ -100,5 +104,6 @@ return [
     */
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
+    'query_cache_lifetime' =>env('QUERY_CACHE_LIFETIME', 3600),
 
 ];
