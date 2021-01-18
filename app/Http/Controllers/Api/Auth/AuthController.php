@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserRegisterRequest;
 use App\Models\User;
+use App\Services\DTO\User\UserRegisterData;
 use \Illuminate\Http\JsonResponse;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Services\Auth\AuthService;
@@ -34,12 +35,16 @@ class AuthController extends Controller
         return response()->json($newToken);
     }
 
+
     public function registration(UserRegisterRequest $request, UserService $userService)
     {
-        $data = $request->getFromData();
-        $data['role'] = User::ROLE_CLIENT; //жестко зашиваем в клиентском контроллере
-        $result = $userService->registerUser($data);
-        return response()->json($result);
+        $userData = UserRegisterData::fromRequest($request);
+        $userData->role = User::ROLE_CLIENT; //жестко зашиваем в клиентском контроллере
+        $user = $userService->registerUser($userData);
+
+        return response()->json(
+            ['success'=>$user?true:false]
+        );
     }
 
 }

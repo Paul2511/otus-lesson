@@ -13,13 +13,15 @@ class CreateTranslatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('translates', function (Blueprint $table) {
-            $table->id();
-            $table->string('type', 50);
-            $table->unsignedBigInteger('row_id');
-            $table->string('locale', 4);
-            $table->string('value');
-        });
+        if (!Schema::hasTable('translates')) {
+            Schema::create('translates', function (Blueprint $table) {
+                $table->id();
+                $table->string('type', 50);
+                $table->unsignedBigInteger('row_id');
+                $table->string('locale', 4);
+                $table->string('value');
+            });
+        }
     }
 
     /**

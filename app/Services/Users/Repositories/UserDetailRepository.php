@@ -11,7 +11,7 @@ class UserDetailRepository
     public function findUserDetailByUserId(int $userId, ?bool $fromCache = false): UserDetail
     {
         return $fromCache ?
-            CacheHelper::remember(UserDetail::query(), UserDetail::$modelName, $userId)->where('user_id', $userId)->firstOrFail() :
+            CacheHelper::remember(UserDetail::query(), class_basename(UserDetail::class), $userId)->where('user_id', $userId)->firstOrFail() :
             UserDetail::whereUserId($userId)->firstOrFail();
     }
 

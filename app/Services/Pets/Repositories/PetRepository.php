@@ -11,7 +11,7 @@ class PetRepository
     public function findPet(int $petId, ?bool $fromCache=false): Pet
     {
         return $fromCache ?
-            CacheHelper::remember(Pet::query(), Pet::$modelName, $petId)->findOrFail($petId) :
+            CacheHelper::remember(Pet::query(), class_basename(Pet::class), $petId)->findOrFail($petId) :
             Pet::findOrFail($petId);
     }
 
@@ -26,7 +26,7 @@ class PetRepository
         }
 
         return $fromCache ?
-            CacheHelper::remember($query, Pet::$modelName . 's', $userId)->get() :
+            CacheHelper::remember($query, \Str::plural(class_basename(Pet::class)), $userId)->get() :
             $query->get();
     }
 

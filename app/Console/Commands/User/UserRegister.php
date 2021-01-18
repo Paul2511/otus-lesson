@@ -2,11 +2,13 @@
 
 namespace App\Console\Commands\User;
 
+use App\Services\DTO\User\UserRegisterData;
 use App\Services\Users\Helpers\UserLabelsHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use App\Services\Users\UserService;
 use Illuminate\Support\Facades\Validator;
+
 class UserRegister extends Command
 {
     /**
@@ -19,7 +21,7 @@ class UserRegister extends Command
                             {--email= : The email of the user}
                             {--phone= : The phone number of the user}
                             {--p|--password : Specify password}
-                            {--no-send : Do not send email with credentials}';
+                            {--send : Do send email with credentials}';
 
     /**
      * The console command description.
@@ -73,14 +75,14 @@ class UserRegister extends Command
 
         $phone = $this->option('phone');
 
-        $noSend = $this->option('no-send') ?? false;
+        $send = $this->option('send');
 
         $data = [
             'role'=>$role,
             'email'=>$email,
             'password'=>$password,
             'phone'=>$phone,
-            'sendWelcomeEmail'=>!$noSend
+            'sendWelcomeEmail'=>$send
         ];
 
         $validator = Validator::make($data, [
@@ -97,20 +99,17 @@ class UserRegister extends Command
 
         $userService = $this->_getUserService();
 
-        try {
-            $result = $userService->registerUser($data);
+        $userData = new UserRegisterData($data);
 
-            if (!$result || !$result['success'] || !$result['user']) {
-                $this->error('An error occurred while registering a user');
-                return 1;
-            }
-            $user = $result['user'];
-            $this->info("Successfully registered user with id {$user['id']}");
+        $user = $userService->registerUser($userData);
 
-            return 0;
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
+        if (!$user) {
+            $this->error('An error occurred while registering a user');
             return 1;
         }
+
+        $this->info("Successfully registered user with id {$user->id}");
+
+        return 0;
     }
 }

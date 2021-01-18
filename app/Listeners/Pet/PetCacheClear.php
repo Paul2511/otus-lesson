@@ -22,10 +22,10 @@ class PetCacheClear
     {
         $pet = $event->getPet();
         $petId = $pet->id;
-        $key = CacheHelper::getKey(Pet::$modelName, $petId);
+        $key = CacheHelper::getKey(class_basename(Pet::class), $petId);
         Pet::flushCache($key);
 
-        $key = CacheHelper::getKey(Pet::$modelName.'s', $pet->client_id);
+        $key = CacheHelper::getKey(\Str::plural(class_basename(Pet::class)), $pet->client_id);
         Pet::flushCache($key);
     }
 }

@@ -5,9 +5,9 @@ namespace App\Services\Users\Handlers;
 
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Services\DTO\User\UserRegisterData;
 use App\Services\Users\Repositories\UserDetailRepository;
 use App\Services\Users\Repositories\UserRepository;
-
 use App\Helpers\LogHelper;
 use Hash;
 
@@ -32,17 +32,20 @@ class RegisterUserHandler
     }
 
     /**
-     * @param array $data
-     * @return User|bool
+     * @param UserRegisterData $data
+     * @return User|null
+     * @throws \Throwable
      */
-    public function handle(array $data)
+    public function handle(UserRegisterData $userRegisterData)
     {
         \DB::beginTransaction();
+
+        $clientPassword = $userRegisterData->password;
+        $userRegisterData->password = Hash::make($clientPassword);
+
+        $data = $userRegisterData->toArray();
+
         try {
-
-            $clientPassword = $data['password'];
-            $data['password'] = Hash::make($data['password']);
-
             $user = $this->userRepository->createUser($data);
 
             $classifier = $this->getUserDetailDefaultClassifier($user->role);
@@ -64,8 +67,7 @@ class RegisterUserHandler
             ]);
             $user->refresh();
             return $user;
-        } catch (\Exception $e) {
-
+        } catch (\Throwable $e) {
             \DB::rollBack();
 
             LogHelper::slack("Ошибка регистрации пользователя", [
@@ -73,7 +75,7 @@ class RegisterUserHandler
                 'userData'=>$data
             ]);
 
-            return false;
+            return null;
         }
     }
 

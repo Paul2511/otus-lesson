@@ -72,7 +72,7 @@ class ConsoleCommandUserRegisterTest extends TestCase
      */
     public function testSpecifyParamsSuccess0()
     {
-        $this->artisan(self::$command, ['role'=>'admin', '--email'=>'test@mail.com', '--no-send'=>true])
+        $this->artisan(self::$command, ['role'=>'admin', '--email'=>'test@mail.com'])
             ->assertExitCode(0);
 
         $this->assertDatabaseHas('users', [
@@ -95,7 +95,7 @@ class ConsoleCommandUserRegisterTest extends TestCase
     {
         Notification::fake();
 
-        $this->artisan(self::$command, ['role'=>'admin', '--password'=>true])
+        $this->artisan(self::$command, ['role'=>'admin', '--password'=>true, '--send'=>true])
             ->expectsQuestion('Email', 'test@mail.com')
             ->expectsQuestion('Password (skip to generate random)', '12345')
             ->assertExitCode(0);

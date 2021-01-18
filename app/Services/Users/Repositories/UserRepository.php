@@ -11,7 +11,7 @@ class UserRepository
     public function findUser(int $userId, ?bool $fromCache=false): User
     {
         return $fromCache ?
-            CacheHelper::remember(User::query(), User::$modelName, $userId)->findOrFail($userId) :
+            CacheHelper::remember(User::query(), class_basename(User::class), $userId)->findOrFail($userId) :
             User::findOrFail($userId);
     }
 

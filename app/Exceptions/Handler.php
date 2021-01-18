@@ -3,12 +3,10 @@
 namespace App\Exceptions;
 
 use App\Http\RouteNames;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -44,7 +42,6 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
-
             $routeName = $request->route()->getName();
 
             if ($routeName && array_key_exists($routeName, RouteNames::$notFound)) {

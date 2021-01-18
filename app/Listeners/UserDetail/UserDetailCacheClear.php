@@ -21,7 +21,7 @@ class UserDetailCacheClear
     public function handle(UserDetailEvent $event)
     {
         $userId = $event->getUserDetail()->user_id;
-        $key = CacheHelper::getKey(UserDetail::$modelName, $userId);
+        $key = CacheHelper::getKey(class_basename(UserDetail::class), $userId);
         UserDetail::flushCache($key);
     }
 }

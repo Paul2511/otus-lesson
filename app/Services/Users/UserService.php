@@ -3,7 +3,9 @@
 
 namespace App\Services\Users;
 
+use App\Models\User;
 use App\Notifications\User\UserWelcome;
+use App\Services\DTO\User\UserRegisterData;
 use App\Services\Users\Helpers\UserDetailLabelsHelper;
 use App\Services\Users\Repositories\UserRepository;
 use App\Services\BaseService;
@@ -90,29 +92,18 @@ class UserService extends BaseService
         ];
     }
 
-    /**
-     * @param array $data
-     * @return array
-     */
-    public function registerUser(array $data)
+
+    public function registerUser(UserRegisterData $data)
     {
         $user = $this->registerUserHandler->handle($data);
-        if ($user) {
-            $userArray = $this->userLabelsHelper->toArray($user);
 
-            if (isset($data['sendWelcomeEmail']) && $data['sendWelcomeEmail']) {
+        if (isset($data->sendWelcomeEmail) && $data->sendWelcomeEmail) {
+            try {
                 $user->notify(new UserWelcome()); //Отправка уведомления не по событию, а только после успешной общей транзакции
+            } catch (\Throwable $e) {
+                //поставил временно, до включения очередей
             }
-
-            return [
-                'user'=>$userArray,
-                'success'=>true
-            ];
-        } else {
-            return [
-                'success'=>false
-            ];
         }
-
+        return $user;
     }
 }

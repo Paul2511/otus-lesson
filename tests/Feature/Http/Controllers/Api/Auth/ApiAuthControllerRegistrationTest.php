@@ -103,7 +103,6 @@ class ApiAuthControllerRegistrationTest extends TestCase
         $response= $this->json('POST', self::$uri, $payload);
 
         $response->assertJson(['success' => true])
-            ->assertJsonStructure(['user'])
             ->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
@@ -136,7 +135,6 @@ class ApiAuthControllerRegistrationTest extends TestCase
         $response= $this->json('POST', self::$uri, $payload);
 
         $response->assertJson(['success' => true])
-            ->assertJsonStructure(['user'])
             ->assertStatus(200);
 
 
