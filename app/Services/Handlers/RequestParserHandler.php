@@ -1,11 +1,8 @@
 <?php
 
-
 namespace App\Services\Handlers;
 
-
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 class RequestParserHandler
 {
@@ -14,15 +11,15 @@ class RequestParserHandler
         'confirmation'
     ];
 
-    public static function handle(): array
+    public static function handle(Request $request): array
     {
-        $route = Route::current();
+        $route = $request->route();
         $controller = $route->getActionName();
-        $params = Request::except(self::$except);
-        $userName = (Request::user()) ? Request::user()->full_name : null;
-        $userRole = (Request::user()) ? Request::user()->is_admin : null;
-        $userAgent = Request::userAgent();
-        $ip = Request::ip();
+        $params = $request->except(self::$except);
+        $userName = ($request->user()) ? $request->user()->full_name : null;
+        $userRole = ($request->user()) ? $request->user()->is_admin : null;
+        $userAgent = $request->userAgent();
+        $ip = $request->ip();
 
         $context = [
             'Controller' => $controller,
@@ -31,7 +28,7 @@ class RequestParserHandler
             'Role' => $userRole,
             'User Agent' => $userAgent,
             'IP' => $ip,
-            'Method' => Request::getMethod(),
+            'Method' => $request->getMethod(),
         ];
 
         return $context;

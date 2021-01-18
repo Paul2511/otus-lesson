@@ -8,16 +8,13 @@ use App\Services\Handlers\ActivityLogHandler;
 
 class ActivityLog
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Request  $request
-     * @param  Closure  $next
-     * @return mixed
-     */
+    private function getActivityLogHandler(): ActivityLogHandler{
+        return app(ActivityLogHandler::class);
+    }
+
     public function handle(Request $request, Closure $next)
     {
-        ActivityLogHandler::handle();
+        $this->getActivityLogHandler()->handle($request);
         return $next($request);
     }
 }
