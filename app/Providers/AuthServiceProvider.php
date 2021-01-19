@@ -39,6 +39,6 @@ class AuthServiceProvider extends ServiceProvider
 
     private function registerGates()
     {
-        Gate::define(Gates::CAN_VIEW, 'App\Policies\DashboardGate@admin');
+        Gate::define(Gates::CAN_ADMIN, 'App\Policies\DashboardGate@admin');
     }
 }

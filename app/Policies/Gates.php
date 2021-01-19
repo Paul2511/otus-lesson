@@ -6,10 +6,10 @@ namespace App\Policies;
 
 abstract class Gates
 {
-    const CAN_VIEW = 'view';
+    const CAN_ADMIN = 'admin';
 
     public static $gates = [
-        self::CAN_VIEW,
+        self::CAN_ADMIN,
     ];
 
 }

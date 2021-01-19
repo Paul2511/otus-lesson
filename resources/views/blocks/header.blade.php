@@ -43,9 +43,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @dd(Gate::allows('CAN_READ'))
-                                    @if(Gate::allows('CAN_READ'))
 
+                                    @if(Gate::check('admin'))
                                         <a class="dropdown-item" href="{{route('cms.index')}}">CMS</a>
                                     @endif
 

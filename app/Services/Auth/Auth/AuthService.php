@@ -3,14 +3,13 @@
 
 namespace App\Services\Auth\Auth;
 
-
 use App\Models\Role;
 use App\Models\User;
-use App\Models\UserRole;
+
 
 class AuthService
 {
-    public function hasUserPermission(User $user, string $model, string $permission): bool
+    public function hasUserPermission(User $user, string $permission): bool
     {
 
         if ($user->isAdmin()) {
@@ -22,18 +21,13 @@ class AuthService
         if (!$role) {
             return false;
         }
-        return $this->hasRolePermission($role, $model, $permission);
+        return $this->hasRolePermission($role, $permission);
     }
 
-    private function hasRolePermission(Role $role, string $model, string $permission): bool
+    private function hasRolePermission(Role $role, string $permission): bool
     {
 
-
-        if (!isset($role->permissions[$model])) {
-            return false;
-        }
-
-        return in_array($permission, $role->permissions[$model]);
+        return in_array($permission, $role->permissions()->get()->toArray());
     }
 
 
