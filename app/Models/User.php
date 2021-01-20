@@ -98,6 +98,11 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
     /** @var string */
     public $clientPassword;
 
+    /**
+     * @var bool
+     */
+    public $sendWelcomeEmail = false;
+
     protected $fillable = [
         'email', 'password', 'role', 'status', 'locale'
     ];
@@ -238,5 +243,20 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
         return [
             'role'=>$this->role
         ];
+    }
+
+    public function fill(array $attributes)
+    {
+        if (isset($attributes['sendWelcomeEmail'])) {
+            $this->sendWelcomeEmail = $attributes['sendWelcomeEmail'];
+            unset($attributes['sendWelcomeEmail']);
+        }
+
+        if (isset($attributes['clientPassword'])) {
+            $this->clientPassword = $attributes['clientPassword'];
+            unset($attributes['clientPassword']);
+        }
+
+        return parent::fill($attributes);
     }
 }

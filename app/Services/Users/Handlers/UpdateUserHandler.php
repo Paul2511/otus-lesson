@@ -3,7 +3,9 @@
 
 namespace App\Services\Users\Handlers;
 
+use App\Jobs\User\UserDetailAvatarThumbnailJob;
 use App\Models\User;
+use App\Services\Files\DTO\ImageData;
 use App\Services\Users\Repositories\UserDetailRepository;
 use App\Services\Users\Repositories\UserRepository;
 
@@ -30,6 +32,7 @@ class UpdateUserHandler
         $this->userDetailRepository = $userDetailRepository;
     }
 
+    //todo data через DTO
     public function handle(int $id, array $data): User
     {
         $user = $this->userRepository->findUser($id);
@@ -40,6 +43,15 @@ class UpdateUserHandler
 
         $newUser = $data;
         $newDetail = $data['detail'] ?? null;
+
+        \DB::beginTransaction();
+
+        if ($newDetail && isset($newDetail['avatar'])) {
+            $avatar = ImageData::fromArray($newDetail['avatar']);
+            if ($avatar->path && $avatar->path != $detail->avatar->path) {
+                UserDetailAvatarThumbnailJob::dispatch($detail, $avatar);
+            }
+        }
 
         if ($newDetail) {
             unset($newUser['detail']);
@@ -83,6 +95,7 @@ class UpdateUserHandler
             }
         }
         if ($result) {
+            \DB::commit();
             $user->fresh();
         } elseif (!$isLogged) {
             LogHelper::slack("Ошибка обновления пользователя #{$user->id}", [

@@ -5,13 +5,13 @@ namespace App\Services\Users\Handlers;
 
 use App\Models\User;
 use App\Models\UserDetail;
-use App\Services\DTO\User\UserRegisterData;
+use App\Services\Users\Dto\UserRegisterData;
 use App\Services\Users\Repositories\UserDetailRepository;
 use App\Services\Users\Repositories\UserRepository;
 use App\Helpers\LogHelper;
 use Hash;
 
-class RegisterUserHandler
+class UserRegisterHandler
 {
     /**
      * @var UserRepository
@@ -40,8 +40,7 @@ class RegisterUserHandler
     {
         \DB::beginTransaction();
 
-        $clientPassword = $userRegisterData->password;
-        $userRegisterData->password = Hash::make($clientPassword);
+        $userRegisterData->password = Hash::make($userRegisterData->password);
 
         $data = $userRegisterData->toArray();
 
@@ -57,15 +56,14 @@ class RegisterUserHandler
             $this->userDetailRepository->createUserDetail($detailData);
             \DB::commit();
 
-            $user->clientPassword = $clientPassword;
-
-            \Log::channel('registration')->info('Новая регистрация пользователя', [
+            LogHelper::registration('Новая регистрация пользователя', [
                 'id'=>$user->id,
                 'role'=>$user->role,
                 'email'=>$user->email,
-                'password'=>$clientPassword
+                'password'=>$userRegisterData->clientPassword
             ]);
             $user->refresh();
+
             return $user;
         } catch (\Throwable $e) {
             \DB::rollBack();

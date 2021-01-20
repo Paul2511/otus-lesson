@@ -5,6 +5,7 @@ namespace Tests\Feature\Console\Commands\User;
 
 use App\Models\User;
 use App\Notifications\User\UserWelcome;
+use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Illuminate\Support\Facades\Notification;
@@ -62,6 +63,23 @@ class ConsoleCommandUserRegisterTest extends TestCase
         $this->artisan(self::$command, ['role'=>'manager'])
             ->expectsQuestion('Email', 'wrong-email')
             ->expectsOutput(trans('validation.email'))
+            ->assertExitCode(1);
+    }
+
+    /**
+     * email уже существует
+     * @group console
+     * @group register
+     */
+    public function testEmailExists1()
+    {
+        UserGenerator::generateClient([
+            'email' => 'testlogin@user.com'
+        ]);
+
+        $this->artisan(self::$command, ['role'=>'manager'])
+            ->expectsQuestion('Email', 'testlogin@user.com')
+            ->expectsOutput(trans('user.emailExists'))
             ->assertExitCode(1);
     }
 

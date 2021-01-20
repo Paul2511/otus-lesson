@@ -24,22 +24,19 @@ class PetDeleteHandler
      * @param Pet $pet
      * @return bool|null
      */
-    public function handler(Pet $pet)
+    public function handle(Pet $pet, ?array $logData)
     {
         try {
             $result = $this->petRepository->deletePet($pet);
 
-            LogHelper::pet("Удален питомец #{$pet->id}", [
-                'userId'=>auth()->user()->getAuthIdentifier()
-            ]);
+            LogHelper::pet("Удален питомец #{$pet->id}", $logData);
 
             return $result;
         } catch (\Exception $e) {
 
-            LogHelper::slack("Ошибка удаления питомца #{$pet->id}", [
-                'userId'=>auth()->user()->getAuthIdentifier(),
-                'error'=>$e->getMessage()
-            ]);
+            $logData['error'] = $e->getMessage();
+
+            LogHelper::slack("Ошибка удаления питомца #{$pet->id}", $logData);
 
             return false;
         }

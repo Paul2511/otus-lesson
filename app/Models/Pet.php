@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
+use App\Services\Files\DTO\ImageData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +21,7 @@ use Watson\Rememberable\Rememberable;
  * @property int|null $age в месяцах
  * @property string|null $bread
  * @property int|null $sex
- * @property mixed|null $photo
+ * @property ImageData|null $photo
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static Builder|Pet newModelQuery()

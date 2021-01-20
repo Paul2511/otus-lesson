@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Helpers\BaseHelper;
-use App\Helpers\UploadHelper;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -21,10 +20,7 @@ class WebApplicationData
     {
         $data = [
             'locale' => App::currentLocale(),
-            'defaultAvatar' => [
-                'src'=>BaseHelper::getUserDefaultAvatar(),
-                'type'=>UploadHelper::TYPE_DEFAULT
-            ]
+            'defaultAvatar' => BaseHelper::getUserDefaultAvatar()
         ];
 
         View::share('data', $data);

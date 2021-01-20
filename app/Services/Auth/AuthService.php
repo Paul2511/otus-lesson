@@ -3,6 +3,7 @@
 
 namespace App\Services\Auth;
 
+use App\Helpers\LogHelper;
 use App\Services\BaseService;
 use App\Services\Users\UserService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -31,9 +32,9 @@ class AuthService extends BaseService
 
         if (!$token = auth()->attempt($credentials)) {
 
-            Log::channel('auth')->error('Ошибка авторизации', [
+            LogHelper::auth('Ошибка авторизации', [
                 'data'=>$credentials
-            ]);
+            ], 'error');
 
             throw new UnauthorizedException();
         } else {
@@ -42,8 +43,8 @@ class AuthService extends BaseService
             $user = $this->userService->findUser($userId);
             $userData = $user['user'];
 
-            Log::channel('auth')->info('Авторизация пользователя', [
-                'userId'=>$userId
+            LogHelper::auth('Авторизация пользователя', [
+                'data'=>$credentials
             ]);
 
             $result = [

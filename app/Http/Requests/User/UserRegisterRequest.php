@@ -23,13 +23,20 @@ class UserRegisterRequest extends ApiRequest
     {
         return [
             'password' => 'required|min:5',
-            'email' => ['email','required'],
+            'email' => ['email','required','unique:users'],
             'role' => [
                 Rule::in(array_keys(UserLabelsHelper::roleLabels()))
             ],
             'locale' => [
                 Rule::in(Locale::$availableLocales)
             ]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.unique' => trans('user.emailExists')
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 
 namespace App\Services\Pets;
+use App\Jobs\Pet\PetDeleteJob;
 use App\Models\Pet;
 use App\Services\BaseService;
 use App\Services\Pets\Repositories\PetRepository;
@@ -13,10 +14,7 @@ class PetService extends BaseService
      * @var PetRepository
      */
     private $petRepository;
-    /**
-     * @var PetDeleteHandler
-     */
-    private $petDeleteHandler;
+
     /**
      * @var PetLabelsHelper
      */
@@ -24,12 +22,10 @@ class PetService extends BaseService
 
     public function __construct(
         PetRepository $petRepository,
-        PetDeleteHandler $petDeleteHandler,
         PetLabelsHelper $petLabelsHelper
     )
     {
         $this->petRepository = $petRepository;
-        $this->petDeleteHandler = $petDeleteHandler;
         $this->petLabelsHelper = $petLabelsHelper;
     }
 
@@ -48,8 +44,9 @@ class PetService extends BaseService
 
     public function deletePet(Pet $pet): array
     {
-        $result = $this->petDeleteHandler->handler($pet);
-        return ['success'=>$result];
+        PetDeleteJob::dispatch($pet);
+
+        return ['success'=>true];
     }
 
 }

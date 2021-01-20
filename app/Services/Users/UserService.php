@@ -4,15 +4,14 @@
 namespace App\Services\Users;
 
 use App\Models\User;
-use App\Notifications\User\UserWelcome;
-use App\Services\DTO\User\UserRegisterData;
+use App\Services\Users\Dto\UserRegisterData;
 use App\Services\Users\Helpers\UserDetailLabelsHelper;
 use App\Services\Users\Repositories\UserRepository;
 use App\Services\BaseService;
 use App\Services\Users\Handlers\UpdateUserHandler;
 use App\Services\Users\Helpers\UserLabelsHelper;
 use App\Services\Users\Repositories\UserDetailRepository;
-use App\Services\Users\Handlers\RegisterUserHandler;
+use App\Services\Users\Handlers\UserRegisterHandler;
 class UserService extends BaseService
 {
     /**
@@ -36,9 +35,9 @@ class UserService extends BaseService
      */
     private $detailRepository;
     /**
-     * @var RegisterUserHandler
+     * @var UserRegisterHandler
      */
-    private $registerUserHandler;
+    private $userRegisterHandler;
 
     public function __construct(
         UserRepository $userRepository,
@@ -46,7 +45,7 @@ class UserService extends BaseService
         UserLabelsHelper $userLabelsHelper,
         UserDetailLabelsHelper $detailLabelsHelper,
         UserDetailRepository $detailRepository,
-        RegisterUserHandler $registerUserHandler
+        UserRegisterHandler $userRegisterHandler
     )
     {
         $this->userRepository = $userRepository;
@@ -54,7 +53,7 @@ class UserService extends BaseService
         $this->userLabelsHelper = $userLabelsHelper;
         $this->detailLabelsHelper = $detailLabelsHelper;
         $this->detailRepository = $detailRepository;
-        $this->registerUserHandler = $registerUserHandler;
+        $this->userRegisterHandler = $userRegisterHandler;
     }
 
     public function findUser(int $id): array
@@ -92,18 +91,14 @@ class UserService extends BaseService
         ];
     }
 
-
+    /**
+     * @param UserRegisterData $data
+     * @return User|null
+     */
     public function registerUser(UserRegisterData $data)
     {
-        $user = $this->registerUserHandler->handle($data);
+        $user = $this->userRegisterHandler->handle($data);
 
-        if (isset($data->sendWelcomeEmail) && $data->sendWelcomeEmail) {
-            try {
-                $user->notify(new UserWelcome()); //Отправка уведомления не по событию, а только после успешной общей транзакции
-            } catch (\Throwable $e) {
-                //поставил временно, до включения очередей
-            }
-        }
         return $user;
     }
 }

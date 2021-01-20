@@ -7,5 +7,6 @@ return [
     'roleAdmin' => 'Admin',
     'statusActive' => 'Active',
     'statusNotActive' => 'Blocked',
-    'notFound' => 'User not found'
+    'notFound' => 'User not found',
+    'emailExists' => 'A user with this email already exists!'
 ];

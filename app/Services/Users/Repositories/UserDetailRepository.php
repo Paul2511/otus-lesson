@@ -24,4 +24,5 @@ class UserDetailRepository
     {
         return UserDetail::create($data);
     }
+
 }

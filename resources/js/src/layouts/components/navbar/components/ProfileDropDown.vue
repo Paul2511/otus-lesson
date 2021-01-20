@@ -11,7 +11,7 @@
 
             <div class="con-img ml-3">
                 <img v-if="activeUserInfo.detail.avatar && activeUserInfo.detail.avatar.type !== 'default'" key="onlineImg"
-                     :src="activeUserInfo.detail.avatar.src" alt="user-img"
+                     :src="activeUserInfo.detail.avatar.thumb_src" alt="user-img"
                      width="40" height="40" class="rounded-full shadow-md cursor-pointer block"/>
                 <vs-avatar color="primary" v-else/>
             </div>
@@ -21,14 +21,14 @@
 
                     <li @click="$router.push('/cabinet/pets').catch(() => {})" class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
                         <feather-icon icon="UserIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Мой профиль</span>
+                        <span class="ml-2">{{ $t('main.myProfile') }}</span>
                     </li>
 
                     <vs-divider class="m-1"/>
 
                     <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout">
                         <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Выход</span>
+                        <span class="ml-2">{{ $t('main.exit') }}</span>
                     </li>
                 </ul>
             </vs-dropdown-menu>

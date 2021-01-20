@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Files\DTO\ImageData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,7 +20,7 @@ use App\Events\UserDetail\UserDetailUpdated;
  * @property string|null $middlename
  * @property string|null $classifier
  * @property int|null $specialization_id
- * @property mixed|null $avatar
+ * @property ImageData|null $avatar
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static Builder|UserDetail newModelQuery()

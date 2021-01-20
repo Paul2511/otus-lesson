@@ -5,6 +5,8 @@ namespace Tests\Feature\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use App\Notifications\User\UserWelcome;
+use Illuminate\Support\Facades\Bus;
+use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Tests\AuthAttach;
 use Illuminate\Support\Facades\Notification;
@@ -62,6 +64,26 @@ class ApiAuthControllerRegistrationTest extends TestCase
     {
 
         $payload = ['email' => 'wrongEmail', 'password' => env('USER_TEST_PASSWORD')];
+
+        $this->json('POST', self::$uri, $payload)
+            ->assertStatus(422)
+            ->assertJson(['success' => false])
+            ->assertJsonValidationErrors(['email']);
+    }
+
+
+    /**
+     * Ошибка - пользователь с таким email уже существует
+     * @group auth
+     * @group register
+     */
+    public function testWrongEmailExists422()
+    {
+        UserGenerator::generateClient([
+            'email' => 'testlogin@user.com'
+        ]);
+
+        $payload = ['email' => 'testlogin@user.com', 'password' => env('USER_TEST_PASSWORD')];
 
         $this->json('POST', self::$uri, $payload)
             ->assertStatus(422)
@@ -142,6 +164,6 @@ class ApiAuthControllerRegistrationTest extends TestCase
         $user = User::where(['email'=>'testlogin@user.com'])->first();
 
         Notification::assertSentTo($user, UserWelcome::class);
-    }
 
+    }
 }

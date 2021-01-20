@@ -8,20 +8,26 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UserWelcome extends Notification
+class UserWelcome extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public $afterCommit = true;
+    /**
+     * @var string
+     */
+    protected $clientPassword;
+
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $clientPassword)
     {
-        //
+
+        $this->clientPassword = $clientPassword;
     }
 
     /**
@@ -33,6 +39,13 @@ class UserWelcome extends Notification
     public function via($notifiable)
     {
         return ['mail'];
+    }
+
+    public function viaQueues()
+    {
+        return [
+            'mail' => 'mail',
+        ];
     }
 
     /**
@@ -49,7 +62,7 @@ class UserWelcome extends Notification
                     ->greeting(__('mail.user.welcome'))
                     ->line(__('mail.user.text'))
                     ->line('**'.__('mail.user.login'). ':** '.$user->email)
-                    ->line('**'.__('mail.user.password'). ':** '.$user->clientPassword);
+                    ->line('**'.__('mail.user.password'). ':** '.$this->clientPassword);
     }
 
     /**

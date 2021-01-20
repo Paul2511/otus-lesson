@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\User;
 
-use App\Services\DTO\User\UserRegisterData;
+use App\Services\Users\Dto\UserRegisterData;
 use App\Services\Users\Helpers\UserLabelsHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -87,8 +87,8 @@ class UserRegister extends Command
 
         $validator = Validator::make($data, [
             'password' => 'required|min:5',
-            'email' => ['email','required'],
-        ]);
+            'email' => ['email','required', 'unique:users'],
+        ], ['email.unique' => trans('user.emailExists')]);
 
         if ($validator->fails()) {
             foreach ($validator->errors()->all() as $error) {
@@ -99,7 +99,7 @@ class UserRegister extends Command
 
         $userService = $this->_getUserService();
 
-        $userData = new UserRegisterData($data);
+        $userData = UserRegisterData::fromArray($data);
 
         $user = $userService->registerUser($userData);
 

@@ -1,15 +1,11 @@
 <?php
 
 
-namespace App\Services\DTO\User;
+namespace App\Services\Users\Dto;
 
 use App\Models\User;
 use Spatie\DataTransferObject\DataTransferObject;
 use App\Http\Requests\ApiRequest;
-/**
- * Class UserRegisterData
- * @package App\Services\DTO\User
- */
 
 class UserRegisterData extends DataTransferObject
 {
@@ -23,6 +19,8 @@ class UserRegisterData extends DataTransferObject
 
     public ?bool $sendWelcomeEmail;
 
+    public string $clientPassword;
+
 
     public static function fromRequest(ApiRequest $request): self
     {
@@ -32,6 +30,17 @@ class UserRegisterData extends DataTransferObject
             'password' => $request->get('password'),
             'phone' => $request->get('phone'),
             'sendWelcomeEmail' => $request->get('sendWelcomeEmail'),
+            'clientPassword' => $request->get('password')
         ]);
     }
+
+    public static function fromArray(array $data): self
+    {
+        if (!isset($data['clientPassword'])) {
+            $data['clientPassword'] = $data['password'];
+        }
+
+        return new self($data);
+    }
+
 }

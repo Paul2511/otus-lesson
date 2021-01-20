@@ -24,6 +24,10 @@ class UserSendWelcomeMsg
      */
     public function handle(UserEvent $event)
     {
-        //
+        $user = $event->getUser();
+
+        if (isset($user->sendWelcomeEmail) && $user->sendWelcomeEmail) {
+            $user->notify(new UserWelcome($user->clientPassword)); //только с таким хуком в очереди сохраняется пользовательское поле
+        }
     }
 }

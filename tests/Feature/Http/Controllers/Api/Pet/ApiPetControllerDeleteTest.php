@@ -3,6 +3,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Pet;
 
+use App\Jobs\Pet\PetDeleteJob;
+use Illuminate\Support\Facades\Bus;
 use Tests\Generators\UserGenerator;
 use App\Models\User;
 class ApiPetControllerDeleteTest extends TestPet
@@ -111,5 +113,31 @@ class ApiPetControllerDeleteTest extends TestPet
         $response->assertStatus(404)
             ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('main.urlNotFound')]);
+    }
+
+    /**
+     * Клиент удаляет своего питомца, тест очереди
+     * @group pet
+     * @group petDelete
+     * @group queue
+     */
+    public function testQueueSuccess()
+    {
+        Bus::fake();
+
+        $user = $this->currentUser();
+
+        $pets = $this->generatePet(3);
+
+        $pet = $pets->random(1)->all();
+        $pet = $pet[0];
+
+        $response = $this->tokenHeader()->json('delete', self::$uri . $pet->id);
+
+        $response->assertStatus(200)
+            ->assertJson(['success' => true]);
+
+        Bus::assertDispatched(PetDeleteJob::class);
+
     }
 }
