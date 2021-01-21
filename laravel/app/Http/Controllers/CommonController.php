@@ -19,8 +19,6 @@ class CommonController extends Controller
      */
     public function index()
     {
-        //$this->authorize('update',QuestionCategory::class);
-
         $questionCategories = QuestionCategory::paginate(50);
         return view('quiz.welcome', [
             'questionCategories' => $questionCategories
