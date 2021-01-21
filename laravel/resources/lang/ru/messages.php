@@ -2,6 +2,10 @@
 
 return [
     "save" => 'Сохранить',
+    "delete" => 'Удалить',
+    "edit" => 'Редактировать',
+    "create" => 'Создать',
+    "not_specified" => 'Не указано',
 
     "do_not_remember" => 'Не помню',
     "check_it" => 'Проверить',
@@ -10,6 +14,7 @@ return [
     "questions" => 'Вопросы',
     "questions_list" => 'Список вопросов',
     "questions_create" => 'Добавить вопрос',
+    "questions_edit" => 'Редактировать вопрос',
 
     "parent_category" => 'Родительская категория',
 
@@ -19,10 +24,13 @@ return [
     "questions_categories" => 'Категории вопросов',
     "questions_categories_list" => 'Список категорий',
     "questions_categories_create" => 'Добавить категорию',
+    "questions_categories_edit" => 'Редактировать категорию',
+
+    "answers_create" => 'Добавить вариант ответа',
 
     "roles" => 'Роли',
-    "role_create" => 'Добавить роль',
-    "role_list" => 'Список ролей',
+    "roles_create" => 'Добавить роль',
+    "roles_list" => 'Список ролей',
 
     "users" => 'Пользователи',
     "users_list" => 'Список пользователей',

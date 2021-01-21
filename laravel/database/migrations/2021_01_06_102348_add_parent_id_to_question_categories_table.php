@@ -14,8 +14,7 @@ class AddParentIdToQuestionCategoriesTable extends Migration
     public function up()
     {
         Schema::table('question_categories', function (Blueprint $table) {
-            //$table->unsignedBigInteger('parent_id');
-            $table->foreignId('question_category_id')->nullable()->constrained('question_categories')->onDelete('cascade');
+            $table->foreignId('parent_id')->nullable()->constrained('question_categories')->onDelete('cascade');
         });
     }
 
@@ -27,7 +26,7 @@ class AddParentIdToQuestionCategoriesTable extends Migration
     public function down()
     {
         Schema::table('question_categories', function (Blueprint $table) {
-            $table->dropColumn('question_category_id');
+            $table->dropColumn('parent_id');
         });
     }
 }

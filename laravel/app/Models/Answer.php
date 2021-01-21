@@ -55,11 +55,15 @@ class Answer extends Model
         return $this->morphMany(Translation::class,'entity');
     }
 
-    public function text(): Translation
+    public function text( ?string $locale = null ): Translation
     {
         return $this->translations()
-            ->where('locale', '=', App::getLocale())
-            ->firstOrNew();
+            ->firstOrNew(
+                [
+                    'locale' => $locale ?? App::getLocale(),
+                    'key' => 'text'
+                ],
+            );
     }
 
 }

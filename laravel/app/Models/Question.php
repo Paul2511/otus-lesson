@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\App;
@@ -34,7 +35,7 @@ class Question extends Model
         'status',
     ];
 
-    public function categories()
+    public function categories(): belongsToMany
     {
         return $this->belongsToMany(QuestionCategory::class)
             ->using(QuestionQuestioncategory::class);
@@ -50,20 +51,37 @@ class Question extends Model
         return $this->morphMany(Translation::class,'entity');
     }
 
-    public function title(): Translation
+    public function title( ?string $locale = null): Translation
     {
         return $this->translations()
-            ->where('locale', '=', App::getLocale())
-            ->where('key','=','title')
-            ->firstOrNew();
+            ->firstOrNew([
+                'locale' => $locale ?? App::getLocale(),
+                'key' => 'title',
+            ]);
     }
 
-    public function comment(): Translation
+    public function comment( ?string $locale = null): Translation
     {
         return $this->translations()
-            ->where('locale', '=', App::getLocale())
-            ->where('key','=','comment')
-            ->firstOrNew();
+            ->firstOrNew([
+                'locale' => $locale ?? App::getLocale(),
+                'key' => 'comment',
+            ]);
+    }
+
+    public static function getStatuses(): array
+    {
+        return [
+            '' => trans('messages.not_specified'),
+            Question::STATUS_INACTIVE => __('messages.statuses.inactive'),
+            Question::STATUS_ACTIVE => __('messages.statuses.active'),
+        ];
+    }
+
+    public function getStatusText(): string
+    {
+        $statuses = static::getStatuses();
+        return $statuses[$this->status] ?? '';
     }
 
 }

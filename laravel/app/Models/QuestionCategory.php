@@ -24,9 +24,9 @@ use Illuminate\Support\Facades\App;
  */
 class QuestionCategory extends Model
 {
-    /*protected $fillable = [
-
-    ];*/
+    protected $fillable = [
+        'parent_id'
+    ];
 
     protected $guarded = [
         '_method',
@@ -40,7 +40,7 @@ class QuestionCategory extends Model
 
     public function children(): hasMany
     {
-        return $this->hasMany(QuestionCategory::class);
+        return $this->hasMany(QuestionCategory::class,'parent_id');
     }
 
     public function questions(): belongsToMany
@@ -66,11 +66,15 @@ class QuestionCategory extends Model
         return $this->morphMany(Translation::class, 'entity');
     }
 
-    public function title(): Translation
+    public function title( ?string $locale = null): Translation
     {
         return $this->translations()
-            ->where('locale', '=', App::getLocale())
-            ->firstOrNew();
+            ->firstOrNew(
+                ['locale' => $locale ?? App::getLocale()],
+                ['key' => 'title']
+            );
     }
+
+
 
 }

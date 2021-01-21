@@ -1,14 +1,14 @@
 <?php
     /** @var \App\Models\QuestionCategory[] $categories */
 ?>
-@extends('dashboard.layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        {{ trans('messages.questions_categories_list') }}
+    </x-slot>
 
-@section('h1'){{ trans('messages.questions_categories_list') }} @endsection
-
-@section('content')
-    <table class="table table-striped">
+    <table class="border-collapse border border-green-800">
         <tbody>
-            @each('dashboard.questions_categories.blocks.list.item', $categories, 'category')
+        @each('dashboard.questions_categories.blocks.list.item', $categories, 'category')
         </tbody>
     </table>
-@endsection
+</x-app-layout>

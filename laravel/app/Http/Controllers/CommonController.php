@@ -9,7 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
-class CommonController
+class CommonController extends Controller
 {
 
     /**
@@ -19,7 +19,9 @@ class CommonController
      */
     public function index()
     {
-        $questionCategories = QuestionCategory::paginate();
+        //$this->authorize('update',QuestionCategory::class);
+
+        $questionCategories = QuestionCategory::paginate(50);
         return view('quiz.welcome', [
             'questionCategories' => $questionCategories
         ]);

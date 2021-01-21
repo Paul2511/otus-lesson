@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use Illuminate\Routing\Controller;
+use \App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
