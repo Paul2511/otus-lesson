@@ -64,4 +64,11 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function isAdmin(): bool
+    {
+        return $this->level === self::LEVEL_ADMIN;
+    }
+
 }

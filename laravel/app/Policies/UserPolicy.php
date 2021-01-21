@@ -2,11 +2,13 @@
 
 namespace App\Policies;
 
-use App\Models\Question;
 use App\Models\User;
 
-class QuestionPolicy extends BasePolicy
+
+class UserPolicy extends BasePolicy
 {
+
+
     /**
      * Determine whether the user can view any models.
      *
@@ -22,10 +24,10 @@ class QuestionPolicy extends BasePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function view(User $user, Question $question)
+    public function view(User $user, User $model)
     {
         //
     }
@@ -45,10 +47,10 @@ class QuestionPolicy extends BasePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function update(User $user, Question $question)
+    public function update(User $user, User $model)
     {
         //
     }
@@ -57,10 +59,10 @@ class QuestionPolicy extends BasePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function delete(User $user, Question $question)
+    public function delete(User $user, User $model)
     {
         //
     }
@@ -69,10 +71,10 @@ class QuestionPolicy extends BasePolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function restore(User $user, Question $question)
+    public function restore(User $user, User $model)
     {
         //
     }
@@ -81,10 +83,10 @@ class QuestionPolicy extends BasePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function forceDelete(User $user, Question $question)
+    public function forceDelete(User $user, User $model)
     {
         //
     }
