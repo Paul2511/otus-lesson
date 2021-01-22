@@ -8,6 +8,8 @@ use App\Models\Answer;
 use App\Models\Question;
 use App\Models\QuestionCategory;
 use App\Models\Translation;
+use App\Services\Questions\DTO\CreateQuestionDTO;
+use App\Services\Questions\DTO\DTOInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -28,11 +30,16 @@ class EloquentQuestionRepository
         return Question::getStatuses();
     }
 
-    public function store(array $data): Question
+    public function createFromDTO(DTOInterface $questionDTO): Question
     {
-        $question = Question::create($data);
+        $data = $questionDTO->toArray();
+        return Question::create($data);
+    }
 
-        $translationModels = $answerTranslationModels = $answerModels = [];
+    public function saveTranslations(Question $question, DTOInterface $questionDTO): self
+    {
+        $data = $questionDTO->toArray();
+        $translationModels = [];
 
         foreach ( Arr::get($data, 'title', []) as $locale => $text) {
             $translationModels[] = new Translation([
@@ -43,11 +50,12 @@ class EloquentQuestionRepository
         }
 
         $question->translations()->saveMany($translationModels);
+        return $this;
+    }
 
-        foreach ($answerModels as $index => $answerModel) {
-            $answerModel->translations()->saveMany($answerTranslationModels[$index]);
-        }
-
+    public function saveCategories(Question $question, DTOInterface $questionDTO): self
+    {
+        $data = $questionDTO->toArray();
         $questionCategories = [];
         foreach ( Arr::get($data, 'question_category_id', []) as $index => $questionCategoryId) {
             // @todo Избавиться от прямой зависимости от QuestionCategory
@@ -58,20 +66,21 @@ class EloquentQuestionRepository
         }
 
         $question->categories()->saveMany($questionCategories);
-
-        return $question;
+        return $this;
     }
 
-    public function addEmptyAnswer(Question $question)
+
+    public function addEmptyAnswer(Question $question): self
     {
         $question->answers()->save( new Answer([
             'right' => Answer::RIGHT_NO
         ]) ) ;
+        return $this;
     }
 
-    public function update(Question $question, $data)
+    public function updateTitle(Question $question, DTOInterface $questionDTO): self
     {
-
+        $data = $questionDTO->toArray();
         $titleRu = Arr::get($data,'title.ru');
         $titleEn = Arr::get($data,'title.en');
 
@@ -86,7 +95,12 @@ class EloquentQuestionRepository
             $translation->value = $titleEn;
             $translation->save();
         }
+        return $this;
+    }
 
+    public function updateAnswersTranslations(Question $question, DTOInterface $questionDTO): self
+    {
+        $data = $questionDTO->toArray();
         $question->answers()->each(function (Answer $answer) use ($data){
             $answerTranslations = Arr::get($data,'answer.'.$answer->id,[]);
             foreach ($answerTranslations as $locale => $text) {
@@ -99,20 +113,15 @@ class EloquentQuestionRepository
             }
             $answer->save();
         });
-
-        $questionCategories = [];
-        foreach ( Arr::get($data, 'question_category_id', []) as $index => $questionCategoryId) {
-            // @todo Избавиться от прямой зависимости от QuestionCategory
-            $questionCategory = QuestionCategory::find($questionCategoryId);
-            if ( $questionCategory !== null) {
-                $questionCategories[] = $questionCategory;
-            }
-        }
-        $question->categories()->detach();
-        $question->categories()->saveMany($questionCategories);
-
         $question->update($data);
-        return $question;
+        return $this;
+    }
+
+    public function updateFromDTO(Question $question, DTOInterface $questionDTO): self
+    {
+        $data = $questionDTO->toArray();
+        $question->update($data);
+        return $this;
     }
 
     public function destroy(int $questionId): void

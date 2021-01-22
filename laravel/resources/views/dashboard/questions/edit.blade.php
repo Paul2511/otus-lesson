@@ -12,7 +12,7 @@ $btnClass = '"cursor-pointer ml-5 bg-white py-2 px-3 border border-gray-300 roun
 
 <x-app-layout>
     <x-slot name="header">
-        {{ trans('messages.questions_create') }}
+        {{ $pageH1 }}
     </x-slot>
 
     <div class="<?php echo $formClass; ?>">
