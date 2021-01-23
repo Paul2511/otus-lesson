@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Policies\DictionaryPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,14 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $this->registerGates();
+    }
 
-        //
+    public function registerGates() {
+        Gate::define('show-dictionary', [DictionaryPolicy::class, 'isOwnDictionary']);
+        Gate::define('destroy-dictionary', [DictionaryPolicy::class, 'isOwnDictionary']);
+
+        Gate::define('store-word', [DictionaryPolicy::class, 'isOwnDictionary']);
+        Gate::define('destroy-word', [DictionaryPolicy::class, 'isOwnDictionary']);
     }
 }

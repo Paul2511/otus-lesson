@@ -6,6 +6,7 @@ namespace App\Services\Dictionaries;
 
 use App\Models\Dictionary;
 use App\Models\Word;
+use Illuminate\Support\Facades\Auth;
 
 class DictionaryGetService
 {
@@ -15,6 +16,7 @@ class DictionaryGetService
     public function getDictionariesList()
     {
         return Dictionary::with('words')
+            ->where('user_id', Auth::id())
             ->orderByDesc('id')
             ->paginate(10);
     }

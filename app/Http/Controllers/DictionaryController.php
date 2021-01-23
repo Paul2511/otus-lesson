@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dictionary;
-use App\Models\Word;
 use App\Services\Dictionaries\DictionaryDestroyService;
 use App\Services\Dictionaries\DictionaryGetService;
 use App\Services\Dictionaries\DictionaryStoreService;
 use App\Services\Dictionaries\Providers\Routes;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class DictionaryController extends Controller
 {
@@ -25,6 +24,8 @@ class DictionaryController extends Controller
         $this->dictionaryDestroyService = $dictionaryDestroyService;
         $this->dictionaryStoreService = $dictionaryStoreService;
         $this->dictionaryGetService = $dictionaryGetService;
+
+        $this->middleware('auth');
     }
 
     /**
@@ -70,6 +71,8 @@ class DictionaryController extends Controller
      */
     public function show(Dictionary $dictionary)
     {
+        Gate::authorize('show-dictionary', $dictionary);
+
         $words = $this->dictionaryGetService->getDictionaryWords($dictionary->id);
 
         return view('dictionary')->with([
@@ -109,6 +112,8 @@ class DictionaryController extends Controller
      */
     public function destroy(Dictionary $dictionary)
     {
+        Gate::authorize('destroy-dictionary', $dictionary);
+
         $this->dictionaryDestroyService->destroyDictionaryWithRelations($dictionary);
 
         return redirect(route(Routes::DICTIONARIES_INDEX));

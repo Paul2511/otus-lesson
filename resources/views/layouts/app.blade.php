@@ -58,10 +58,26 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item"
+                                       href="{{ route('home') }}">
+                                        {{ __('Домой') }}
+                                    </a>
+
+                                    <a class="dropdown-item"
+                                       href="#">
+                                        {{ __('Начать тренировку') }}
+                                    </a>
+
+                                    <a class="dropdown-item"
+                                       href="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX) }}">
+                                        {{ __('Мои словари') }}
+                                    </a>
+
+                                    <a class="dropdown-item"
+                                       href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Выйти') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
