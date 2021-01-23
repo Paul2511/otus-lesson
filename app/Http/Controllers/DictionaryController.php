@@ -45,10 +45,10 @@ class DictionaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    /*public function create()
     {
         //
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
@@ -58,17 +58,21 @@ class DictionaryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->dictionaryStoreService->store($request->name);
+        $name = $request->name;
 
-        return redirect(route(Routes::DICTIONARIES_INDEX));
+        if (!$name) {
+            abort(400);
+        }
+
+        $result = $this->dictionaryStoreService->store($request->name);
+
+        if ($result) {
+            return redirect(route(Routes::DICTIONARIES_INDEX));
+        } else {
+            abort(400);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Dictionary $dictionary
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
     public function show(Dictionary $dictionary)
     {
         Gate::authorize('show-dictionary', $dictionary);
@@ -87,10 +91,10 @@ class DictionaryController extends Controller
      * @param \App\Models\Dictionary $dictionary
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dictionary $dictionary)
+/*    public function edit(Dictionary $dictionary)
     {
         //
-    }
+    }*/
 
     /**
      * Update the specified resource in storage.
@@ -99,10 +103,10 @@ class DictionaryController extends Controller
      * @param \App\Models\Dictionary $dictionary
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dictionary $dictionary)
+/*    public function update(Request $request, Dictionary $dictionary)
     {
         //
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
