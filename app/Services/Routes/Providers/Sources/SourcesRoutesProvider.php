@@ -20,7 +20,7 @@ final class SourcesRoutesProvider
     public function register()
     {
         Route::group([
-            'middleware' => ['auth','log']
+            'middleware' => ['locale','auth','log']
         ], function () {
             Route::get('/', function () {
                 return redirect(SourcesRoutes::SOURCES_DASHBOARD);

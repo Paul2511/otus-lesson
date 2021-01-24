@@ -52,7 +52,7 @@
                             <h6 id="error_message" style="text-align: center;font-size: 14px;color: red;"></h6>
                             <form class="text-left">
                                 <div class="form">
-{{--                                    <input name="_token" type="hidden" value="{{ csrf_token() }}">--}}
+                                    <input name="_token" type="hidden" value="{{ csrf_token() }}">
                                     <div id="username-field" class="field-wrapper input">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                         <input id="email" name="email" type="text" class="form-control" placeholder=" @lang('auth.username') ">
@@ -142,6 +142,25 @@
             });
         });
 
+        $('.lang').click(function (e) {
+            let set_locale = "{{route(App\Services\Routes\Providers\Helpers\HelpersRoutes::SET_LOCALE) }}";
+            let locale = $(this).data('lang');
+            $.ajax({
+                type: 'POST',
+                beforeSend: function (xhr) { // Add this line
+                    xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
+                },  // Add this line
+                url: set_locale,
+                data: {locale: locale},
+                dataType: 'json',
+                success: function (respond) {
+                    window.location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    window.location.reload();
+                }
+            });
+        });
     });
 </script>
 </body>

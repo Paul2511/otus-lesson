@@ -18,7 +18,7 @@ final class AdminRoutesProvider
     public function register()
     {
         Route::group([
-            'middleware' => ['auth','log']
+            'middleware' => ['locale','auth','log']
         ], function () {
             Route::resource('users', AdminUsersController::class);
             Route::post('users/activate/{id}', [AdminUsersController::class, 'activate'])->name( AdminRoutes::ADMIN_USERS_ACTIVATE);

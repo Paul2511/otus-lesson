@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Sources\DashboardController;
 use App\Services\Routes\Providers\Admin\AdminRoutesProvider;
+use App\Services\Routes\Providers\Helpers\HelpersRoutesProvider;
 use App\Services\Routes\Providers\Sources\SourcesRoutesProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 app(AdminRoutesProvider::class)->register();
 app(SourcesRoutesProvider::class)->register();
+app(HelpersRoutesProvider::class)->register();
 
 
 

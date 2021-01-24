@@ -1,11 +1,6 @@
 <?php
 
-
 namespace App\Http\Requests;
-
-
-
-use Illuminate\Validation\Rule;
 
 class AdminUsersStoreRequest extends BaseFormRequest
 {
