@@ -32,5 +32,9 @@ class DatabaseSeeder extends Seeder
             )
             ->count(5)
             ->create();
+
+        $this->call([
+            UserSeeder::class,
+        ]);
     }
 }
