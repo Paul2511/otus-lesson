@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Fakers\CustomPhoneProvider;
+use Support\Phone\Fakers\PhoneNumberProvider;
 use App\Models\Lead;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\States\Lead\Status\SpecialistLeadStatus;
+use App\States\Lead\Type\IncomingCallLeadType;
+use App\States\Lead\Type\OutgoingCallLeadType;
 class LeadFactory extends Factory
 {
     /**
@@ -23,17 +24,20 @@ class LeadFactory extends Factory
      */
     public function definition()
     {
-        $type = $this->faker->randomElement(array_keys(Lead::typeLabels()));
+        $types = Lead::getStatesFor('type')->all();
+        $type = $this->faker->randomElement($types);
 
-        $statuses = Lead::statusLabels();
-        unset($statuses[Lead::STATUS_SPEC]);
-        $status = $this->faker->randomElement(array_keys($statuses));
+        $statuses = Lead::getStatesFor('status')
+            ->filter(function($status){
+                return $status !== SpecialistLeadStatus::$name;
+            })->all();
+        $status = $this->faker->randomElement($statuses);
 
         $internalPhone = null;
         $externalPhone = null;
 
-        if (in_array($type, [Lead::TYPE_OUTGOING_CALL, Lead::TYPE_INCOMING_CALL])) {
-            $this->faker->addProvider(new CustomPhoneProvider($this->faker));
+        if (in_array($type, [IncomingCallLeadType::$name, OutgoingCallLeadType::$name])) {
+            $this->faker->addProvider(new PhoneNumberProvider($this->faker));
 
             $internalPhone = $this->faker->phoneNumber;
             $externalPhone = $this->faker->phoneNumber;

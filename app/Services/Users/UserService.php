@@ -3,102 +3,99 @@
 
 namespace App\Services\Users;
 
+use App\Exceptions\User\UserRegisterException;
+use App\Exceptions\User\UserUpdateException;
+use App\Jobs\User\UserAvatarThumbnailJob;
 use App\Models\User;
 use App\Services\Users\Dto\UserRegisterData;
-use App\Services\Users\Helpers\UserDetailLabelsHelper;
+use App\Services\Users\DTO\UserUpdateData;
 use App\Services\Users\Repositories\UserRepository;
-use App\Services\BaseService;
-use App\Services\Users\Handlers\UpdateUserHandler;
-use App\Services\Users\Helpers\UserLabelsHelper;
-use App\Services\Users\Repositories\UserDetailRepository;
-use App\Services\Users\Handlers\UserRegisterHandler;
-class UserService extends BaseService
+use Hash;
+use Support\Log\LogHelper;
+
+class UserService
 {
     /**
      * @var UserRepository
      */
     private $userRepository;
-    /**
-     * @var UpdateUserHandler
-     */
-    private $updateUserHandler;
-    /**
-     * @var UserLabelsHelper
-     */
-    private $userLabelsHelper;
-    /**
-     * @var UserDetailLabelsHelper
-     */
-    private $detailLabelsHelper;
-    /**
-     * @var UserDetailRepository
-     */
-    private $detailRepository;
-    /**
-     * @var UserRegisterHandler
-     */
-    private $userRegisterHandler;
 
     public function __construct(
-        UserRepository $userRepository,
-        UpdateUserHandler $updateUserHandler,
-        UserLabelsHelper $userLabelsHelper,
-        UserDetailLabelsHelper $detailLabelsHelper,
-        UserDetailRepository $detailRepository,
-        UserRegisterHandler $userRegisterHandler
+        UserRepository $userRepository
     )
     {
         $this->userRepository = $userRepository;
-        $this->updateUserHandler = $updateUserHandler;
-        $this->userLabelsHelper = $userLabelsHelper;
-        $this->detailLabelsHelper = $detailLabelsHelper;
-        $this->detailRepository = $detailRepository;
-        $this->userRegisterHandler = $userRegisterHandler;
     }
 
-    public function findUser(int $id): array
+    public function findUser(int $id): User
     {
         $user = $this->userRepository->findUser($id, true);
-        $userArray = $this->userLabelsHelper->toArray($user);
 
-        $detail = $this->detailRepository->findUserDetailByUserId($id, true);
-        $detailArray = $this->detailLabelsHelper->toArray($detail);
-        $userArray['detail'] = $detailArray;
-
-        return [
-            'user'=>$userArray,
-            'success'=>true
-        ];
-    }
-
-    public function setUser(int $id, $data): array
-    {
-        $user = $this->updateUserHandler->handle($id, $data);
-        $userArray = $this->userLabelsHelper->toArray($user);
-
-        $detail = $user->userDetail;
-        $detailArray = $this->detailLabelsHelper->toArray($detail);
-        $userArray['detail'] = $detailArray;
-
-        $message = [
-            'title'=>trans('form.message.successTitle'),
-            'text'=>trans('form.message.successText')
-        ];
-        return [
-            'user'=>$userArray,
-            'success'=>true,
-            'message'=>$message
-        ];
+        return $user;
     }
 
     /**
-     * @param UserRegisterData $data
-     * @return User|null
+     * @throws UserUpdateException
      */
-    public function registerUser(UserRegisterData $data)
+    public function updateUser(User $user, UserUpdateData $updateData): User
     {
-        $user = $this->userRegisterHandler->handle($data);
+        \DB::beginTransaction();
 
-        return $user;
+        if ($updateData->avatar && $updateData->avatar->path && $updateData->avatar->path != $user->avatar->path) {
+            UserAvatarThumbnailJob::dispatch($user, $updateData->avatar);
+        }
+
+        $data = $updateData->all();
+
+        try {
+            $result = $this->userRepository->updateUser($user, $data);
+
+            if (!$result) {
+                throw new UserUpdateException();
+            }
+
+            \DB::commit();
+
+            $user->refresh();
+            return $user;
+        } catch (\Throwable $e) {
+            LogHelper::slack("Ошибка обновления user #{$user->id}", [
+                'userId'=>auth()->user()->getAuthIdentifier(),
+                'error'=>$e->getMessage(),
+                'userData'=>$data
+            ]);
+            throw new UserUpdateException($e->getMessage());
+        }
+    }
+
+    /**
+     * @throws \App\Exceptions\User\UserRegisterException
+     */
+    public function registerUser(UserRegisterData $userRegisterData)
+    {
+        $userRegisterData->password = Hash::make($userRegisterData->password);
+
+        $data = $userRegisterData->toArray();
+
+        try {
+            $user = $this->userRepository->createUser($data);
+
+            LogHelper::registration('Новая регистрация пользователя', [
+                'id'=>$user->id,
+                'role'=>$user->role->getValue(),
+                'email'=>$user->email,
+                'password'=>$userRegisterData->clientPassword
+            ]);
+
+            return $user;
+        } catch (\Throwable $e) {
+
+            LogHelper::slack("Ошибка регистрации пользователя", [
+                'error'=>$e->getMessage(),
+                'userData'=>$data
+            ]);
+
+            throw new UserRegisterException($e->getMessage());
+        }
     }
 }

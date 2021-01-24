@@ -3,17 +3,15 @@
 
 namespace App\Services\Files;
 
-use App\Services\BaseService;
 use App\Services\Files\DTO\ImageData;
+use App\Services\Files\DTO\UploadImageData;
 use Illuminate\Http\UploadedFile;
 use App\Services\Files\Helpers\UploadHelper;
-use Intervention\Image\Exception\ImageException;
-use Intervention\Image\Facades\Image;
 use App\Services\Files\Repositories\FileRepository;
 use App\Services\Files\Handlers\FileDeleteHandler;
 use App\Services\Files\Handlers\CreateThumbnailHandler;
 use Storage;
-class FileService extends BaseService
+class FileService
 {
     /**
      * @var FileDeleteHandler
@@ -40,17 +38,17 @@ class FileService extends BaseService
     }
 
 
-    public function uploadImage(UploadedFile $file, ?array $data=[], ?string $disk=null): array
+    public function uploadImage(UploadImageData $uploadData): ImageData
     {
-        $disk = $disk ?? config('filesystems.default');
-        $filePath = UploadHelper::getUploadPathFromArray($data);
+        $uploadPath = str_replace('.', '/', $uploadData->uploadPath);
+        $filePath = $uploadPath . '/' . $uploadData->user;
 
-        $path = $file->store($filePath, $disk);
+        $file = $uploadData->file;
+        $path = $file->store($filePath, $uploadData->disk);
 
         $imageSize = getimagesize($file->path()) ?? [];
-
-        $result = ImageData::fromArray([
-            'disk' => $disk,
+        return ImageData::fromArray([
+            'disk' => $uploadData->disk,
             'path'=>$path,
             'src' => Storage::url($path),
             'mime'=>$file->getMimeType(),
@@ -58,11 +56,6 @@ class FileService extends BaseService
             'width' => $imageSize[0] ?? 0,
             'height' => $imageSize[1] ?? 0
         ]);
-
-        return [
-            'fileData'=>$result,
-            'success'=>true
-        ];
     }
 
     public function getAllFiles(?string $disk=null): array

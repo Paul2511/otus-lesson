@@ -14,6 +14,7 @@ class ApiAuthControllerRefreshTest extends TestCase
 
     /**
      * @group auth
+     * @group refreshToken
      */
     public function testWrongToken401()
     {
@@ -34,6 +35,7 @@ class ApiAuthControllerRefreshTest extends TestCase
 
     /**
      * @group auth
+     * @group refreshToken
      */
     public function testValidToken200()
     {

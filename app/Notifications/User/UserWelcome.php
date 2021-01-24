@@ -7,10 +7,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
+use Illuminate\Queue\InteractsWithQueue;
 class UserWelcome extends Notification implements ShouldQueue
 {
-    use Queueable;
+    //use Queueable;
+    use InteractsWithQueue;
 
     public $afterCommit = true;
     /**

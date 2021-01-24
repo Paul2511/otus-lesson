@@ -3,7 +3,7 @@
 namespace App\Listeners\Pet;
 
 use App\Events\Pet\PetEvent;
-use App\Helpers\CacheHelper;
+use Support\Cache\CacheHelper;
 use App\Models\Pet;
 
 class PetCacheClear

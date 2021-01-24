@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Skachinsky\LocaleTranslator\LocaleTranslator;
+use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\PetType
  *
@@ -22,7 +23,7 @@ use Skachinsky\LocaleTranslator\LocaleTranslator;
  *
  * @property-read Collection|Pet[] $pets
  */
-class PetType extends BaseModel
+class PetType extends Model
 {
     use HasFactory;
     use LocaleTranslator;
@@ -42,7 +43,8 @@ class PetType extends BaseModel
         return $this->hasMany(Pet::class);
     }
 
-    public function getTitleAttribute() {
+    public function getTitleAttribute()
+    {
         return $this->translateAttribute($this->slug);
     }
 }

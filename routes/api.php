@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PetController;
-use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FileController;
 use App\Http\RouteNames;
 /*
@@ -30,7 +30,7 @@ Route::group([
     'prefix' => 'users',
 ], function () {
     Route::get('/{user}', [UserController::class, 'show'])->name(RouteNames::GET_USER);
-    Route::patch('/{user}', [UserController::class, 'update'])->name(RouteNames::UPDATE_USER);
+    Route::post('/{user}', [UserController::class, 'update'])->name(RouteNames::UPDATE_USER);
 });
 
 Route::group([

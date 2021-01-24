@@ -4,64 +4,60 @@
 namespace Tests\Generators;
 
 use App\Models\User;
-use App\Models\UserDetail;
-use App\Services\Users\Helpers\UserLabelsHelper;
+use App\States\User\Role\AdminUserRole;
+use App\States\User\Role\ClientUserRole;
+use App\States\User\Role\ManagerUserRole;
+use App\States\User\Role\SpecialistUserRole;
+use App\States\User\Role\UserRole;
+
 class UserGenerator
 {
     private static function generate(array $data): User
     {
         /** @var User $user */
         $user = User::factory()->create($data);
-        UserDetail::factory()->create([
-            'user_id' => $user->id,
-        ]);
+
         return $user;
     }
 
     public static function generateClient(?array $data = []): User
     {
         return self::generate(array_merge([
-            'role' => User::ROLE_CLIENT,
+            'role' => ClientUserRole::class,
         ], $data));
     }
 
     public static function generateSpec(?array $data = []): User
     {
         return self::generate(array_merge([
-            'role' => User::ROLE_SPEC,
+            'role' => SpecialistUserRole::class,
         ], $data));
     }
 
     public static function generateManager(?array $data = []): User
     {
         return self::generate(array_merge([
-            'role' => User::ROLE_MANAGER,
+            'role' => ManagerUserRole::class,
         ], $data));
     }
 
     public static function generateAdmin(?array $data = []): User
     {
         return self::generate(array_merge([
-            'role' => User::ROLE_ADMIN,
+            'role' => AdminUserRole::class,
         ], $data));
     }
 
 
     /**
-     * @param string $role
+     * @param string|UserRole $role
      * @param array|null $data
-     * @return User|null
+     * @return User
      */
-    public static function generateRole(string $role, ?array $data = []): ?User
+    public static function generateRole($role, ?array $data = []): ?User
     {
-        $roles = UserLabelsHelper::roleLabels();
-
-        if (in_array($role, array_keys($roles))) {
-            return self::generate(array_merge([
-                'role' => $role,
-            ], $data));
-        }
-
-        return null;
+        return self::generate(array_merge([
+            'role' => $role,
+        ], $data));
     }
 }

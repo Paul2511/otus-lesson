@@ -5,15 +5,13 @@ namespace App\Providers;
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
 use App\Events\User\UserCreated;
+use App\Events\User\UserRoleCreated;
 use App\Listeners\Pet\PetCacheClear;
 use App\Listeners\User\UserSend\UserSendWelcomeMsg;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\User\UserUpdated;
-use App\Listeners\User\UserCacheClear;
-use App\Events\UserDetail\UserDetailUpdated;
-use App\Listeners\UserDetail\UserDetailCacheClear;
+use App\Listeners\User\UserCache\UserCacheClear;
+use App\Listeners\User\UserRole\UserRoleCreate;
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -27,14 +25,15 @@ class EventServiceProvider extends ServiceProvider
         ],*/
 
         UserCreated::class => [
+            UserRoleCreate::class
+        ],
+
+        UserRoleCreated::class => [
             UserSendWelcomeMsg::class
         ],
 
         UserUpdated::class => [
             UserCacheClear::class
-        ],
-        UserDetailUpdated::class => [
-            UserDetailCacheClear::class
         ],
 
         PetUpdated::class => [

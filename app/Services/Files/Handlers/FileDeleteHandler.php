@@ -4,7 +4,7 @@
 namespace App\Services\Files\Handlers;
 
 
-use App\Helpers\LogHelper;
+use Support\Log\LogHelper;
 use Storage;
 use App\Services\Files\Exceptions\FileDeleteException;
 class FileDeleteHandler

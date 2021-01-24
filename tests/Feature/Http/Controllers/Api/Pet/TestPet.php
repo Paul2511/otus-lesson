@@ -17,11 +17,6 @@ class TestPet extends TestCase
 
     private static $isSeed = false;
 
-    protected function getPetRepository(): PetRepository
-    {
-        return app(PetRepository::class);
-    }
-
     /**
      * @param int|null $count
      * @param array|null $data
@@ -35,9 +30,9 @@ class TestPet extends TestCase
         }
 
         if (!count($data) || !isset($data['client_id'])) {
-            $userId = $this->currentUser()->id;
+            $clientId = $this->currentUser()->client->id;
             $data = array_merge($data, [
-                'client_id' => $userId
+                'client_id' => $clientId
             ]);
         }
 

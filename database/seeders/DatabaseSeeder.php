@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PetTypesTableSeeder::class);
         $this->call(SpecializationsTableSeeder::class);
 
-        $this->call(ClientSeeder::class); //Создаем клиентов с зависимостями
-        Pet::factory(10)->create(); //Создаем питомцев
-        $this->call(SpecSeeder::class); //Создаем специалистов
+        $this->call(ClientSeeder::class);
+        Pet::factory(10)->create();
+
+        $this->call(SpecialistSeeder::class);
     }
 }

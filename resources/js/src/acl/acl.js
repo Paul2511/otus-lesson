@@ -6,7 +6,7 @@ Vue.use(AclInstaller)
 
 let initialRole = 'public'
 const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-if (userInfo && userInfo.role) initialRole = userInfo.role
+if (userInfo && userInfo.role) initialRole = userInfo.currentRole.role
 
 export default new AclCreate({
     initial: initialRole,
@@ -16,19 +16,19 @@ export default new AclCreate({
     globalRules: {
         admin: new AclRule('admin').generate(),
         manager: new AclRule('manager').or('admin').generate(),
-        spec: new AclRule('spec').generate(),
+        spec: new AclRule('specialist').generate(),
         client: new AclRule('client').generate(),
         inter:
             new AclRule('inter')
                 .or('client')
-                .or('spec')
+                .or('specialist')
                 .or('manager')
                 .or('admin')
                 .generate(),
         public:
             new AclRule('public')
                 .or('client')
-                .or('spec')
+                .or('specialist')
                 .or('manager')
                 .or('admin')
                 .generate(),

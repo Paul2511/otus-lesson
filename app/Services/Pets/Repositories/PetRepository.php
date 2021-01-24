@@ -3,7 +3,7 @@
 
 namespace App\Services\Pets\Repositories;
 
-use App\Helpers\CacheHelper;
+use Support\Cache\CacheHelper;
 use App\Models\Pet;
 
 class PetRepository
@@ -18,15 +18,15 @@ class PetRepository
     /**
      * @return Pet[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getPets(?int $userId = null, ?bool $fromCache=false)
+    public function getPets(?int $clientId = null, ?bool $fromCache=false)
     {
         $query = Pet::query();
-        if ($userId) {
-            $query->where(['client_id'=>$userId]);
+        if ($clientId) {
+            $query->where(['client_id'=>$clientId]);
         }
 
         return $fromCache ?
-            CacheHelper::remember($query, \Str::plural(class_basename(Pet::class)), $userId)->get() :
+            CacheHelper::remember($query, \Str::plural(class_basename(Pet::class)), $clientId)->get() :
             $query->get();
     }
 

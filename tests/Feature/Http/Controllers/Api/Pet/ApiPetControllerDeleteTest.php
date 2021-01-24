@@ -4,6 +4,7 @@
 namespace Tests\Feature\Http\Controllers\Api\Pet;
 
 use App\Jobs\Pet\PetDeleteJob;
+use App\States\User\Role\AdminUserRole;
 use Illuminate\Support\Facades\Bus;
 use Tests\Generators\UserGenerator;
 use App\Models\User;
@@ -45,7 +46,7 @@ class ApiPetControllerDeleteTest extends TestPet
 
         $anotherUser = UserGenerator::generateClient();
         $anotherPets = $this->generatePet(3, [
-            'client_id' => $anotherUser->id
+            'client_id' => $anotherUser->client->id
         ]);
 
         $pet = $anotherPets->random(1)->all();
@@ -65,11 +66,11 @@ class ApiPetControllerDeleteTest extends TestPet
      */
     public function testAdminSuccess200()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $anotherUser = UserGenerator::generateClient();
         $anotherPets = $this->generatePet(5, [
-            'client_id' => $anotherUser->id
+            'client_id' => $anotherUser->client->id
         ]);
 
         $pet = $anotherPets->random(1)->all();
@@ -90,7 +91,7 @@ class ApiPetControllerDeleteTest extends TestPet
      */
     public function testPetNotFound404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $response = $this->tokenHeader()->json('delete', self::$uri . '12');
 
@@ -106,7 +107,7 @@ class ApiPetControllerDeleteTest extends TestPet
      */
     public function testWithoutPet404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $response = $this->tokenHeader()->json('delete', self::$uri);
 

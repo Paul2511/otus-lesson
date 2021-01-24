@@ -4,7 +4,7 @@
         <div class="vx-row mb-8">
             <div class="vx-col w-full">
                 <div class="flex items-start flex-col sm:flex-row">
-                    <img :src="detail.avatar.src" class="mr-8 rounded h-32 w-32" />
+                    <img :src="user.avatar.src" class="mr-8 rounded h-32 w-32" />
                     <div>
                         <input type="file" class="hidden" ref="update_avatar_input" @change="uploadAvatar" accept="image/*">
 
@@ -34,22 +34,22 @@
                     <tr>
                         <td class="font-semibold">{{ $t('user.lastname') }}</td>
                         <td>
-                            <vs-input @change="setDetailData('lastname')" v-model="detail.lastname" :danger="!!errors.lastname" val-icon-danger="icon-x" val-icon-pack="feather" />
+                            <vs-input @change="setUserName('lastName', $event.target.value)" v-model="user.name.lastName" :danger="!!errors.lastName" val-icon-danger="icon-x" val-icon-pack="feather" />
                             <span class="text-danger text-xs" v-show="!!errors.lastname">{{ errors.lastname | arr2str }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td class="font-semibold">{{ $t('user.firstname') }}</td>
                         <td>
-                            <vs-input @change="setDetailData('firstname')" v-model="detail.firstname" :danger="!!errors.firstname" val-icon-danger="icon-x" val-icon-pack="feather"/>
-                            <span class="text-danger text-xs" v-show="!!errors.firstname">{{ errors.firstname | arr2str }}</span>
+                            <vs-input @change="setUserName('firstName', $event.target.value)" v-model="user.name.firstName" :danger="!!errors.firstName" val-icon-danger="icon-x" val-icon-pack="feather"/>
+                            <span class="text-danger text-xs" v-show="!!errors.firstName">{{ errors.firstName | arr2str }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td class="font-semibold">{{ $t('user.middlename') }}</td>
                         <td>
-                            <vs-input @change="setDetailData('middlename')" v-model="detail.middlename" :danger="!!errors.middlename" val-icon-danger="icon-x" val-icon-pack="feather"/>
-                            <span class="text-danger text-xs" v-show="!!errors.middlename">{{ errors.middlename | arr2str }}</span>
+                            <vs-input @change="setUserName('middleName', $event.target.value)" v-model="user.name.middleName" :danger="!!errors.middleName" val-icon-danger="icon-x" val-icon-pack="feather"/>
+                            <span class="text-danger text-xs" v-show="!!errors.middleName">{{ errors.middleName | arr2str }}</span>
                         </td>
                     </tr>
                 </table>
@@ -61,23 +61,19 @@
                 <table>
                     <tr>
                         <td class="font-semibold">{{ $t('user.phone') }}</td>
-                        <td>{{ user.phoneFormat }}</td>
+                        <td>{{ user.phone.formatPhone }}</td>
                     </tr>
                     <tr>
                         <td class="font-semibold">{{ $t('user.email') }}</td>
                         <td>
                             {{ user.email }}
-                            <template v-if="0">
-                                <vs-input @change="setUserData('email')" type="email" v-model="user.email" :danger="!!errors.email" val-icon-danger="icon-x" val-icon-pack="feather"/>
-                                <span class="text-danger text-xs" v-show="!!errors.email">{{ errors.email | arr2str }}</span>
-                            </template>
                         </td>
                     </tr>
                     <tr v-if="canAdmin">
                         <td class="font-semibold">{{ $t('user.status') }}</td>
                         <td>
-                            <vs-select @change="setUserData('status')" v-model="user.status" class="w-full" :danger="!!errors.status" val-icon-danger="icon-x" val-icon-pack="feather">
-                                <vs-select-item :key="index" :value="index" :text="item" v-for="(item,index) in user.statusLabels" class="w-full" />
+                            <vs-select @change="setUserData('status')" v-model="user.currentStatus.status" class="w-full" :danger="!!errors.status" val-icon-danger="icon-x" val-icon-pack="feather">
+                                <vs-select-item :key="index" :value="index" :text="item" v-for="(item,index) in userStatuses" class="w-full" />
                             </vs-select>
                             <span class="text-danger text-xs" v-show="!!errors.status">{{ errors.status | arr2str }}</span>
                         </td>
@@ -85,18 +81,18 @@
 
                     <tr v-if="canAdmin">
                         <td class="font-semibold">{{ $t('user.role') }}</td>
-                        <td>{{ user.roleLabel }}</td>
+                        <td>{{ user.currentRole.label }}</td>
                     </tr>
-                    <tr v-if="!!user.detail.specialization">
+                    <tr v-if="!!user.specialist && !!user.specialist.specializationTitle">
                         <td class="font-semibold">{{ $t('user.specialization') }}</td>
-                        <td>{{ user.detail.specialization.name }}</td>
+                        <td>{{ user.specialist.specializationTitle }}</td>
                     </tr>
                 </table>
             </div>
             <!-- /Information - Col 2 -->
 
             <div class="vx-col w-full flex mt-4">
-                <vs-button @click.native="save" :disabled="!userData && !detailData || uploading" icon-pack="feather" color="success" icon="icon-save" class="mr-4">
+                <vs-button @click.native="save" :disabled="!userData || uploading" icon-pack="feather" color="success" icon="icon-save" class="mr-4">
                     {{ $t('buttons.save') }}
                 </vs-button>
                 <vs-button type="border" @click.native="cancel">
@@ -119,10 +115,8 @@
         data() {
             return {
                 user: Object.assign({}, this.userInfo),
-                detail: Object.assign({}, this.userInfo.detail),
                 errors: [],
                 userData: null,
-                detailData: null,
                 uploading: false
             }
         },
@@ -132,25 +126,31 @@
                     this.userData = {};
                 }
                 const val = this.user[field];
+
                 Vue.set(this.userData, field, val);
             },
-            setDetailData(field) {
-                if (!this.detailData) {
-                    this.detailData = {};
+            setUserName(field, value) {
+                if (!this.user.name) {
+                    this.user.name = {};
                 }
-                const val = this.detail[field];
-                Vue.set(this.detailData, field, val);
-            },
 
+                Vue.set(this.user.name, field, value);
+
+                this.setUserData('name');
+            },
             cancel() {
                 this.$emit('cancel');
             },
             save() {
-                if (this.detailData) {
-                    if (!this.userData) {
-                        this.userData = {};
-                    }
-                    Vue.set(this.userData, 'detail', this.detailData);
+                if (this.userData.name) {
+                    const allowedNameFields = ['lastName', 'firstName', 'middleName'];
+                    const name = Object.keys(this.userData.name)
+                        .filter(key => allowedNameFields.includes(key))
+                        .reduce((obj, key) => {
+                            obj[key] = this.userData.name[key];
+                            return obj;
+                        }, {});
+                    Vue.set(this.userData, 'name', name);
                 }
 
                 this.$vs.loading();
@@ -193,8 +193,8 @@
                 this.$store.dispatch('uploadImage', formData)
                     .then(res => {
                         if (res.data.success && !!res.data.fileData) {
-                            this.detail.avatar = res.data.fileData;
-                            this.setDetailData('avatar');
+                            this.user.avatar = res.data.fileData;
+                            this.setUserData('avatar');
                         }
                     })
                     .catch(err => {
@@ -210,8 +210,8 @@
                     });
             },
             deleteAvatar() {
-                this.detail.avatar = this.defaultAvatar;
-                this.setDetailData('avatar');
+                this.user.avatar = this.defaultAvatar;
+                this.setUserData('avatar');
             }
         },
         computed: {
@@ -219,22 +219,27 @@
                 return this.$acl.check('canAdmin')
             },
             changeAvatarLabel() {
-                const avatar = this.detail.avatar;
+                const avatar = this.user.avatar;
                 if (!avatar.type || avatar.type === 'default') {
                     return this.$t('user.uploadAvatar');
                 }
                 return this.$t('user.changeAvatar');
             },
             showAvatarDelete() {
-                const avatar = this.detail.avatar;
+                const avatar = this.user.avatar;
                 if (!!avatar.type && avatar.type === 'default') {
                     return false;
                 }
                 return true;
             },
+            params() {
+                return this.$store.state.appParams;
+            },
             defaultAvatar() {
-                let params = this.$store.state.appParams;
-                return params.defaultAvatar;
+                return this.params.defaultAvatar;
+            },
+            userStatuses() {
+                return this.params.userStatuses;
             }
         }
     }

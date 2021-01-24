@@ -3,6 +3,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Pet;
 
+use App\States\User\Role\AdminUserRole;
 use Tests\Generators\UserGenerator;
 use App\Models\User;
 class ApiPetControllerIndexTest extends TestPet
@@ -57,7 +58,7 @@ class ApiPetControllerIndexTest extends TestPet
 
         $anotherUser = UserGenerator::generateClient();
         $anotherPets = $this->generatePet(3, [
-            'client_id' => $anotherUser->id
+            'client_id' => $anotherUser->client->id
         ]);
 
         $response = $this->tokenHeader()->json('get', self::$uri . $anotherUser->id);
@@ -74,11 +75,11 @@ class ApiPetControllerIndexTest extends TestPet
      */
     public function testAdminSuccess200()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $anotherUser = UserGenerator::generateClient();
         $anotherPets = $this->generatePet(2, [
-            'client_id' => $anotherUser->id
+            'client_id' => $anotherUser->client->id
         ]);
 
         $response = $this->tokenHeader()->json('get', self::$uri . $anotherUser->id);
@@ -96,7 +97,7 @@ class ApiPetControllerIndexTest extends TestPet
      */
     public function testUserNotFound404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $response = $this->tokenHeader()->json('get', self::$uri . '2');
 
@@ -112,7 +113,7 @@ class ApiPetControllerIndexTest extends TestPet
      */
     public function testWithoutUser404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $response = $this->tokenHeader()->json('get', self::$uri);
 

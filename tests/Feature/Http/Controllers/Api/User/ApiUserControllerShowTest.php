@@ -4,6 +4,7 @@
 namespace Tests\Feature\Http\Controllers\Api\User;
 
 use App\Models\User;
+use App\States\User\Role\AdminUserRole;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Tests\AuthAttach;
@@ -53,7 +54,7 @@ class ApiUserControllerShowTest extends TestCase
      */
     public function testAdminSuccess200()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $anotherUser = UserGenerator::generateClient();
 
@@ -71,7 +72,7 @@ class ApiUserControllerShowTest extends TestCase
      */
     public function testUserNotFound404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $response = $this->tokenHeader()->json('get', self::$uri . '2');
 
@@ -87,7 +88,7 @@ class ApiUserControllerShowTest extends TestCase
      */
     public function testWithoutUser404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $response = $this->tokenHeader()->json('get', self::$uri);
 

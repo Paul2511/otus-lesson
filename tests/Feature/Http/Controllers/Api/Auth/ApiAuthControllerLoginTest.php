@@ -14,6 +14,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
     /**
      * @group auth
+     * @group login
      */
     public function testRequiresEmailAndPassword422()
     {
@@ -26,6 +27,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
     /**
      * @group auth
+     * @group login
      */
     public function testRequiresEmail422()
     {
@@ -39,6 +41,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
     /**
      * @group auth
+     * @group login
      */
     public function testRequiresPassword422()
     {
@@ -52,6 +55,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
     /**
      * @group auth
+     * @group login
      */
     public function testWrongEmail403()
     {
@@ -69,6 +73,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
     /**
      * @group auth
+     * @group login
      */
     public function testWrongPassword403()
     {
@@ -86,6 +91,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
     /**
      * @group auth
+     * @group login
      */
     public function testLoginSuccessfully200()
     {

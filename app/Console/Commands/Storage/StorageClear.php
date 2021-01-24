@@ -6,8 +6,8 @@ use App\Models\Pet;
 use App\Services\Files\DTO\ImageData;
 use App\Services\Files\FileService;
 use Illuminate\Console\Command;
-use App\Models\UserDetail;
 use App\Services\Files\Handlers\FileDeleteHandler;
+use App\Models\User;
 class StorageClear extends Command
 {
 
@@ -59,9 +59,9 @@ class StorageClear extends Command
         $deleted = 0;
 
         //Определяем используемые файлы
-        $details = UserDetail::whereNotNull('avatar')->get();
-        $details->each(function (UserDetail $detail) {
-            $this->addUses($detail->avatar);
+        $details = User::whereNotNull('avatar')->get();
+        $details->each(function (User $user) {
+            $this->addUses($user->avatar);
         });
 
         $pets = Pet::whereNotNull('photo')->get();

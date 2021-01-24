@@ -107,9 +107,8 @@ return [
 
     //TTL в секундах для разных моделей
     'ttl' => [
-        \App\Models\User::$modelName=>600,
-        \App\Models\UserDetail::$modelName=>600,
-        \App\Models\Pet::$modelName=>600
+        'user'=>600,
+        'pet'=>600
     ]
 
 ];

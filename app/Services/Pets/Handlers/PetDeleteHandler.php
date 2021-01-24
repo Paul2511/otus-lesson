@@ -5,7 +5,7 @@ namespace App\Services\Pets\Handlers;
 
 use App\Services\Pets\Repositories\PetRepository;
 use App\Models\Pet;
-use App\Helpers\LogHelper;
+use Support\Log\LogHelper;
 class PetDeleteHandler
 {
     /**

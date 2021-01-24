@@ -2,23 +2,34 @@
 
 namespace App\Models;
 
+use App\Models\Casts\PhoneCast;
+use App\Models\Casts\User\AvatarCast;
+use App\Models\Casts\User\NameCast;
+use App\Services\Files\DTO\ImageData;
+use App\States\User\Role\AdminUserRole;
+use App\States\User\Role\ClientUserRole;
+use App\States\User\Role\ManagerUserRole;
+use App\States\User\Role\SpecialistUserRole;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Support\Person\PersonName\PersonNameData;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Casts\Phone;
 use Illuminate\Database\Eloquent\Builder;
 use Watson\Rememberable\Rememberable;
 use App\Events\User\UserUpdated;
 use App\Events\User\UserCreated;
+use Spatie\ModelStates\HasStates;
+use App\States\User\Status\UserStatus;
+use App\States\User\Role\UserRole;
 /**
  * App\Models\User
  *
  * @property int $id
- * @property string $name
+ * @property PersonNameData $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
@@ -27,18 +38,13 @@ use App\Events\User\UserCreated;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $role
- * @property int $status
+ * @property UserRole $role
+ * @property UserStatus $status
  * @property string|null $phone
  * @property string $locale
- * @property-read \App\Models\Team $currentTeam
- * @property-read string $profile_photo_url
+ * @property ImageData|null $avatar
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Team[] $ownedTeams
- * @property-read int|null $owned_teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Team[] $teams
- * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
  * @method static Builder|User newModelQuery()
@@ -46,35 +52,26 @@ use App\Events\User\UserCreated;
  * @method static Builder|User query()
  * @method static Builder|User whereCreatedAt($value)
  * @method static Builder|User whereEmail($value)
- * @method static Builder|User whereEmailVerifiedAt($value)
  * @method static Builder|User whereId($value)
  * @method static Builder|User whereName($value)
- * @method static Builder|User wherePassword($value)
  * @method static Builder|User wherePhone($value)
- * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereRole($value)
  * @method static Builder|User whereStatus($value)
- * @method static Builder|User whereTwoFactorRecoveryCodes($value)
- * @method static Builder|User whereTwoFactorSecret($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @method static Builder|User remember($seconds, $key=null)
  * @method static Builder|User flushCache($key)
  * @mixin \Eloquent
  *
- * @method static Builder|User          active()
- * @method static Builder|User          client()
- * @method static Builder|User          spec()
  * @property-read bool                  $isAdmin
  * @property-read bool                  $isManager
- * @property-read bool                  $phoneFormat
+ * @property-read bool                  $isClient
+ * @property-read bool                  $isSpecialist
  *
- * @property-read Collection|Pet[]      $pets
- * @property-read Collection|UserDetail $userDetail
+ * @property-read Collection|Comment[]  $commentsByUser
+ * @property-read Collection|Client     $client
+ * @property-read Collection|Specialist $specialist
  * @property-read Collection|Lead[]     $leads
  * @property-read Collection|Lead[]     $managerLeads
- * @property-read Collection|Request[]  $requests
- * @property-read Collection|Request[]  $specRequests
- * @property-read Collection|Comment[]  $commentsByUser
  */
 class User extends Authenticatable implements JWTSubject, HasLocalePreference
 {
@@ -82,21 +79,15 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
     use HasFactory;
     use Notifiable;
     use Rememberable;
+    use HasStates;
 
-    const ROLE_CLIENT = 'client';
-    const ROLE_SPEC = 'spec';
-    const ROLE_MANAGER = 'manager';
-    const ROLE_ADMIN = 'admin';
+    public string $clientPassword;
 
-    const STATUS_ACTIVE = 10;
-    const STATUS_NOT_ACTIVE = 20;
-
-    const EMPTY_NAME = '-';
-
-    public static $modelName = 'user';
-
-    /** @var string */
-    public $clientPassword;
+    //Спецефические данные формы для регистрации пользователя с ролью
+    public array $clientData = [];
+    public array $specialistData = [];
+    public array $managerData = [];
+    public array $adminData = [];
 
     /**
      * @var bool
@@ -104,7 +95,7 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
     public $sendWelcomeEmail = false;
 
     protected $fillable = [
-        'email', 'password', 'role', 'status', 'locale'
+        'email', 'password', 'phone', 'status', 'locale', 'role', 'name', 'avatar'
     ];
 
     public function preferredLocale()
@@ -119,18 +110,21 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
         'two_factor_secret',
         'created_at',
         'updated_at',
-        'name',
-        'userDetail'
+        'status',
+        'role'
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime:Y-m-d H:i',
-        'phone' => Phone::class
+        'name' => NameCast::class,
+        'phone' => PhoneCast::class,
+        'avatar'=>AvatarCast::class,
+        'status'=>UserStatus::class,
+        'role'=>UserRole::class
     ];
 
-
     protected $appends = [
-        'phoneFormat'
+        'currentStatus', 'currentRole', 'specialist'
     ];
 
     protected $rememberCachePrefix = 'users';
@@ -140,97 +134,71 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
         'updated'=>UserUpdated::class
     ];
 
-    /**
-     * Питомцы клиента
-     */
-    public function pets()
+    public function client()
     {
-        return $this->hasMany(Pet::class, 'client_id');
+        return $this->hasOne(Client::class);
     }
 
-    /**
-     * Подробная информация о клиенте/специалисте
-     */
-    public function userDetail()
+    public function specialist()
     {
-        return $this->hasOne(UserDetail::class);
+        return $this->hasOne(Specialist::class);
     }
 
-    /**
-     * Лиды от клиента/специалиста
-     */
     public function leads()
     {
-       return $this->hasMany(Lead::class);
+        return $this->hasMany(Lead::class);
     }
 
-    /**
-     * Лиды, назначенные менеджеру
-     */
     public function managerLeads()
     {
         return $this->hasMany(Lead::class, 'manager_id');
     }
 
-    /**
-     * Заявки клиента
-     */
-    public function requests()
-    {
-        return $this->hasMany(Request::class, 'client_id');
-    }
-
-    /**
-     * Заявки, назначенные на специалиста
-     */
-    public function specRequests()
-    {
-        return $this->hasMany(Request::class);
-    }
-
-    /**
-     * Все комментарии пользователя
-     */
     public function commentsByUser()
     {
         return $this->hasMany(Comment::class);
     }
 
-
-    public function scopeActive(Builder $query)
+    public function getCurrentStatusAttribute()
     {
-        return $query->where('status', self::STATUS_ACTIVE);
+        return $this->status ? [
+            'status'=>$this->status->getValue(),
+            'label'=>$this->status->label(),
+            'color'=>$this->status->color()
+        ] : null;
     }
 
-    public function scopeClient(Builder $query)
+    public function getCurrentRoleAttribute()
     {
-        return $query->where('role', self::ROLE_CLIENT);
-    }
-
-
-    public function scopeSpec(Builder $query)
-    {
-        return $query->where('role', self::ROLE_SPEC);
-    }
-
-    public function getDetailAttribute()
-    {
-        return $this->userDetail()->first()->toArray();
-    }
-
-    public function getPhoneFormatAttribute()
-    {
-        return Phone::formatPhone($this->attributes['phone']);
+        return [
+            'role'=>$this->role->getValue(),
+            'label'=>$this->role->label()
+        ];
     }
 
     public function getIsAdminAttribute()
     {
-        return $this->role === self::ROLE_ADMIN;
+        return $this->role->equals(AdminUserRole::$name);
     }
 
     public function getIsManagerAttribute()
     {
-        return $this->role === self::ROLE_MANAGER;
+        return $this->role->equals(ManagerUserRole::$name);
+    }
+
+    public function getIsClientAttribute()
+    {
+        return $this->role->equals(ClientUserRole::$name);
+    }
+
+    public function getIsSpecialistAttribute()
+    {
+        return $this->role->equals(SpecialistUserRole::$name);
+    }
+
+    public function getSpecialistAttribute()
+    {
+        return $this->role->equals(SpecialistUserRole::$name) ? $this->specialist()->first()->toArray():null;
     }
 
     public function getJWTIdentifier()
@@ -241,7 +209,7 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
     public function getJWTCustomClaims()
     {
         return [
-            'role'=>$this->role
+            'role'=>$this->role->getValue()
         ];
     }
 

@@ -6,8 +6,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use App\Fakers\CustomPhoneProvider;
-
+use Support\Phone\Fakers\PhoneNumberProvider;
+use Support\Person\PersonName\PersonNameData;
 class UserFactory extends Factory
 {
     /**
@@ -28,12 +28,18 @@ class UserFactory extends Factory
         $password = env('USER_TEST_PASSWORD');
         $hash = Hash::make($password);
 
+        $sex = $this->faker->randomElement(['male', 'female']);
+        $name = PersonNameData::fromArray([
+            'lastName' => $this->faker->lastName($sex),
+            'firstName' => $this->faker->firstName($sex),
+            'middleName' => $this->faker->middleName($sex)
+        ])->fullName;
+
         //Добавляем свой формат на номер телефона
-        $this->faker->addProvider(new CustomPhoneProvider($this->faker));
+        $this->faker->addProvider(new PhoneNumberProvider($this->faker));
 
         return [
-            //'name' => $this->faker->name,
-            'name' => User::EMPTY_NAME, //В нашей системе ФИО распологается в UserDetail
+            'name' => $name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => $hash,

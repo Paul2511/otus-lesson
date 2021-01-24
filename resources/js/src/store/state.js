@@ -19,11 +19,9 @@ const userDefaults = {
     id: '',
     role: "public",
     email: '',
-    status: '',
-    detail: {
-        avatar: '',
-        displayName: ''
-    }
+    status: {},
+    avatar: {},
+    name: {}
 };
 
 const userInfoLocalStorage = JSON.parse(localStorage.getItem('userInfo')) || {}

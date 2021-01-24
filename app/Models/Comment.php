@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Comment
  *
@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @property-read Collection|User   $user
  */
-class Comment extends BaseModel
+class Comment extends Model
 {
     use HasFactory;
 

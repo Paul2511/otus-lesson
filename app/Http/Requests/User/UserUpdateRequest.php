@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\User;
 
-use App\Services\Users\Helpers\UserLabelsHelper;
-use Illuminate\Validation\Rule;
+use App\Models\User;
+use App\Services\Localise\Locale;
+use App\States\User\Status\UserStatus;
 use App\Http\Requests\ApiRequest;
+use Illuminate\Validation\Rule;
+use Spatie\ModelStates\Validation\ValidStateRule;
 class UserUpdateRequest extends ApiRequest
 {
     /**
@@ -14,50 +17,27 @@ class UserUpdateRequest extends ApiRequest
      */
     public function authorize()
     {
+        $data = $this->validationData();
+
+        if (isset($data['status'])) {
+            return \Gate::allows('updateSystem', User::class);
+        }
+
         return true;
     }
 
-    public function validationData()
-    {
-        $data = parent::validationData();
-
-        if (isset($data['detail'])) {
-            $data = array_merge($data, $data['detail']);
-            unset($data['detail']);
-        }
-
-        return $data;
-    }
 
     public function rules(): array
     {
-        $data = $this->validationData();
-        $method = strtolower($this->method());
-
         return [
-            'email' => [
-                'email',
-                Rule::requiredIf(function () use ($data, $method) {
-                    return array_key_exists('email', $data) || $method !== 'patch';
-                })
-            ],
-            'role' => [
-                Rule::in(array_keys(UserLabelsHelper::roleLabels())),
-                Rule::requiredIf(function () use ($data, $method) {
-                    return array_key_exists('role', $data) || $method !== 'patch';
-                })
-            ],
             'status' => [
-                'integer',
-                Rule::in(array_keys(UserLabelsHelper::statusLabels())),
-                Rule::requiredIf(function () use ($data, $method) {
-                    return array_key_exists('status', $data) || $method !== 'patch';
-                })
+                'string',
+                new ValidStateRule(UserStatus::class)
             ],
-            'lastname' => ['string', 'nullable'],
-            'firstname' => ['string' ,'nullable'],
-            'middlename' => ['string','nullable'],
-            'avatar' => ['array']
+            'avatar' => ['array'],
+            'locale' => [
+                Rule::in(Locale::$availableLocales)
+            ]
         ];
     }
 }

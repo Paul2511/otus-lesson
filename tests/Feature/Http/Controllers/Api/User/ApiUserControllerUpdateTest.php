@@ -4,19 +4,23 @@
 namespace Tests\Feature\Http\Controllers\Api\User;
 
 use App\Models\User;
+use App\Services\Users\UserService;
+use App\States\User\Role\AdminUserRole;
+use App\States\User\Role\ManagerUserRole;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Tests\AuthAttach;
 use App\Services\Users\Repositories\UserRepository;
+use App\States\User\Status\BlockedUserStatus;
 class ApiUserControllerUpdateTest extends TestCase
 {
     use AuthAttach;
 
     private static $uri = 'api/users/';
 
-    private function getUserRepository(): UserRepository
+    private function getUserService(): UserService
     {
-        return app(UserRepository::class);
+        return app(UserService::class);
     }
 
     /**
@@ -27,113 +31,23 @@ class ApiUserControllerUpdateTest extends TestCase
     public function testClientUpdateSuccess200()
     {
         $user = $this->currentUser();
-        $data = [
-            'data'=>[
-                'email'=>'newemail@email.com'
-            ]
+        $newLastName = 'Константинопольский';
+        $newName = [
+            'lastName'=>$newLastName,
+            'firstName'=>$user->name->firstName,
+            'middleName'=>$user->name->middleName,
         ];
+        $data = ['name'=>$newName];
 
-        $response = $this->tokenHeader()->json('patch', self::$uri . $user->id, $data);
+        $response = $this->tokenHeader()->json('POST', self::$uri . $user->id, $data);
 
         $response->assertStatus(200)
             ->assertJsonStructure(['user'])
             ->assertJson(['success' => true]);
 
-        $newUser = $this->getUserRepository()->findUser($user->id);
-        $oldField = $data['data']['email'];
-        $newField = $newUser->email;
-        $this->assertEquals($oldField, $newField);
-    }
+        $newUser = $this->getUserService()->findUser($user->id);
 
-    /**
-     * Клиент успешно обновляет одно свое поле из userDetail
-     * @group user
-     * @group userUpdate
-     */
-    public function testClientUpdateDetailSuccess200()
-    {
-        $user = $this->currentUser();
-        $data = [
-            'data'=>[
-                'detail'=>[
-                    'lastname'=>'Константинопольский'
-                ]
-            ]
-        ];
-
-        $response = $this->tokenHeader()->json('patch', self::$uri . $user->id, $data);
-
-        $response->assertStatus(200)
-            ->assertJsonStructure(['user'])
-            ->assertJson(['success' => true]);
-
-        $newUser = $this->getUserRepository()->findUser($user->id);
-        $oldField = $data['data']['detail']['lastname'];
-        $newField = $newUser->userDetail->lastname;
-        $this->assertEquals($oldField, $newField);
-    }
-
-    /**
-     * Неверный емэйл
-     * @group user
-     * @group userUpdate
-     */
-    public function testClientUpdateEmailWrong422()
-    {
-        $user = $this->currentUser();
-        $data = [
-            'data'=>[
-                'email'=>'newemail'
-            ]
-        ];
-
-        $response = $this->tokenHeader()->json('patch', self::$uri . $user->id, $data);
-        $response
-            ->assertStatus(422)
-            ->assertJson(['success' => false])
-            ->assertJsonValidationErrors(['email']);
-    }
-
-    /**
-     * Пустой емэйл
-     * @group user
-     * @group userUpdate
-     */
-    public function testClientUpdateEmailEmpty422()
-    {
-        $user = $this->currentUser();
-        $data = [
-            'data'=>[
-                'email'=>''
-            ]
-        ];
-
-        $response = $this->tokenHeader()->json('patch', self::$uri . $user->id, $data);
-        $response
-            ->assertStatus(422)
-            ->assertJson(['success' => false])
-            ->assertJsonValidationErrors(['email']);
-    }
-
-    /**
-     * Не-админ не может обновлять роль
-     * @group user
-     * @group userUpdate
-     */
-    public function testNotAdminUpdateRole403()
-    {
-        $user = $this->currentUser();
-        $data = [
-            'data'=>[
-                'role'=>User::ROLE_MANAGER
-            ]
-        ];
-
-        $response = $this->tokenHeader()->json('patch', self::$uri . $user->id, $data);
-
-        $response->assertStatus(403)
-            ->assertJson(['success' => false])
-            ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
+        $this->assertEquals($newUser->name->lastName, $newLastName);
     }
 
     /**
@@ -145,12 +59,10 @@ class ApiUserControllerUpdateTest extends TestCase
     {
         $user = $this->currentUser();
         $data = [
-            'data'=>[
-                'status'=>User::STATUS_NOT_ACTIVE
-            ]
+            'status'=>BlockedUserStatus::$name
         ];
 
-        $response = $this->tokenHeader()->json('patch', self::$uri . $user->id, $data);
+        $response = $this->tokenHeader()->json('POST', self::$uri . $user->id, $data);
 
         $response->assertStatus(403)
             ->assertJson(['success' => false])
@@ -169,11 +81,9 @@ class ApiUserControllerUpdateTest extends TestCase
         $anotherUser = UserGenerator::generateClient();
 
         $data = [
-            'data'=>[
-                'email'=>'newemail@email.com'
-            ]
+            'email'=>'newemail@email.com'
         ];
-        $response = $this->tokenHeader()->json('patch', self::$uri . $anotherUser->id, $data);
+        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
 
         $response->assertStatus(403)
             ->assertJson(['success' => false])
@@ -187,87 +97,57 @@ class ApiUserControllerUpdateTest extends TestCase
      */
     public function testAdminSuccess200()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $anotherUser = UserGenerator::generateClient();
 
-        $data = [
-            'data'=>[
-                'email'=>'newemail@email.com'
-            ]
+        $newLastName = 'Константинопольский';
+        $newName = [
+            'lastName'=>$newLastName,
+            'firstName'=>$anotherUser->name->firstName,
+            'middleName'=>$anotherUser->name->middleName,
         ];
-        $response = $this->tokenHeader()->json('patch', self::$uri . $anotherUser->id, $data);
+        $data = ['name'=>$newName];
+        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
 
         $response->assertStatus(200)
             ->assertJsonStructure(['user'])
             ->assertJson(['success' => true]);
 
-        $newUser = $this->getUserRepository()->findUser($anotherUser->id);
-        $oldField = $data['data']['email'];
-        $newField = $newUser->email;
-        $this->assertEquals($oldField, $newField);
+        $newUser = $this->getUserService()->findUser($anotherUser->id);
+
+        $this->assertEquals($newUser->name->lastName, $newLastName);
     }
 
 
     /**
-     * Админ может обновлять роль или статус
+     * Админ может обновлять статус
      * @group user
      * @group userUpdate
      */
     public function testAdminUpdateRoleORStatus200()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $anotherUser = UserGenerator::generateClient();
 
         $data = [
-            'data'=>[
-                'role'=>User::ROLE_MANAGER,
-                'status'=>User::STATUS_NOT_ACTIVE
-            ]
+            'status'=>BlockedUserStatus::$name
         ];
 
-        $response = $this->tokenHeader()->json('patch', self::$uri . $anotherUser->id, $data);
+        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
 
         $response->assertStatus(200)
             ->assertJsonStructure(['user'])
             ->assertJson(['success' => true]);
 
-        $newUser = $this->getUserRepository()->findUser($anotherUser->id);
+        $newUser = $this->getUserService()->findUser($anotherUser->id);
 
-        $oldField = $data['data']['role'];
-        $newField = $newUser->role;
-        $this->assertEquals($oldField, $newField);
-
-        $oldField = $data['data']['status'];
-        $newField = $newUser->status;
+        $oldField = $data['status'];
+        $newField = $newUser->status->getValue();
         $this->assertEquals($oldField, $newField);
     }
 
-    /**
-     * Неверная роль
-     * @group user
-     * @group userUpdate
-     */
-    public function testUpdateRoleWrong422()
-    {
-        $admin = $this->createUser(User::ROLE_ADMIN);
-
-        $anotherUser = UserGenerator::generateClient();
-
-        $data = [
-            'data'=>[
-                'role'=>'wrong',
-            ]
-        ];
-
-        $response = $this->tokenHeader()->json('patch', self::$uri . $anotherUser->id, $data);
-
-        $response
-            ->assertStatus(422)
-            ->assertJson(['success' => false])
-            ->assertJsonValidationErrors(['role']);
-    }
 
     /**
      * Неверный статус
@@ -276,17 +156,15 @@ class ApiUserControllerUpdateTest extends TestCase
      */
     public function testUpdateStatusWrong422()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $anotherUser = UserGenerator::generateClient();
 
         $data = [
-            'data'=>[
-                'status'=>100,
-            ]
+            'status'=>'test_status'
         ];
 
-        $response = $this->tokenHeader()->json('patch', self::$uri . $anotherUser->id, $data);
+        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
 
         $response
             ->assertStatus(422)
@@ -297,18 +175,17 @@ class ApiUserControllerUpdateTest extends TestCase
     /**
      * Пользователь не найден
      * @group user
-     * @group userShow
+     * @group userUpdate
      */
     public function testUserNotFound404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $data = [
-            'data'=>[
-                'email'=>'newemail@email.com'
-            ]
+            'status'=>BlockedUserStatus::$name
         ];
-        $response = $this->tokenHeader()->json('patch', self::$uri . '2', $data);
+
+        $response = $this->tokenHeader()->json('POST', self::$uri . '2', $data);
 
         $response->assertStatus(404)
             ->assertJson(['success' => false])
@@ -318,18 +195,16 @@ class ApiUserControllerUpdateTest extends TestCase
     /**
      * Отсутствует пользователь в запросе
      * @group user
-     * @group userShow
+     * @group userUpdate
      */
     public function testWithoutUser404()
     {
-        $admin = $this->createUser(User::ROLE_ADMIN);
+        $admin = $this->createUser(AdminUserRole::class);
 
         $data = [
-            'data'=>[
-                'email'=>'newemail@email.com'
-            ]
+            'status'=>BlockedUserStatus::$name
         ];
-        $response = $this->tokenHeader()->json('patch', self::$uri, $data);
+        $response = $this->tokenHeader()->json('POST', self::$uri, $data);
 
         $response->assertStatus(404)
             ->assertJson(['success' => false])

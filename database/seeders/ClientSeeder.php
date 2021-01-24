@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Client;
+use App\States\User\Role\ClientUserRole;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\UserDetail;
 use App\Models\Lead;
 
 /**
@@ -22,14 +23,8 @@ class ClientSeeder extends Seeder
     public function run()
     {
         User::factory()->count(10)->create([
-            'role' => User::ROLE_CLIENT
+            'role' => ClientUserRole::class
         ])->each(function (User $user) {
-
-            UserDetail::factory()->createOne([
-               'user_id' => $user->id,
-               'classifier' => UserDetail::CLASSIFIER_CLIENT_TARGET
-            ]);
-
             $count = rand(1,3);
             Lead::factory()->count($count)->create([
                 'user_id' => $user->id

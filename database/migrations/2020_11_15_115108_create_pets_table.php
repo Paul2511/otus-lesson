@@ -32,7 +32,7 @@ class CreatePetsTable extends Migration
                 ->onDelete('restrict')->onUpdate('cascade');
 
             $table->foreign('client_id')
-                ->references('id')->on('users')
+                ->references('id')->on('clients')
                 ->onDelete('restrict')->onUpdate('cascade');
         });
     }

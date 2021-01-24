@@ -4,6 +4,8 @@
 namespace Tests;
 
 use App\Models\User;
+use App\States\User\Role\ClientUserRole;
+use App\States\User\Role\UserRole;
 use Illuminate\Testing\TestResponse;
 use Tests\Generators\UserGenerator;
 
@@ -33,10 +35,10 @@ trait AuthAttach
 
     /**
      * Создает тестового пользователя
-     * @param string|null $role
+     * @param string|UserRole|null $role
      * @return $this
      */
-    protected function createUser(?string $role = User::ROLE_CLIENT)
+    protected function createUser($role = ClientUserRole::class)
     {
         $email = 'testlogin@user.com';
 

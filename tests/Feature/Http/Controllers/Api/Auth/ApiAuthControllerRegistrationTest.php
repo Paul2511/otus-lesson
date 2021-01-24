@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use App\Notifications\User\UserWelcome;
+use App\States\User\Role\ClientUserRole;
 use Illuminate\Support\Facades\Bus;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
@@ -111,7 +112,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     }
 
     /**
-     * Удачная регистрация
+     * Удачная регистрация клиента
      * @group auth
      * @group register
      */
@@ -129,11 +130,12 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'email' => 'testlogin@user.com',
+            'role' => ClientUserRole::$name
         ]);
         /** @var User $user */
         $user = User::where(['email'=>'testlogin@user.com'])->first();
 
-        $this->assertDatabaseHas('user_details', [
+        $this->assertDatabaseHas('clients', [
             'user_id' => $user->id
         ]);
     }
@@ -162,8 +164,6 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         /** @var User $user */
         $user = User::where(['email'=>'testlogin@user.com'])->first();
-
         Notification::assertSentTo($user, UserWelcome::class);
-
     }
 }

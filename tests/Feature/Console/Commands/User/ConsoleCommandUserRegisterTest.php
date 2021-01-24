@@ -5,6 +5,7 @@ namespace Tests\Feature\Console\Commands\User;
 
 use App\Models\User;
 use App\Notifications\User\UserWelcome;
+use App\States\User\Role\ClientUserRole;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
@@ -84,22 +85,23 @@ class ConsoleCommandUserRegisterTest extends TestCase
     }
 
     /**
-     * Успешное выполнение с указанием параметров
+     * Успешное выполнение с указанием параметров c ролью клиент
      * @group console
      * @group register
      */
     public function testSpecifyParamsSuccess0()
     {
-        $this->artisan(self::$command, ['role'=>'admin', '--email'=>'test@mail.com'])
+        $this->artisan(self::$command, ['role'=>'client', '--email'=>'test@mail.com'])
             ->assertExitCode(0);
 
         $this->assertDatabaseHas('users', [
             'email' => 'test@mail.com',
+            'role' => ClientUserRole::$name
         ]);
         /** @var User $user */
         $user = User::where(['email'=>'test@mail.com'])->first();
 
-        $this->assertDatabaseHas('user_details', [
+        $this->assertDatabaseHas('clients', [
             'user_id' => $user->id
         ]);
     }
@@ -113,7 +115,7 @@ class ConsoleCommandUserRegisterTest extends TestCase
     {
         Notification::fake();
 
-        $this->artisan(self::$command, ['role'=>'admin', '--password'=>true, '--send'=>true])
+        $this->artisan(self::$command, ['role'=>'specialist', '--password'=>true, '--send'=>true])
             ->expectsQuestion('Email', 'test@mail.com')
             ->expectsQuestion('Password (skip to generate random)', '12345')
             ->assertExitCode(0);

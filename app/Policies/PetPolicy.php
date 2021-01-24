@@ -52,7 +52,7 @@ class PetPolicy
      */
     public function view(User $user, Pet $pet)
     {
-        return $pet->client_id == $user->id;
+        return $pet->client_id == $user->client->id;
     }
 
     /**
@@ -63,7 +63,7 @@ class PetPolicy
      */
     public function create(User $user)
     {
-        return $user->role == User::ROLE_CLIENT;
+        return $user->isClient;
     }
 
     /**
@@ -75,7 +75,7 @@ class PetPolicy
      */
     public function update(User $user, Pet $pet)
     {
-        return $pet->client_id == $user->id;
+        return $pet->client_id == $user->client->id;
     }
 
     /**
@@ -87,6 +87,6 @@ class PetPolicy
      */
     public function delete(User $user, Pet $pet)
     {
-        return $pet->client_id == $user->id;
+        return $pet->client_id == $user->client->id;
     }
 }

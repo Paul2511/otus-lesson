@@ -2,12 +2,15 @@
 
 namespace App\Console\Commands\User;
 
+use App\Exceptions\User\UserRegisterException;
+use App\Models\User;
 use App\Services\Users\Dto\UserRegisterData;
-use App\Services\Users\Helpers\UserLabelsHelper;
+use App\States\User\Role\UserRole;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use App\Services\Users\UserService;
 use Illuminate\Support\Facades\Validator;
+use Spatie\ModelStates\Validation\ValidStateRule;
 
 class UserRegister extends Command
 {
@@ -55,9 +58,9 @@ class UserRegister extends Command
     {
         $role = $this->argument('role');
 
-        $availableRoles = UserLabelsHelper::roleLabels();
+        $availableRoles = User::getStatesFor('role')->all();
 
-        if (!in_array($role, array_keys($availableRoles))) {
+        if (!in_array($role, $availableRoles)) {
             $this->error("The role {$role} is not supported!");
             return 1;
         }
@@ -88,6 +91,9 @@ class UserRegister extends Command
         $validator = Validator::make($data, [
             'password' => 'required|min:5',
             'email' => ['email','required', 'unique:users'],
+            'role' => [
+                new ValidStateRule(UserRole::class)
+            ],
         ], ['email.unique' => trans('user.emailExists')]);
 
         if ($validator->fails()) {
@@ -101,15 +107,14 @@ class UserRegister extends Command
 
         $userData = UserRegisterData::fromArray($data);
 
-        $user = $userService->registerUser($userData);
+        try {
+            $user = $userService->registerUser($userData);
+            $this->info("Successfully registered user with id {$user->id}");
 
-        if (!$user) {
+            return 0;
+        } catch (UserRegisterException $e) {
             $this->error('An error occurred while registering a user');
             return 1;
         }
-
-        $this->info("Successfully registered user with id {$user->id}");
-
-        return 0;
     }
 }

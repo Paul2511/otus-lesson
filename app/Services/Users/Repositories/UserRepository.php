@@ -4,7 +4,7 @@
 namespace App\Services\Users\Repositories;
 
 use App\Models\User;
-use App\Helpers\CacheHelper;
+use Support\Cache\CacheHelper;
 class UserRepository
 {
 
@@ -15,20 +15,16 @@ class UserRepository
             User::findOrFail($userId);
     }
 
-
-    public function findUserWithDetail(int $userId): User
+    public function updateUser(User $user, array $data): bool
     {
-        return User::whereId($userId)->with('userDetail')->firstOrFail();
-    }
+        $data = collect($data)->whereNotNull()->all();
 
-
-    public function setUser(User $user, array $data): bool
-    {
-        return $user->fill($data)->save();
+        return $user->update($data);
     }
 
     public function createUser(array $data): User
     {
+        $data = collect($data)->whereNotNull()->all();
         return User::create($data);
     }
 }

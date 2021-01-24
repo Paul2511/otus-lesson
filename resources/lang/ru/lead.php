@@ -1,15 +1,21 @@
 <?php
 
 return [
-    'typeSiteRequest' => 'Заявка с сайта',
-    'typeIncomingCall' => 'Входящий вызов',
-    'typeOutgoingCall' => 'Исходящий вызов',
-    'statusUnsorted' => 'Не разобрано',
-    'statusNeedCallback' => 'Нужно перезвонить',
-    'statusRepeated' => 'Повторное обращение',
-    'statusMeetHouse' => 'Вызов на дом',
-    'statusMeetClinic' => 'Посещение клиники',
-    'statusChangeMeet' => 'Перенос заявки',
-    'statusCancelMeet' => 'Отмена заявки',
-    'statusSpec' => 'Обращение специалиста',
+    'type' => [
+        'siteRequest' => 'Заявка с сайта',
+        'incomingCall' => 'Входящий вызов',
+        'outgoingCall' => 'Исходящий вызов',
+        'unknown' => 'Не определен'
+    ],
+    'status' => [
+        'unsorted' => 'Не разобрано',
+        'needCallback' => 'Нужно перезвонить',
+        'repeated' => 'Повторное обращение',
+        'meetHouse' => 'Вызов на дом',
+        'meetClinic' => 'Посещение клиники',
+        'changeMeet' => 'Перенос заявки',
+        'cancelMeet' => 'Отмена заявки',
+        'specialist' => 'Обращение специалиста',
+        'unknown' => 'Не определен'
+    ]
 ];

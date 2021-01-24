@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Http\ViewModels\User\UserShowViewModel;
+use App\Http\ViewModels\User\UserUpdateViewModel;
+use App\Services\Users\DTO\UserUpdateData;
 use Illuminate\Http\Request;
 use App\Services\Users\UserService;
 use \Illuminate\Http\JsonResponse;
@@ -33,30 +36,29 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Ручное добавление нового пользователя
-     */
-    public function store(Request $request): JsonResponse
-    {
-        //
-    }
 
     /**
      * Отображение одного пользователя
      */
     public function show(User $user): JsonResponse
     {
-        $result = $this->usersService->findUser($user->id);
-        return response()->json($result);
+        $user = $this->usersService->findUser($user->id);
+        $viewModel = new UserShowViewModel($user);
+
+        return $viewModel->json();
     }
 
     /**
-     * Обновление данных профиля конкретного пользователя
+     * @throws \App\Exceptions\User\UserUpdateException
      */
     public function update(UserUpdateRequest $request, User $user): JsonResponse
     {
-        $result = $this->usersService->setUser($user->id, $request->getFromData());
-        return response()->json($result);
+        $data = UserUpdateData::fromRequest($request);
+
+        $user = $this->usersService->updateUser($user, $data);
+
+        $viewModel = new UserUpdateViewModel($user);
+        return $viewModel->json();
     }
 
 }

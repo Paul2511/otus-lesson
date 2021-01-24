@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
-use App\Casts\Phone;
-use App\Helpers\UtilsHelper;
+use App\Models\Casts\PhoneCast;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
-
+use App\Models\Traits\HasComments;
+use Spatie\ModelStates\HasStates;
+use App\States\Lead\Type\LeadType;
+use App\States\Lead\Status\LeadStatus;
 /**
  * App\Models\Lead
  *
  * @property int $id
- * @property string|null $type
- * @property int $status
- * @property string|null $internal_phone
- * @property string|null $external_phone
+ * @property LeadType|null $type
+ * @property LeadStatus $status
+ * @property PhoneCast|null $internal_phone
+ * @property PhoneCast|null $external_phone
  * @property int $user_id
  * @property int|null $manager_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -38,48 +41,30 @@ use Illuminate\Database\Eloquent\Builder;
  * @property-read Collection|User   $manager
  *
  */
-class Lead extends BaseModel
+class Lead extends Model
 {
     use HasFactory;
-
-    const TYPE_SITE_REQUEST = 'site_request';
-    const TYPE_INCOMING_CALL = 'incoming_call';
-    const TYPE_OUTGOING_CALL = 'outgoing_call';
-
-    const STATUS_UNSORTED = 0;
-    const STATUS_NEED_CALLBACK = 10;
-    const STATUS_REPEATED = 20;
-    const STATUS_MEET_HOUSE = 30;
-    const STATUS_MEET_CLINIC = 40;
-    const STATUS_CHANGE_MEET = 50;
-    const STATUS_CANCEL_MEET = 60;
-    const STATUS_SPEC = 70;
-
-    /**
-     * @var array
-     */
-    private static $typeLabels;
-
-    /**
-     * @var array
-     */
-    private static $statusLabels;
-
-    public $commentType = 'lead';
+    use HasComments;
+    use HasStates;
 
     protected $fillable = [
         'type', 'status', 'internal_phone', 'external_phone', 'user_id', 'manager_id'
     ];
 
     protected $casts = [
-        'internal_phone' => Phone::class,
-        'external_phone' => Phone::class
+        'internal_phone' => PhoneCast::class,
+        'external_phone' => PhoneCast::class,
+        'type' => LeadType::class,
+        'status' => LeadStatus::class
+    ];
+
+    protected $hidden = [
+        'type', 'status'
     ];
 
     protected $appends = [
-        'internalPhoneFormat', 'externalPhoneFormat'
+        'currentType', 'currentStatus'
     ];
-
 
     public function user()
     {
@@ -91,33 +76,19 @@ class Lead extends BaseModel
         return $this->belongsTo(User::class, 'manager_id')->withDefault();
     }
 
-
-    public function getInternalPhoneFormatAttribute()
+    public function getCurrentTypeAttribute()
     {
-        return Phone::formatPhone($this->attributes['internal_phone']);
+        return [
+            'type'=>$this->type->getValue(),
+            'label'=>$this->type->label()
+        ];
     }
 
-    public function getExternalPhoneFormatAttribute()
+    public function getCurrentStatusAttribute()
     {
-        return Phone::formatPhone($this->attributes['external_phone']);
+        return [
+            'status'=>$this->status->getValue(),
+            'label'=>$this->status->label()
+        ];
     }
-
-    /**
-     * @return array
-     */
-    public static function typeLabels()
-    {
-        if (isset(self::$typeLabels)) return self::$typeLabels;
-        return self::$typeLabels = UtilsHelper::getLangLabels(static::class, 'type');
-    }
-
-    /**
-     * @return array
-     */
-    public static function statusLabels()
-    {
-        if (isset(self::$statusLabels)) return self::$statusLabels;
-        return self::$statusLabels = UtilsHelper::getLangLabels(static::class, 'status');
-    }
-
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Skachinsky\LocaleTranslator\LocaleTranslator;
-
+use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Specialization
  *
@@ -18,11 +18,12 @@ use Skachinsky\LocaleTranslator\LocaleTranslator;
  * @method static Builder|Specialization query()
  * @method static Builder|Specialization whereId($value)
  * @method static Builder|Specialization whereSlug($value)
+ *
+ * @property-read Collection|Specialist[]   $specialists
  * @mixin \Eloquent
  *
- * @property-read Collection|UserDetail[] $userDetails
  */
-class Specialization extends BaseModel
+class Specialization extends Model
 {
     use HasFactory;
     use LocaleTranslator;
@@ -37,13 +38,13 @@ class Specialization extends BaseModel
         'title'
     ];
 
-
-    public function userDetails()
+    public function specialists()
     {
-        return $this->hasMany(UserDetail::class);
+        return $this->hasMany(Specialist::class);
     }
 
-    public function getTitleAttribute() {
+    public function getTitleAttribute()
+    {
         return $this->translateAttribute($this->slug);
     }
 }

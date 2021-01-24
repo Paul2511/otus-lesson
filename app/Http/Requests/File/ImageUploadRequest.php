@@ -20,6 +20,7 @@ class ImageUploadRequest extends ApiRequest
         $max = config('filesystems.maxsize.image', 2048);
         return [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:'.$max,
+            'uploadPath' => 'string'
         ];
     }
 }

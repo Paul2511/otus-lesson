@@ -8,15 +8,9 @@ class UploadHelper
     const TYPE_DEFAULT = 'default';
     const TYPE_USER = 'user';
 
-    public static function getUploadPathFromArray(?array $data=[]): string
-    {
-        $uploadPath = $data['uploadPath'] ?? 'common';
-        $uploadPath = str_replace('.', '/', $uploadPath);
+    const DEFAULT_UPLOAD_PATH = 'common';
+    const DEFAULT_UPLOAD_USER = 'guest';
 
-        $user = $data['userId'] ?? 'guest';
-
-        return $uploadPath . '/' . $user;
-    }
 
     public static function getThumbFileName(string $originFilePath): string
     {

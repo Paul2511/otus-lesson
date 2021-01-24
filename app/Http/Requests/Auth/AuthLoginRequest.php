@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Services\Users\Helpers\UserLabelsHelper;
-use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
 class AuthLoginRequest extends ApiRequest
 {

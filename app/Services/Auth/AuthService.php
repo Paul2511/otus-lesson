@@ -3,13 +3,12 @@
 
 namespace App\Services\Auth;
 
-use App\Helpers\LogHelper;
-use App\Services\BaseService;
+use App\Services\Auth\DTO\AuthLoginData;
+use Support\Log\LogHelper;
 use App\Services\Users\UserService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\UnauthorizedException;
-use Log;
-class AuthService extends BaseService
+class AuthService
 {
 
     /**
@@ -26,10 +25,11 @@ class AuthService extends BaseService
      * Возвращает результат авторизации
      * @throws AuthorizationException
      */
-    public function login(array $credentials): array
+    public function login(AuthLoginData $authLoginData): string
     {
         $token = null;
 
+        $credentials = $authLoginData->toArray();
         if (!$token = auth()->attempt($credentials)) {
 
             LogHelper::auth('Ошибка авторизации', [
@@ -38,22 +38,11 @@ class AuthService extends BaseService
 
             throw new UnauthorizedException();
         } else {
-            $userId = auth()->user()->getAuthIdentifier();
-
-            $user = $this->userService->findUser($userId);
-            $userData = $user['user'];
-
             LogHelper::auth('Авторизация пользователя', [
                 'data'=>$credentials
             ]);
 
-            $result = [
-                'accessToken' => $token,
-                'userData' => $userData,
-                'success' => true
-            ];
+            return $token;
         }
-
-        return $result;
     }
 }

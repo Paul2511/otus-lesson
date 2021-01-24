@@ -8,9 +8,12 @@ use App\Services\Files\DTO\ImageData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
-use App\Casts\PetPhotoCast;
+use App\Models\Casts\Pet\PhotoCast;
 use Watson\Rememberable\Rememberable;
-
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\HasComments;
+use Spatie\ModelStates\HasStates;
+use App\States\Pet\Sex\PetSex;
 /**
  * App\Models\Pet
  *
@@ -20,7 +23,7 @@ use Watson\Rememberable\Rememberable;
  * @property string $name
  * @property int|null $age в месяцах
  * @property string|null $bread
- * @property int|null $sex
+ * @property PetSex|null $sex
  * @property ImageData|null $photo
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -41,19 +44,17 @@ use Watson\Rememberable\Rememberable;
  * @method static Builder|Pet flushCache($key)
  * @mixin \Eloquent
  *
- * @property-read Collection|User $client
+ * @property-read Collection|Client $client
  * @property-read Collection|PetType $petType
  */
-class Pet extends BaseModel
+class Pet extends Model
 {
     use HasFactory;
     use Rememberable;
-
-    const SEX_MALE = 'male';
-    const SEX_FEMALE = 'female';
+    use HasComments;
+    use HasStates;
 
     protected $rememberCachePrefix = 'pets';
-    public $commentType = 'pet';
 
     protected $fillable = [
         'pet_type_id', 'name', 'age', 'bread', 'sex', 'photo'
@@ -62,17 +63,17 @@ class Pet extends BaseModel
     protected $hidden = [
         'created_at',
         'updated_at',
+        'sex'
     ];
 
     protected $casts = [
-        'photo' => PetPhotoCast::class
+        'photo' => PhotoCast::class,
+        'sex' => PetSex::class
     ];
 
     protected $appends = [
-        'petTypeTitle', 'petTypes'
+        'petTypeTitle', 'currentSex'
     ];
-
-    public static $modelName = 'pet';
 
     protected $dispatchesEvents = [
         'updated'=>PetUpdated::class,
@@ -81,7 +82,7 @@ class Pet extends BaseModel
 
     public function client()
     {
-        return $this->belongsTo(User::class, 'client_id');
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
 
@@ -97,9 +98,11 @@ class Pet extends BaseModel
         return $petType->title ?? '';
     }
 
-    public function getPetTypesAttribute()
+    public function getCurrentSexAttribute()
     {
-        return PetType::all();
+        return [
+            'sex'=>$this->sex->getValue(),
+            'label'=>$this->sex->label()
+        ];
     }
-
 }

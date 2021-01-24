@@ -3,9 +3,10 @@
 namespace App\Http\Requests\User;
 
 use App\Services\Localise\Locale;
-use App\Services\Users\Helpers\UserLabelsHelper;
+use App\States\User\Role\UserRole;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\ApiRequest;
+use Spatie\ModelStates\Validation\ValidStateRule;
 class UserRegisterRequest extends ApiRequest
 {
     /**
@@ -25,7 +26,7 @@ class UserRegisterRequest extends ApiRequest
             'password' => 'required|min:5',
             'email' => ['email','required','unique:users'],
             'role' => [
-                Rule::in(array_keys(UserLabelsHelper::roleLabels()))
+                new ValidStateRule(UserRole::class)
             ],
             'locale' => [
                 Rule::in(Locale::$availableLocales)

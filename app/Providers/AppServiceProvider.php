@@ -24,8 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Gate::define('update-user-system-fields', function (User $user) {
-            return $user->isAdmin;
-        });
+
     }
 }

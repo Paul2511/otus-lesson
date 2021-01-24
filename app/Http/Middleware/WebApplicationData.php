@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Helpers\BaseHelper;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\App;
+use App\Services\Files\Helpers\SrcHelper;
 class WebApplicationData
 {
     /**
@@ -20,8 +21,15 @@ class WebApplicationData
     {
         $data = [
             'locale' => App::currentLocale(),
-            'defaultAvatar' => BaseHelper::getUserDefaultAvatar()
+            'defaultAvatar' => SrcHelper::getUserDefaultAvatar()
         ];
+
+        $userStatuses = [];
+        User::getStatesFor('status')->each(function (string $status) use (&$userStatuses) {
+            $userStatuses[$status] = trans('user.status.'.$status);
+        });
+
+        $data['userStatuses'] = $userStatuses;
 
         View::share('data', $data);
 
