@@ -14,7 +14,7 @@ class CreateGroupsTeachersTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups_teachers', function (Blueprint $table) {
+        Schema::create('group_teacher', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('group_id')->unsigned()->index();
             $table->foreign('group_id')->references('id')
@@ -22,6 +22,9 @@ class CreateGroupsTeachersTable extends Migration
             $table->bigInteger('teacher_id')->unsigned()->index();
             $table->foreign('teacher_id')->references('id')
                   ->on('users')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unique(['group_id', 'teacher_id']);
+
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -34,6 +37,6 @@ class CreateGroupsTeachersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups_teachers');
+        Schema::dropIfExists('group_teacher');
     }
 }
