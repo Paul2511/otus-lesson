@@ -10,16 +10,8 @@ use Illuminate\Http\Request;
 
 class Localization
 {
-    /**
-     * @var LocalizeService
-     */
-    private LocalizeService $localizeService;
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  LocalizeService  $localizeService
-     */
+    private LocalizeService $localizeService;
 
     public function __construct(
         LocalizeService $localizeService
@@ -27,30 +19,21 @@ class Localization
         $this->localizeService = $localizeService;
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse|mixed
+     */
     public function handle(Request $request, Closure $next)
     {
         $locale = $this->getRequestLocale($request);
-        $path = $this->getCurrentPathWithoutLocale($request, $locale);
+        $path = $request->path();
 
         if (!$this->isLocaleSupported($locale)) {
             App::setLocale(config('app.fallback_locale'));
-
             return redirect()->to($path);
         }
         $this->setAppLocale($locale);
-        $this->removeParamLocaleFromRequest($request);
 
         return $next($request);
-    }
-
-    private function getCurrentPathWithoutLocale(Request $request, ?string $locale): ?string {
-        $path = $request->path();
-
-        if (!$locale) {
-            return $path;
-        }
-
-        return substr($path, strlen($locale));
     }
 
     private function getRequestLocale(Request $request): ?string
@@ -60,7 +43,7 @@ class Localization
           return config('app.fallback_locale');
       }
         return $request->cookie('locale');
-//        return $request->route('locale');
+
     }
 
     private function isLocaleSupported(?string $locale): bool
@@ -78,9 +61,4 @@ class Localization
         Carbon::setLocale($locale);
     }
 
-    private function removeParamLocaleFromRequest(Request $request): void
-    {
-        $request->route()->forgetParameter('locale');
-
-    }
 }
