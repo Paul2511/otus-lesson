@@ -1,6 +1,6 @@
 @extends('cms.layouts.cms-app')
 @section('content')
-    @include('cms.menus.meniu-breadcrumb')
+    @include('cms.menus.menu-breadcrumb')
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -8,7 +8,7 @@
                     <h6 class="card-title">
                         @lang('cms-general.user-create')
                     </h6>
-                    {{ Form::open(array('route' => \App\Services\Routes\CMS\CMSRoutes::CMS_USERS_STORE,'class'=>'forms-sample','metod'=>'post')) }}
+                    {{ Form::open(array('route' => \App\Services\Routes\CMS\CMSRoutes::CMS_USERS_STORE,'class'=>'forms-sample','method'=>'post')) }}
                     @include('cms.parts.errors')
                     <div class="row">
                         <div class="col-sm-4">

@@ -4,8 +4,11 @@
 namespace App\Services\Users\Repositories;
 
 use App\Models\User;
+use App\Services\Interfaces\BaseRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 
-class EloquentUserRepository
+
+class EloquentUserRepository implements BaseRepositoryInterface
 {
     /**
      * @var User
@@ -28,15 +31,37 @@ class EloquentUserRepository
     }
 
     /**
-     * @param User $user
      * @param array $data
+     * @param int $id
      */
-    public function updateByArray(User $user, array $data): void
+    public function updateByArray(array $data, int $id): void
     {
-        $this->user->find($user->id)->update($data);
+        $this->user->find($id)->update($data);
     }
 
-    public function deleteById(int $id){
+    /**
+     * @param int $id
+     */
+    public function deleteById(int $id): void
+    {
         $this->user->find($id)->delete();
+    }
+
+
+    /**
+     * @return Builder
+     */
+    public function newQuery(): Builder
+    {
+        return $this->user->newQuery();
+    }
+
+    /**
+     * @param int $id
+     * @return User|null
+     */
+    public function findById(int $id): ?User
+    {
+        return $this->user->find($id);
     }
 }

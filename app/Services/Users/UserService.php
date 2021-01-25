@@ -8,10 +8,14 @@ use App\Models\User;
 use App\Services\Users\Handlers\UserCreateHandler;
 use App\Services\Users\Handlers\UserDeleteHandler;
 use App\Services\Users\Handlers\UserUpdateHandler;
+use App\Services\Users\Repositories\EloquentUserRepository;
 use App\Services\Users\Repositories\UserStatusRepository;
 use App\Services\Users\Repositories\UserTypeRepository;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
-class UsersService
+
+class UserService
 {
     /**
      * @var UserCreateHandler
@@ -33,14 +37,20 @@ class UsersService
      * @var UserTypeRepository
      */
     private $typeRepository;
+    /**
+     * @var EloquentUserRepository
+     */
+    private $userRepository;
 
-    public function __construct(UserCreateHandler $createHandler, UserUpdateHandler $updateHandler, UserDeleteHandler $deleteHandler, UserStatusRepository $statusRepository, UserTypeRepository $typeRepository)
+    public function __construct(UserCreateHandler $createHandler, UserUpdateHandler $updateHandler, UserDeleteHandler $deleteHandler, UserStatusRepository $statusRepository, UserTypeRepository $typeRepository, EloquentUserRepository $userRepository)
     {
         $this->createHandler = $createHandler;
         $this->updateHandler = $updateHandler;
         $this->deleteHandler = $deleteHandler;
         $this->statusRepository = $statusRepository;
         $this->typeRepository = $typeRepository;
+        DB::class;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -77,5 +87,14 @@ class UsersService
     public function getStatusUsers(): array
     {
         return $this->statusRepository->getStatuses();
+    }
+
+
+    /**
+     * @return Builder
+     */
+    public function newQuery(): Builder
+    {
+        return $this->userRepository->newQuery();
     }
 }

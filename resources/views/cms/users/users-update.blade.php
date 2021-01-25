@@ -1,6 +1,6 @@
 @extends('cms.layouts.cms-app')
 @section('content')
-    @include('cms.menus.meniu-breadcrumb')
+    @include('cms.menus.menu-breadcrumb')
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">

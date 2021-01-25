@@ -26,6 +26,6 @@ class UserUpdateHandler
      */
     public function handle(User $user, array $data): void
     {
-        $this->repository->updateByArray($user, $data);
+        $this->repository->updateByArray( $data,$user->id);
     }
 }

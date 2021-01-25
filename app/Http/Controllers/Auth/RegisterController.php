@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Services\Users\UsersService;
+use App\Services\Users\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -27,12 +26,12 @@ class RegisterController extends Controller
 
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    private $service;
+    private $usersService;
 
-    public function __construct(UsersService $service)
+    public function __construct(UserService $usersService)
     {
         $this->middleware('guest');
-        $this->service = $service;
+        $this->usersService = $usersService;
     }
 
 
@@ -56,7 +55,7 @@ class RegisterController extends Controller
     {
         $data['type'] = User::TYPE_USER;
         $data['status'] = User::STATUS_INACTIVE;
-        return $this->service->createByArray($data);
+        return $this->usersService->createByArray($data);
 
     }
 

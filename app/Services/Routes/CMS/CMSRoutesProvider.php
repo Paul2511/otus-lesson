@@ -4,6 +4,7 @@
 namespace App\Services\Routes\CMS;
 
 
+use App\Http\Controllers\CMS\Countries\CountryController;
 use App\Http\Controllers\CMS\DashboardController;
 use App\Http\Controllers\CMS\Users\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -16,15 +17,23 @@ final class CMSRoutesProvider
 
             Route::get('/',[DashboardController::class,'index'])->name(CMSRoutes::CMS_DASHBOARD_INDEX);
 
-            Route::group(['prefix' => 'users'],function(){
-                Route::get('/',[UsersController::class,'index'])->name(CMSRoutes::CMS_USERS_INDEX);
-                Route::get('/create',[UsersController::class,'create'])->name(CMSRoutes::CMS_USERS_CREATE);
-                Route::post('/store',[UsersController::class,'store'])->name(CMSRoutes::CMS_USERS_STORE);
-                Route::get('/{user}/edit',[UsersController::class,'edit'])->name(CMSRoutes::CMS_USERS_EDIT);
-                Route::patch('/{user}',[UsersController::class,'update'])->name(CMSRoutes::CMS_USERS_UPDATE);
-                Route::delete('/{user}',[UsersController::class,'destroy'])->name(CMSRoutes::CMS_USERS_DELETE);
-                Route::get('/{user}',[UsersController::class,'show'])->name(CMSRoutes::CMS_USERS_SHOW);
-            });
+            Route::resource('/users', UsersController::class)
+                ->name('index',CMSRoutes::CMS_USERS_INDEX)
+                ->name('create',CMSRoutes::CMS_USERS_CREATE)
+                ->name('store',CMSRoutes::CMS_USERS_STORE)
+                ->name('edit',CMSRoutes::CMS_USERS_EDIT)
+                ->name('update',CMSRoutes::CMS_USERS_UPDATE)
+                ->name('destroy',CMSRoutes::CMS_USERS_DELETE)
+                ->name('show',CMSRoutes::CMS_USERS_SHOW);
+
+            Route::resource('/countries',CountryController::class)
+                ->name('index',CMSRoutes::CMS_COUNTRIES_INDEX)
+                ->name('create',CMSRoutes::CMS_COUNTRIES_CREATE)
+                ->name('store',CMSRoutes::CMS_COUNTRIES_STORE)
+                ->name('edit',CMSRoutes::CMS_COUNTRIES_EDIT)
+                ->name('update',CMSRoutes::CMS_COUNTRIES_UPDATE)
+                ->name('destroy',CMSRoutes::CMS_COUNTRIES_DELETE)
+                ->name('show',CMSRoutes::CMS_COUNTRIES_SHOW);
 
         });
     }

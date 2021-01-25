@@ -28,7 +28,7 @@ class Country extends Model
     /**
      * @var array
      */
-    protected $fillable = ['country_code', 'country_name', 'capital', 'languages', 'created_at', 'updated_at'];
+    protected $fillable = ['country_code', 'country_name', 'capital', 'languages','code_phone','data_show', 'created_at', 'updated_at'];
 
 
     protected $casts =[

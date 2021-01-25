@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">
-                        @lang('cms-general.users')
+                        @lang('cms-general.countries')
                     </h6>
                     {{$dataTable->table()}}
                 </div>
