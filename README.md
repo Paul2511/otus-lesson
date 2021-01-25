@@ -34,14 +34,26 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## Установка
 
-Перед запуском вам необходимо установить все зависимости и собрать фронт.
+1. Перед запуском вам необходимо установить все зависимости и собрать фронт:
 
-```console
-npm i
-npm run production
-```
+   ```console
+   npm i
+   npm run production
+   ```
+
+2. Применить миграций и заполнить справочники:
+
+   ```console
+   php artisan migrate --seed
+   ```
 
 ## Возможности
+
+* Для создания тестовых данных необходимо выполнить следующую команду:
+
+  ```console
+  php artisan db:seed --class=DataSeeder
+  ```
 
 ### Frontend статичные страницы
 

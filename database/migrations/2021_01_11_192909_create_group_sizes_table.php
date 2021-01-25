@@ -17,7 +17,7 @@ class CreateGroupSizesTable extends Migration
         Schema::create('group_sizes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique()->index();
             $table->integer('max_count')->default(5);
             $table->integer('order')->default(500);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

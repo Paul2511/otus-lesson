@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSkillsTable extends Migration
+class CreateSkillUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateUserSkillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_skills', function (Blueprint $table) {
+        Schema::create('skill_user', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')
@@ -25,6 +25,9 @@ class CreateUserSkillsTable extends Migration
             $table->bigInteger('level_id')->unsigned()->index();
             $table->foreign('level_id')->references('id')
                   ->on('levels')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unique(['user_id', 'skill_id']);
+
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -37,6 +40,6 @@ class CreateUserSkillsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_skills');
+        Schema::dropIfExists('skill_user');
     }
 }
