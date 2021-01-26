@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\{
  * @method static Builder|Column whereTitle($value)
  * @method static Builder|Column whereUpdatedAt($value)
  * @method static find(int $int)
+ * @method static create(array $data)
+ * @method static findOrFail(int $id)
  */
 class Column extends Model
 {

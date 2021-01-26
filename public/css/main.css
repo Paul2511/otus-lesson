@@ -1,53 +1,5 @@
 @charset "UTF-8";
 
-.navbar {
-  width: 100%;
-}
-
-.form {
-  width: 100%;
-}
-
-.header {
-  background-color: #fff;
-}
-
-p {
-  padding-top: 0.3125rem;
-  font-size: 1.25rem;
-}
-
-.column {
-  background-color: #f5f2f2;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.column__title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.column__body {
-  padding: 5px;
-}
-
-.column .card {
-  padding: 5px;
-  margin-top: 5px;
-  background-color: #fff;
-  border-radius: 5px;
-}
-
-.column .card:hover {
-  cursor: pointer;
-}
-
-.column .card__title {
-  font-size: 18px;
-}
-
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -10949,6 +10901,66 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+.navbar {
+  width: 100%;
+}
+
+.form {
+  width: 100%;
+}
+
+.action-panel {
+  padding: 15px;
+}
+
+.header {
+  background-color: #fff;
+}
+
+p {
+  padding-top: 0.3125rem;
+  font-size: 1.25rem;
+}
+
+.column {
+  background-color: #f5f2f2;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.column__header {
+  justify-content: space-between;
+  display: flex;
+}
+
+.column__title {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.column .card {
+  margin-top: 5px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.column .card:hover {
+  cursor: pointer;
+}
+
+.column .card__title {
+  padding: 5px;
+  font-size: 18px;
+}
+
+.remove-column {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 html,

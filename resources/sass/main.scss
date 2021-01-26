@@ -1,25 +1,23 @@
 // Utils
-@import
-"./utils/variables",
-"./utils/mixins"
-;
-
-//Components
-@import
-"./components/nav",
-"./components/feedback-form"
-;
-
-//Layouts
-@import
-"./layout/header",
-"./layout/footer";
-
-//Pages
-@import "./pages/main";
+@import "./utils/variables",
+"./utils/mixins";
 
 // Vendors
 @import "./vendors/vendors";
+
+//Components
+@import "./components/nav",
+"./components/feedback-form",
+"./components/action-panel",
+"./components/action-column";
+
+//Layouts
+@import "./layout/header",
+"./layout/footer";
+
+//Pages
+@import "./pages/main",
+"./pages/modals/remove-column";
 
 // Themes
 @import "./themes/default";

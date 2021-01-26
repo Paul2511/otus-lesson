@@ -85,4 +85,17 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    public function hasRole()
+    {
+        $userRole = $this->hasOne(UserRole::class)->first();
+        return $userRole->role();
+    }
+
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole()->first()->title === Role::ADMIN_ROLE;
+    }
+
 }

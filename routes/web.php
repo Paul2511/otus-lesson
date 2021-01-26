@@ -3,6 +3,8 @@
 use App\Http\Controllers\CMS\Permission\PermissionController;
 use App\Http\Controllers\CMS\Role\RoleController;
 use App\Http\Controllers\CMS\User\UserController;
+use App\Http\Controllers\Desk\ColumnController;
+use App\Http\Controllers\Desk\DeskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-})->name('home');
+Route::get('/',[DeskController::class,'index'])->name('home');
+Route::resource('column', ColumnController::class);
 
 Route::get('/profile', function () {
     return view('pages.profile');
@@ -37,6 +38,7 @@ Route::get('/feedback', function () {
 })->name('feedback');
 
 Route::group(['prefix' => 'cms'], function () {
+    Route::view('/','pages.cms.home.index')->name('cms.index');
     Route::resource('user', UserController::class);
     Route::resource('role', RoleController::class);
     Route::resource('permission', PermissionController::class);

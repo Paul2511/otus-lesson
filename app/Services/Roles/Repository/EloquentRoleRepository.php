@@ -37,4 +37,9 @@ class EloquentRoleRepository implements EloquentRoleRepositoryInterface
     {
         return Role::findOrFail($id);
     }
+
+    public function getDefaultRole(): Model
+    {
+        return Role::where('title', self::DEFAULT_ROLE)->first();
+    }
 }

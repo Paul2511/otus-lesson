@@ -3,10 +3,6 @@
 
 namespace App\Services\Roles;
 
-
-use App\Services\Roles\Handlers\CreateRoleHandler;
-use App\Services\Roles\Handlers\DeleteRoleHandler;
-use App\Services\Roles\Handlers\UpdateRoleHandler;
 use App\Services\Roles\Repository\EloquentRoleRepository;
 use App\Services\Roles\Repository\Interfaces\EloquentRoleRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -28,6 +24,11 @@ class RolesServices
         return $this->eloquentRoleRepository->search();
     }
 
+    public function getDefaultRole(): Model
+    {
+        return $this->eloquentRoleRepository->getDefaultRole();
+    }
+
     public function findRole(int $id): Model
     {
         return $this->eloquentRoleRepository->findOrFail($id);
@@ -40,13 +41,12 @@ class RolesServices
 
     public function updateRole(array $data, int $id): bool
     {
-        return $this->updateRoleHandler->updateRole($data, $model);
+        return $this->eloquentRoleRepository->update($id, $data);
     }
 
     public function deleteRole(int $id): bool
     {
-        $model = $this->findRole($id);
-        return $this->deleteRoleHandler->deleteRole($model);
+        return $this->eloquentRoleRepository->delete($id);
     }
 
 }

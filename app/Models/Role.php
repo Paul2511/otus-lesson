@@ -27,6 +27,7 @@ use Carbon\Carbon;
  * @method static paginate()
  * @method static findOrFail(int $id)
  * @method static create(array $data)
+ * @method static where(string $string, string $title)
  * @property-read Collection|Role[] $permissions
  * @property-read int|null $permissions_count
  */
@@ -34,12 +35,15 @@ class Role extends Model
 {
     use HasFactory;
 
+    const ADMIN_ROLE = 'Admin';
+    const USER_ROLE = 'User';
+
     protected $fillable = [
         'title'
     ];
 
     public function permissions()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Permission::class)->using(PermissionRole::class);
     }
 }

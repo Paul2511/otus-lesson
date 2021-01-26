@@ -2,11 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\{
-    Builder,
-    Model,
-    Factories\HasFactory
-};
+use Illuminate\Database\Eloquent\{Builder, Model, Factories\HasFactory, Relations\Pivot};
 use Carbon\Carbon;
 
 /**
@@ -26,7 +22,7 @@ use Carbon\Carbon;
  * @method static Builder|PermissionRole whereRoleId($value)
  * @method static Builder|PermissionRole whereUpdatedAt($value)
  */
-class PermissionRole extends Model
+class PermissionRole extends Pivot
 {
     use HasFactory;
 

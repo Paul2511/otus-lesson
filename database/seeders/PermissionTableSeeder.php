@@ -15,10 +15,11 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $payload = [
-          ['title' => 'read'],
+          ['title' => 'view'],
           ['title' => 'write'],
           ['title' => 'edit'],
           ['title' => 'delete'],
+          ['title' => 'admin'],
         ];
 
         foreach ($payload as $item){

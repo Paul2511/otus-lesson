@@ -34,12 +34,14 @@ class Permission extends Model
 {
     use HasFactory;
 
+    const READ = 'read';
+    const WRITE = 'write';
+    const EDIT = 'edit';
+    const DELETE = 'delete';
+    const ADMIN = 'admin';
+
     protected $fillable = [
         'title'
     ];
 
-    public function roles()
-    {
-        return $this->belongsToMany(Permission::class);
-    }
 }

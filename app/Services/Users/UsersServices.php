@@ -3,31 +3,20 @@
 
 namespace App\Services\Users;
 
-
-use App\Services\Users\Handlers\CreateUserHandler;
-use App\Services\Users\Handlers\DeleteUserHandler;
-use App\Services\Users\Handlers\UpdateUserHandler;
 use App\Services\Users\Repository\EloquentUserRepository;
+use Illuminate\Database\Eloquent\Model;
 
 class UsersServices
 {
 
     private EloquentUserRepository $eloquentUserRepository;
-    private CreateUserHandler $createUserHandler;
-    private UpdateUserHandler $updateUserHandler;
-    private DeleteUserHandler $deleteUserHandler;
 
     public function __construct(
-        EloquentUserRepository $eloquentUserRepository,
-        CreateUserHandler $createUserHandler,
-        UpdateUserHandler $updateUserHandler,
-        DeleteUserHandler $deleteUserHandler
+        EloquentUserRepository $eloquentUserRepository
     )
     {
         $this->eloquentUserRepository = $eloquentUserRepository;
-        $this->createUserHandler = $createUserHandler;
-        $this->updateUserHandler = $updateUserHandler;
-        $this->deleteUserHandler = $deleteUserHandler;
+
     }
 
     public function getUsers()
@@ -35,21 +24,19 @@ class UsersServices
         return $this->eloquentUserRepository->search();
     }
 
-    public function storeUser(array $data)
+    public function storeUser(array $data): Model
     {
-        $this->createUserHandler->create(array($data));
+        return $this->eloquentUserRepository->create(array($data));
     }
 
     public function deleteUser(int $id)
     {
-        $model = $this->findUser($id);
-        return $this->deleteUserHandler->deleteUser($model);
+        return $this->eloquentUserRepository->delete($id);
     }
 
     public function updateUser(array $data, int $id)
     {
-        $model = $this->findUser($id);
-        return $this->updateUserHandler->updateUser($data, $model);
+        return $this->eloquentUserRepository->update($id, $data);
     }
 
     public function findUser(int $id)
