@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Services\Helpers\RequestLogger;
+use Guskov\Logger\Http\Middleware\RequestLoggerMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -30,7 +30,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareGroups = [
-        'web' => [
+        'web' => array(
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -39,8 +39,9 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Localization::class,
-            \App\Http\Middleware\RequestLog::class,
-        ],
+
+
+        ),
 
         'api' => [
             'throttle:api',
@@ -65,9 +66,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'setLocale' =>  \App\Http\Middleware\Localization::class,
+        'setLocale' => \App\Http\Middleware\Localization::class,
         'admin' => \App\Http\Middleware\AdminAuthenticated::class,
-        'user'  => \App\Http\Middleware\UserAuthenticated::class,
-        'log' =>  \App\Http\Middleware\RequestLog::class,
+        'user' => \App\Http\Middleware\UserAuthenticated::class,
+
+
     ];
 }

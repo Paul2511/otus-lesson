@@ -18,11 +18,6 @@ Route::get('/', function () {
 Route::prefix('{locale}')->group(function () {
     Auth::routes();
 });
-//Auth::routes();
-//Route::get('locale/{locale}', function ($locale){
-//    Session::put('locale', $locale);
-//    return redirect()->back();
-//});
 
 // Users Route Group
 app(\App\Services\Routes\Providers\User\UserRoutesProvider::class)->registerRoutes();
