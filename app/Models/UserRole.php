@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @method static create(int[] $array)
  */
-class UserRole extends Model
+class UserRole extends Pivot
 {
     protected $fillable = [
         'user_id', 'role_id'

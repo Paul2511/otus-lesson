@@ -92,6 +92,11 @@ class User extends Authenticatable
         return $userRole->role();
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'user_roles')->using(UserRole::class);
+    }
+
 
     public function isAdmin(): bool
     {
