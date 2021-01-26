@@ -14,6 +14,8 @@ class UserRole extends Pivot
         'user_id', 'role_id'
     ];
 
+    protected $table = 'user_roles';
+
     public function role()
     {
         return $this->hasOne(Role::class,'id','role_id');

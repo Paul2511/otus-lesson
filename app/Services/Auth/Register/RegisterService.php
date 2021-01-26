@@ -26,7 +26,7 @@ class RegisterService
     {
         $user = $this->userRepository->create($data);
         $role = $this->rolesServices->getDefaultRole();
-        $this->userRoleService->setRoleOnUser($user->id, $role->id);
+        $user->roles()->attach($role->id);
         return $user;
     }
 
