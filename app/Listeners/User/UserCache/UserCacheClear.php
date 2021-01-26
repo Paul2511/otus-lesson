@@ -26,7 +26,9 @@ class UserCacheClear
      */
     public function handle(UserEvent $event)
     {
-        $userId = $event->getUser()->id;
-        User::flushCache(CacheHelper::getKey(class_basename(User::class), $userId));
+        if (CacheHelper::isCacheEnabled()) {
+            $userId = $event->getUser()->id;
+            User::flushCache(CacheHelper::getKey(class_basename(User::class), $userId));
+        }
     }
 }

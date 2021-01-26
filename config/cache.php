@@ -103,7 +103,7 @@ return [
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
 
     //Включение/выключение кэша
-    'enabled' => true,
+    'enabled' => env('CACHE_ENABLED', true),
 
     //TTL в секундах для разных моделей
     'ttl' => [

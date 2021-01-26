@@ -20,12 +20,15 @@ class PetCacheClear
 
     public function handle(PetEvent $event)
     {
-        $pet = $event->getPet();
-        $petId = $pet->id;
-        $key = CacheHelper::getKey(class_basename(Pet::class), $petId);
-        Pet::flushCache($key);
+        if (CacheHelper::isCacheEnabled()) {
+            $pet = $event->getPet();
+            $petId = $pet->id;
+            $key = CacheHelper::getKey(class_basename(Pet::class), $petId);
+            Pet::flushCache($key);
 
-        $key = CacheHelper::getKey(\Str::plural(class_basename(Pet::class)), $pet->client_id);
-        Pet::flushCache($key);
+            $key = CacheHelper::getKey(\Str::plural(class_basename(Pet::class)), $pet->client_id);
+            Pet::flushCache($key);
+        }
+
     }
 }
