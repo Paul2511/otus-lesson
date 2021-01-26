@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-
-class Queue extends Model
+class Queue extends BaseModel
 {
     protected $table = 'ast_queue';
 

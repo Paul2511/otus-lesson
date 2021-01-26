@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentUserRepository
 {
+    const CACHE_TTL = 60*60;
+    const CACHE_TAG = 'users';
     /**
      * @param  int  $id
      *
@@ -35,9 +37,7 @@ class EloquentUserRepository
 
     public function getList(array $with = []): Collection
     {
-        $query = User::query();
-        $query->with($with);
-        return $query->get();
+        return User::remember(self::CACHE_TTL)->cacheTags(self::CACHE_TAG)->with($with)->get();
     }
 
     public function getByNameStart(string $name,int $limit,int $offset=0): Collection
@@ -61,8 +61,7 @@ class EloquentUserRepository
      */
     public function findById(int $id ,array $with = [])
     {
-        $query = User::with($with);
-        return $query->findOrFail($id);
+        return User::remember(self::CACHE_TTL)->cacheTags(self::CACHE_TAG)->with($with)->findOrFail($id);
     }
 
     public function getProjects(int $id): array
@@ -100,7 +99,7 @@ class EloquentUserRepository
     {
         $user = $this->findById($id);
         $user->fill($data)->save();
-
+        User::flushCache();
         return $user;
     }
 

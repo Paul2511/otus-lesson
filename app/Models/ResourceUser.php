@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\ResourceUser
  *
@@ -24,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ResourceUser whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ResourceUser whereUserId($value)
  */
-class ResourceUser extends Model
+class ResourceUser extends BaseModel
 {
     use HasFactory;
     protected $table = 'resource_user';

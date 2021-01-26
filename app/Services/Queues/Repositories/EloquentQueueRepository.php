@@ -10,9 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class EloquentQueueRepository
 {
+    const CACHE_TTL = 60*60*24;
+    const CACHE_TAG = 'queues';
+
     public function getList($connection): array
     {
-        return Queue::on($connection)
+        return Queue::on($connection)->remember(self::CACHE_TTL)->cacheTags(self::CACHE_TAG)
             ->get()->keyBy('name')->toArray();
     }
 }

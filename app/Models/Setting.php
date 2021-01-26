@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Setting
  *
@@ -24,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Setting whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Setting whereValue($value)
  */
-class Setting extends Model
+class Setting extends BaseModel
 {
     use HasFactory;
 

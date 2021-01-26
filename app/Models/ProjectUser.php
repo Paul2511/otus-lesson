@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\ProjectUser
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ProjectUser whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProjectUser whereUserId($value)
  */
-class ProjectUser extends Model
+class ProjectUser extends BaseModel
 {
     use HasFactory;
     protected $table = 'project_user';

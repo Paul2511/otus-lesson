@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Database\Seeders\ProjectUserTableSeeder;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use function PHPUnit\Framework\returnArgument;
+use Watson\Rememberable\Rememberable;
 
 /**
  * App\Models\User
@@ -50,7 +47,7 @@ use function PHPUnit\Framework\returnArgument;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Rememberable;
 
     protected $fillable = [
         'email',

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Resource
@@ -24,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ResourceUser[] $resource_user
  * @property-read int|null $resource_user_count
  */
-class Resource extends Model
+class Resource extends BaseModel
 {
     use HasFactory;
 
