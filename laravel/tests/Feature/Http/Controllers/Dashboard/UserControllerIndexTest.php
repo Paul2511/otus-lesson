@@ -7,7 +7,7 @@ namespace Tests\Feature\Http\Controllers\Dashboard;
 use Tests\Generators\UsersGenerator;
 use Tests\TestCase;
 
-class QuestionControllerIndexTest extends TestCase
+class UserControllerIndexTest extends TestCase
 {
 
     /**
@@ -22,6 +22,7 @@ class QuestionControllerIndexTest extends TestCase
         ;
     }
 
+
     /**
      * @group http
      * */
@@ -35,7 +36,7 @@ class QuestionControllerIndexTest extends TestCase
 
     protected function getRoute():string
     {
-        return route('dashboard.question.index');
+        return route('dashboard.user.index');
     }
 
 }

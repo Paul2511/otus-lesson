@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\Dashboard;
 
 
-use App\Models\Answer;
+use App\Http\Controllers\Dashboard\Requests\QuestionStoreRequest;
 use App\Models\Question;
-use App\Models\QuestionCategory;
-use App\Models\Translation;
 use App\Services\Questions\QuestionsService;
-use App\Services\Questions\Repositories\EloquentQuestionRepository;
-use App\Services\QuestionsCategories\Repositories\EloquentQuestionCategoryRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class QuestionController extends DashboardController
 {
@@ -58,7 +53,7 @@ class QuestionController extends DashboardController
     }
 
 
-    public function store(Request $request)
+    public function store(QuestionStoreRequest $request)
     {
         $item = $this->questionsService->createQuestionFromArray($request->all());
         return redirect(route('dashboard.question.edit',['question' => $item]));
