@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\PermissionRole;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class PermissionRoleTableSeeder extends Seeder
@@ -17,10 +16,10 @@ class PermissionRoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $adminRole = Role::where('title', 'Admin')->first();
-        $userRole = Role::where('title','User')->first();
+        $adminRole = Role::where('title', Role::ADMIN_ROLE)->first();
+        $userRole = Role::where('title',Role::USER_ROLE)->first();
 
-        $userPermission = Permission::where('title', 'read')->first();
+        $userPermission = Permission::where('title', Permission::VIEW)->first();
         $adminPermission = Permission::all();
 
         PermissionRole::factory()->create([

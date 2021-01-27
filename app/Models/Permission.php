@@ -34,7 +34,7 @@ class Permission extends Model
 {
     use HasFactory;
 
-    const READ = 'read';
+    const VIEW = 'view';
     const WRITE = 'write';
     const EDIT = 'edit';
     const DELETE = 'delete';

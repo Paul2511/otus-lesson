@@ -26,10 +26,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         $user = User::create($payload);
-        $user->hasRole()->create([
-            'user_id' => $user->id,
-            'role_id' => Role::where('title', Role::ADMIN_ROLE)->first()->id
-        ]);
-
+        $roleID = Role::where('title', Role::ADMIN_ROLE)->first()->id;
+        $user->roles()->attach($roleID);
     }
 }
