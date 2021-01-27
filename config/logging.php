@@ -40,7 +40,10 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
-
+        'slack_log' =>[
+            'driver' => 'stack',
+            'channels' => ['slack_debug', 'slack_info','slack_critical'],
+        ],
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
@@ -60,6 +63,28 @@ return [
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
             'level' => env('LOG_LEVEL', 'critical'),
+        ],
+
+        'slack_debug' => [
+            'driver' => 'slack',
+            'url' => env('LOG_DEBUG_SLACK_WEBHOOK_URL'),
+            'username' => 'Laravel Log DEBUG',
+            'emoji' => ':boom:',
+            'level' => 'debug',
+        ],
+        'slack_info' => [
+            'driver' => 'slack',
+            'url' => env('LOG_INFO_SLACK_WEBHOOK_URL'),
+            'username' => 'Laravel Log Info',
+            'emoji' => ':boom:',
+            'level' => 'info',
+        ],
+        'slack_critical' => [
+            'driver' => 'slack',
+            'url' => env('LOG_CRITICAL_SLACK_WEBHOOK_URL'),
+            'username' => 'Laravel Log Critical',
+            'emoji' => ':boom:',
+            'level' => 'critical',
         ],
 
         'papertrail' => [
