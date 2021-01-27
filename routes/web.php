@@ -39,7 +39,7 @@ Route::get('/feedback', function () {
 
 Route::group(['prefix' => 'cms'], function () {
     Route::view('/','pages.cms.home.index')->name('cms.index');
-    Route::resource('user', UserController::class);
+    Route::resource('user', UserController::class)->middleware('auth:web');
     Route::resource('role', RoleController::class);
     Route::resource('permission', PermissionController::class);
 });

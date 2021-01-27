@@ -13,6 +13,7 @@ class ColumnController extends Controller
 
     public function __construct(ColumnService $columnService)
     {
+        $this->middleware('auth:web')->only('store','destroy');
         $this->columnService = $columnService;
     }
 
