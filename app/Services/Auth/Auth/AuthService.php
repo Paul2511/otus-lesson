@@ -16,18 +16,18 @@ class AuthService
             return true;
         }
 
-        $role = $user->hasRole;
+        $role = $user->roles()->first();
 
-        if (!$role) {
+        if (!isset($role)) {
             return false;
         }
+
         return $this->hasRolePermission($role, $permission);
     }
 
     private function hasRolePermission(Role $role, string $permission): bool
     {
-
-        return in_array($permission, $role->permissions()->get()->toArray());
+        return in_array($permission, $role->permissions()->get()->toArray()[0]);
     }
 
 

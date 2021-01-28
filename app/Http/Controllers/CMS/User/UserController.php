@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $this->usersServices->storeUser($request->toArray());
+        return $this->usersServices->storeUser($request->toArray());
     }
 
 
@@ -37,7 +37,7 @@ class UserController extends Controller
         $this->usersServices->updateUser($request->toArray(), $id);
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         return $this->usersServices->deleteUser($id);
     }

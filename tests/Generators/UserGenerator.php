@@ -24,14 +24,26 @@ class UserGenerator
         return $user;
     }
 
-    public static function generateUser()
+    public static function generateUserWithRole()
     {
-        return self::generate();
+        $user = self::generate();
+        $userRoleId = Role::where('title', Role::USER_ROLE)->first()->id;
+        UserRole::factory()->create([
+            'user_id' => $user->id,
+            'role_id' => $userRoleId
+        ]);
+
+        return $user;
     }
 
-    private static function generate()
+    public static function generateUser(array $data = [])
     {
-        return User::factory()->create();
+        return self::generate($data);
+    }
+
+    private static function generate(array $data = [])
+    {
+        return User::factory()->create($data);
 
     }
 

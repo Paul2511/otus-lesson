@@ -86,21 +86,18 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public function hasRole()
-    {
-        $userRole = $this->hasOne(UserRole::class)->first();
-        return $userRole->role();
-    }
-
     public function roles()
     {
-        return $this->belongsToMany(Role::class,'user_roles')->using(UserRole::class);
+        return $this->belongsToMany(Role::class, 'user_roles')->using(UserRole::class);
     }
 
 
     public function isAdmin(): bool
     {
-        return $this->hasRole()->first()->title === Role::ADMIN_ROLE;
+        if (!$this->roles()->first()) {
+            return false;
+        }
+        return $this->roles()->first()->title === Role::ADMIN_ROLE;
     }
 
 }

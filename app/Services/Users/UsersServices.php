@@ -26,7 +26,7 @@ class UsersServices
 
     public function storeUser(array $data): Model
     {
-        return $this->eloquentUserRepository->create(array($data));
+        return $this->eloquentUserRepository->create($data);
     }
 
     public function deleteUser(int $id)

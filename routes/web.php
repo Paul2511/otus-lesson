@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[DeskController::class,'index'])->name('home');
+Route::get('/', [DeskController::class, 'index'])->name('home');
 Route::resource('column', ColumnController::class);
 
 Route::get('/profile', function () {
@@ -37,9 +37,9 @@ Route::get('/feedback', function () {
     return view('pages.feedback');
 })->name('feedback');
 
-Route::group(['prefix' => 'cms'], function () {
-    Route::view('/','pages.cms.home.index')->name('cms.index');
-    Route::resource('user', UserController::class)->middleware('auth:web');
+Route::group(['prefix' => 'cms', 'middleware' => 'auth:web'], function () {
+    Route::view('/', 'pages.cms.home.index')->name('cms.index');
+    Route::resource('user', UserController::class);
     Route::resource('role', RoleController::class);
     Route::resource('permission', PermissionController::class);
 });
