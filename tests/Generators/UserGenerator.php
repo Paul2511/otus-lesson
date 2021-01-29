@@ -41,6 +41,15 @@ class UserGenerator
         return self::generate($data);
     }
 
+    public static function generateDataRegister()
+    {
+        return [
+            'name' => 'Test User',
+            'email' => 'test@mail.ru',
+            'password' => '123123123',
+        ];
+    }
+
     private static function generate(array $data = [])
     {
         return User::factory()->create($data);

@@ -9,18 +9,19 @@ use Tests\Generators\ColumnGenerator;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 
-class ColumnControllerStoreTest extends TestCase
+class ColumnControllerDestroyTest extends  TestCase
 {
     /**
      * @group column
      */
-    public function testStoreColumn()
+    public function testDestroyColumn()
     {
-        $data = ColumnGenerator::generateTestColumn();
+        $column = ColumnGenerator::generateTestColumn();
         $admin = UserGenerator::generateAdmin();
 
-        $response = $this->actingAs($admin)->post(route('column.store'), $data->toArray());
+        $response = $this->actingAs($admin)->delete(route('column.destroy', ['column' => $column->id]));
 //        dd($response);
         $response->assertStatus(Response::HTTP_FOUND);
     }
+
 }

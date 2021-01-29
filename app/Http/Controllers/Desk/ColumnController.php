@@ -24,11 +24,6 @@ class ColumnController extends Controller
         return back()->with('message', __('Успех'));
     }
 
-    public function show($id)
-    {
-        return redirect()->route('home');
-    }
-
     public function destroy(int $id)
     {
 
