@@ -125,8 +125,25 @@ const mutations = {
 
     SET_USER_INFO(state, payload) {
         state.AppActiveUser = payload;
+    },
+
+    // /////////////////////////////////////////////
+    // Modals
+    // /////////////////////////////////////////////
+
+    OPEN_PET_MODAL(state, data) {
+        state.petModalOpened = data;
+    },
+    CLOSE_PET_MODAL(state) {
+        state.petModalOpened = undefined;
+    },
+    OPEN_PET_CREATE_MODAL(state) {
+        state.petCreateModalOpened = true;
+    },
+    CLOSE_PET_CREATE_MODAL(state) {
+        state.petCreateModalOpened = false;
     }
-}
+};
 
 export default mutations
 

@@ -16,6 +16,8 @@ abstract class UserRole extends State implements StateInterface
         return trans('user.role.'.$name);
     }
 
+    abstract public function canManage(): bool;
+
     public static function config(): StateConfig
     {
         return parent::config()->default(ClientUserRole::class);

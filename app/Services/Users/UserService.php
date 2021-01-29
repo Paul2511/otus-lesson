@@ -11,6 +11,7 @@ use App\Services\Users\Dto\UserRegisterData;
 use App\Services\Users\DTO\UserUpdateData;
 use App\Services\Users\Repositories\UserRepository;
 use Hash;
+use Illuminate\Database\Eloquent\Collection;
 use Support\Log\LogHelper;
 
 class UserService
@@ -71,7 +72,7 @@ class UserService
     /**
      * @throws \App\Exceptions\User\UserRegisterException
      */
-    public function registerUser(UserRegisterData $userRegisterData)
+    public function registerUser(UserRegisterData $userRegisterData): User
     {
         $userRegisterData->password = Hash::make($userRegisterData->password);
 

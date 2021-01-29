@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\ViewModels\Pet\PetDestroyViewModel;
-use App\Http\ViewModels\Pet\PetIndexViewModel;
+use App\Http\Requests\Pet\PetCreateRequest;
+use App\Http\Requests\Pet\PetUpdateRequest;
+use App\Http\Resources\Pet\PetResource;
 use App\Models\Pet;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\Pets\DTO\PetCreateData;
+use App\Services\Pets\DTO\PetUpdateData;
+use Illuminate\Auth\Access\AuthorizationException;
 use \Illuminate\Http\JsonResponse;
 use App\Services\Pets\PetService;
+use Illuminate\Http\Resources\Json\JsonResource;
+
 class PetController extends Controller
 {
     /**
@@ -27,21 +32,88 @@ class PetController extends Controller
         $this->authorizeResource(Pet::class, 'pet');
     }
 
-    public function index(User $user): JsonResponse
+    /**
+     * Возвращает питомцев залогиненного пользователя
+     * @throws \App\Exceptions\Client\ClientNotFoundException
+     */
+    public function index(): JsonResource
     {
+        /** @var User $user */
+        $user = auth()->user();
         $pets = $this->petService->getUserPets($user);
 
-        $viewModel = new PetIndexViewModel($pets);
+        return PetResource::collection($pets);
+    }
 
-        return $viewModel->json();
+    /**
+     * Возвращает всех питомцев
+     * @throws AuthorizationException
+     * @throws \App\Exceptions\Client\ClientNotFoundException
+     */
+    public function list(): JsonResource
+    {
+        if (!$this->authorize('list', Pet::class)) {
+            throw new AuthorizationException();
+        }
+
+        $pets = $this->petService->getUserPets();
+
+        return PetResource::collection($pets);
     }
 
 
-    public function destroy(Pet $pet)
+    public function show(Pet $pet): JsonResource
+    {
+        return new PetResource($pet);
+    }
+
+    /**
+     * @throws \App\Exceptions\Client\ClientNotFoundException
+     * @throws \App\Exceptions\Pet\PetCreateException
+     */
+    public function store(PetCreateRequest $request)
+    {
+        $data = PetCreateData::fromRequest($request);
+
+        $pet = $this->petService->createPet($data);
+
+        $message = [
+            'message'=>[
+                'title'=>trans('form.message.successTitle'),
+                'text'=>trans('form.message.successText')]
+        ];
+
+        return (new PetResource($pet))
+            ->additional($message)
+            ->response()
+            ->setStatusCode(self::JSON_STATUS_CREATED);
+    }
+
+    /**
+     * @throws \App\Exceptions\Pet\PetUpdateException
+     */
+    public function update(PetUpdateRequest $request, Pet $pet)
+    {
+        $data = PetUpdateData::fromRequest($request);
+
+        $pet = $this->petService->updatePet($pet, $data);
+
+        $message = [
+            'message'=>[
+                'title'=>trans('form.message.successTitle'),
+                'text'=>trans('form.message.successText')]
+        ];
+
+        return (new PetResource($pet))
+            ->additional($message)
+            ->response()
+            ->setStatusCode(self::JSON_STATUS_ACCEPTED);
+    }
+
+    public function destroy(Pet $pet): JsonResponse
     {
         $this->petService->deletePet($pet);
 
-        $viewModel = new PetDestroyViewModel();
-        return $viewModel->json();
+        return response()->json([]);
     }
 }

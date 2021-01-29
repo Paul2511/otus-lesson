@@ -27,9 +27,11 @@
         },
         created() {
             this.$vs.loading();
-            this.$store.dispatch('getUser', this.appUser.id)
+            this.$store.dispatch('getProfile')
                 .then(res => {
-                    this.user = res.data.user;
+                    this.user = res.data.data;
+
+
                 })
                 .catch(err => {
                     this.$vs.notify({

@@ -3,6 +3,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Pet;
 
+use App\Http\Controllers\Controller;
+use App\Http\RouteNames;
 use App\Jobs\Pet\PetDeleteJob;
 use App\States\User\Role\AdminUserRole;
 use Illuminate\Support\Facades\Bus;
@@ -10,8 +12,6 @@ use Tests\Generators\UserGenerator;
 use App\Models\User;
 class ApiPetControllerDeleteTest extends TestPet
 {
-    private static $uri = 'api/pets/';
-
     /**
      * Клиент удаляет своего питомца
      * @group pet
@@ -26,10 +26,9 @@ class ApiPetControllerDeleteTest extends TestPet
         $pet = $pets->random(1)->all();
         $pet = $pet[0];
 
-        $response = $this->tokenHeader()->json('delete', self::$uri . $pet->id);
+        $response = $this->tokenHeader()->json('delete', route(RouteNames::DELETE_PET, ['pet'=>$pet]));
 
-        $response->assertStatus(200)
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_OK);
 
         $this->assertDeleted($pet);
     }
@@ -52,10 +51,9 @@ class ApiPetControllerDeleteTest extends TestPet
         $pet = $anotherPets->random(1)->all();
         $pet = $pet[0];
 
-        $response = $this->tokenHeader()->json('delete', self::$uri . $pet->id);
+        $response = $this->tokenHeader()->json('delete', route(RouteNames::DELETE_PET, ['pet'=>$pet]));
 
         $response->assertStatus(403)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
     }
 
@@ -76,10 +74,10 @@ class ApiPetControllerDeleteTest extends TestPet
         $pet = $anotherPets->random(1)->all();
         $pet = $pet[0];
 
-        $response = $this->tokenHeader()->json('delete', self::$uri . $pet->id);
+        $response = $this->tokenHeader()->json('delete', route(RouteNames::DELETE_PET, ['pet'=>$pet]));
 
-        $response->assertStatus(200)
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_OK);
+
 
         $this->assertDeleted($pet);
     }
@@ -93,10 +91,9 @@ class ApiPetControllerDeleteTest extends TestPet
     {
         $admin = $this->createUser(AdminUserRole::class);
 
-        $response = $this->tokenHeader()->json('delete', self::$uri . '12');
+        $response = $this->tokenHeader()->json('delete', '/api/pets/1000');
 
         $response->assertStatus(404)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('pet.notFound')]);
     }
 
@@ -109,11 +106,10 @@ class ApiPetControllerDeleteTest extends TestPet
     {
         $admin = $this->createUser(AdminUserRole::class);
 
-        $response = $this->tokenHeader()->json('delete', self::$uri);
+        $response = $this->tokenHeader()->json('delete', '/api/pets/');
 
-        $response->assertStatus(404)
-            ->assertJson(['success' => false])
-            ->assertJsonFragment(['message'=>trans('main.urlNotFound')]);
+        $response->assertStatus(400)
+            ->assertJsonFragment(['message'=>trans('exception.badRequest')]);
     }
 
     /**
@@ -133,10 +129,9 @@ class ApiPetControllerDeleteTest extends TestPet
         $pet = $pets->random(1)->all();
         $pet = $pet[0];
 
-        $response = $this->tokenHeader()->json('delete', self::$uri . $pet->id);
+        $response = $this->tokenHeader()->json('delete', route(RouteNames::DELETE_PET, ['pet'=>$pet]));
 
-        $response->assertStatus(200)
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_OK);
 
         Bus::assertDispatched(PetDeleteJob::class);
 

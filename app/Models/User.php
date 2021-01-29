@@ -66,6 +66,7 @@ use App\States\User\Role\UserRole;
  * @property-read bool                  $isManager
  * @property-read bool                  $isClient
  * @property-read bool                  $isSpecialist
+ * @property-read bool                  $canManage
  *
  * @property-read Collection|Comment[]  $commentsByUser
  * @property-read Collection|Client     $client
@@ -199,6 +200,11 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
     public function getSpecialistAttribute()
     {
         return $this->role->equals(SpecialistUserRole::$name) ? $this->specialist()->first()->toArray():null;
+    }
+
+    public function getCanManageAttribute()
+    {
+        return $this->role->canManage();
     }
 
     public function getJWTIdentifier()

@@ -3,6 +3,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\User;
 
+use App\Http\Controllers\Controller;
+use App\Http\RouteNames;
 use App\Models\User;
 use App\Services\Users\UserService;
 use App\States\User\Role\AdminUserRole;
@@ -15,8 +17,6 @@ use App\States\User\Status\BlockedUserStatus;
 class ApiUserControllerUpdateTest extends TestCase
 {
     use AuthAttach;
-
-    private static $uri = 'api/users/';
 
     private function getUserService(): UserService
     {
@@ -39,11 +39,10 @@ class ApiUserControllerUpdateTest extends TestCase
         ];
         $data = ['name'=>$newName];
 
-        $response = $this->tokenHeader()->json('POST', self::$uri . $user->id, $data);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_USER, ['user'=>$user]), $data);
 
-        $response->assertStatus(200)
-            ->assertJsonStructure(['user'])
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_ACCEPTED)
+            ->assertJsonStructure(['data']);
 
         $newUser = $this->getUserService()->findUser($user->id);
 
@@ -62,10 +61,9 @@ class ApiUserControllerUpdateTest extends TestCase
             'status'=>BlockedUserStatus::$name
         ];
 
-        $response = $this->tokenHeader()->json('POST', self::$uri . $user->id, $data);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_USER, ['user'=>$user]), $data);
 
         $response->assertStatus(403)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
     }
 
@@ -83,10 +81,9 @@ class ApiUserControllerUpdateTest extends TestCase
         $data = [
             'email'=>'newemail@email.com'
         ];
-        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_USER, ['user'=>$anotherUser]), $data);
 
         $response->assertStatus(403)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
     }
 
@@ -108,11 +105,10 @@ class ApiUserControllerUpdateTest extends TestCase
             'middleName'=>$anotherUser->name->middleName,
         ];
         $data = ['name'=>$newName];
-        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_USER, ['user'=>$anotherUser]), $data);
 
-        $response->assertStatus(200)
-            ->assertJsonStructure(['user'])
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_ACCEPTED)
+            ->assertJsonStructure(['data']);
 
         $newUser = $this->getUserService()->findUser($anotherUser->id);
 
@@ -125,7 +121,7 @@ class ApiUserControllerUpdateTest extends TestCase
      * @group user
      * @group userUpdate
      */
-    public function testAdminUpdateRoleORStatus200()
+    public function testAdminUpdateStatus200()
     {
         $admin = $this->createUser(AdminUserRole::class);
 
@@ -135,11 +131,10 @@ class ApiUserControllerUpdateTest extends TestCase
             'status'=>BlockedUserStatus::$name
         ];
 
-        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_USER, ['user'=>$anotherUser]), $data);
 
-        $response->assertStatus(200)
-            ->assertJsonStructure(['user'])
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_ACCEPTED)
+            ->assertJsonStructure(['data']);
 
         $newUser = $this->getUserService()->findUser($anotherUser->id);
 
@@ -164,11 +159,10 @@ class ApiUserControllerUpdateTest extends TestCase
             'status'=>'test_status'
         ];
 
-        $response = $this->tokenHeader()->json('POST', self::$uri . $anotherUser->id, $data);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_USER, ['user'=>$anotherUser]), $data);
 
         $response
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['status']);
     }
 
@@ -185,30 +179,9 @@ class ApiUserControllerUpdateTest extends TestCase
             'status'=>BlockedUserStatus::$name
         ];
 
-        $response = $this->tokenHeader()->json('POST', self::$uri . '2', $data);
+        $response = $this->tokenHeader()->json('put', 'api/users/1000', $data);
 
         $response->assertStatus(404)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('user.notFound')]);
     }
-
-    /**
-     * Отсутствует пользователь в запросе
-     * @group user
-     * @group userUpdate
-     */
-    public function testWithoutUser404()
-    {
-        $admin = $this->createUser(AdminUserRole::class);
-
-        $data = [
-            'status'=>BlockedUserStatus::$name
-        ];
-        $response = $this->tokenHeader()->json('POST', self::$uri, $data);
-
-        $response->assertStatus(404)
-            ->assertJson(['success' => false])
-            ->assertJsonFragment(['message'=>trans('main.urlNotFound')]);
-    }
-
 }

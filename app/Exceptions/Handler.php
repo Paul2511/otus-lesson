@@ -53,7 +53,6 @@ class Handler extends ExceptionHandler
 
             return response()->json([
                 'message' => $message,
-                'success' => false
             ], 404);
         });
     }
@@ -64,14 +63,12 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'message' => trans('form.validationErrorMessage'),
                 'errors' => $e->errors(),
-                'success' => false
             ], 422);
         }
 
         if ($e instanceof AuthorizationException) {
             return response()->json([
                 'message' => trans('auth.accessDenied'),
-                'success' => false
             ], 403);
         }
 
@@ -80,16 +77,20 @@ class Handler extends ExceptionHandler
                 'message' => trans('auth.wrongAuth'),
                 'errors' => [
                     'password'=>[trans('auth.wrongAuth')]
-                ],
-                'success' => false
+                ]
             ], 403);
         }
 
         if ($e instanceof UnauthorizedHttpException) {
             return response()->json([
-                'message' => trans('auth.wrongToken'),
-                'success' => false
+                'message' => trans('auth.wrongToken')
             ], 401);
+        }
+
+        if ($request->wantsJson() && $e->getMessage() && $e->getCode()) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], $e->getCode());
         }
 
         return parent::render($request, $e);

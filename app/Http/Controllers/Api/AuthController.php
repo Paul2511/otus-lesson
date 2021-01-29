@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserRegisterRequest;
-use App\Http\ViewModels\Auth\LoginAuthViewModel;
-use App\Http\ViewModels\User\UserRegisterViewModel;
+use App\Http\Resources\User\UserResource;
+use App\Models\User;
 use App\Services\Auth\DTO\AuthLoginData;
 use App\Services\Users\Dto\UserRegisterData;
 use App\States\User\Role\ClientUserRole;
@@ -13,6 +13,8 @@ use \Illuminate\Http\JsonResponse;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Services\Auth\AuthService;
 use App\Services\Users\UserService;
+use Illuminate\Http\Resources\Json\JsonResource;
+
 class AuthController extends Controller
 {
 
@@ -29,9 +31,12 @@ class AuthController extends Controller
         $authLoginData = AuthLoginData::fromRequest($request);
         $token = $authService->login($authLoginData);
 
-        $viewModel = new LoginAuthViewModel($token);
-
-        return $viewModel->json();
+        /** @var User $user */
+        $user = auth()->user();
+        return response()->json([
+            'accessToken' => $token,
+            'userData' => $user
+        ]);
     }
 
     public function refresh(): JsonResponse
@@ -47,10 +52,17 @@ class AuthController extends Controller
     {
         $userData = UserRegisterData::fromRequest($request);
         $userData->role = ClientUserRole::$name; //жестко зашиваем в клиентском контроллере
-        $user = $userService->registerUser($userData);
+        $userService->registerUser($userData);
 
-        $viewModel = new UserRegisterViewModel($user);
-        return $viewModel->json();
+        return response()->json([], self::JSON_STATUS_CREATED);
+    }
+
+
+    public function profile(): JsonResource
+    {
+        /** @var User $user */
+        $user = auth()->user();
+        return new UserResource($user);
     }
 
 }

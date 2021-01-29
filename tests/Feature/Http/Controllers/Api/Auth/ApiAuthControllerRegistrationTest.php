@@ -3,10 +3,11 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Http\RouteNames;
 use App\Models\User;
 use App\Notifications\User\UserWelcome;
 use App\States\User\Role\ClientUserRole;
-use Illuminate\Support\Facades\Bus;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Tests\AuthAttach;
@@ -15,17 +16,14 @@ class ApiAuthControllerRegistrationTest extends TestCase
 {
     use AuthAttach;
 
-    private static $uri = 'api/auth/registration';
-
     /**
      * @group auth
      * @group register
      */
     public function testRequiresEmailAndPassword422()
     {
-        $this->json('POST', self::$uri)
+        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION))
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['email', 'password']);
     }
 
@@ -37,9 +35,8 @@ class ApiAuthControllerRegistrationTest extends TestCase
     {
         $payload = ['password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['email']);
     }
 
@@ -51,9 +48,8 @@ class ApiAuthControllerRegistrationTest extends TestCase
     {
         $payload = ['email' => 'testlogin@user.com'];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['password']);
     }
 
@@ -66,9 +62,8 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         $payload = ['email' => 'wrongEmail', 'password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['email']);
     }
 
@@ -86,9 +81,8 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         $payload = ['email' => 'testlogin@user.com', 'password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['email']);
     }
 
@@ -105,9 +99,8 @@ class ApiAuthControllerRegistrationTest extends TestCase
             'locale' => 'fr'
         ];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['locale']);
     }
 
@@ -123,10 +116,9 @@ class ApiAuthControllerRegistrationTest extends TestCase
             'password' => env('USER_TEST_PASSWORD')
         ];
 
-        $response= $this->json('POST', self::$uri, $payload);
+        $response= $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload);
 
-        $response->assertJson(['success' => true])
-            ->assertStatus(200);
+        $response->assertStatus(Controller::JSON_STATUS_CREATED);
 
         $this->assertDatabaseHas('users', [
             'email' => 'testlogin@user.com',
@@ -156,10 +148,9 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         Notification::fake();
 
-        $response= $this->json('POST', self::$uri, $payload);
+        $response= $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload);
 
-        $response->assertJson(['success' => true])
-            ->assertStatus(200);
+        $response->assertStatus(Controller::JSON_STATUS_CREATED);
 
 
         /** @var User $user */

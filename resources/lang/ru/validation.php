@@ -9,7 +9,10 @@ return [
         'firstname' => 'Имя',
         'middlename' => 'Отчество',
         'password' => 'Пароль',
-        'image' => 'Изображение'
+        'image' => 'Изображение',
+        'name' => 'Имя',
+        'pet_type_id' => 'Тип',
+        'sex' => 'Пол'
     ],
     'required' => 'Поле :attribute обязательно для заполнения',
     'email' => 'Неверный email',

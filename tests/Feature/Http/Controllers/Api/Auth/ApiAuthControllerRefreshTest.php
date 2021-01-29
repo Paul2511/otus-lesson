@@ -3,14 +3,14 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Http\RouteNames;
 use Tests\TestCase;
 use Tests\AuthAttach;
 
 class ApiAuthControllerRefreshTest extends TestCase
 {
     use AuthAttach;
-
-    private static $uri = 'api/auth/refresh';
 
     /**
      * @group auth
@@ -26,10 +26,9 @@ class ApiAuthControllerRefreshTest extends TestCase
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization'=>'Bearer ' . $wrongToken
-        ])->json('post', self::$uri, ['accessToken'=>$wrongToken]);
+        ])->json('post', route(RouteNames::TOKEN_REFRESH), ['accessToken'=>$wrongToken]);
 
         $response->assertStatus(401)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('auth.wrongToken')]);
     }
 
@@ -45,13 +44,13 @@ class ApiAuthControllerRefreshTest extends TestCase
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization'=>'Bearer ' . $token
-        ])->json('post', self::$uri, ['accessToken'=>$token]);
+        ])->json('post', route(RouteNames::TOKEN_REFRESH), ['accessToken'=>$token]);
 
         $newToken = json_decode($response->getContent(), true);
         if ($newToken && is_string($newToken)) {
             $this->setToken($newToken);
         }
 
-        $response->assertStatus(200);
+        $response->assertStatus(Controller::JSON_STATUS_OK);
     }
 }

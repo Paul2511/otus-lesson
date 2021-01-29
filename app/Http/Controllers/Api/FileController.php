@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\File\ImageUploadRequest;
-use App\Http\ViewModels\File\UploadImageViewModel;
+use App\Http\Resources\File\FileResource;
 use App\Services\Files\DTO\UploadImageData;
 use App\Services\Files\FileService;
-use \Illuminate\Http\JsonResponse;
 class FileController extends Controller
 {
     /**
@@ -26,12 +25,11 @@ class FileController extends Controller
     /**
      * Загрузка одного изображения
      */
-    public function uploadImage(ImageUploadRequest $request): JsonResponse
+    public function uploadImage(ImageUploadRequest $request)
     {
         $uploadData = UploadImageData::fromRequest($request);
         $imageData = $this->fileService->uploadImage($uploadData);
 
-        $viewModel = new UploadImageViewModel($imageData);
-        return $viewModel->json();
+        return new FileResource($imageData);
     }
 }

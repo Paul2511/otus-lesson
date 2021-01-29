@@ -19,7 +19,6 @@ class LocaleDetectionTest extends TestCase
         ])->json('POST', 'api/auth/login', $payload);
 
         $response->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['password'])
             ->assertJsonPath('message', trans('form.validationErrorMessage', [], 'ru'));
     }
@@ -37,7 +36,6 @@ class LocaleDetectionTest extends TestCase
         ])->json('POST', 'api/auth/login', $payload);
 
         $response->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['password'])
             ->assertJsonPath('message', trans('form.validationErrorMessage', [], 'en'));
     }
@@ -55,7 +53,6 @@ class LocaleDetectionTest extends TestCase
         ])->json('POST', 'api/auth/login', $payload);
 
         $response->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['password'])
             ->assertJsonPath('message', trans('form.validationErrorMessage', [], 'ru'));
     }

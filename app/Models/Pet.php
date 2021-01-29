@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\Pet\PetCreated;
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
 use App\Services\Files\DTO\ImageData;
@@ -57,13 +58,12 @@ class Pet extends Model
     protected $rememberCachePrefix = 'pets';
 
     protected $fillable = [
-        'pet_type_id', 'name', 'age', 'bread', 'sex', 'photo'
+        'pet_type_id', 'name', 'age', 'bread', 'sex', 'photo', 'client_id'
     ];
 
     protected $hidden = [
         'created_at',
-        'updated_at',
-        'sex'
+        'updated_at'
     ];
 
     protected $casts = [
@@ -77,7 +77,8 @@ class Pet extends Model
 
     protected $dispatchesEvents = [
         'updated'=>PetUpdated::class,
-        'deleted'=>PetDeleted::class
+        'deleted'=>PetDeleted::class,
+        'created'=>PetCreated::class
     ];
 
     public function client()

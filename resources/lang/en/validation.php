@@ -147,6 +147,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'pet_type_id' => 'type',
+    ],
 
 ];

@@ -3,7 +3,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\User;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Http\RouteNames;
 use App\States\User\Role\AdminUserRole;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
@@ -11,8 +12,6 @@ use Tests\AuthAttach;
 class ApiUserControllerShowTest extends TestCase
 {
     use AuthAttach;
-
-    private static $uri = 'api/users/';
 
     /**
      * Клиент получает свои данные
@@ -22,11 +21,10 @@ class ApiUserControllerShowTest extends TestCase
     public function testClientSuccess200()
     {
         $user = $this->currentUser();
-        $response = $this->tokenHeader()->json('get', self::$uri . $user->id);
+        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_USER, ['user'=>$user]));
 
-        $response->assertStatus(200)
-            ->assertJsonStructure(['user'])
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_OK)
+            ->assertJsonStructure(['data']);
     }
 
     /**
@@ -40,10 +38,9 @@ class ApiUserControllerShowTest extends TestCase
 
         $anotherUser = UserGenerator::generateClient();
 
-        $response = $this->tokenHeader()->json('get', self::$uri . $anotherUser->id);
+        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_USER, ['user'=>$anotherUser]));
 
         $response->assertStatus(403)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
     }
 
@@ -58,11 +55,10 @@ class ApiUserControllerShowTest extends TestCase
 
         $anotherUser = UserGenerator::generateClient();
 
-        $response = $this->tokenHeader()->json('get', self::$uri . $anotherUser->id);
+        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_USER, ['user'=>$anotherUser]));
 
-        $response->assertStatus(200)
-            ->assertJsonStructure(['user'])
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_OK)
+            ->assertJsonStructure(['data']);
     }
 
     /**
@@ -74,26 +70,9 @@ class ApiUserControllerShowTest extends TestCase
     {
         $admin = $this->createUser(AdminUserRole::class);
 
-        $response = $this->tokenHeader()->json('get', self::$uri . '2');
+        $response = $this->tokenHeader()->json('get', '/api/users/1000');
 
         $response->assertStatus(404)
-            ->assertJson(['success' => false])
             ->assertJsonFragment(['message'=>trans('user.notFound')]);
-    }
-
-    /**
-     * Отсутствует пользователь в запросе
-     * @group user
-     * @group userShow
-     */
-    public function testWithoutUser404()
-    {
-        $admin = $this->createUser(AdminUserRole::class);
-
-        $response = $this->tokenHeader()->json('get', self::$uri);
-
-        $response->assertStatus(404)
-            ->assertJson(['success' => false])
-            ->assertJsonFragment(['message'=>trans('main.urlNotFound')]);
     }
 }

@@ -24,10 +24,7 @@ class TestPet extends TestCase
      */
     protected function generatePet(?int $count = 1, ?array $data = [])
     {
-        if (!self::$isSeed || !PetType::count()) {
-            $this->seed(PetTypesTableSeeder::class);
-            self::$isSeed = true;
-        }
+        $this->seedPetTypes();
 
         if (!count($data) || !isset($data['client_id'])) {
             $clientId = $this->currentUser()->client->id;
@@ -37,5 +34,12 @@ class TestPet extends TestCase
         }
 
         return PetGenerator::generate($count, $data);
+    }
+
+    protected function seedPetTypes() {
+        if (!self::$isSeed || !PetType::count()) {
+            $this->seed(PetTypesTableSeeder::class);
+            self::$isSeed = true;
+        }
     }
 }

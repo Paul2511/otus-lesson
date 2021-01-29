@@ -51,10 +51,6 @@ class PersonNameData extends DataTransferObject
 
     public function getFullName()
     {
-        if ($this->fullName) {
-            return $this->fullName;
-        }
-
         $lastName = $this->lastName?$this->lastName.' ':'';
         $firstName = $this->firstName?$this->firstName.' ':'';
         $middleName = $this->middleName ?? '';

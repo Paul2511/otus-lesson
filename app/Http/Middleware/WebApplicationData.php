@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Pet;
+use App\Models\PetType;
 use App\Models\User;
+use App\Services\PetTypes\PetTypeService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -19,6 +22,7 @@ class WebApplicationData
      */
     public function handle(Request $request, Closure $next)
     {
+
         $data = [
             'locale' => App::currentLocale(),
             'defaultAvatar' => SrcHelper::getUserDefaultAvatar()
@@ -28,11 +32,24 @@ class WebApplicationData
         User::getStatesFor('status')->each(function (string $status) use (&$userStatuses) {
             $userStatuses[$status] = trans('user.status.'.$status);
         });
-
         $data['userStatuses'] = $userStatuses;
+
+        $petTypes = $this->getPetTypeService()->getAll();
+        $data['petTypes'] = $petTypes;
+
+        $petSexes = [];
+        Pet::getStatesFor('sex')->each(function (string $sex) use (&$petSexes) {
+            $petSexes[$sex] = trans('pet.sex.'.$sex);
+        });
+        $data['petSexes'] = $petSexes;
 
         View::share('data', $data);
 
         return $next($request);
+    }
+
+    private function getPetTypeService(): PetTypeService
+    {
+        return app(PetTypeService::class);
     }
 }

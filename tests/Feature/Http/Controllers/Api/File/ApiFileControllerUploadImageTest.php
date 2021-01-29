@@ -3,6 +3,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\File;
 
+use App\Http\Controllers\Controller;
+use App\Http\RouteNames;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Tests\AuthAttach;
@@ -11,8 +13,6 @@ use Illuminate\Support\Facades\Storage;
 class ApiFileControllerUploadImageTest extends TestCase
 {
     use AuthAttach;
-
-    private static $uri = 'api/files/upload-image';
 
 
     /**
@@ -25,10 +25,9 @@ class ApiFileControllerUploadImageTest extends TestCase
             'image' => UploadedFile::fake()->image('тестовый_файл.jpg'),
         ];
 
-        $response = $this->json('post', self::$uri, $data);
+        $response = $this->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
 
-        $response->assertStatus(401)
-            ->assertJson(['success' => false]);
+        $response->assertStatus(401);
     }
 
 
@@ -45,11 +44,10 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', self::$uri, $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
 
         $response
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['image']);
     }
 
@@ -67,11 +65,10 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', self::$uri, $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
 
         $response
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['image']);
     }
 
@@ -90,11 +87,10 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', self::$uri, $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
 
         $response
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['image']);
     }
 
@@ -113,15 +109,14 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', self::$uri, $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
 
-        $response->assertStatus(200)
-            ->assertJsonStructure(['fileData'])
-            ->assertJson(['success' => true]);
+        $response->assertStatus(Controller::JSON_STATUS_OK)
+            ->assertJsonStructure(['data']);
 
         $result = json_decode($response->getContent(), true);
 
-        $fileData = $result['fileData'];
+        $fileData = $result['data'];
 
         Storage::disk($fileData['disk'])->assertExists($fileData['path']);
     }

@@ -34,21 +34,21 @@
                     <tr>
                         <td class="font-semibold">{{ $t('user.lastname') }}</td>
                         <td>
-                            <vs-input @change="setUserName('lastName', $event.target.value)" v-model="user.name.lastName" :danger="!!errors.lastName" val-icon-danger="icon-x" val-icon-pack="feather" />
+                            <vs-input @change="setUserName('lastName', $event.target.value)" :value="name.lastName" :danger="!!errors.lastName" val-icon-danger="icon-x" val-icon-pack="feather" />
                             <span class="text-danger text-xs" v-show="!!errors.lastname">{{ errors.lastname | arr2str }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td class="font-semibold">{{ $t('user.firstname') }}</td>
                         <td>
-                            <vs-input @change="setUserName('firstName', $event.target.value)" v-model="user.name.firstName" :danger="!!errors.firstName" val-icon-danger="icon-x" val-icon-pack="feather"/>
+                            <vs-input @change="setUserName('firstName', $event.target.value)" :value="name.firstName" :danger="!!errors.firstName" val-icon-danger="icon-x" val-icon-pack="feather"/>
                             <span class="text-danger text-xs" v-show="!!errors.firstName">{{ errors.firstName | arr2str }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td class="font-semibold">{{ $t('user.middlename') }}</td>
                         <td>
-                            <vs-input @change="setUserName('middleName', $event.target.value)" v-model="user.name.middleName" :danger="!!errors.middleName" val-icon-danger="icon-x" val-icon-pack="feather"/>
+                            <vs-input @change="setUserName('middleName', $event.target.value)" :value="name.middleName" :danger="!!errors.middleName" val-icon-danger="icon-x" val-icon-pack="feather"/>
                             <span class="text-danger text-xs" v-show="!!errors.middleName">{{ errors.middleName | arr2str }}</span>
                         </td>
                     </tr>
@@ -115,10 +115,14 @@
         data() {
             return {
                 user: Object.assign({}, this.userInfo),
+                name: {},
                 errors: [],
                 userData: null,
                 uploading: false
             }
+        },
+        mounted() {
+            this.name = Object.assign({}, this.user.name)
         },
         methods: {
             setUserData(field) {
@@ -130,19 +134,21 @@
                 Vue.set(this.userData, field, val);
             },
             setUserName(field, value) {
-                if (!this.user.name) {
-                    this.user.name = {};
+                if (!this.name) {
+                    this.name = {};
                 }
 
-                Vue.set(this.user.name, field, value);
-
-                this.setUserData('name');
+                Vue.set(this.name, field, value);
+                if (!this.userData) {
+                    this.userData = {};
+                }
+                Vue.set(this.userData, 'name', this.name);
             },
             cancel() {
                 this.$emit('cancel');
             },
             save() {
-                if (this.userData.name) {
+                /*if (this.userData.name) {
                     const allowedNameFields = ['lastName', 'firstName', 'middleName'];
                     const name = Object.keys(this.userData.name)
                         .filter(key => allowedNameFields.includes(key))
@@ -151,7 +157,8 @@
                             return obj;
                         }, {});
                     Vue.set(this.userData, 'name', name);
-                }
+                }*/
+
 
                 this.$vs.loading();
 
@@ -160,7 +167,7 @@
                         if (!!res.data.message) {
                             this.$vs.notify({title:res.data.message.title, text: res.data.message.text, color: 'success', iconPack: 'feather', icon:'icon-check'});
                         }
-                        this.$emit('set', res.data.user);
+                        this.$emit('set', res.data.data);
                     })
                     .catch(err => {
                         this.errors = err.response.data.errors ? err.response.data.errors : [];
@@ -189,11 +196,10 @@
                 formData.append('image', image);
                 formData.append('uploadPath', 'user.avatar');
                 formData.append('userId', this.user.id);
-
                 this.$store.dispatch('uploadImage', formData)
                     .then(res => {
-                        if (res.data.success && !!res.data.fileData) {
-                            this.user.avatar = res.data.fileData;
+                        if (res.data.data) {
+                            this.user.avatar = res.data.data;
                             this.setUserData('avatar');
                         }
                     })
@@ -214,6 +220,7 @@
                 this.setUserData('avatar');
             }
         },
+
         computed: {
             canAdmin() {
                 return this.$acl.check('canAdmin')

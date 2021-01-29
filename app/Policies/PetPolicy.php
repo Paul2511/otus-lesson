@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Pet;
 use App\Models\User;
-use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Http\Request;
 class PetPolicy
@@ -37,10 +36,12 @@ class PetPolicy
      */
     public function viewAny(User $user)
     {
-        /** @var User $requestUser */
-        $requestUser = $this->request->route()->parameter('user');
+        return true;
+    }
 
-        return $requestUser->id == $user->id;
+    public function list(User $user)
+    {
+        return false;
     }
 
     /**

@@ -1,6 +1,6 @@
 <template>
     <div id="my-pets">
-        <vs-button color="warning" class="mb-4 shadow-lg" icon="add_circle">
+        <vs-button color="warning" class="mb-4 shadow-lg" icon="add_circle" @click="addPet()">
             {{ $t('pet.addPet') }}
         </vs-button>
         <vx-card no-shadow>
@@ -18,6 +18,9 @@
                                             <vs-icon class="" icon="more_vert"></vs-icon>
                                         </a>
                                         <vs-dropdown-menu>
+                                            <vs-dropdown-item @click="editPetModal(pet.id)">
+                                                {{ $t('buttons.edit') }}
+                                            </vs-dropdown-item>
                                             <vs-dropdown-item @click="removePet(pet)">
                                                 {{ $t('buttons.delete') }}
                                             </vs-dropdown-item>
@@ -26,9 +29,17 @@
                                 </template>
                                 <img :src="pet.photo.src" alt="content-img" class="responsive rounded-lg">
                                 <div class="flex justify-between flex-wrap">
-                                    <vs-button icon="assignment" class="mt-4 mr-2 shadow-md" type="gradient" color="#7367F0" gradient-color-secondary="#CE9FFC">
+                                    <vs-button
+                                            icon="assignment"
+                                            class="mt-4 mr-2 shadow-md"
+                                            type="gradient"
+                                            color="#7367F0"
+                                            gradient-color-secondary="#CE9FFC"
+                                            @click="openPetModal(pet.id)"
+                                    >
                                         {{ $t('pet.questionary') }}
                                     </vs-button>
+
                                     <vs-button icon="assignment_turned_in" class="mt-4 shadow-md" type="gradient" color="success">
                                         {{ $t('pet.card') }}
                                     </vs-button>
@@ -66,11 +77,9 @@
             }
         },
         created() {
-            const userId = this.user.id;
-
-            this.$store.dispatch('getUserPets', userId)
+            this.$store.dispatch('getPets')
                 .then(res => {
-                    this.pets = res.data.pets
+                    this.pets = res.data.data
                 })
                 .catch(err => {
                     this.$vs.notify({
@@ -84,7 +93,9 @@
                 .finally(() => (this.isLoading = false));
         },
         methods: {
-
+            addPet() {
+                this.$store.dispatch('openPetCreateModal');
+            },
             removePet(pet) {
                 let _this = this;
                 this.$vs.dialog({
@@ -113,7 +124,13 @@
                             color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
                     })
                     .finally(() => (this.$vs.loading.close()));
-            }
+            },
+            openPetModal(petId) {
+                this.$store.dispatch('openPetModal', {petId: petId, isEdit: false});
+            },
+            editPetModal(petId) {
+                this.$store.dispatch('openPetModal', {petId: petId, isEdit: true});
+            },
         },
 
         computed: {

@@ -11,6 +11,10 @@
 <template>
     <div id="app" :class="vueAppClasses">
         <router-view @setAppClasses="setAppClasses"/>
+
+        <pet-modal v-if="petModalOpened" @reload="reload"></pet-modal>
+        <pet-create-modal v-if="petCreateModalOpened" @reload="reload"></pet-create-modal>
+
     </div>
 </template>
 
@@ -18,10 +22,24 @@
     import themeConfig from '@/../themeConfig.js'
     import jwt from '@/http/requests/auth/jwt/index.js'
 
+    import petModal from './modals/pet-modal/pet-modal.vue';
+    import petCreateModal from './modals/pet-modal/pet-create-modal.vue';
+
     export default {
+        components: {
+            petModal, petCreateModal
+        },
         data() {
             return {
                 vueAppClasses: []
+            }
+        },
+        computed: {
+            petModalOpened() {
+                return !!this.$store.state.petModalOpened;
+            },
+            petCreateModalOpened() {
+                return !!this.$store.state.petCreateModalOpened;
             }
         },
         watch: {
@@ -56,6 +74,9 @@
             },
             handleScroll() {
                 this.$store.commit('UPDATE_WINDOW_SCROLL_Y', window.scrollY)
+            },
+            reload() {
+                window.location.reload();
             }
         },
         mounted() {

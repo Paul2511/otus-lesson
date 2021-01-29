@@ -4,10 +4,20 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-
+use Illuminate\Http\Request;
 class UserPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * @var Request
+     */
+    private $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
 
     public function before(User $user, $ability)
     {
@@ -103,5 +113,12 @@ class UserPolicy
         return false;
     }
 
+    public function relations(User $user)
+    {
+        /** @var User $requestUser */
+        $requestUser = $this->request->route()->parameter('user');
+
+        return $requestUser ? $requestUser->id == $user->id : true;
+    }
 
 }

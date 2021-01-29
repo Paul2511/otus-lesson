@@ -50,25 +50,32 @@ const actions = {
     updateUserInfo ({ commit }, payload) {
         commit('UPDATE_USER_INFO', payload)
     },
-    getUser({commit}, userId) {
 
+    getProfile() {
         return new Promise((resolve, reject) => {
-            axios.get('/api/users/'+userId)
+            axios.get('/api/auth/profile')
                 .then((response) => {
-                    commit('UPDATE_USER_INFO', response.data.user)
                     resolve(response);
                 })
                 .catch((error) => { reject(error) })
         })
     },
 
+    getUser({commit}, userId) {
+
+        return new Promise((resolve, reject) => {
+            axios.get('/api/users/'+userId)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        })
+    },
     updateUser({ commit }, data) {
         return new Promise((resolve, reject) => {
-            axios.post('/api/users/'+data.userId, data.data)
+            axios.put('/api/users/'+data.userId, data.data)
                 .then((response) => {
-                    if (response.data.success) {
-                        commit('UPDATE_USER_INFO', response.data.user)
-                    }
+                    commit('UPDATE_USER_INFO', response.data.data);
                     resolve(response);
                 })
                 .catch((error) => { reject(error) })
@@ -78,9 +85,10 @@ const actions = {
     // /////////////////////////////////////////////
     // Pets
     // /////////////////////////////////////////////
-    getUserPets({ commit }, userId) {
+
+    getPets() {
         return new Promise((resolve, reject) => {
-            axios.get('/api/pets/user/'+userId)
+            axios.get('/api/pets')
                 .then((response) => {
                     resolve(response);
                 })
@@ -88,6 +96,15 @@ const actions = {
         });
     },
 
+    getUserPets({ commit }, userId) {
+        return new Promise((resolve, reject) => {
+            axios.get('/api/users/'+userId+'/pets')
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
     deletePet({ commit }, petId) {
         return new Promise((resolve, reject) => {
             axios.delete('/api/pets/'+petId)
@@ -97,7 +114,33 @@ const actions = {
                 .catch((error) => { reject(error) })
         });
     },
-
+    getPet({ commit }, petId) {
+        return new Promise((resolve, reject) => {
+            axios.get('/api/pets/'+petId)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    updatePet({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.put('/api/pets/'+data.petId, data.data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    createPet({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.post('/api/pets/', data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
 
     // /////////////////////////////////////////////
     // Files
@@ -118,9 +161,26 @@ const actions = {
                 })
                 .catch((error) => { reject(error) })
         });
+    },
+
+    // /////////////////////////////////////////////
+    // Modals
+    // /////////////////////////////////////////////
+    openPetModal({ commit }, data) {
+        commit('OPEN_PET_MODAL', data);
+    },
+
+    closePetModal({ commit }) {
+        commit('CLOSE_PET_MODAL');
+    },
+
+    openPetCreateModal({ commit }) {
+        commit('OPEN_PET_CREATE_MODAL');
+    },
+
+    closePetCreateModal({ commit }) {
+        commit('CLOSE_PET_CREATE_MODAL');
     }
-
-
 };
 
 export default actions

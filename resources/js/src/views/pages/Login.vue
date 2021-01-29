@@ -84,10 +84,7 @@
                 };
                 this.$store.dispatch('auth/login', payload)
                     .then(res =>  {
-                        if (!!res.data.success) {
-                            window.location.reload();
-                        }
-
+                        window.location.reload();
                     })
                     .catch(err => {
                         this.errors = err.response.data.errors ? err.response.data.errors : [];

@@ -3,6 +3,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Http\RouteNames;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Tests\AuthAttach;
@@ -10,17 +12,14 @@ class ApiAuthControllerLoginTest extends TestCase
 {
     use AuthAttach;
 
-    private static $uri = 'api/auth/login';
-
     /**
      * @group auth
      * @group login
      */
     public function testRequiresEmailAndPassword422()
     {
-        $this->json('POST', self::$uri)
+        $this->json('POST', route(RouteNames::LOGIN))
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['email', 'password']);
     }
 
@@ -33,9 +32,8 @@ class ApiAuthControllerLoginTest extends TestCase
     {
         $payload = ['password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::LOGIN), $payload)
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['email']);
     }
 
@@ -47,9 +45,8 @@ class ApiAuthControllerLoginTest extends TestCase
     {
         $payload = ['email' => 'testlogin@user.com'];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::LOGIN), $payload)
             ->assertStatus(422)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['password']);
     }
 
@@ -65,9 +62,8 @@ class ApiAuthControllerLoginTest extends TestCase
 
         $payload = ['email' => 'wronglogin@user.com', 'password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::LOGIN), $payload)
             ->assertStatus(403)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['password']);
     }
 
@@ -83,9 +79,8 @@ class ApiAuthControllerLoginTest extends TestCase
 
         $payload = ['email' => 'testlogin@user.com', 'password' => '54321'];
 
-        $this->json('POST', self::$uri, $payload)
+        $this->json('POST', route(RouteNames::LOGIN), $payload)
             ->assertStatus(403)
-            ->assertJson(['success' => false])
             ->assertJsonValidationErrors(['password']);
     }
 
@@ -103,7 +98,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
         $this->loginAs($user);
 
-        $response= $this->json('POST', self::$uri, $payload);
+        $response= $this->json('POST', route(RouteNames::LOGIN), $payload);
 
         $answer = json_decode($response->getContent(), true);
         $token = $answer['accessToken'] ?? null;
@@ -112,9 +107,9 @@ class ApiAuthControllerLoginTest extends TestCase
             $this->setToken($answer['accessToken']);
         }
 
-        $response->assertJson(['success' => true])
+        $response
             ->assertJsonStructure(['accessToken'])
-            ->assertStatus(200);
+            ->assertStatus(Controller::JSON_STATUS_OK);
     }
 
 }

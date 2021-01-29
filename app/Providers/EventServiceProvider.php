@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\Pet\PetCreated;
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
 use App\Events\User\UserCreated;
@@ -34,6 +35,10 @@ class EventServiceProvider extends ServiceProvider
 
         UserUpdated::class => [
             UserCacheClear::class
+        ],
+
+        PetCreated::class => [
+            PetCacheClear::class
         ],
 
         PetUpdated::class => [

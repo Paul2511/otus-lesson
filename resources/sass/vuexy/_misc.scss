@@ -112,3 +112,13 @@ i.feather {
     overflow-y: auto;
   }
 }
+
+.modal-open {
+  .vx-navbar-wrapper {
+    z-index: 1000!important;
+  }
+  .vs-sidebar {
+    z-index: 1000!important;
+  }
+
+}
