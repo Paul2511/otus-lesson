@@ -61,7 +61,7 @@ class Group extends BaseModel
      */
     public function students(): belongsToMany
     {
-        return $this->belongsToMany(User::class, GroupStudent::class, 'group_id', 'student_id');
+        return $this->belongsToMany(User::class, GroupStudent::class, 'group_id', 'student_id')->withPivot('id');
     }
 
     /**
@@ -69,6 +69,6 @@ class Group extends BaseModel
      */
     public function teachers(): belongsToMany
     {
-        return $this->belongsToMany(User::class, GroupTeacher::class, 'group_id', 'teacher_id');
+        return $this->belongsToMany(User::class, GroupTeacher::class, 'group_id', 'teacher_id')->withPivot('id');
     }
 }

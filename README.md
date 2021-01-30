@@ -61,7 +61,12 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 * Политика конф-ти(`\policy`);
 * Авторизация(`\login`);
 * Регистрация(`\signup`);
-* Профиль(`\profile`);.
+* Профиль(`\profile`).
+
+### Панель администрирования
+
+* Красивая тема панели управления с открытым исходным кодом для серверной части AdminLTE 3;
+* CRUD для справочников, пользователей и учебных групп.
 
 ## License
 

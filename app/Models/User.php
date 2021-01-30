@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -29,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|Skill[] $skills
+ * @property-read Collection|SkillUser[] $skillsList
  * @property-read int|null $skills_count
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
@@ -51,7 +53,7 @@ class User extends Authenticatable
     const TYPE_STUDENT = 10;
     const TYPE_TEACHER = 20;
     const TYPE_MANAGER = 30;
-    const TYPE_ADMIN = 30;
+    const TYPE_ADMIN = 40;
 
     /**
      * The attributes that are mass assignable.
@@ -62,6 +64,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type'
     ];
 
     /**
@@ -91,6 +94,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Skill::class);
     }
 
+    public function skillsList(): hasMany
+    {
+        return $this->hasMany(SkillUser::class);
+    }
+
     /**
      * Get all of the student groups for the user.
      */
@@ -105,5 +113,15 @@ class User extends Authenticatable
     public function groupTeachers(): BelongsToMany
     {
         return $this->belongsToMany(Group::class)->using(GroupTeacher::class);
+    }
+
+    public static function types(): array
+    {
+        return [
+            self::TYPE_STUDENT => 'Студент',
+            self::TYPE_TEACHER => 'Преподаватель',
+            self::TYPE_MANAGER => 'Менеджер',
+            self::TYPE_ADMIN => 'Администратор',
+        ];
     }
 }
