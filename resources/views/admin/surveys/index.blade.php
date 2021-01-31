@@ -12,6 +12,12 @@
     @include("components.first_screen")
 
     <div class="container py-5 d-flex flex-column flex-grow-1">
+        @if (\Session::has('surveysIndexSuccess'))
+            <div class="alert alert-success mb-5">
+                {!! \Session::get('surveysIndexSuccess') !!}
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-12">
 

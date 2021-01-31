@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Surveys;
 
 use App\Http\Controllers\Admin\AdminBaseController;
+use App\Jobs\CreateSurvey;
 use App\Models\Survey;
 use App\Policies\Permission;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
@@ -16,8 +17,7 @@ use View as ViewFacade;
 
 class AdminSurveysController extends AdminBaseController
 {
-    private $model = Survey::class;
-
+    private string $model = Survey::class;
     private SurveysService $surveysService;
 
     public function __construct(SurveysService $surveysService)
@@ -32,8 +32,8 @@ class AdminSurveysController extends AdminBaseController
 
         ViewFacade::share(
             [
-                'surveys'   => $this->surveysService->eloquentSurveyRepository->searchForCurrentUser(),
-                'user'      => $user,
+                'surveys' => $this->surveysService->eloquentSurveyRepository->searchForCurrentUser(),
+                'user' => $user,
                 'canCreate' => $user->can(Permission::CREATE, $this->model),
             ]
         );
@@ -47,7 +47,7 @@ class AdminSurveysController extends AdminBaseController
 
         ViewFacade::share(
             [
-                'survey'    => $survey,
+                'survey' => $survey,
                 'canUpdate' => $this->getCurrentUser()->can(Permission::UPDATE, $survey),
             ]
         );
@@ -63,10 +63,10 @@ class AdminSurveysController extends AdminBaseController
             [
                 'formOpenOptions' =>
                     [
-                        'url'    => AdminRoutes::surveysUpdate($survey),
+                        'url' => AdminRoutes::surveysUpdate($survey),
                         'method' => 'PUT',
                     ],
-                'survey'          => $survey,
+                'survey' => $survey,
             ]
         );
 
@@ -81,11 +81,11 @@ class AdminSurveysController extends AdminBaseController
             [
                 'formOpenOptions' =>
                     [
-                        'url'    => AdminRoutes::surveysStore(),
+                        'url' => AdminRoutes::surveysStore(),
                         'method' => 'POST',
                     ],
 
-                'survey' => new Survey,
+                'survey' => new Survey(),
             ]
         );
 
@@ -96,14 +96,23 @@ class AdminSurveysController extends AdminBaseController
     {
         $this->authorize(Permission::CREATE, $this->model);
 
-        $survey = $this->surveysService->createFromArray($request->all());
+        // $survey = $this->surveysService->createFromArray($request->all());
 
+        $data = $request->all();
+        $data['_user'] = Auth::user();
+
+        CreateSurvey::dispatch($data);
+
+        return redirect(AdminRoutes::surveysIndex())
+            ->with('surveysIndexSuccess', __('surveys.create_planned'));
+        /*
         return $this->showElementIfCreatedOrGoBack(
             $survey->id ?? 0,
             function () use ($survey) {
                 return AdminRoutes::surveysShow($survey);
             }
         );
+        */
     }
 
     public function update(Request $request, Survey $survey)
@@ -123,5 +132,4 @@ class AdminSurveysController extends AdminBaseController
 
         return redirect(AdminRoutes::surveysIndex());
     }
-
 }

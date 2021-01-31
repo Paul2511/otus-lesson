@@ -16,7 +16,9 @@ class EloquentSurveyRepository extends EloquentBaseRepository
     public function searchForCurrentUser(?int $perPage = null): LengthAwarePaginator
     {
         $user = Auth::user();
-        if (!$user) abort(403);
+        if (!$user) {
+            abort(403);
+        }
 
         if ($user->can('viewTotallyAny', Survey::class)) {
             return $this->search($perPage);
@@ -48,13 +50,14 @@ class EloquentSurveyRepository extends EloquentBaseRepository
 
     public function store(array $data): Survey
     {
-        $user = Auth::user();
-        if (!$user) abort(403);
+        $user = $data['_user'] ?? Auth::user();
+
+        if (!$user) {
+            abort(403);
+        }
 
         $survey = new Survey($data);
-
         $survey->user()->associate($user);
-
         $survey->save();
 
         return $survey;
