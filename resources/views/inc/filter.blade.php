@@ -16,18 +16,41 @@
             <div class="d-flex justify-content-between">
                 <h4 class="">@lang('filter.name')</h4>
             </div>
+            <div class="row">
 
-            @if(!empty($date) && $date == 'date_single')
-                @include('elements.date', array('id'=>'date'))
-            @endif
+                @if(!empty($project) && $project == 'project_single')
+                    @include('elements.project-single', array('id'=>'project'))
+                @endif
 
-            @if(!empty($date) && $date == 'date_period')
-                @include('elements.date-range', array('id'=>'date_period'))
-            @endif
+                @if(!empty($project) && $project == 'project_many')
+                    @include('elements.project-many', array('id'=>'projects'))
+                @endif
 
-            @if(!empty($date) && $date == 'date_month')
-                @include('elements.date-month', array('id'=>'date_month'))
-            @endif
+                @if(!empty($date) && $date == 'date_single')
+                    @include('elements.date', array('id'=>'date'))
+                @endif
+
+                @if(!empty($date) && $date == 'date_period')
+                    @include('elements.date-range', array('id'=>'date_period'))
+                @endif
+
+                @if(!empty($date) && $date == 'date_month')
+                    @include('elements.date-month', array('id'=>'date_month'))
+                @endif
+
+                @if(!empty($phone))
+                    @include('elements.phone', array('id'=>'phone'))
+                @endif
+
+            </div>
+
+            <div class="row">
+
+                @if(!empty($button) && $button == 'build')
+                    @include('elements.button-build', array('id'=>'build'))
+                @endif
+
+            </div>
 
 
 

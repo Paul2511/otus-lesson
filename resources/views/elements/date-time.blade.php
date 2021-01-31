@@ -1,11 +1,9 @@
-<div class="form-group mb-0" style="margin:5px">
-    <div class="col-2">
-        <label for="{{ $id }}">@lang('filter.DateTimeName')</label>
-        <input id="{{ $id }}" value=""
-               class="form-control form-control-sm flatpickr flatpickr-input active"
-               type="text" placeholder="@lang('filter.select_date_time')"
-               readonly="readonly">
-    </div>
+<div class="col-2">
+    <label for="{{ $id }}">@lang('filter.DateTimeName')</label>
+    <input id="{{ $id }}" value=""
+           class="form-control form-control-sm flatpickr flatpickr-input active"
+           type="text" placeholder="@lang('filter.select_date_time')"
+           readonly="readonly">
 </div>
 <script>
     flatpickr.localize(flatpickr.l10ns.ru);
