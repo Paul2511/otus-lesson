@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Watson\Rememberable\Rememberable;
 
 
 /**
@@ -38,6 +39,8 @@ use Illuminate\Support\Carbon;
  */
 class Question extends BaseModel
 {
+    use Rememberable;
+
     const TYPE_CHECKBOX = 10;
     const TYPE_RADIO    = 20;
 
