@@ -2,6 +2,7 @@
 
 use App\Policies\Permission;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
+use App\Services\Routes\Providers\PublicRoutes\PublicRoutes;
 
 
 return [
@@ -231,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'AdminRoutes' => AdminRoutes::class,
+        'PublicRoutes' => PublicRoutes::class,
         'Permission' => Permission::class,
 
     ],
