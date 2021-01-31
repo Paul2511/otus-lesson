@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d633c93bc37cbd96f4a3d4951255893",
+    "content-hash": "62483ddebdb87cb51e358d67c5c5d5d1",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -785,6 +785,42 @@
                 }
             ],
             "time": "2020-10-22T13:57:20+00:00"
+        },
+        {
+            "name": "gordyush/records",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../records",
+                "reference": "6eb37223513f32037abc42f3c71ad8df2229cc07"
+            },
+            "require": {
+                "illuminate/support": "^8.12"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gordyush\\Records\\RecordsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gordyush\\Records\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Olga Gordyushina",
+                    "email": "o.gordyushina@smter.ru",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Package for listening to call records",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "graham-campbell/result-type",
@@ -8458,7 +8494,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "gordyush/records": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

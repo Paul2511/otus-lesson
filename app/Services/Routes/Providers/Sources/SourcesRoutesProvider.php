@@ -38,6 +38,7 @@ final class SourcesRoutesProvider
             Route::get('about', AboutController::class);
             Route::prefix('records')->group(function () {
                 Route::get('simple', [SimpleRecordsController::class, 'view'])->name( SourcesRoutes::SOURCES_SIMPLE_RECORDS);
+                Route::post('simple/get', [SimpleRecordsController::class, 'records'])->name( SourcesRoutes::SOURCES_SIMPLE_GET_RECORDS);
                 Route::get('advanced', [AdvancedRecordsController::class, 'view'])->name( SourcesRoutes::SOURCES_ADVANCED_RECORDS);
 
             });

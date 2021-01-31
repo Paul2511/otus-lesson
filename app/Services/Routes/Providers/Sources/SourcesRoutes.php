@@ -10,6 +10,7 @@ abstract class SourcesRoutes
     const SOURCES_ABOUT = 'about';
 
     const SOURCES_SIMPLE_RECORDS = 'records/simple';
+    const SOURCES_SIMPLE_GET_RECORDS = 'records/simple/get';
     const SOURCES_ADVANCED_RECORDS = 'records/advanced';
 
     const SOURCES_STATISTIC_ONLINE = 'statistic/online';
