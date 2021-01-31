@@ -2,11 +2,31 @@
 
 return [
 
-    //main page
-    'h1_main_page' => 'Hello main page!',
+    //always pages
+    'title' => 'Title',
+    'description' => 'Description',
+    'back' => 'Back',
+    'continent_name' => 'Continent name',
+    'status' => 'Status',
+    'additional_info' => 'Additional info',
+    'created' => 'Date created',
+    'updated' => 'Date updated',
+    'countries' => 'Countries',
+    'country' => 'Country',
+    'add_country' => 'Add country',
+    'edit_country' => 'Edit country',
+    'cities' => 'Cities',
+    'city' => 'City',
+    'add_city' => 'Add city',
+    'countries_header_description' => 'Countries control',
+    'cities_header_description' => 'Cities control',
+    'dashboard' => 'Dashboard',
+
+    //dashboard page
+    'h1_main_page' => 'Hello dashboard page!',
     'content_main_page' => '<p>Hello!</p>'.
-        '<p>Here will be able text about main page</p>',
-    //end main page
+        '<p>Here will be able text about dashboard page</p>',
+    //end dashboard page
 
     //news
     'h1_news' => 'News',

@@ -30,8 +30,8 @@ class Country extends Model
 {
     use HasFactory;
 
-    const STATUS_INACTIVE = 10;
-    const STATUS_ACTIVE = 20;
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 10;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +41,8 @@ class Country extends Model
     protected $fillable = [
         'name',
         'continent_name',
+        'status',
+        'description',
     ];
 
     public function cities()

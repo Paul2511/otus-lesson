@@ -10,5 +10,10 @@ return [
     'login' => 'Login',
     'register' => 'Register',
     'logout' => 'Logout',
+    'dashboard' => 'Dashboard',
+    'countries' => 'Countries',
+    'add_country' => 'Add country',
+    'update' => 'Update',
+    'edit' => 'Edit',
 
 ];

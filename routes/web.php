@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+$cmsRoutesProvider = app(\App\Services\Routes\Providers\Admin\AdminRoutesProvider::class);
+$cmsRoutesProvider->registerRoutes();
+
 Route::get('/', function () {
     return view('front.index');
-});
+})->name('home');
 Route::get('/news', function () {
     return view('front.news');
 });

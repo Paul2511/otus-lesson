@@ -2,11 +2,31 @@
 
 return [
 
-    //main page
+    //always pages
+    'title' => 'Наименование',
+    'description' => 'Описание',
+    'back' => 'Вернуться',
+    'continent_name' => 'Название континента',
+    'status' => 'Статус',
+    'additional_info' => 'Дополнительная информация',
+    'created' => 'Дата создания',
+    'updated' => 'Дата изменения',
+    'countries' => 'Страны',
+    'country' => 'Страна',
+    'add_country' => 'Добавить страну',
+    'edit_country' => 'Изменить страну',
+    'cities' => 'Города',
+    'city' => 'Город',
+    'add_city' => 'Добавить город',
+    'countries_header_description' => 'Управление странами',
+    'cities_header_description' => 'Управление городами',
+    'dashboard' => 'Dashboard',
+
+    //dashboard page
     'h1_main_page' => 'Приветствуем на главной странице',
     'content_main_page' => '<p>Приветствуем на главной странице!</p>'.
     '<p>Здесь будут выводиться несколько самых актуальных объявлений сайта</p>',
-    //end main page
+    //end dashboard page
 
     //news
     'h1_news' => 'Новости',

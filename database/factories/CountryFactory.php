@@ -26,6 +26,7 @@ class CountryFactory extends Factory
             'name' => $this->faker->unique()->country,
             'continent_name' => $this->faker->name,
             'status' => $this->faker->randomElement([Country::STATUS_ACTIVE, Country::STATUS_INACTIVE]),
+            'description' => $this->faker->text
         ];
     }
 }
