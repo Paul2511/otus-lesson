@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class AdminUsersController extends Controller
 {
+    /*
     public function index()
     {
         dd(User::get());
@@ -43,4 +44,5 @@ class AdminUsersController extends Controller
     {
         //
     }
+    */
 }
