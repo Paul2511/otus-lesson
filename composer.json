@@ -70,11 +70,5 @@
             "@php artisan ide-helper:meta",
             "@php artisan optimize"
         ]
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../records"
-        }
-    ]
+    }
 }
