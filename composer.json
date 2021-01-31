@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
+        "watson/rememberable": "^5.0",
         "laravelcollective/html": "^6.2",
         "predis/predis": "^1.0"
     },
