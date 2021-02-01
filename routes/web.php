@@ -37,7 +37,7 @@ Route::get('/feedback', function () {
     return view('pages.feedback');
 })->name('feedback');
 
-Route::group(['prefix' => 'cms', 'middleware' => 'auth:web'], function () {
+Route::group(['prefix' => 'cms', 'middleware' => ['auth:web', 'admin']], function () {
     Route::view('/', 'pages.cms.home.index')->name('cms.index');
     Route::resource('user', UserController::class);
     Route::resource('role', RoleController::class);
