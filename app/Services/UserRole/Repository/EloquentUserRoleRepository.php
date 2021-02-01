@@ -11,9 +11,10 @@ use App\Services\UserRole\Repository\Interfaces\EloquentUserRoleRepositoryInterf
 class EloquentUserRoleRepository implements EloquentUserRoleRepositoryInterface
 {
 
-    public function setRoleOnUser(int $userId, int $roleId): Model
+    public function setRoleOnUser(int $userId, int $roleId): bool
     {
-        return UserRole::create(['user_id' => $userId, 'role_id' => $roleId]);
+        UserRole::create(['user_id' => $userId, 'role_id' => $roleId]);
+        return true;
     }
 
 }

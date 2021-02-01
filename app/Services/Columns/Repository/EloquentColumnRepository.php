@@ -25,11 +25,8 @@ class EloquentColumnRepository implements EloquentColumnRepositoryInterfaces
     public function destroy(int $id): bool
     {
         $model = Column::findOrFail($id);
-
-        if ($model->delete()) {
-            return true;
-        }
-        return false;
+        $model->delete();
+        return true;
     }
 
 }

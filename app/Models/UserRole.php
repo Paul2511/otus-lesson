@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class UserRole extends Pivot
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id', 'role_id'
     ];
@@ -18,6 +20,6 @@ class UserRole extends Pivot
 
     public function role()
     {
-        return $this->hasOne(Role::class,'id','role_id');
+        return $this->hasOne(Role::class, 'id', 'role_id');
     }
 }

@@ -13,6 +13,7 @@ class ColumnController extends Controller
 
     public function __construct(ColumnService $columnService)
     {
+        $this->middleware('auth:web')->only('store','destroy');
         $this->columnService = $columnService;
     }
 
@@ -21,11 +22,6 @@ class ColumnController extends Controller
     {
         $this->columnService->storeColumn($columnRequest->toArray());
         return back()->with('message', __('Успех'));
-    }
-
-    public function show($id)
-    {
-        return redirect()->route('home');
     }
 
     public function destroy(int $id)
