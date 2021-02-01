@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Restaurant extends Model
 {
-    protected $table = 'restaurants';
 
     protected $fillable = [
         'name',

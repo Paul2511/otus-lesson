@@ -12,7 +12,6 @@ namespace App\Models;
  */
 class Role extends Model
 {
-    protected $table = 'roles';
 
     const STATUS_INACTIVE = 0;
     const STATUS_PENDING = 10;

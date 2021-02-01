@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Comment extends Model
 {
-    protected $table = 'comments';
 
     protected $fillable = [
         'name',
