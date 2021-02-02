@@ -17,6 +17,7 @@ class CreateRestaurantsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name');
+            $table->string('slug');
             $table->integer('rating')
                 ->default(0)
                 ->unsigned();
