@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Client;
 use App\Models\Pet;
 use App\Models\PetType;
+use App\Models\User;
+use App\States\User\Role\ClientUserRole;
+use Database\Seeders\PetTypesTableSeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Support\Pet\Fakers\PetNameProvider;
 class PetFactory extends Factory
@@ -29,7 +32,15 @@ class PetFactory extends Factory
         $petType = PetType::orderByRaw('RAND()')->where('id', '!=', 1)->take(1)->first();
 
         if (!$client) {
-            return abort(500);
+            /** @var User $user */
+            $user = User::factory()->create([
+                'role' => ClientUserRole::class
+            ]);
+            $client = $user->client;
+        }
+
+        if (!$petType && !PetType::count()) {
+            $petType = PetType::create(['slug'=>$this->faker->slug]);
         }
 
         $sex = $this->faker->randomElement(Pet::getStatesFor('sex')->all());

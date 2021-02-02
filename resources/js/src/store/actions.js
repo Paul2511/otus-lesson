@@ -7,6 +7,7 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 import axios from '@/axios.js'
+import * as requests from './../http/requests/consts.js';
 
 const actions = {
 
@@ -53,7 +54,7 @@ const actions = {
 
     getProfile() {
         return new Promise((resolve, reject) => {
-            axios.get('/api/auth/profile')
+            axios.get(requests.PROFILE)
                 .then((response) => {
                     resolve(response);
                 })
@@ -64,7 +65,7 @@ const actions = {
     getUser({commit}, userId) {
 
         return new Promise((resolve, reject) => {
-            axios.get('/api/users/'+userId)
+            axios.get(requests.GET_USER(userId))
                 .then((response) => {
                     resolve(response);
                 })
@@ -73,7 +74,7 @@ const actions = {
     },
     updateUser({ commit }, data) {
         return new Promise((resolve, reject) => {
-            axios.put('/api/users/'+data.userId, data.data)
+            axios.put(requests.UPDATE_USER(data.userId), data.data)
                 .then((response) => {
                     commit('UPDATE_USER_INFO', response.data.data);
                     resolve(response);
@@ -88,7 +89,7 @@ const actions = {
 
     getPets() {
         return new Promise((resolve, reject) => {
-            axios.get('/api/pets')
+            axios.get(requests.GET_PETS)
                 .then((response) => {
                     resolve(response);
                 })
@@ -98,7 +99,7 @@ const actions = {
 
     getUserPets({ commit }, userId) {
         return new Promise((resolve, reject) => {
-            axios.get('/api/users/'+userId+'/pets')
+            axios.get(requests.GET_USER_PETS(userId))
                 .then((response) => {
                     resolve(response);
                 })
@@ -107,7 +108,7 @@ const actions = {
     },
     deletePet({ commit }, petId) {
         return new Promise((resolve, reject) => {
-            axios.delete('/api/pets/'+petId)
+            axios.delete(requests.DELETE_PET(petId))
                 .then((response) => {
                     resolve(response);
                 })
@@ -116,7 +117,7 @@ const actions = {
     },
     getPet({ commit }, petId) {
         return new Promise((resolve, reject) => {
-            axios.get('/api/pets/'+petId)
+            axios.get(requests.GET_PET(petId))
                 .then((response) => {
                     resolve(response);
                 })
@@ -125,7 +126,7 @@ const actions = {
     },
     updatePet({ commit }, data) {
         return new Promise((resolve, reject) => {
-            axios.put('/api/pets/'+data.petId, data.data)
+            axios.put(requests.UPDATE_PET(data.petId), data.data)
                 .then((response) => {
                     resolve(response);
                 })
@@ -134,7 +135,7 @@ const actions = {
     },
     createPet({ commit }, data) {
         return new Promise((resolve, reject) => {
-            axios.post('/api/pets/', data)
+            axios.post(requests.CREATE_PET, data)
                 .then((response) => {
                     resolve(response);
                 })
@@ -149,7 +150,7 @@ const actions = {
     uploadImage({ commit }, formData) {
         return new Promise((resolve, reject) => {
             axios.post(
-                '/api/files/upload-image',
+                requests.UPLOAD_IMAGE,
                 formData,
                 {
                     headers: {

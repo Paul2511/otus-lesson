@@ -22,7 +22,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
      */
     public function testRequiresEmailAndPassword422()
     {
-        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION))
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email', 'password']);
     }
@@ -35,7 +35,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     {
         $payload = ['password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
     }
@@ -48,7 +48,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     {
         $payload = ['email' => 'testlogin@user.com'];
 
-        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
     }
@@ -62,7 +62,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         $payload = ['email' => 'wrongEmail', 'password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
     }
@@ -81,7 +81,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         $payload = ['email' => 'testlogin@user.com', 'password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
     }
@@ -99,7 +99,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
             'locale' => 'fr'
         ];
 
-        $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload)
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['locale']);
     }
@@ -109,14 +109,14 @@ class ApiAuthControllerRegistrationTest extends TestCase
      * @group auth
      * @group register
      */
-    public function testRegisterSuccessfully200()
+    public function testRegisterSuccessfully201()
     {
         $payload = [
             'email' => 'testlogin@user.com',
             'password' => env('USER_TEST_PASSWORD')
         ];
 
-        $response= $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload);
+        $response= $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload);
 
         $response->assertStatus(Controller::JSON_STATUS_CREATED);
 
@@ -138,7 +138,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
      * @group register
      * @group mail
      */
-    public function testSendWelcomeEmail200()
+    public function testSendWelcomeEmail201()
     {
         $payload = [
             'email' => 'testlogin@user.com',
@@ -148,7 +148,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
 
         Notification::fake();
 
-        $response= $this->json('POST', route(RouteNames::CLIENT_REGISTRATION), $payload);
+        $response= $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload);
 
         $response->assertStatus(Controller::JSON_STATUS_CREATED);
 

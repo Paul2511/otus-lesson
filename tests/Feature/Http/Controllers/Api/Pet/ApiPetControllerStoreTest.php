@@ -29,7 +29,7 @@ class ApiPetControllerStoreTest extends TestPet
             'pet_type_id'=>$petType->id
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::CREATE_PET), $payload);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_CREATE_PET), $payload);
 
 
         $response->assertStatus(Controller::JSON_STATUS_CREATED)
@@ -58,7 +58,7 @@ class ApiPetControllerStoreTest extends TestPet
 
         $payload = [];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::CREATE_PET), $payload);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_CREATE_PET), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['name','sex','pet_type_id']);
@@ -82,7 +82,7 @@ class ApiPetControllerStoreTest extends TestPet
             'pet_type_id'=>1000
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::CREATE_PET), $payload);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_CREATE_PET), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['pet_type_id']);
@@ -106,7 +106,7 @@ class ApiPetControllerStoreTest extends TestPet
             'pet_type_id'=>1000
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::CREATE_PET), $payload);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_CREATE_PET), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['sex']);
@@ -133,7 +133,7 @@ class ApiPetControllerStoreTest extends TestPet
             'client_id' => $anotherUser->client->id
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::CREATE_PET), $payload);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_CREATE_PET), $payload);
 
 
         $response->assertStatus(Controller::JSON_STATUS_CREATED)

@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\RouteNames;
+use App\Models\User;
 use App\States\User\Role\AdminUserRole;
 use Tests\Generators\UserGenerator;
 use Tests\TestCase;
@@ -22,7 +23,7 @@ class ApiUserControllerPetsTest extends TestCase
     public function testClientSuccess200()
     {
         $user = $this->currentUser();
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_USER_PETS, ['user'=>$user]));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_USER_PETS, ['user'=>$user]));
 
         $response->assertStatus(Controller::JSON_STATUS_OK)
             ->assertJsonStructure(['data']);
@@ -40,7 +41,7 @@ class ApiUserControllerPetsTest extends TestCase
 
         $anotherUser = UserGenerator::generateClient();
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_USER_PETS, ['user'=>$anotherUser]));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_USER_PETS, ['user'=>$anotherUser]));
 
         $response->assertStatus(403)
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
@@ -58,7 +59,7 @@ class ApiUserControllerPetsTest extends TestCase
 
         $anotherUser = UserGenerator::generateClient();
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_USER_PETS, ['user'=>$anotherUser]));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_USER_PETS, ['user'=>$anotherUser]));
 
         $response->assertStatus(Controller::JSON_STATUS_OK)
             ->assertJsonStructure(['data']);
@@ -74,7 +75,13 @@ class ApiUserControllerPetsTest extends TestCase
     {
         $admin = $this->createUser(AdminUserRole::class);
 
-        $response = $this->tokenHeader()->json('get', '/api/users/1000/pets');
+        $fakeUser = User::factory()->makeOne([
+            'id' => 1000
+        ]);
+
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_USER_PETS, [
+            'user' => $fakeUser
+        ]));
 
         $response->assertStatus(404)
             ->assertJsonFragment(['message'=>trans('user.notFound')]);

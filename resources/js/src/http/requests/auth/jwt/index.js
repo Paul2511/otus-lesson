@@ -1,6 +1,7 @@
 import axios from '../../../axios/index.js'
 import store from '../../../../store/store.js'
 
+import * as requests from './../../consts.js';
 import router from '@/router'
 
 // Token Refresh
@@ -73,19 +74,19 @@ export default {
     },
 
     login(email, pwd) {
-        return axios.post('/api/auth/login', {
+        return axios.post(requests.LOGIN, {
             email,
             password: pwd
         })
     },
     registerUser(name, email, pwd) {
-        return axios.post('/api/auth/register', {
+        return axios.post(requests.CLIENT_REGISTRATION, {
             displayName: name,
             email,
             password: pwd
         })
     },
     refreshToken() {
-        return axios.post('/api/auth/refresh', {accessToken: localStorage.getItem('accessToken')})
+        return axios.post(requests.TOKEN_REFRESH, {accessToken: localStorage.getItem('accessToken')})
     }
 }

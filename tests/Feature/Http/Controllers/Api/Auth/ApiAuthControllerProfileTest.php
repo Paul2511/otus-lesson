@@ -22,7 +22,7 @@ class ApiAuthControllerProfileTest extends TestCase
     public function testProfileSuccessfully200()
     {
         $user = $this->currentUser();
-        $response = $this->tokenHeader()->json('get', route(RouteNames::PROFILE));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_PROFILE));
 
         $result = json_decode($response->getContent(), true);
 
@@ -41,7 +41,7 @@ class ApiAuthControllerProfileTest extends TestCase
     public function testProfileBadRequest400()
     {
         $user = $this->currentUser();
-        $response = $this->tokenHeader()->json('get', route(RouteNames::PROFILE).'/2');
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_PROFILE).'/2');
 
         $response->assertStatus(400)
             ->assertJsonFragment(['message'=>trans('exception.badRequest')]);

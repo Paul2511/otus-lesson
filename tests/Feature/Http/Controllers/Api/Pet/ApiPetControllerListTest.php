@@ -25,7 +25,7 @@ class ApiPetControllerListTest extends TestPet
             'client_id' => $anotherUser->client->id
         ]);
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_ALL_PETS));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_ALL_PETS));
 
         $response->assertStatus(403)
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
@@ -45,7 +45,7 @@ class ApiPetControllerListTest extends TestPet
             'client_id' => $anotherUser->client->id
         ]);
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_ALL_PETS));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_ALL_PETS));
 
         $response->assertStatus(Controller::JSON_STATUS_OK)
             ->assertJsonStructure(['data'])

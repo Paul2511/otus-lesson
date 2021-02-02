@@ -38,7 +38,7 @@ class ApiPetControllerUpdateTest extends TestPet
             'name' => $newName
         ];
 
-        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_PET, ['pet'=>$pet]), $payload);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::V1_UPDATE_PET, ['pet'=>$pet]), $payload);
 
         $response->assertStatus(Controller::JSON_STATUS_ACCEPTED)
             ->assertJsonStructure(['data']);
@@ -65,7 +65,7 @@ class ApiPetControllerUpdateTest extends TestPet
             'pet_type_id'=>1000
         ];
 
-        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_PET, ['pet'=>$pet]), $payload);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::V1_UPDATE_PET, ['pet'=>$pet]), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['pet_type_id']);
@@ -89,7 +89,7 @@ class ApiPetControllerUpdateTest extends TestPet
             'sex'=>'test'
         ];
 
-        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_PET, ['pet'=>$pet]), $payload);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::V1_UPDATE_PET, ['pet'=>$pet]), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['sex']);
@@ -115,7 +115,7 @@ class ApiPetControllerUpdateTest extends TestPet
         ];
 
 
-        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_PET, ['pet'=>$pet]), $payload);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::V1_UPDATE_PET, ['pet'=>$pet]), $payload);
 
 
         $response->assertStatus(Controller::JSON_STATUS_ACCEPTED)
@@ -149,7 +149,7 @@ class ApiPetControllerUpdateTest extends TestPet
             'name' => $newName
         ];
 
-        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_PET, ['pet'=>$anotherPet]), $payload);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::V1_UPDATE_PET, ['pet'=>$anotherPet]), $payload);
 
         $response->assertStatus(403)
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
@@ -161,7 +161,7 @@ class ApiPetControllerUpdateTest extends TestPet
      * @group pet
      * @group petUpdate
      */
-    public function testAdminSuccess200()
+    public function testAdminSuccess202()
     {
         $admin = $this->createUser(AdminUserRole::class);
 
@@ -177,7 +177,7 @@ class ApiPetControllerUpdateTest extends TestPet
             'name' => $newName
         ];
 
-        $response = $this->tokenHeader()->json('put', route(RouteNames::UPDATE_PET, ['pet'=>$anotherPet]), $payload);
+        $response = $this->tokenHeader()->json('put', route(RouteNames::V1_UPDATE_PET, ['pet'=>$anotherPet]), $payload);
 
         $response->assertStatus(Controller::JSON_STATUS_ACCEPTED)
             ->assertJsonStructure(['data']);
@@ -205,7 +205,13 @@ class ApiPetControllerUpdateTest extends TestPet
             'name' => $newName
         ];
 
-        $response = $this->tokenHeader()->json('put', 'api/pets/1000');
+        $fakePet = Pet::factory()->makeOne([
+            'id' => 1000
+        ]);
+
+        $response = $this->tokenHeader()->json('put', route(RouteNames::V1_UPDATE_PET, [
+            'pet' => $fakePet
+        ]));
 
         $response->assertStatus(404)
             ->assertJsonFragment(['message'=>trans('pet.notFound')]);

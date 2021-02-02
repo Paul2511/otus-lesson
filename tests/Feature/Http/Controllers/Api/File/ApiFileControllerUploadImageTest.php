@@ -25,7 +25,7 @@ class ApiFileControllerUploadImageTest extends TestCase
             'image' => UploadedFile::fake()->image('тестовый_файл.jpg'),
         ];
 
-        $response = $this->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
+        $response = $this->json('post', route(RouteNames::V1_UPLOAD_IMAGE), $data);
 
         $response->assertStatus(401);
     }
@@ -44,7 +44,7 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_UPLOAD_IMAGE), $data);
 
         $response
             ->assertStatus(422)
@@ -65,7 +65,7 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_UPLOAD_IMAGE), $data);
 
         $response
             ->assertStatus(422)
@@ -87,7 +87,7 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_UPLOAD_IMAGE), $data);
 
         $response
             ->assertStatus(422)
@@ -109,7 +109,7 @@ class ApiFileControllerUploadImageTest extends TestCase
             'userId' => $user->id
         ];
 
-        $response = $this->tokenHeader()->json('post', route(RouteNames::UPLOAD_IMAGE), $data);
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_UPLOAD_IMAGE), $data);
 
         $response->assertStatus(Controller::JSON_STATUS_OK)
             ->assertJsonStructure(['data']);

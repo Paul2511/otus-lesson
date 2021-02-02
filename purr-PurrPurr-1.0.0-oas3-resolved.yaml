@@ -1,0 +1,532 @@
+---
+openapi: 3.0.0
+info:
+  title: PurrPurr Care API
+  description: Описание API для проекта PurrPurr
+  contact:
+    name: Vasily Skachinsky
+  version: 1.0.0-oas3
+servers:
+- url: https://virtserver.swaggerhub.com/purr/PurrPurr/1.0.0
+- url: http://virtserver.swaggerhub.com/purr/PurrPurr/1.0.0
+tags:
+- name: auth
+  description: Авторизация, регистрация, получение токена
+- name: users
+  description: Работа с пользователями
+- name: pets
+  description: Работа с питомцами
+- name: files
+  description: Работа с файлами
+paths:
+  /auth/profile:
+    get:
+      tags:
+      - auth
+      summary: Получение профиля пользователя
+      operationId: profile
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: Авторизация пользователя
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "403":
+          description: Access Denied
+        "422":
+          description: Validation Errors
+  /auth/registration:
+    post:
+      tags:
+      - auth
+      summary: Регистрация нового клиента
+      operationId: clientRegistration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_1'
+      responses:
+        "201":
+          description: successful operation
+        "422":
+          description: Validation Errors
+  /users/{userId}:
+    get:
+      tags:
+      - users
+      summary: Получение данных пользователя
+      operationId: getUser
+      parameters:
+      - name: userId
+        in: path
+        description: id пользователя
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "403":
+          description: Access Denied
+        "404":
+          description: Пользователь не найден
+    put:
+      tags:
+      - users
+      summary: Обновление данных пользователя
+      operationId: updateUser
+      parameters:
+      - name: userId
+        in: path
+        description: id пользователя
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        description: Объект обновленных данных пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "202":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "403":
+          description: Access Denied
+        "404":
+          description: Пользователь не найден
+        "422":
+          description: Validation Errors
+  /users/{userId}/pets:
+    get:
+      tags:
+      - users
+      summary: Получение питомцев пользователя
+      operationId: getUserPets
+      parameters:
+      - name: userId
+        in: path
+        description: id пользователя
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        "403":
+          description: Access Denied
+        "404":
+          description: Пользователь не найден
+  /pets:
+    get:
+      tags:
+      - pets
+      summary: Получение питомцев авторизованного пользователя
+      operationId: getPets
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+    post:
+      tags:
+      - pets
+      summary: Добавление питомца авторизованным пользователем
+      operationId: createPet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_2'
+      responses:
+        "201":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        "422":
+          description: Validation Errors
+  /pets/list:
+    get:
+      tags:
+      - pets
+      summary: Получение всех питомцев
+      description: Только админ/менеджер имеет право на получение всех питомцев
+      operationId: getAllPets
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        "403":
+          description: Access Denied
+  /pets/{petId}:
+    get:
+      tags:
+      - pets
+      summary: Получение питомца
+      operationId: getPet
+      parameters:
+      - name: petId
+        in: path
+        description: id питомца
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        "403":
+          description: Access Denied
+        "404":
+          description: Питомец не найден
+    put:
+      tags:
+      - pets
+      summary: Обновление питомца
+      operationId: updatePet
+      parameters:
+      - name: petId
+        in: path
+        description: id питомца
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        description: Объект обновленного питомца
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        "202":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        "403":
+          description: Access Denied
+        "404":
+          description: Питомец не найден
+        "422":
+          description: Validation Errors
+    delete:
+      tags:
+      - pets
+      summary: Получение питомца
+      operationId: deletePet
+      parameters:
+      - name: petId
+        in: path
+        description: id питомца
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successful operation
+        "403":
+          description: Access Denied
+        "404":
+          description: Питомец не найден
+  /files/upload-image:
+    post:
+      tags:
+      - files
+      summary: Пользовательский аплоад изображения
+      operationId: uploadImage
+      requestBody:
+        content:
+          image/*:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        "401":
+          description: Access Denied
+        "422":
+          description: Validation Errors
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          $ref: '#/components/schemas/User_name'
+        email:
+          type: string
+        email_verified_at:
+          type: string
+        phone:
+          $ref: '#/components/schemas/User_phone'
+        avatar:
+          $ref: '#/components/schemas/Image'
+        locale:
+          type: string
+          description: Установленная локаль пользователя
+          enum:
+          - en
+          - ru
+        client_id:
+          type: integer
+      description: Модель пользователей
+    Pet:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        pet_type_id:
+          type: integer
+          example: 2
+        client_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          description: Кличка питомца
+          example: Гриня
+        age:
+          type: integer
+          description: Возраст питомца
+        bread:
+          type: string
+          description: Порода питомца
+        sex:
+          type: string
+          description: Пол питомца
+          example: male
+          enum:
+          - male
+          - female
+        photo:
+          $ref: '#/components/schemas/Image'
+        petTypeTitle:
+          type: string
+          description: Отображаемый title типа в текущей локале
+          example: Кошка
+        currentSex:
+          $ref: '#/components/schemas/Pet_currentSex'
+        pet_type:
+          $ref: '#/components/schemas/PetType'
+      description: Модель питомцев
+    PetType:
+      required:
+      - slug
+      - title
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        slug:
+          type: string
+          example: cat
+        title:
+          type: string
+          example: Кошка
+      description: Типы питомца
+    Image:
+      required:
+      - path
+      - src
+      - thumb_src
+      type: object
+      properties:
+        src:
+          type: string
+          description: url до файла
+        path:
+          type: string
+          description: Путь на диске до файла
+        disk:
+          type: string
+          description: Диск (store)
+        mime:
+          type: string
+          description: mime тип файла
+        originalFileName:
+          type: string
+          description: Клиентское имя файла
+        thumb_src:
+          type: string
+          description: url до превью
+        thumb_path:
+          type: string
+          description: Путь на диске до превью
+        width:
+          type: integer
+          description: Ширина изображения
+        height:
+          type: integer
+          description: Высота изображения
+      description: Объект загруженного изображения
+    body:
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    inline_response_200:
+      type: object
+      properties:
+        userData:
+          $ref: '#/components/schemas/User'
+        accessToken:
+          type: string
+    body_1:
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        locale:
+          type: string
+          description: Установленная локаль пользователя
+          enum:
+          - en
+          - ru
+        sendWelcomeEmail:
+          type: boolean
+          description: Отправлять ли новому пользователю приветственное письмо
+    body_2:
+      required:
+      - name
+      - pet_type_id
+      - sex
+      type: object
+      properties:
+        pet_type_id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          description: Кличка питомца
+          example: Гриня
+        sex:
+          type: string
+          description: Пол питомца
+          example: male
+          enum:
+          - male
+          - female
+        bread:
+          type: string
+          description: Порода питомца
+    User_name:
+      type: object
+      properties:
+        lastName:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+        fullName:
+          type: string
+        shortName:
+          type: string
+        displayName:
+          type: string
+    User_phone:
+      type: object
+      properties:
+        phone:
+          type: string
+        formatPhone:
+          type: string
+    Pet_currentSex:
+      type: object
+      properties:
+        sex:
+          type: string
+          description: Пол питомца
+          example: male
+          enum:
+          - male
+          - female
+        label:
+          type: string
+          description: Отображаемый лейбл пола в текущей локале
+          example: Мужской
+      description: Данные текущего пола питомца

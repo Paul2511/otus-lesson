@@ -18,7 +18,7 @@ class ApiPetControllerIndexTest extends TestPet
 
         $pets = $this->generatePet(3);
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_PETS));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_PETS));
 
         $response->assertStatus(Controller::JSON_STATUS_OK)
             ->assertJsonStructure(['data'])
@@ -34,7 +34,7 @@ class ApiPetControllerIndexTest extends TestPet
     {
         $user = $this->currentUser();
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_PETS));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_PETS));
 
         $response->assertStatus(Controller::JSON_STATUS_OK)
             ->assertJsonStructure(['data'])

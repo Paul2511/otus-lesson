@@ -18,7 +18,7 @@ class ApiAuthControllerLoginTest extends TestCase
      */
     public function testRequiresEmailAndPassword422()
     {
-        $this->json('POST', route(RouteNames::LOGIN))
+        $this->json('POST', route(RouteNames::V1_LOGIN))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email', 'password']);
     }
@@ -32,7 +32,7 @@ class ApiAuthControllerLoginTest extends TestCase
     {
         $payload = ['password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', route(RouteNames::LOGIN), $payload)
+        $this->json('POST', route(RouteNames::V1_LOGIN), $payload)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
     }
@@ -45,7 +45,7 @@ class ApiAuthControllerLoginTest extends TestCase
     {
         $payload = ['email' => 'testlogin@user.com'];
 
-        $this->json('POST', route(RouteNames::LOGIN), $payload)
+        $this->json('POST', route(RouteNames::V1_LOGIN), $payload)
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
     }
@@ -62,7 +62,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
         $payload = ['email' => 'wronglogin@user.com', 'password' => env('USER_TEST_PASSWORD')];
 
-        $this->json('POST', route(RouteNames::LOGIN), $payload)
+        $this->json('POST', route(RouteNames::V1_LOGIN), $payload)
             ->assertStatus(403)
             ->assertJsonValidationErrors(['password']);
     }
@@ -79,7 +79,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
         $payload = ['email' => 'testlogin@user.com', 'password' => '54321'];
 
-        $this->json('POST', route(RouteNames::LOGIN), $payload)
+        $this->json('POST', route(RouteNames::V1_LOGIN), $payload)
             ->assertStatus(403)
             ->assertJsonValidationErrors(['password']);
     }
@@ -98,7 +98,7 @@ class ApiAuthControllerLoginTest extends TestCase
 
         $this->loginAs($user);
 
-        $response= $this->json('POST', route(RouteNames::LOGIN), $payload);
+        $response= $this->json('POST', route(RouteNames::V1_LOGIN), $payload);
 
         $answer = json_decode($response->getContent(), true);
         $token = $answer['accessToken'] ?? null;

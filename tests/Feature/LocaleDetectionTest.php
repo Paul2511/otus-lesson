@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\RouteNames;
 use Tests\TestCase;
 
 class LocaleDetectionTest extends TestCase
@@ -16,7 +17,7 @@ class LocaleDetectionTest extends TestCase
 
         $response = $this->withHeaders([
             'Accept-Language'=>'ru'
-        ])->json('POST', 'api/auth/login', $payload);
+        ])->json('POST', route(RouteNames::V1_LOGIN), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['password'])
@@ -33,7 +34,7 @@ class LocaleDetectionTest extends TestCase
 
         $response = $this->withHeaders([
             'Accept-Language'=>'en'
-        ])->json('POST', 'api/auth/login', $payload);
+        ])->json('POST', route(RouteNames::V1_LOGIN), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['password'])
@@ -50,7 +51,7 @@ class LocaleDetectionTest extends TestCase
 
         $response = $this->withHeaders([
             'Accept-Language'=>'fr'
-        ])->json('POST', 'api/auth/login', $payload);
+        ])->json('POST', route(RouteNames::V1_LOGIN), $payload);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['password'])

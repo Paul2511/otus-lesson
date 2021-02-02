@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Api\Pet;
 
 use App\Http\Controllers\Controller;
 use App\Http\RouteNames;
+use App\Models\Pet;
 use App\States\User\Role\AdminUserRole;
 use Tests\Generators\UserGenerator;
 
@@ -23,7 +24,7 @@ class ApiPetControllerShowTest extends TestPet
         $pet = $pets->random(1)->all();
         $pet = $pet[0];
 
-        $response = $this->tokenHeader()->json('get', 'api/pets/' . $pet->id );
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_PET, ['pet'=>$pet]) );
 
         $result = json_decode($response->getContent(), true);
 
@@ -50,7 +51,7 @@ class ApiPetControllerShowTest extends TestPet
         $anotherPet = $anotherPets->random(1)->all();
         $anotherPet = $anotherPet[0];
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_PET, ['pet'=>$anotherPet]));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_PET, ['pet'=>$anotherPet]));
 
         $response->assertStatus(403)
             ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
@@ -73,7 +74,7 @@ class ApiPetControllerShowTest extends TestPet
         $anotherPet = $anotherPets->random(1)->all();
         $anotherPet = $anotherPet[0];
 
-        $response = $this->tokenHeader()->json('get', route(RouteNames::GET_PET, ['pet'=>$anotherPet]));
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_PET, ['pet'=>$anotherPet]));
 
         $result = json_decode($response->getContent(), true);
 
@@ -97,7 +98,13 @@ class ApiPetControllerShowTest extends TestPet
             'client_id' => $anotherUser->client->id
         ]);
 
-        $response = $this->tokenHeader()->json('get', 'api/pets/1000');
+        $fakePet = Pet::factory()->makeOne([
+            'id' => 1000
+        ]);
+
+        $response = $this->tokenHeader()->json('get', route(RouteNames::V1_GET_PET, [
+            'pet' => $fakePet
+        ]));
 
         $response->assertStatus(404)
             ->assertJsonFragment(['message'=>trans('pet.notFound')]);

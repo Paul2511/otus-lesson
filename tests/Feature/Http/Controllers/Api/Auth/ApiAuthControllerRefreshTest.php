@@ -26,7 +26,24 @@ class ApiAuthControllerRefreshTest extends TestCase
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization'=>'Bearer ' . $wrongToken
-        ])->json('post', route(RouteNames::TOKEN_REFRESH), ['accessToken'=>$wrongToken]);
+        ])->json('post', route(RouteNames::V1_TOKEN_REFRESH), ['accessToken'=>$wrongToken]);
+
+
+        $response->assertStatus(401)
+            ->assertJsonFragment(['message'=>trans('auth.wrongToken')]);
+    }
+
+    /**
+     * @group auth
+     * @group refreshToken
+     */
+    public function testWithoutToken401()
+    {
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])->json('post', route(RouteNames::V1_TOKEN_REFRESH));
+
 
         $response->assertStatus(401)
             ->assertJsonFragment(['message'=>trans('auth.wrongToken')]);
@@ -44,7 +61,7 @@ class ApiAuthControllerRefreshTest extends TestCase
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization'=>'Bearer ' . $token
-        ])->json('post', route(RouteNames::TOKEN_REFRESH), ['accessToken'=>$token]);
+        ])->json('post', route(RouteNames::V1_TOKEN_REFRESH), ['accessToken'=>$token]);
 
         $newToken = json_decode($response->getContent(), true);
         if ($newToken && is_string($newToken)) {
