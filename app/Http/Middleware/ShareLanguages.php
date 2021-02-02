@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\Languages\LanguageService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
-class GetListLanguages
+class ShareLanguages
 {
     /**
      * Handle an incoming request.
@@ -15,12 +16,9 @@ class GetListLanguages
      * @param \Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next,LanguageService $languageService)
     {
-        $languages = [];
-        foreach (config(app . locales) ?? [] as $localy) {
-            $languages[] = ['title' => __('general.languages.' . $localy), 'code' => $localy];
-        }
+        $languages = $languageService->getAppLanguages();
         View::share('languages', $languages);
         return $next($request);
     }
