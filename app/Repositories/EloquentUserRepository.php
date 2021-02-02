@@ -28,7 +28,16 @@ class EloquentUserRepository implements RepositoryInterface
     public function update(array $data, int $id)
     {
         $record = $this->model->find($id);
-        return $record->update($data);
+        $record->update($data);
+        /*$record->name = $data["name"];
+        $record->last_name = $data["last_name"];
+        $record->patronymic = $data["patronymic"];
+        $record->email = $data['email'];
+        $record->password = $data['password'];
+        $record->role = $data['role'];
+        $record->skills = $data['skills'];
+        $record->save();*/
+        return $record;
     }
     //update several records
     public function updateSeveral(array $data, array $id){
@@ -42,7 +51,7 @@ class EloquentUserRepository implements RepositoryInterface
     // remove record from the database
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $this->model->destroy($id);
     }
 
     // show the record with the given id

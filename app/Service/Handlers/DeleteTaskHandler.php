@@ -11,7 +11,7 @@ class DeleteTaskHandler implements HandlerInterface
 		$this->taskRepository = $taskRepository;
 	}
 
-    public function handle()
+    public function handle($id)
     {
     	return $this->taskRepository->delete($id);
     }

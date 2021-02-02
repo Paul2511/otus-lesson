@@ -11,7 +11,7 @@ class DeleteKnowledgeHandler implements HandlerInterface
 		$this->knowledgeRepository = $knowledgeRepository;
 	}
 
-    public function handle()
+    public function handle($id)
     {
     	return $this->knowledgeRepository->delete($id);
     }

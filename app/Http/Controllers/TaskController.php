@@ -55,11 +55,13 @@ class TaskController extends Controller
     {
         if(\Auth::check()){
             $this->validate($request, [
+                'user_id' => 'required',
                 'name' => 'required|max:255',
             ]);
 
             // create record and pass in only fields that are fillable
             $data = $request->only(["name", "description", "status"]);
+            $data["user_id"] = \Auth::id();
             $this->taskService->createTask($data);
             return redirect()->back();
         } else{
@@ -133,7 +135,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::check()){
+        if(\Auth::check()){
             $updatingTask = $this->taskService->getTask($id);
             $this->authorize(User::DELETE, $updatingTask);
             $this->taskService->deleteTask($id);

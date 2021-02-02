@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Service\UserService;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -66,7 +67,6 @@ class UserController extends Controller
            	'email' =>'required|unique:users'
        	]);
 
-        $request->password = Hash::make($request->password);
         if($request->role != User::MANAGER && $request->role != User::DEVELOPER){
         	throw Exception("invalid role");
     	}
@@ -80,6 +80,7 @@ class UserController extends Controller
             'role',
             'skills'
         ]);
+        $data['password'] = Hash::make($data['password']);
         $newUser = $this->userService->createUser($data);
         if(!\Auth::check()){
             \Auth::loginUsingId($newUser->id);
@@ -148,10 +149,11 @@ class UserController extends Controller
                 'role',
                 'skills'
             ]);
+            $data['password'] = Hash::make($data['password']);
             $updatingUser = $this->userService->getUser($id);
             $this->authorize(User::UPDATE, $updatingUser);
             $this->userService->updateUser($data, $id);
-           	return redirect()->route('users.show', ['user' => $id]);
+           	return redirect()->route('user.show', ['user' => $id]);
         } else {
             return redirect()->route('user.login');
         }
@@ -165,7 +167,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::check()){
+        if(\Auth::check()){
             $updatingUser = $this->userService->getUser($id);
             $this->authorize(User::DELETE, $updatingUser);
             $this->userService->deleteUser($id);
@@ -180,14 +182,14 @@ class UserController extends Controller
     	$credentials = $request->only("email","password");
         $credentials["password"] = \Hash::make($credentials["password"]);
     	if(\Auth::attempt($credentials)){
-    		return redirect()->route('users.show', ['user' => Auth::id()]);
+    		return redirect()->route('user.show', ['user' => Auth::id()]);
     	}
     }
 
     public function login()
     {
     	if(!\Auth::check()){
-    		return view("users.login");
+    		return view("user.login");
     	}
     	return redirect()->back();
     }
