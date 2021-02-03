@@ -2,26 +2,27 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Role;
+use App\Services\Auth\Auth\AuthService;
 use Closure;
 use Illuminate\Http\Request;
 
 class CheckAdmin
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
-     */
+    private AuthService $authService;
+
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
     public function handle(Request $request, Closure $next)
     {
 
-        if (auth()->user()->roles()->first()->title == Role::ADMIN_ROLE) {
+        if ($this->authService->isAdminUser(auth()->user())) {
             return $next($request);
         } else {
-            abort(401);
+            abort(403);
         }
 
     }

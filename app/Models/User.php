@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\Cache\CacheService;
+use Cache;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
@@ -94,10 +96,15 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        if (!$this->roles()->first()) {
+
+        $roleObj = Cache::rememberForever(CacheService::ROLE, function () {
+            return $this->roles()->first();
+        });
+
+        if (!$roleObj) {
             return false;
         }
-        return $this->roles()->first()->title === Role::ADMIN_ROLE;
+        return $roleObj->title === Role::ADMIN_ROLE;
     }
 
 }

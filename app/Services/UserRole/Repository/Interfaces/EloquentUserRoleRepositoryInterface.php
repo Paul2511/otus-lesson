@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface EloquentUserRoleRepositoryInterface
 {
-    public function setRoleOnUser(int $userId, int $roleId): bool;
+    public function setRoleOnUser(int $userId, int $roleId): Model;
 }

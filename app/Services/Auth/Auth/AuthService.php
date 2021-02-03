@@ -12,7 +12,7 @@ class AuthService
     public function hasUserPermission(User $user, string $permission): bool
     {
 
-        if ($user->isAdmin()) {
+        if ($this->isAdminUser($user)) {
             return true;
         }
 
@@ -28,6 +28,11 @@ class AuthService
     private function hasRolePermission(Role $role, string $permission): bool
     {
         return in_array($permission, $role->permissions()->get()->toArray()[0]);
+    }
+
+    public function isAdminUser(User $user): bool
+    {
+        return $user->isAdmin();
     }
 
 
