@@ -22,6 +22,7 @@ class EloquentQuestionRepository
     {
         $query = Question::query();
         $query->with($with);
+        $query->orderByDesc('id');
         return $query->paginate($perPage ?? static::DEFAULT_PERPAGE);
     }
 
