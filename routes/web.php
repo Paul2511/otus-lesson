@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Route::get('/register', function () {
     return view('auth.register');
-});
+})->name('register');
 
 Route::get('/profile', function () {
     return view('cabinet.home');

@@ -9,6 +9,8 @@ use App\Http\Requests\Admin\AdminUsersUpdateRequest;
 use Illuminate\Support\Facades\View;
 use App\Services\Users\UsersService;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
+use App\Models\Promotion;
+use App\Policies\Permission;
 
 class AdminUsersController extends AdminBaseController
 {
@@ -26,6 +28,8 @@ class AdminUsersController extends AdminBaseController
     }
     public function index()
     {
+        $this->authorize(Permission::VIEW_ANY, Promotion::class);
+
         $users = $this->usersService->showUserList();
         view::share([
             'users' => $users,

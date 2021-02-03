@@ -12,6 +12,7 @@ final class AdminRoutesProvider {
 	public function register(){
 		Route::group([
 			'prefix'=>'/admin',
+			'middleware'=> 'auth',
 		], function(){
 			Route::get('/', [
                                 AdminController::class,

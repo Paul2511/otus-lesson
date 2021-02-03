@@ -51,8 +51,8 @@
                                aria-expanded="false">@lang('common.user')</a>
                             <ul class="dropdown-menu">
                                 @guest
-                                    <li class="nav-item {{ (request()->routeIs('login')) ? 'active' : '' }}"><a class="nav-link" href="">@lang('common.login')</a></li>
-                                    <li class="nav-item {{ (request()->routeIs('register')) ? 'active' : '' }}"><a class="nav-link" href="">@lang('common.register')</a></li>
+                                    <li class="nav-item {{ (request()->routeIs('login')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('login') }}">@lang('common.login')</a></li>
+                                    <li class="nav-item {{ (request()->routeIs('register')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('register') }}">@lang('common.register')</a></li>
                                 @else
                                     <li class="nav-item {{ (request()->routeIs('cabinet.home')) ? 'active' : '' }}"><a class="nav-link" href="">@lang('common.cabinet')</a></li>
                                     <li class="nav-item">
@@ -60,7 +60,7 @@
                                             @lang('common.logout')
                                         </a>
 
-                                        <form id="logout-form" action="" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
                                         </form>
                                     </li>

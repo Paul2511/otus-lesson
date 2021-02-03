@@ -18,7 +18,7 @@ class CreatePromotionsTable extends Migration
             $table->string('title');
             $table->text('text');
             $table->timestamp('validate');
-            $table->tinyInt('status');
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

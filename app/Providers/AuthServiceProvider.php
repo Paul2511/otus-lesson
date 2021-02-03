@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Promotion;
+use App\Policies\PromotionyPolicy;
+use App\Models\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+         Promotion::class => PromotionyPolicy::class,
     ];
 
     /**
@@ -26,5 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+    }
+    
+    public function registerGates(): void {
+        Gate::define(\App\Policies\Permission::GATE_PROMOTION, '\App\Policies\PromotionGate@view');
     }
 }
