@@ -3,7 +3,7 @@
 @section('content')
     @include('blocks.breadcrumb', [
         'links' => [
-            __('Домой') => route('home'),
+            __('Домой') => route('home', App::getLocale()),
             ],
         'current' => __('Словари')
     ])
@@ -22,7 +22,7 @@
                 <div>
                     <button type="button" class="btn btn-primary">{{ __('Начать тренировку') }}</button>
 
-                    @include('blocks.forms.destroy', ['link' => route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_DESTROY, [$dictionary->id])])
+                    @include('blocks.forms.destroy', ['link' => route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_DESTROY, ['locale' => App::getLocale(), 'dictionary' => $dictionary->id])])
                 </div>
             </div>
         @endforeach

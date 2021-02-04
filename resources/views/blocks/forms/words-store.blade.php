@@ -5,7 +5,7 @@
                 <div class="card-header">{{ __('Добавить слово') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ route(\App\Services\Words\Providers\Routes::WORDS_STORE) }}"
+                    <form action="{{ route(\App\Services\Words\Providers\Routes::WORDS_STORE, App::getLocale()) }}"
                           method="POST">
                         @csrf
                         <input type="hidden"

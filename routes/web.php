@@ -20,26 +20,28 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\MainController::class, 'index'])
-    ->name('main');
+Route::prefix('/{locale}')
+    ->middleware('locale')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\MainController::class, 'index'])
+            ->name('main');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home');
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+            ->name('home');
 
-Route::resource('/dictionaries', DictionaryController::class)
-    ->name('index', DictionariesRoutes::DICTIONARIES_INDEX)
-    ->name('show', DictionariesRoutes::DICTIONARIES_SHOW)
-    ->name('store', DictionariesRoutes::DICTIONARIES_STORE)
-    ->name('destroy', DictionariesRoutes::DICTIONARIES_DESTROY);
+        Route::resource('/dictionaries', DictionaryController::class)
+            ->name('index', DictionariesRoutes::DICTIONARIES_INDEX)
+            ->name('show', DictionariesRoutes::DICTIONARIES_SHOW)
+            ->name('store', DictionariesRoutes::DICTIONARIES_STORE)
+            ->name('destroy', DictionariesRoutes::DICTIONARIES_DESTROY);
 
-Route::resource('/words', WordController::class)
-    ->name('index', WordsRoutes::WORDS_INDEX)
-    ->name('show', WordsRoutes::WORDS_SHOW)
-    ->name('store', WordsRoutes::WORDS_STORE)
-    ->name('destroy', WordsRoutes::WORDS_DESTROY);
+        Route::resource('/words', WordController::class)
+            ->name('index', WordsRoutes::WORDS_INDEX)
+            ->name('show', WordsRoutes::WORDS_SHOW)
+            ->name('store', WordsRoutes::WORDS_STORE)
+            ->name('destroy', WordsRoutes::WORDS_DESTROY);
 
-Route::get('/training', function () {
-    return view('training');
-});
-
-
+        Route::get('/training', function () {
+            return view('training');
+        });
+    });
