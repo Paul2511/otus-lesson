@@ -21,5 +21,6 @@ abstract class SourcesRoutes
     const SOURCES_REPORT_QUOTAS = 'reports/quotas';
     const SOURCES_REPORT_SERVICE = 'reports/service';
     const SOURCES_REPORT_STAT = 'reports/stat';
+    const SOURCES_REPORT_CALLS = 'reports/calls';
 
 }

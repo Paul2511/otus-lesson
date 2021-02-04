@@ -37,9 +37,6 @@ class CreateUserHandler
             } catch (\Exception $e) {
                 Log::channel('slack')->error('Ошибка создания пользователя '. $e->getMessage());
             }
-}
-
-
-
+        }
     }
 }

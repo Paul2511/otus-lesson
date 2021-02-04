@@ -13,6 +13,7 @@ use App\Http\Controllers\Sources\QuotasReportController;
 use App\Http\Controllers\Sources\ServiceReportController;
 use App\Http\Controllers\Sources\SimpleRecordsController;
 use App\Http\Controllers\Sources\StatReportController;
+use App\Http\Controllers\Sources\CallsReportController;
 use Illuminate\Support\Facades\Route;
 
 final class SourcesRoutesProvider
@@ -48,6 +49,7 @@ final class SourcesRoutesProvider
                 Route::get('quotas', [QuotasReportController::class, 'view'])->name( SourcesRoutes::SOURCES_REPORT_QUOTAS);
                 Route::get('service', [ServiceReportController::class, 'view'])->name( SourcesRoutes::SOURCES_REPORT_SERVICE);
                 Route::get('stat', [StatReportController::class, 'view'])->name( SourcesRoutes::SOURCES_REPORT_STAT);
+                Route::get('calls', [CallsReportController::class, 'view'])->name( SourcesRoutes::SOURCES_REPORT_CALLS);
             });
             Route::prefix('statistic')->group(function () {
                 Route::get('online', [OnlineStatisticController::class, 'view'])->name( SourcesRoutes::SOURCES_STATISTIC_ONLINE);

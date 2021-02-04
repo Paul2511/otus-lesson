@@ -13,4 +13,5 @@ class Resources
     const REPORT_PROCESSED_CALLS = 7;
     const REPORT_BALANCE = 8;
     const REPORT_QUOTAS = 9;
+    const REPORT_CALLS = 10;
 }

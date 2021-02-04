@@ -19,6 +19,7 @@ return [
     'Processed-calls' => 'Processed Calls Report',
     'Processed Calls' => 'Processed Calls Report',
     'Balance' => 'Balance Report',
+    'Calls' => 'Report by calls',
     'Quotas' => 'Quotas Report',
     'About' => 'About us',
     'About Us' => 'About us',
