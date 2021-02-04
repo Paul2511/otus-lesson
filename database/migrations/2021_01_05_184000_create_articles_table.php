@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use \App\Models\Article;
+
 
 class CreateArticlesTable extends Migration
 {
@@ -17,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->integer('sort')->default(100);
+            $table->integer('sort')->default(Article::SORT);
             $table->text('short_description');
             $table->longText('description');
             $table->string('meta_title');
