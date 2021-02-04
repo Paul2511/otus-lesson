@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Services\Routes\Providers\AdminRoutesProvider;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home.index');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/profile', function () {
     return view('profile.index');
@@ -29,10 +29,4 @@ Route::get('/about', function () {
     return view('about.index');
 });
 
-Route::group([
-    'prefix' => '/admin',
-    'namespace' => 'App\Http\Controllers',
-], function () {
-    Route::get('/articles',
-        'RestaurantController@index')->name('RestaurantController');
-});
+app(AdminRoutesProvider::class)->register();

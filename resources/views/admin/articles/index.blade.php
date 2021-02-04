@@ -1,42 +1,23 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.main')
 
-    <title>Laravel</title>
+@section('title', 'article')
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-</head>
-<body>
-<div class="container">
-    <div class="row">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Дата создания</th>
-                <th scope="col">Рейтинг</th>
-                <th scope="col">Сортировка</th>
-                <th scope="col">Описание</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach( $restaurant as $item )
-                <tr>
-                    <th scope="row">{{$item->id}}</th>
-                    <td>{{$item->name}}</td>
-                    <td>{{$item->created_at}}</td>
-                    <td>{{$item->rating}}</td>
-                    <td>{{$item->sort}}</td>
-                    <td>{{$item->description}}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+@section('content')
+    <h1>{{ __('admin/article.title') }}</h1>
+    <div class="btn-group mb-3">
+        <a class="btn btn-success" href="{{route(\App\Services\Routes\Providers\AdminRoutes::ADMIN_ARTICLE_CREATE)}}" role="button">{{ __('admin/article.button.add') }}</a>
     </div>
-</div>
-</body>
-</html>
+    @include('blocks.form.success')
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                @include('admin.articles.blocks.list.header')
+                <tbody>
+                @each('admin.articles.blocks.list.item', $articles, 'article')
+                </tbody>
+            </table>
+            {{ $articles->links() }}
+        </div>
+    </div>
+
+@endsection
