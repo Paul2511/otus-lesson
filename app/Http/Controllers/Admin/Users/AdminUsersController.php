@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Policies\Permissions;
 use App\Services\Users\UsersService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Artisan;
 use View;
 
 class AdminUsersController extends AdminBaseController
@@ -54,7 +55,15 @@ class AdminUsersController extends AdminBaseController
     public function store(AdminUsersStoreRequest $request): JsonResponse
     {
         $this->authorize(Permissions::CREATE,User::class);
-        $user = $this->usersService->createUser($request->getFormCreateData());
+        $data = $request->getFormCreateData();
+        $user = $this->usersService->createUser($data);
+        if (!empty($user)) {
+            Artisan::queue('mail:send', [
+                'user' => $user->id,
+                'password'=>$data['password']
+            ]);
+        }
+        dd();
         return response()->json($user);
     }
 
