@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\PetType;
-use Skachinsky\LocaleTranslator\Models\Translate;
+use App\Models\Translate;
 use Illuminate\Database\Seeder;
 use App\Services\Localise\Locale;
 
@@ -35,6 +35,9 @@ class PetTypesTableSeeder extends Seeder
                     ]);
                 }
             }
+            $petType->refresh();
         }
+        \Artisan::call('scout:flush', ['model'=>PetType::class]);
+        \Artisan::call('scout:import', ['model'=>PetType::class]);
     }
 }

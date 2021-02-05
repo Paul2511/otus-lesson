@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Specialization;
-use Skachinsky\LocaleTranslator\Models\Translate;
+use App\Models\Translate;
 use App\Services\Localise\Locale;
 use Illuminate\Database\Seeder;
 

@@ -49,11 +49,26 @@ export default [
         icon: "pets",
         i18n: "myPets",
     },
+
     {
-        url: "/cabinet/requests",
-        name: "Requests",
-        slug: "Requests",
-        icon: "CalendarIcon",
-        i18n: "myRequests"
+        url: null,
+        name: "References",
+        slug: "references",
+        icon: "BookIcon",
+        i18n: "References",
+        submenu: [
+            {
+                url: '/cabinet/references/pet-types',
+                name: 'PetTypes',
+                slug: 'pet-types',
+                i18n: 'PetTypes'
+            },
+            {
+                url: '/cabinet/references/specializations',
+                name: 'Specializations',
+                slug: 'specializations',
+                i18n: 'Specializations'
+            }
+        ]
     }
 ]

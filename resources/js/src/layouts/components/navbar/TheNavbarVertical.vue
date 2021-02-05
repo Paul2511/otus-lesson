@@ -103,7 +103,12 @@
                 this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', true)
             },
             setTitle() {
-                let item = this.navMenuItems.find(n => n.url === this.currentPath);
+                let item = this.navMenuItems.find((n) => {
+                    if (!n.url && !!n.submenu) {
+                        return n.submenu.find(s => s.url === this.currentPath);
+                    }
+                    return n.url === this.currentPath;
+                });
                 if (item) {
                     this.headerTitle = item.i18n ? item.i18n : item.name;
                 }

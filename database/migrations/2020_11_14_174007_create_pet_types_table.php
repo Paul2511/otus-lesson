@@ -15,7 +15,7 @@ class CreatePetTypesTable extends Migration
     {
         Schema::create('pet_types', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
+            $table->string('slug');
         });
     }
 

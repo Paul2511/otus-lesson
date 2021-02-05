@@ -108,7 +108,7 @@ class ApiPetControllerDeleteTest extends TestPet
      * @group pet
      * @group petDelete
      */
-    public function testWithoutPet404()
+    public function testWithoutPet400()
     {
         $admin = $this->createUser(AdminUserRole::class);
 

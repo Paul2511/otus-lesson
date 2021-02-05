@@ -17,6 +17,12 @@ trait CreatesApplication
 
         $app->make(Kernel::class)->bootstrap();
 
+        //Проверка на верно закэшированную конфигурацию
+        if (env('DB_DATABASE') !== 'default_testing') {
+            echo 'Ошибочная конфигурация'.PHP_EOL;
+            exit;
+        }
+
         return $app;
     }
 }

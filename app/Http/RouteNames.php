@@ -23,6 +23,12 @@ class RouteNames
     const V1_DELETE_PET = 'deletePet';
     const V1_CREATE_PET = 'createPet';
 
+    const V1_GET_PET_TYPES = 'getPetTypes';
+    const V1_GET_PET_TYPE = 'getPetType';
+    const V1_CREATE_PET_TYPE = 'createPetType';
+    const V1_UPDATE_PET_TYPE = 'updatePetType';
+    const V1_DELETE_PET_TYPE = 'deletePetType';
+
     const V1_UPLOAD_IMAGE = 'uploadImage';
 
     public static $notFound = [
@@ -31,7 +37,10 @@ class RouteNames
         self::V1_GET_USER_PETS => 'user',
         self::V1_GET_PET => 'pet',
         self::V1_UPDATE_PET => 'pet',
-        self::V1_DELETE_PET => 'pet'
+        self::V1_DELETE_PET => 'pet',
+        self::V1_GET_PET_TYPE => 'petType',
+        self::V1_UPDATE_PET_TYPE => 'petType',
+        self::V1_DELETE_PET_TYPE => 'petType',
     ];
 
 }

@@ -3,12 +3,14 @@ import ruButtons from './data/ru/ru-buttons';
 import ruDashboard from './data/ru/ru-dashboard';
 import ruUser from './data/ru/ru-user';
 import ruPet from './data/ru/ru-pet';
+import ruPetType from './data/ru/ru-pet-type';
 
 import enMain from './data/en/en-main';
 import enButtons from './data/en/en-buttons';
 import enDashboard from './data/en/en-dashboard';
 import enUser from './data/en/en-user';
 import enPet from './data/en/en-pet';
+import enPetType from './data/en/en-pet-type';
 
 export default {
     en: {
@@ -40,6 +42,7 @@ export default {
         Statistics: 'Statistics',
         Analytics: 'Analytics',
         CardActions: 'Card Actions',
+        Actions: 'Actions',
         CardColors: 'Card Colors',
         Table: 'Table',
         agGridTable: 'agGrid Table',
@@ -155,7 +158,14 @@ export default {
         buttons: enButtons,
         dashboard: enDashboard,
         user: enUser,
-        pet: enPet
+        pet: enPet,
+        petType: enPetType,
+        References: 'References',
+        PetTypes: 'Pet types',
+        Specializations: 'Specializations',
+        noData: 'No data available',
+        slug: 'Key',
+        value: 'Value'
     },
     ru: {
         Dashboard: 'Рабочий стол',
@@ -178,10 +188,19 @@ export default {
         userSettingsChangePassword: 'Сменить пароль',
         myRequests: 'Мои заявки',
         Loading: 'Загрузка',
+        Actions: 'Действия',
+        Search: 'Поиск',
         main: ruMain,
         buttons: ruButtons,
         dashboard: ruDashboard,
         user: ruUser,
-        pet: ruPet
+        pet: ruPet,
+        petType: ruPetType,
+        References: 'Справочники',
+        PetTypes: 'Типы питомцев',
+        Specializations: 'Специализации',
+        noData: 'Записей не найдено',
+        slug: 'Ключ',
+        value: 'Значение'
     }
 }

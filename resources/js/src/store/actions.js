@@ -61,7 +61,6 @@ const actions = {
                 .catch((error) => { reject(error) })
         })
     },
-
     getUser({commit}, userId) {
 
         return new Promise((resolve, reject) => {
@@ -136,6 +135,52 @@ const actions = {
     createPet({ commit }, data) {
         return new Promise((resolve, reject) => {
             axios.post(requests.CREATE_PET, data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+
+    // /////////////////////////////////////////////
+    // PetTypes
+    // /////////////////////////////////////////////
+
+    getPetTypes({ commit }, queryData) {
+        if (typeof queryData !== 'object') {
+            queryData = {};
+        }
+        return new Promise((resolve, reject) => {
+            axios.get(requests.GET_PET_TYPES, {
+                params: queryData
+            })
+            .then((response) => {
+                resolve(response);
+            })
+            .catch((error) => { reject(error) })
+        });
+    },
+    createPetType({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.CREATE_PET_TYPE, data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    updatePetType({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.put(requests.UPDATE_PET_TYPE(data.id), data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    deletePetType({ commit }, id) {
+        return new Promise((resolve, reject) => {
+            axios.delete(requests.DELETE_PET_TYPE(id))
                 .then((response) => {
                     resolve(response);
                 })

@@ -26,4 +26,13 @@ export const UPDATE_PET = (petId) => {
     return '/api/v1/pets/'+petId;
 };
 
+export const GET_PET_TYPES = '/api/v1/pet-types';
+export const CREATE_PET_TYPE = '/api/v1/pet-types';
+export const UPDATE_PET_TYPE = (id) => {
+    return '/api/v1/pet-types/'+id;
+};
+export const DELETE_PET_TYPE = (id) => {
+    return '/api/v1/pet-types/'+id;
+};
+
 export const UPLOAD_IMAGE = '/api/v1/files/upload-image';

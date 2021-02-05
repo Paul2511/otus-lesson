@@ -14,7 +14,6 @@
 
         <pet-modal v-if="petModalOpened" @reload="reload"></pet-modal>
         <pet-create-modal v-if="petCreateModalOpened" @reload="reload"></pet-create-modal>
-
     </div>
 </template>
 
@@ -93,6 +92,7 @@
                     }
                 }
             }
+            this.$store.commit('UPDATE_THEME', theme)
             this.toggleClassInBody(theme)
             this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)
 
@@ -116,9 +116,10 @@
     }
 
 </script>
-
 <style lang="scss">
     .loading-block {
-        min-height: 200px;
+        //min-height: 200px;
+        position: absolute;
+        z-index: 1000000;
     }
 </style>

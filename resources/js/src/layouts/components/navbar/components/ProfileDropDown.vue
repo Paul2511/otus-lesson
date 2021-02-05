@@ -3,9 +3,12 @@
          v-if="activeUserInfo.name && activeUserInfo.name.displayName">
 
         <div class="text-right leading-tight hidden sm:block">
-            <p class="font-semibold">{{ activeUserInfo.name.displayName }}</p>
+            <p class="font-semibold mb-0">{{ activeUserInfo.name.displayName }}</p>
             <small v-if="!!activeUserInfo.specialist && !!activeUserInfo.specialist.specializationTitle">
                 {{ activeUserInfo.specialist.specializationTitle }}
+            </small>
+            <small v-else-if="!!activeUserInfo.currentRole && $acl.check('canAdmin')">
+                {{ activeUserInfo.currentRole.label }}
             </small>
         </div>
 

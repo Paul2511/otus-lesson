@@ -5,5 +5,6 @@ export default
     cancel: 'Отмена',
     delete: 'Удалить',
     close: 'Закрыть',
-    create: 'Создать'
+    create: 'Создать',
+    add: 'Добавить'
 }

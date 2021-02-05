@@ -30,8 +30,6 @@
             this.$store.dispatch('getProfile')
                 .then(res => {
                     this.user = res.data.data;
-
-
                 })
                 .catch(err => {
                     this.$vs.notify({

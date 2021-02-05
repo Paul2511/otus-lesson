@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Pet;
 use App\Models\PetType;
 use App\Models\User;
+use App\Services\Localise\Locale;
 use App\Services\PetTypes\PetTypeService;
 use Closure;
 use Illuminate\Http\Request;
@@ -25,7 +26,8 @@ class WebApplicationData
 
         $data = [
             'locale' => App::currentLocale(),
-            'defaultAvatar' => SrcHelper::getUserDefaultAvatar()
+            'locales' => Locale::$availableLocales,
+            'defaultAvatar' => SrcHelper::getUserDefaultAvatar(),
         ];
 
         $userStatuses = [];

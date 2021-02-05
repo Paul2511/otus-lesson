@@ -3,13 +3,20 @@
 
 namespace App\Models\Casts\User;
 
+use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Support\Person\PersonName\PersonNameData;
 class NameCast implements CastsAttributes
 {
     public function get($model, $key, $value, $attributes)
     {
-        return PersonNameData::fromFullName($value);
+        $name = PersonNameData::fromFullName($value);
+
+        if (!$name->displayName && $model instanceof User) {
+            $name->displayName = $model->role->label();
+        }
+
+        return $name;
     }
 
     public function set($model, $key, $value, $attributes)

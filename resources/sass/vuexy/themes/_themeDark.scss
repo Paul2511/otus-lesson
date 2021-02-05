@@ -16,6 +16,26 @@
   background-color: $content-dark-bg;
   color: $theme-dark-text-color !important;
 
+  .modal-dialog {
+    .modal-content {
+      background: #262c49;
+      color: #fff;
+      .modal-header {
+        background: #10163a;
+        border-bottom: medium none;
+        h3, h4, h5 {
+          color: #fff;
+        }
+        .close {
+          color: #fff;
+        }
+      }
+      .modal-footer {
+        border-top: medium none;
+      }
+    }
+  }
+
   .main-vertical {
     &.navbar-static {
       .vx-navbar-wrapper {

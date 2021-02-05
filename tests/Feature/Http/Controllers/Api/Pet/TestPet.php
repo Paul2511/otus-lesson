@@ -15,8 +15,6 @@ class TestPet extends TestCase
 {
     use AuthAttach;
 
-    private static $isSeed = false;
-
     /**
      * @param int|null $count
      * @param array|null $data
@@ -34,12 +32,5 @@ class TestPet extends TestCase
         }
 
         return PetGenerator::generate($count, $data);
-    }
-
-    protected function seedPetTypes() {
-        if (!self::$isSeed || !PetType::count()) {
-            $this->seed(PetTypesTableSeeder::class);
-            self::$isSeed = true;
-        }
     }
 }

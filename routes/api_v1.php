@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\PetController;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\FileController;
+use App\Http\Controllers\Api\v1\PetTypeController;
 use App\Http\RouteNames;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
@@ -34,6 +35,15 @@ Route::group([
     Route::get('/{pet}', [PetController::class, 'show'])->name(RouteNames::V1_GET_PET);
     Route::put('/{pet}', [PetController::class, 'update'])->name(RouteNames::V1_UPDATE_PET);
     Route::delete('/{pet}', [PetController::class, 'destroy'])->name(RouteNames::V1_DELETE_PET);
+});
+
+Route::group([
+    'prefix' => 'pet-types',
+], function () {
+    Route::get('/', [PetTypeController::class, 'index'])->name(RouteNames::V1_GET_PET_TYPES);
+    Route::post('/', [PetTypeController::class, 'store'])->name(RouteNames::V1_CREATE_PET_TYPE);
+    Route::put('/{petType}', [PetTypeController::class, 'update'])->name(RouteNames::V1_UPDATE_PET_TYPE);
+    Route::delete('/{petType}', [PetTypeController::class, 'destroy'])->name(RouteNames::V1_DELETE_PET_TYPE);
 });
 
 Route::group([

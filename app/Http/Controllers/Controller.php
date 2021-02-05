@@ -14,4 +14,7 @@ class Controller extends BaseController
     const JSON_STATUS_OK = 200;
     const JSON_STATUS_CREATED = 201;
     const JSON_STATUS_ACCEPTED = 202;
+
+    const RESULTS_PER_PAGE = 10;
+    const MAX_PER_PAGE = 100;
 }

@@ -5,5 +5,6 @@ export default
     cancel: 'Cancel',
     delete: 'Delete',
     close: 'Close',
-    create: 'Create'
+    create: 'Create',
+    add: 'Add'
 }

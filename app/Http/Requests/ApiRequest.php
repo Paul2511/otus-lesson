@@ -17,4 +17,6 @@ class ApiRequest extends FormRequest
 
         return $data['data'] ?? $data;
     }
+
+    public function rules() {}
 }

@@ -40,6 +40,5 @@ class PetDeleteHandler
 
             return false;
         }
-
     }
 }

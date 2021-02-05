@@ -40,7 +40,7 @@ class PetFactory extends Factory
         }
 
         if (!$petType && !PetType::count()) {
-            $petType = PetType::create(['slug'=>$this->faker->slug]);
+            $petType = PetType::create(['slug'=>$this->faker->word]);
         }
 
         $sex = $this->faker->randomElement(Pet::getStatesFor('sex')->all());

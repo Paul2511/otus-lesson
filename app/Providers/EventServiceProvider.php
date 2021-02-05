@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Events\Pet\PetCreated;
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
+use App\Events\PetType\PetTypeDeleted;
 use App\Events\User\UserCreated;
 use App\Events\User\UserRoleCreated;
 use App\Listeners\Pet\PetCacheClear;
+use App\Listeners\Translate\TranslateDelete;
 use App\Listeners\User\UserSend\UserSendWelcomeMsg;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\User\UserUpdated;
@@ -47,6 +49,10 @@ class EventServiceProvider extends ServiceProvider
 
         PetDeleted::class => [
             PetCacheClear::class
+        ],
+
+        PetTypeDeleted::class => [
+            TranslateDelete::class
         ]
     ];
 

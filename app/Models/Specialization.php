@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
-use Skachinsky\LocaleTranslator\LocaleTranslator;
+use App\Models\Traits\LocaleTranslator;
 use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Specialization
@@ -20,22 +20,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Specialization whereSlug($value)
  *
  * @property-read Collection|Specialist[]   $specialists
+ * @property Collection|Translate[] $translates
  * @mixin \Eloquent
  *
  */
 class Specialization extends Model
 {
-    use HasFactory;
-    use LocaleTranslator;
+    use HasFactory, LocaleTranslator;
 
     public $timestamps = false;
+
+    protected $rememberCachePrefix = 'specializations';
 
     protected $fillable = [
         'slug'
     ];
 
     protected $appends = [
-        'title'
+        'title', 'canDelete'
     ];
 
     public function specialists()
@@ -46,5 +48,10 @@ class Specialization extends Model
     public function getTitleAttribute()
     {
         return $this->translateAttribute($this->slug);
+    }
+
+    public function getCanDeleteAttribute()
+    {
+        return !$this->specialists()->exists();
     }
 }

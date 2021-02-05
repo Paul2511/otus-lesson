@@ -4,18 +4,16 @@
 namespace App\Http\Resources;
 
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 class BaseResource extends JsonResource
 {
-    public function toArray($request)
+    public function filterResult(array $result, Request $request): array
     {
-        $result = parent::toArray($request);
-
-        //на будущее делаем заказной вывод полей
         $fieldsRequest = $request->get('fields', null);
         if ($fieldsRequest) {
-            $fields = explode(',', $fieldsRequest);
+            $fields = explode(',', str_replace(' ', '', $fieldsRequest));
             $result = Arr::only($result, $fields);
         }
 

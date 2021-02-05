@@ -60,11 +60,19 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/cabinet/requests',
-                    name: 'requests',
-                    component: () => import('./views/cabinet/pets/Pets.vue'),
+                    path: '/cabinet/references/pet-types',
+                    name: 'petTypes',
+                    component: () => import('./views/cabinet/admin/references/pet-types/pet-types.vue'),
                     meta: {
-                        rule: 'spec'
+                        rule: 'admin'
+                    }
+                },
+                {
+                    path: '/cabinet/references/specializations',
+                    name: 'specializations',
+                    component: () => import('./views/cabinet/admin/references/specializations/specializations.vue'),
+                    meta: {
+                        rule: 'admin'
                     }
                 },
             ],

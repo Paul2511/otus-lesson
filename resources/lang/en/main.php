@@ -3,5 +3,7 @@
 return [
     'noscript'=>"We're sorry but PurrPurr Care doesn't work properly without JavaScript enabled. Please enable it to continue.",
     'sexMale' => 'Male',
-    'sexFemale' => 'Female'
+    'sexFemale' => 'Female',
+    'value' => 'Value',
+    'slug' => 'Key'
 ];

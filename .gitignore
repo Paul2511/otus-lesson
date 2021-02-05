@@ -6,6 +6,7 @@ dist/
 /vendor
 *.log
 .env
+.env.testing
 .env.backup
 .idea/
 .phpunit.result.cache
