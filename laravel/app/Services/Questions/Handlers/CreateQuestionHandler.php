@@ -13,18 +13,18 @@ class CreateQuestionHandler
 
     private EloquentQuestionRepository $repository;
 
-    public function __construct(EloquentQuestionRepository $eloquentQuestionRepository)
+    public function __construct(EloquentQuestionRepository $repository)
     {
-        $this->repository = $eloquentQuestionRepository;
+        $this->repository = $repository;
     }
 
 
-    public function handle(CreateQuestionDTO $createQuestionDTO): Question
+    public function handle(CreateQuestionDTO $dto): Question
     {
-        $question = $this->repository->createFromDTO($createQuestionDTO);
+        $question = $this->repository->createFromDTO($dto);
         $this->repository
-            ->saveTranslations($question, $createQuestionDTO)
-            ->saveCategories($question, $createQuestionDTO);
+            ->saveTranslations($question, $dto)
+            ->saveCategories($question, $dto);
         return $question;
     }
 
