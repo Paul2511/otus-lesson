@@ -2,34 +2,27 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Dashboard\Requests\QuestionCategoryEditRequest;
 use App\Http\Controllers\Dashboard\Requests\QuestionCategoryStoreRequest;
 use App\Models\QuestionCategory;
 use App\Services\Questions\Repositories\EloquentQuestionRepository;
+use App\Services\QuestionsCategories\QuestionsCategoriesService;
 use App\Services\QuestionsCategories\Repositories\EloquentQuestionCategoryRepository;
 use Illuminate\Http\Request;
 
 class QuestionCategoryController extends DashboardController
 {
+    private QuestionsCategoriesService $questionsCategoriesService;
 
-    /**
-     * @var EloquentQuestionRepository
-     */
-    private $eloquentQuestionRepository;
-    /**
-     * @var EloquentQuestionCategoryRepository
-     */
-    private $eloquentQuestionCategoryRepository;
-
-    public function __construct(EloquentQuestionRepository $eloquentQuestionRepository, EloquentQuestionCategoryRepository $eloquentQuestionCategoryRepository)
+    public function __construct(QuestionsCategoriesService $questionsCategoriesService)
     {
-        $this->eloquentQuestionRepository = $eloquentQuestionRepository;
-        $this->eloquentQuestionCategoryRepository = $eloquentQuestionCategoryRepository;
+        $this->questionsCategoriesService = $questionsCategoriesService;
     }
 
     public function index()
     {
         return view('dashboard.questions_categories.index',[
-            'categories' => $this->eloquentQuestionCategoryRepository->search()
+            'categories' => $this->questionsCategoriesService->searchQuestionsCategories()
         ]);
     }
 
@@ -37,7 +30,7 @@ class QuestionCategoryController extends DashboardController
     public function create(QuestionCategory $category)
     {
         return view('dashboard.questions_categories.edit',[
-            'categoriesData' => $this->eloquentQuestionCategoryRepository->getCategoriesData(),
+            'categoriesData' => $this->questionsCategoriesService->getCategoriesData(),
             'category' => $category,
             'formOptions' => [
                 'url' => route('dashboard.category.store'),
@@ -50,7 +43,7 @@ class QuestionCategoryController extends DashboardController
 
     public function store(QuestionCategoryStoreRequest $request)
     {
-        $this->eloquentQuestionCategoryRepository->store($request->all());
+        $this->questionsCategoriesService->createQuestionCategoryFromArray($request->all());
         return redirect()->route('dashboard.category.create');
     }
 
@@ -65,7 +58,7 @@ class QuestionCategoryController extends DashboardController
 
     public function edit(QuestionCategory $category)
     {
-        $categoriesData = $this->eloquentQuestionCategoryRepository->getCategoriesData();
+        $categoriesData = $this->questionsCategoriesService->getCategoriesData();
 
         return view('dashboard.questions_categories.edit',[
             'categoriesData' => $categoriesData,
@@ -79,20 +72,17 @@ class QuestionCategoryController extends DashboardController
     }
 
 
-    public function update(Request $request, QuestionCategory $category)
+    public function update(QuestionCategoryEditRequest $request, QuestionCategory $category)
     {
-        $this->eloquentQuestionCategoryRepository->update($category, $request->all());
+        $this->questionsCategoriesService->updateQuestionCategory($category, $request->all());
         return redirect(route('dashboard.category.edit', ['category' => $category ]));
     }
 
 
     public function destroy(QuestionCategory $category)
     {
-        $this->eloquentQuestionCategoryRepository->destroy($category->id);
+        $this->questionsCategoriesService->destroyQuestionCategory($category->id);
         return redirect(route('dashboard.category.index'));
     }
-
-
-
 
 }
