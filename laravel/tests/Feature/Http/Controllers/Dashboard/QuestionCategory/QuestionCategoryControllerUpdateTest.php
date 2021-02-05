@@ -50,7 +50,7 @@ class QuestionCategoryControllerUpdateTest extends TestCase
 
     /**
      * @group http
-     * @group update6
+     * @group update
      * */
     public function testRightDataPassed()
     {
