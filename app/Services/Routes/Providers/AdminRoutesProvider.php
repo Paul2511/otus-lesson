@@ -13,36 +13,14 @@ final class AdminRoutesProvider
     {
         Route::group([
             'prefix' => '/admin',
-            'namespace' => 'App\Http\Controllers\Admin\Article',
+            'as' => 'admin.',
+            'middleware' => 'auth'
         ], function () {
 
-            Route::get('/articles',
-                [AdminArticleController::class, 'index'])
-                ->name(AdminRoutes::ADMIN_ARTICLE_INDEX);
+            Route::resources([
+                'articles' => AdminArticleController::class
+            ]);
 
-            Route::get('/articles/add',
-                [AdminArticleController::class, 'create'])
-                ->name(AdminRoutes::ADMIN_ARTICLE_CREATE);
-
-            Route::match(['put', 'path'], '/articles/{article}',
-                [AdminArticleController::class, 'update'])
-                ->name(AdminRoutes::ADMIN_ARTICLE_UPDATE);
-
-            Route::get('/articles/{article}',
-                [AdminArticleController::class, 'show'])
-                ->name(AdminRoutes::ADMIN_ARTICLE_SHOW);
-
-            Route::get('/articles/{article}/edit',
-                [AdminArticleController::class, 'edit'])
-                ->name(AdminRoutes::ADMIN_ARTICLE_EDIT);
-
-            Route::post('/articles/',
-                [AdminArticleController::class, 'store'])
-                ->name(AdminRoutes::ADMIN_ARTICLE_STORE);
-
-            Route::delete('/articles/{article}',
-                [AdminArticleController::class, 'destroy'])
-                ->name(AdminRoutes::ADMIN_ARTICLE_DELETE);
         });
     }
 }

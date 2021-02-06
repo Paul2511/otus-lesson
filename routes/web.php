@@ -15,14 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
-
 Route::get('/profile', function () {
     return view('profile.index');
-});
-
-Route::get('/register', function () {
-    return view('register.index');
 });
 
 Route::get('/about', function () {
@@ -30,3 +24,7 @@ Route::get('/about', function () {
 });
 
 app(AdminRoutesProvider::class)->register();
+
+Auth::routes();
+
+Route::get('/', [HomeController::class, 'index'])->name('home');

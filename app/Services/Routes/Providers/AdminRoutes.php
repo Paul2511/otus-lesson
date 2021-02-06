@@ -12,5 +12,7 @@ final class AdminRoutes
     const ADMIN_ARTICLE_EDIT = 'admin.articles.edit';
     const ADMIN_ARTICLE_STORE = 'admin.articles.store';
     const ADMIN_ARTICLE_UPDATE = 'admin.articles.update';
-    const ADMIN_ARTICLE_DELETE = 'admin.articles.delete';
+    const ADMIN_ARTICLE_DELETE = 'admin.articles.destroy';
+
+
 }
