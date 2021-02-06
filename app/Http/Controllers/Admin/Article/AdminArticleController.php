@@ -8,7 +8,6 @@ use App\Models\Article;
 use App\Services\Articles\ArticleService;
 use App\Services\Articles\Repositories\EloquentArticleRepository;
 use App\Services\Routes\Providers\AdminRoutes;
-use Illuminate\Http\Request;
 
 
 class AdminArticleController extends AdminController
@@ -27,10 +26,9 @@ class AdminArticleController extends AdminController
 
     public function index()
     {
-        $articles = $this->eloquentArticleRepository->search(self::DEFAULT_MODELS_PER_PAGE);
 
         \View::share([
-            'articles' => $articles
+            'articles' => $this->articleService->searchArticle(self::DEFAULT_MODELS_PER_PAGE)
         ]);
 
         return view(AdminRoutes::ADMIN_ARTICLE_INDEX);
