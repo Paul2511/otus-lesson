@@ -62,7 +62,8 @@ class KnowledgeController extends Controller
                 "data" => 'required'
             ]);
 
-            $data = $request->only(['name', 'description', 'data', 'user_id']);
+            $data = $request->only(['name', 'description', 'data']);
+            $data["user_id"] = \Auth::id();
             $this->knowledgeService->createKnowledge($data);
              return redirect()->back();
         } else {
@@ -115,13 +116,12 @@ class KnowledgeController extends Controller
     {
         if(\Auth::check()){
             $this->validate($request, [
-                'user_id' => 'required',
                 'name' => 'required',
                 'description' => 'required',
                 "data" => 'required'
             ]);
 
-            $data = $request->only(['name', 'description', 'data', 'user_id']);
+            $data = $request->only(['name', 'description', 'data']);
             $updatingKnowledge = $this->knowledgeService->getKnowledge($id);
             $this->authorize(User::UPDATE, $updatingKnowledge);
             $this->knowledgeService->updateKnowledge($data, $id);
@@ -139,7 +139,7 @@ class KnowledgeController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::check()){
+        if(\Auth::check()){
             $updatingKnowledge = $this->knowledgeService->getKnowledge($id);
             $this->authorize(User::DELETE, $updatingKnowledge);
             $this->knowledgeService->deleteKnowledge($id);

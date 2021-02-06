@@ -19,12 +19,12 @@ class UserService{
 
 	public function createUser($data)
 	{
-		$this->createUserHandler->handle($request);
+		return $this->createUserHandler->handle($data);
 	}
 	
 	public function updateUser($data, $id)
 	{
-		$this->updateUserHandler->handle($request, $id);
+		$this->updateUserHandler->handle($data, $id);
 	}
 	
 	public function deleteUser($id)

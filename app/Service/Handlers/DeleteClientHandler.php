@@ -11,7 +11,7 @@ class DeleteClientHandler implements HandlerInterface
 		$this->clientRepository = $clientRepository;
 	}
 
-    public function handle()
+    public function handle($id)
     {
     	return $this->clientRepository->delete($id);
     }

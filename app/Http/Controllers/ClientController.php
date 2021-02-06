@@ -55,7 +55,8 @@ class ClientController extends Controller
     {
         if(\Auth::check()){
             $this->authorize(User::CREATE, Client::class);
-            $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service", "user_id"]);
+            $data = $request->only(["name", "last_name", "patronymic", "interest_status", "email", "addres", "phone", "wishes", "complaints", "selected_service"]);
+            $data["user_id"] = \Auth::id();
             $this->clientService->createClient($data);
             return redirect()->back(); 
         } else {
@@ -123,9 +124,9 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::check()){
+        if(\Auth::check()){
             $updatingClient = $this->clientService->getClient($id);
-            $this->authorize(User::DELETE, $updatingKnowledge);
+            $this->authorize(User::DELETE, $updatingClient);
             $this->clientService->deleteClient($id);
             return redirect()->back();
         } else {

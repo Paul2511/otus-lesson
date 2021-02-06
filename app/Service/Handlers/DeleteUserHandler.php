@@ -11,7 +11,7 @@ class DeleteUserHandler implements HandlerInterface
 		$this->userRepository = $userRepository;
 	}
 
-    public function handle()
+    public function handle($id)
     {
     	return $this->userRepository->delete($id);
     }
