@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'slack', 'slackemergency'],
             'ignore_exceptions' => false,
         ],
 
@@ -53,13 +53,21 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
         ],
-
+        //https://hooks.slack.com/services/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
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
-            'level' => env('LOG_LEVEL', 'critical'),
+            'level' => 'critical',
+        ],
+
+        'slackemergency' => [
+            'driver' => 'slack',
+            'url' => env('LOG_SLACK_WEBHOOK_URL_EMERGENCY'),
+            'username' => 'Laravel Log',
+            'emoji' => ':boom:',
+            'level' => 'emergency',
         ],
 
         'papertrail' => [

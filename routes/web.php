@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{UserController, TaskController, TodoController, CommentController, KnowledgeController, ClientController};
 use App\Models\User;
@@ -32,3 +32,6 @@ Route::post("/comment", [CommentController::class, "store"])->name('comment.stor
 Route::put("/comment", [CommentController::class, "update"])->name('comment.update');
 Route::resource('/knowledge', KnowledgeController::class);
 Route::resource('/client', ClientController::class);
+Route::get('/error', function(){
+	Log::critical("critical !!!");
+});
