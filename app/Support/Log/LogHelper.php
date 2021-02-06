@@ -26,7 +26,12 @@ class LogHelper
         self::queue('auth', $level, $message, $context);
     }
 
-    protected static function queue(string $channel, string $level, string $message, array $context): void
+    public static function schedule(string $message, ?string $level='info')
+    {
+        self::queue('schedule', $level, $message);
+    }
+
+    protected static function queue(string $channel, string $level, string $message, ?array $context=[]): void
     {
         LogJob::dispatch($channel, $level, $message, $context);
     }

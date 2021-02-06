@@ -128,6 +128,13 @@ return [
             'path' => storage_path('logs/mail.log'),
             'level' => env('info'),
             'days' => 14,
+        ],
+
+        'schedule' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/schedule.log'),
+            'level' => env('info'),
+            'days' => 14,
         ]
     ],
 
