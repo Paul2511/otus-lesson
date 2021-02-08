@@ -1,22 +1,22 @@
 <?php
 
 
-namespace App\Services\PetTypes\Repositories;
+namespace App\Services\Specializations\Repositories;
 
-use App\Models\PetType;
+use App\Models\Specialization;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use Support\Cache\CacheHelper;
-class CachePetTypeRepository extends PetTypeRepository
+class CacheSpecializationRepository extends SpecializationRepository
 {
 
-    public function findById(int $id): PetType
+    public function findById(int $id): Specialization
     {
-        return CacheHelper::remember(PetType::query(), class_basename(PetType::class), $id)->findOrFail($id);
+        return CacheHelper::remember(Specialization::query(), class_basename(Specialization::class), $id)->findOrFail($id);
     }
 
     /**
-     * @return PetType[]|Builder[]|Collection|mixed
+     * @return Specialization[]|Builder[]|Collection|mixed
      */
     public function get()
     {
@@ -52,10 +52,10 @@ class CachePetTypeRepository extends PetTypeRepository
         });
     }
 
-    public function create(array $data): PetType
+    public function create(array $data): Specialization
     {
         $data = collect($data)->whereNotNull()->all();
-        $result = PetType::create($data);
+        $result = Specialization::create($data);
 
         \Cache::tags($this->tag)->flush();
 
@@ -66,19 +66,19 @@ class CachePetTypeRepository extends PetTypeRepository
      * @return bool|null
      * @throws \Exception
      */
-    public function delete(PetType $petType)
+    public function delete(Specialization $specialization)
     {
-        $result = $petType->delete();
+        $result = $specialization->delete();
 
         \Cache::tags($this->tag)->flush();
 
         return $result;
     }
 
-    public function update(PetType $petType, array $data): bool
+    public function update(Specialization $specialization, array $data): bool
     {
         $data = collect($data)->whereNotNull()->all();
-        $result = $petType->update($data);
+        $result = $specialization->update($data);
 
         \Cache::tags($this->tag)->flush();
 

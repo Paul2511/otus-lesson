@@ -6,5 +6,6 @@ export default
     delete: 'Удалить',
     close: 'Закрыть',
     create: 'Создать',
-    add: 'Добавить'
+    add: 'Добавить',
+    find: 'Найти'
 }

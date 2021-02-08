@@ -1,9 +1,9 @@
 <template>
     <div>
         <b-modal
-                id="pet-type-modal"
+                id="specialization-modal"
                 centered
-                :title="isNew?$t('petType.add'):$t('petType.edit')"
+                :title="isNew?$t('specialization.add'):$t('specialization.edit')"
                 v-model="active"
                 @hidden="close()"
                 @ok="save"
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-    import Vue from 'Vue'
     import { BModal, BSpinner, BCard, BRow, BCol, BButton } from 'bootstrap-vue'
     export default {
         components: {BModal, BSpinner, BCard, BRow, BCol, BButton},
@@ -68,7 +67,7 @@
 
                 this.$vs.loading();
 
-                let action = this.isNew ? 'createPetType' : 'updatePetType';
+                let action = this.isNew ? 'createSpecialization' : 'updateSpecialization';
 
                 this.$store.dispatch(action, this.item)
                     .then(res => {
@@ -95,7 +94,7 @@
     }
 </script>
 <style lang="scss" scoped>
-    #pet-type-modal {
+    #specialization-modal {
         table {
             td {
                 padding-bottom: .8rem;

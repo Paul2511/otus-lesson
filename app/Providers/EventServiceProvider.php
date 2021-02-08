@@ -6,10 +6,12 @@ use App\Events\Pet\PetCreated;
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
 use App\Events\PetType\PetTypeDeleted;
+use App\Events\Specialization\SpecializationDeleted;
 use App\Events\User\UserCreated;
 use App\Events\User\UserRoleCreated;
 use App\Listeners\Pet\PetCacheClear;
-use App\Listeners\Translate\TranslateDelete;
+use App\Listeners\PetType\PetTypeDeleteListener;
+use App\Listeners\Specialization\SpecializationDeleteListener;
 use App\Listeners\User\UserSend\UserSendWelcomeMsg;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\User\UserUpdated;
@@ -52,7 +54,11 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         PetTypeDeleted::class => [
-            TranslateDelete::class
+            PetTypeDeleteListener::class
+        ],
+
+        SpecializationDeleted::class => [
+            SpecializationDeleteListener::class
         ]
     ];
 

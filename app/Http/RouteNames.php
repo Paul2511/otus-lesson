@@ -29,6 +29,12 @@ class RouteNames
     const V1_UPDATE_PET_TYPE = 'updatePetType';
     const V1_DELETE_PET_TYPE = 'deletePetType';
 
+    const V1_GET_SPECIALIZATIONS = 'getSpecializations';
+    const V1_GET_SPECIALIZATION = 'getSpecialization';
+    const V1_CREATE_SPECIALIZATION = 'createSpecialization';
+    const V1_UPDATE_SPECIALIZATION = 'updateSpecialization';
+    const V1_DELETE_SPECIALIZATION = 'deleteSpecialization';
+
     const V1_UPLOAD_IMAGE = 'uploadImage';
 
     public static $notFound = [
@@ -41,6 +47,9 @@ class RouteNames
         self::V1_GET_PET_TYPE => 'petType',
         self::V1_UPDATE_PET_TYPE => 'petType',
         self::V1_DELETE_PET_TYPE => 'petType',
+        self::V1_GET_SPECIALIZATION => 'specialization',
+        self::V1_UPDATE_SPECIALIZATION => 'specialization',
+        self::V1_DELETE_SPECIALIZATION => 'specialization',
     ];
 
 }

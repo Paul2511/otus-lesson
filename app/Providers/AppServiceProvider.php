@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
-use App\Models\User;
 use App\Services\PetTypes\Repositories\CachePetTypeRepository;
 use App\Services\PetTypes\Repositories\EloquentPetTypeRepository;
 use App\Services\PetTypes\Repositories\PetTypeRepository;
+use App\Services\Specializations\Repositories\CacheSpecializationRepository;
+use App\Services\Specializations\Repositories\EloquentSpecializationRepository;
+use App\Services\Specializations\Repositories\SpecializationRepository;
 use Illuminate\Support\ServiceProvider;
-use Gate;
 use Support\Cache\CacheHelper;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,8 +24,10 @@ class AppServiceProvider extends ServiceProvider
         }
         if (!CacheHelper::isCacheEnabled()) {
             $this->app->bind(PetTypeRepository::class, CachePetTypeRepository::class);
+            $this->app->bind(SpecializationRepository::class, CacheSpecializationRepository::class);
         } else {
             $this->app->bind(PetTypeRepository::class, EloquentPetTypeRepository::class);
+            $this->app->bind(SpecializationRepository::class, EloquentSpecializationRepository::class);
         }
     }
 

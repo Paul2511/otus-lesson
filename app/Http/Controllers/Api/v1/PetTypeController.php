@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ApiGetRequest;
 use App\Http\Requests\PetType\PetTypeGetRequest;
 use App\Http\Requests\PetType\PetTypeRequest;
 use App\Http\Resources\PetType\PetTypeCollection;
@@ -13,7 +12,6 @@ use App\Services\PetTypes\DTO\PetTypeDTO;
 use App\Services\PetTypes\PetTypeService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
-
 class PetTypeController extends Controller
 {
     /**

@@ -4,6 +4,7 @@ import ruDashboard from './data/ru/ru-dashboard';
 import ruUser from './data/ru/ru-user';
 import ruPet from './data/ru/ru-pet';
 import ruPetType from './data/ru/ru-pet-type';
+import ruSpecialization from './data/ru/ru-specialization';
 
 import enMain from './data/en/en-main';
 import enButtons from './data/en/en-buttons';
@@ -11,6 +12,7 @@ import enDashboard from './data/en/en-dashboard';
 import enUser from './data/en/en-user';
 import enPet from './data/en/en-pet';
 import enPetType from './data/en/en-pet-type';
+import enSpecialization from './data/en/en-specialization';
 
 export default {
     en: {
@@ -160,6 +162,7 @@ export default {
         user: enUser,
         pet: enPet,
         petType: enPetType,
+        specialization: enSpecialization,
         References: 'References',
         PetTypes: 'Pet types',
         Specializations: 'Specializations',
@@ -196,6 +199,7 @@ export default {
         user: ruUser,
         pet: ruPet,
         petType: ruPetType,
+        specialization: ruSpecialization,
         References: 'Справочники',
         PetTypes: 'Типы питомцев',
         Specializations: 'Специализации',

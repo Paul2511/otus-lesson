@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Listeners\Translate;
+namespace App\Listeners\Specialization;
 
-use App\Events\Pet\PetEvent;
-use App\Events\PetType\PetTypeEvent;
+use App\Events\Specialization\SpecializationEvent;
 use App\Models\Translate;
 use App\Services\Translates\TranslateService;
-use Support\Cache\CacheHelper;
-use App\Models\Pet;
 
-class TranslateDelete
+class SpecializationDeleteListener
 {
     /**
      * Create the event listener.
@@ -26,10 +23,10 @@ class TranslateDelete
         return app(TranslateService::class);
     }
 
-    public function handle(PetTypeEvent $event)
+    public function handle(SpecializationEvent $event)
     {
         $service = $this->getTranslateService();
-        $event->getPetType()->translates()->each(function (Translate $translate) use ($service) {
+        $event->getSpecialization()->translates()->each(function (Translate $translate) use ($service) {
             $service->delete($translate);
         });
     }

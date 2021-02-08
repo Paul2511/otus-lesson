@@ -5,8 +5,6 @@ namespace App\Services\PetTypes\Repositories;
 
 use App\Models\PetType;
 use Illuminate\Database\Eloquent\Collection;
-use Support\Cache\CacheHelper;
-
 class EloquentPetTypeRepository extends PetTypeRepository
 {
 

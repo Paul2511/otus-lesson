@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\PetController;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\FileController;
 use App\Http\Controllers\Api\v1\PetTypeController;
+use App\Http\Controllers\Api\v1\SpecializationController;
 use App\Http\RouteNames;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
@@ -44,6 +45,15 @@ Route::group([
     Route::post('/', [PetTypeController::class, 'store'])->name(RouteNames::V1_CREATE_PET_TYPE);
     Route::put('/{petType}', [PetTypeController::class, 'update'])->name(RouteNames::V1_UPDATE_PET_TYPE);
     Route::delete('/{petType}', [PetTypeController::class, 'destroy'])->name(RouteNames::V1_DELETE_PET_TYPE);
+});
+
+Route::group([
+    'prefix' => 'specializations',
+], function () {
+    Route::get('/', [SpecializationController::class, 'index'])->name(RouteNames::V1_GET_SPECIALIZATIONS);
+    Route::post('/', [SpecializationController::class, 'store'])->name(RouteNames::V1_CREATE_SPECIALIZATION);
+    Route::put('/{specialization}', [SpecializationController::class, 'update'])->name(RouteNames::V1_UPDATE_SPECIALIZATION);
+    Route::delete('/{specialization}', [SpecializationController::class, 'destroy'])->name(RouteNames::V1_DELETE_SPECIALIZATION);
 });
 
 Route::group([

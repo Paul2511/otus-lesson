@@ -145,7 +145,6 @@ const actions = {
     // /////////////////////////////////////////////
     // PetTypes
     // /////////////////////////////////////////////
-
     getPetTypes({ commit }, queryData) {
         if (typeof queryData !== 'object') {
             queryData = {};
@@ -181,6 +180,51 @@ const actions = {
     deletePetType({ commit }, id) {
         return new Promise((resolve, reject) => {
             axios.delete(requests.DELETE_PET_TYPE(id))
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+
+    // /////////////////////////////////////////////
+    // Specializations
+    // /////////////////////////////////////////////
+    getSpecializations({ commit }, queryData) {
+        if (typeof queryData !== 'object') {
+            queryData = {};
+        }
+        return new Promise((resolve, reject) => {
+            axios.get(requests.GET_SPECIALIZATIONS, {
+                params: queryData
+            })
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    createSpecialization({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.CREATE_SPECIALIZATION, data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    updateSpecialization({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.put(requests.UPDATE_SPECIALIZATION(data.id), data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    deleteSpecialization({ commit }, id) {
+        return new Promise((resolve, reject) => {
+            axios.delete(requests.DELETE_SPECIALIZATION(id))
                 .then((response) => {
                     resolve(response);
                 })

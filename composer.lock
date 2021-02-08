@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a092cc79b834879e856cf7654bb09a4",
+    "content-hash": "3e0730d5c9df79cec5b0c006be2fb8ac",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -1159,16 +1159,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.24.0",
+            "version": "v8.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d16e9f875e4d7609a05d5007393e22ba95efd1fc"
+                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d16e9f875e4d7609a05d5007393e22ba95efd1fc",
-                "reference": "d16e9f875e4d7609a05d5007393e22ba95efd1fc",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
+                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
                 "shasum": ""
             },
             "require": {
@@ -1255,6 +1255,7 @@
             },
             "suggest": {
                 "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.155).",
+                "brianium/paratest": "Required to run tests in parallel (^6.0).",
                 "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.6|^3.0).",
                 "ext-ftp": "Required to use the Flysystem FTP driver.",
                 "ext-gd": "Required to use Illuminate\\Http\\Testing\\FileFactory::image().",
@@ -1322,7 +1323,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-01-21T14:19:29+00:00"
+            "time": "2021-02-02T14:07:24+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -6199,6 +6200,86 @@
             "time": "2020-12-15T10:57:43+00:00"
         },
         {
+            "name": "brianium/paratest",
+            "version": "v6.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paratestphp/paratest.git",
+                "reference": "9a94366983ce32c7724fc92e3b544327d4adb9be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/9a94366983ce32c7724fc92e3b544327d4adb9be",
+                "reference": "9a94366983ce32c7724fc92e3b544327d4adb9be",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-pcre": "*",
+                "ext-reflection": "*",
+                "ext-simplexml": "*",
+                "php": "^7.3 || ^8.0",
+                "phpunit/php-code-coverage": "^9.2.5",
+                "phpunit/php-file-iterator": "^3.0.5",
+                "phpunit/php-timer": "^5.0.3",
+                "phpunit/phpunit": "^9.5.1",
+                "sebastian/environment": "^5.1.3",
+                "symfony/console": "^4.4 || ^5.2",
+                "symfony/process": "^4.4 || ^5.2"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^8.2.0",
+                "ekino/phpstan-banned-code": "^0.3.1",
+                "ergebnis/phpstan-rules": "^0.15.3",
+                "ext-posix": "*",
+                "infection/infection": "^0.20.2",
+                "phpstan/phpstan": "^0.12.70",
+                "phpstan/phpstan-deprecation-rules": "^0.12.6",
+                "phpstan/phpstan-phpunit": "^0.12.17",
+                "phpstan/phpstan-strict-rules": "^0.12.9",
+                "squizlabs/php_codesniffer": "^3.5.8",
+                "symfony/filesystem": "^5.2.2",
+                "thecodingmachine/phpstan-strict-rules": "^0.12.1",
+                "vimeo/psalm": "^4.4.1"
+            },
+            "bin": [
+                "bin/paratest"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ParaTest\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Scaturro",
+                    "email": "scaturrob@gmail.com",
+                    "homepage": "http://brianscaturro.com",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Parallel testing for PHP",
+            "homepage": "https://github.com/paratestphp/paratest",
+            "keywords": [
+                "concurrent",
+                "parallel",
+                "phpunit",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/paratestphp/paratest/issues",
+                "source": "https://github.com/paratestphp/paratest/tree/v6.2.0"
+            },
+            "time": "2021-01-29T15:25:31+00:00"
+        },
+        {
             "name": "composer/ca-bundle",
             "version": "1.2.9",
             "source": {
@@ -7621,16 +7702,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v5.2.0",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "aca954fd03414ba0dd85d7d8e42ba9b251893d1f"
+                "reference": "aca63581f380f63a492b1e3114604e411e39133a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/aca954fd03414ba0dd85d7d8e42ba9b251893d1f",
-                "reference": "aca954fd03414ba0dd85d7d8e42ba9b251893d1f",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/aca63581f380f63a492b1e3114604e411e39133a",
+                "reference": "aca63581f380f63a492b1e3114604e411e39133a",
                 "shasum": ""
             },
             "require": {
@@ -7705,7 +7786,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-01-13T10:00:08+00:00"
+            "time": "2021-01-25T15:34:13+00:00"
         },
         {
             "name": "phar-io/manifest",

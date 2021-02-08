@@ -3,12 +3,11 @@
 
 namespace Tests\Generators;
 
-use App\Models\PetType;
+use App\Models\Specialization;
 use App\Models\Translate;
 use App\Services\Localise\Locale;
-use Illuminate\Support\Collection;
 
-class PetTypeGenerator
+class SpecializationGenerator
 {
     /**
      * @param int|null $count
@@ -18,19 +17,19 @@ class PetTypeGenerator
     public static function generate(?int $count = 3)
     {
         $locales = Locale::$availableLocales;
-        $petTypes = PetType::factory()
+        $specializations = Specialization::factory()
             ->count($count)
-            ->create()->each(function (PetType $petType) use ($locales) {
+            ->create()->each(function (Specialization $specialization) use ($locales) {
                 foreach ($locales as $locale) {
                     Translate::factory()->createOne([
-                        'type' => $petType->getModelName(),
-                        'row_id'=>$petType->id,
+                        'type' => $specialization->getModelName(),
+                        'row_id'=>$specialization->id,
                         'locale'=>$locale
                     ]);
                 }
-                $petType->refresh();
+                $specialization->refresh();
             });
 
-        return $petTypes;
+        return $specializations;
     }
 }

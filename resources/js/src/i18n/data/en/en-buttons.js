@@ -6,5 +6,6 @@ export default
     delete: 'Delete',
     close: 'Close',
     create: 'Create',
-    add: 'Add'
+    add: 'Add',
+    find: 'Find'
 }

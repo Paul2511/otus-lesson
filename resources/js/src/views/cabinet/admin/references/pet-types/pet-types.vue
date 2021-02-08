@@ -29,7 +29,7 @@
 
                             <template slot="append">
                                 <div class="append-text btn-addon">
-                                    <vs-button color="primary" size="small" @click="handleSearch">Найти</vs-button>
+                                    <vs-button color="primary" size="small" @click="handleSearch">{{ $t('buttons.find') }}</vs-button>
                                 </div>
                             </template>
                         </vx-input-group>

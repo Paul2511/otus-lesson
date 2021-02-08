@@ -6,7 +6,6 @@ use App\Models\Specialization;
 use App\Models\Translate;
 use App\Services\Localise\Locale;
 use Illuminate\Database\Seeder;
-
 class SpecializationsTableSeeder extends Seeder
 {
 
@@ -40,6 +39,9 @@ class SpecializationsTableSeeder extends Seeder
                     ]);
                 }
             }
+            $specialization->refresh();
         }
+        \Artisan::call('scout:flush', ['model'=>Specialization::class]);
+        \Artisan::call('scout:import', ['model'=>Specialization::class]);
     }
 }

@@ -35,4 +35,13 @@ export const DELETE_PET_TYPE = (id) => {
     return '/api/v1/pet-types/'+id;
 };
 
+export const GET_SPECIALIZATIONS = '/api/v1/specializations';
+export const CREATE_SPECIALIZATION = '/api/v1/specializations';
+export const UPDATE_SPECIALIZATION = (id) => {
+    return '/api/v1/specializations/'+id;
+};
+export const DELETE_SPECIALIZATION = (id) => {
+    return '/api/v1/specializations/'+id;
+};
+
 export const UPLOAD_IMAGE = '/api/v1/files/upload-image';
