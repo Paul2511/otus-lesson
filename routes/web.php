@@ -30,3 +30,4 @@ Route::get('/about', function () {
 });
 
 app(\App\Services\Routes\Providers\Admin\AdminRoutesProvider::class)->register();
+app(\App\Services\Routes\Providers\RoutesProvider::class)->register();
