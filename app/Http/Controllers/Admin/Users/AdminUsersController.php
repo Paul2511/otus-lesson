@@ -63,7 +63,6 @@ class AdminUsersController extends AdminBaseController
                 'password'=>$data['password']
             ]);
         }
-        dd();
         return response()->json($user);
     }
 

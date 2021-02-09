@@ -50,6 +50,7 @@ final class SourcesRoutesProvider
                 Route::get('service', [ServiceReportController::class, 'view'])->name( SourcesRoutes::SOURCES_REPORT_SERVICE);
                 Route::get('stat', [StatReportController::class, 'view'])->name( SourcesRoutes::SOURCES_REPORT_STAT);
                 Route::get('calls', [CallsReportController::class, 'view'])->name( SourcesRoutes::SOURCES_REPORT_CALLS);
+                Route::post('calls/build', [CallsReportController::class, 'build'])->name( SourcesRoutes::SOURCES_REPORT_CALLS_BUILD);
             });
             Route::prefix('statistic')->group(function () {
                 Route::get('online', [OnlineStatisticController::class, 'view'])->name( SourcesRoutes::SOURCES_STATISTIC_ONLINE);
