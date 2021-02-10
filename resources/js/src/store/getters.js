@@ -39,6 +39,10 @@ const getters = {
             return state.appParams.locale;
         }
         return 'ru';
+    },
+
+    changedPet: state => {
+        return state.changedPet;
     }
 };
 

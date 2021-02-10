@@ -3,54 +3,83 @@
 
 namespace App\Services\Pets\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
-use Support\Cache\CacheHelper;
+use App\Http\Requests\ApiGetRequest;
 use App\Models\Pet;
-
-class PetRepository
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Http\Request;
+abstract class PetRepository
 {
-    public function findPet(int $petId, ?bool $fromCache=false): Pet
-    {
-        return $fromCache ?
-            CacheHelper::remember(Pet::query(), class_basename(Pet::class), $petId)->findOrFail($petId) :
-            Pet::findOrFail($petId);
-    }
+    /**
+     * @var Request
+     */
+    protected $request;
 
-    public function getPets(?int $clientId = null, ?bool $fromCache=false): Collection
-    {
-        $query = Pet::query();
-        if ($clientId) {
-            $query->where(['client_id'=>$clientId]);
-        }
+    abstract public function findById(int $id): Pet;
 
-        return $fromCache ?
-            CacheHelper::remember($query, \Str::plural(class_basename(Pet::class)), $clientId)->get() :
-            $query->get();
-    }
-
-    public function updatePet(Pet $pet, array $data): bool
-    {
-        $data = collect($data)->whereNotNull()->all();
-
-        return $pet->update($data);
-    }
-
-    public function createPet(array $data): Pet
-    {
-        $data = collect($data)->whereNotNull()->all();
-        return Pet::create($data);
-    }
+    abstract public function get();
 
     /**
-     * @param Pet $pet
-     * @return bool|null
-     * @throws \Exception
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|mixed
      */
-    public function deletePet(Pet $pet)
-    {
-        //Использую для тестирования логов в слэке:
-        //throw new \Exception('Тест логгирования ошибки');
+    abstract public function paginate(int $perPage);
 
-        return $pet->delete();
+    abstract public function create(array $data): Pet;
+
+    abstract public function update(Pet $pet, array $data): bool;
+
+    /** @return bool|null */
+    abstract public function delete(Pet $pet);
+
+    /**
+     * @var Pet|\Illuminate\Database\Eloquent\Builder
+     */
+    protected $query;
+
+    protected $isSearch = false;
+
+    protected $tag;
+
+
+    public function __construct(ApiGetRequest $request)
+    {
+        $this->request = $request;
+
+        $this->tag = \Str::plural(class_basename(Pet::class));
+
+        $search = $request->get('query', null);
+
+        if ($search) {
+            $this->query = Pet::search($search);
+            $this->isSearch = true;
+        } else {
+            $this->query = Pet::query();
+        }
+
+        $filters = $request->get('filter');
+        if ($filters && count($filters) && !$search) {
+            $this->query->where($filters);
+        }
+
+        $this->setOrder();
     }
+
+    protected function setOrder(): void
+    {
+        $request = $this->request;
+
+        $order = $request->get('sort', 'id');
+        $direction = $request->get('direction', 'asc');
+
+        $this->query->orderBy($order, $direction);
+    }
+
+    public function filterByClient(int $clientId): self
+    {
+        $this->query->where(['client_id'=>$clientId]);
+
+        return $this;
+    }
+
+
 }

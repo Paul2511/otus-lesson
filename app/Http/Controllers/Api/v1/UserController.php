@@ -89,7 +89,7 @@ class UserController extends Controller
             throw new AuthorizationException();
         }
 
-        $pets = $this->petService->getUserPets($user);
+        $pets = $this->petService->getPets($user);
 
         return PetResource::collection($pets);
     }

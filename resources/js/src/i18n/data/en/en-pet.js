@@ -1,6 +1,7 @@
 export default
 {
     pet: 'Pet',
+    petList:'Pet list',
     addPet: 'Add pet',
     questionary: 'Questionary',
     card: 'Card',

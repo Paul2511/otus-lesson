@@ -3,6 +3,7 @@
 
 namespace App\Services\Pets\Handlers;
 
+use App\Exceptions\Pet\PetDeleteException;
 use App\Services\Pets\Repositories\PetRepository;
 use App\Models\Pet;
 use Support\Log\LogHelper;
@@ -21,24 +22,18 @@ class PetDeleteHandler
     }
 
     /**
-     * @param Pet $pet
-     * @return bool|null
+     * @throws PetDeleteException
      */
-    public function handle(Pet $pet, ?array $logData)
+    public function handle(Pet $pet, ?array $logData = []): bool
     {
         try {
-            $result = $this->petRepository->deletePet($pet);
+            $result = $this->petRepository->delete($pet);
 
             LogHelper::pet("Удален питомец #{$pet->id}", $logData);
 
             return $result;
         } catch (\Exception $e) {
-
-            $logData['error'] = $e->getMessage();
-
-            LogHelper::slack("Ошибка удаления питомца #{$pet->id}", $logData);
-
-            return false;
+            throw new PetDeleteException($e->getMessage());
         }
     }
 }

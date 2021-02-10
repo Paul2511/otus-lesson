@@ -1,23 +1,23 @@
 <?php
 
 
-namespace App\Services\PetTypes\Repositories;
+namespace App\Services\Pets\Repositories;
 
-use App\Models\PetType;
+use App\Models\Pet;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Support\Cache\CacheHelper;
 
-class CachePetTypeRepository extends PetTypeRepository
+class CachePetRepository extends PetRepository
 {
 
-    public function findById(int $id): PetType
+    public function findById(int $id): Pet
     {
-        return CacheHelper::remember(PetType::query(), class_basename(PetType::class), $id)->findOrFail($id);
+        return CacheHelper::remember(Pet::query(), class_basename(Pet::class), $id)->findOrFail($id);
     }
 
     /**
-     * @return PetType[]|Builder[]|Collection|mixed
+     * @return Pet[]|Builder[]|Collection|mixed
      */
     public function get()
     {
@@ -53,10 +53,10 @@ class CachePetTypeRepository extends PetTypeRepository
         });
     }
 
-    public function create(array $data): PetType
+    public function create(array $data): Pet
     {
         $data = collect($data)->whereNotNull()->all();
-        $result = PetType::create($data);
+        $result = Pet::create($data);
 
         \Cache::tags($this->tag)->flush();
 
@@ -67,19 +67,19 @@ class CachePetTypeRepository extends PetTypeRepository
      * @return bool|null
      * @throws \Exception
      */
-    public function delete(PetType $petType)
+    public function delete(Pet $pet)
     {
-        $result = $petType->delete();
+        $result = $pet->delete();
 
         \Cache::tags($this->tag)->flush();
 
         return $result;
     }
 
-    public function update(PetType $petType, array $data): bool
+    public function update(Pet $pet, array $data): bool
     {
         $data = collect($data)->whereNotNull()->all();
-        $result = $petType->update($data);
+        $result = $pet->update($data);
 
         \Cache::tags($this->tag)->flush();
 

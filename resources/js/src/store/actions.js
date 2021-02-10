@@ -95,7 +95,20 @@ const actions = {
                 .catch((error) => { reject(error) })
         });
     },
-
+    getPetsList({ commit }, queryData) {
+        if (typeof queryData !== 'object') {
+            queryData = {};
+        }
+        return new Promise((resolve, reject) => {
+            axios.get(requests.GET_ALL_PETS, {
+                params: queryData,
+            })
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
     getUserPets({ commit }, userId) {
         return new Promise((resolve, reject) => {
             axios.get(requests.GET_USER_PETS(userId))

@@ -4,14 +4,15 @@
 namespace App\Services\Pets;
 use App\Exceptions\Client\ClientNotFoundException;
 use App\Exceptions\Pet\PetCreateException;
+use App\Exceptions\Pet\PetDeleteException;
 use App\Exceptions\Pet\PetUpdateException;
 use App\Jobs\Pet\PetDeleteJob;
 use App\Models\Pet;
 use App\Services\Pets\DTO\PetCreateData;
 use App\Services\Pets\DTO\PetUpdateData;
+use App\Services\Pets\Handlers\PetDeleteHandler;
 use App\Services\Pets\Repositories\PetRepository;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Support\Log\LogHelper;
 
 class PetService
@@ -19,26 +20,36 @@ class PetService
     /**
      * @var PetRepository
      */
-    private $petRepository;
+    private $repository;
+    /**
+     * @var PetDeleteHandler
+     */
+    private $deleteHandler;
 
 
     public function __construct(
-        PetRepository $petRepository
+        PetRepository $petRepository,
+        PetDeleteHandler $deleteHandler
     )
     {
-        $this->petRepository = $petRepository;
+        $this->repository = $petRepository;
+        $this->deleteHandler = $deleteHandler;
     }
 
     public function findPet(int $petId): Pet
     {
-        return $this->petRepository->findPet($petId, true);
+        return $this->repository->findById($petId);
     }
 
     /**
+     * @return Pet[]|array|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|mixed
      * @throws ClientNotFoundException
      */
-    public function getUserPets(?User $user = null): Collection
+    public function getPets(?User $user = null, ?int $perPage = null)
     {
+        $repository = $this->repository;
+
+
         $clientId = null;
 
         if ($user) {
@@ -46,9 +57,11 @@ class PetService
                 throw new ClientNotFoundException();
             }
             $clientId = $user->client->id;
+            $repository = $repository->filterByClient($clientId);
         }
 
-        return $this->petRepository->getPets($clientId, true);
+        $result = $perPage ? $repository->paginate($perPage) : $repository->get();
+        return $result ?? [];
     }
 
     /**
@@ -61,7 +74,7 @@ class PetService
         $data = $updateData->all();
         try {
 
-            $result = $this->petRepository->updatePet($pet, $data);
+            $result = $this->repository->update($pet, $data);
 
             if (!$result) {
                 throw new PetUpdateException();
@@ -100,7 +113,7 @@ class PetService
         $data = $createData->toArray();
 
         try {
-            $pet = $this->petRepository->createPet($data);
+            $pet = $this->repository->create($data);
 
             return $pet;
         } catch (\Throwable $e) {
@@ -113,9 +126,25 @@ class PetService
         }
     }
 
+    /**
+     * @throws PetDeleteException
+     */
     public function deletePet(Pet $pet): void
     {
-        PetDeleteJob::dispatch($pet);
+        //todo PetDeleteJob::dispatch($pet);
+
+        \DB::beginTransaction();
+        try {
+            $this->deleteHandler->handle($pet);
+            \DB::commit();
+        } catch (\Throwable $e) {
+            LogHelper::slack("Ошибка удаления питомца", [
+                'userId' => auth()->user()->getAuthIdentifier(),
+                'error' => $e->getMessage(),
+                'petId' => $pet->id
+            ]);
+            throw new PetDeleteException($e->getMessage());
+        }
     }
 
 }

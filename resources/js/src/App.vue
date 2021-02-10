@@ -12,7 +12,7 @@
     <div id="app" :class="vueAppClasses">
         <router-view @setAppClasses="setAppClasses"/>
 
-        <pet-modal v-if="petModalOpened" @reload="reload"></pet-modal>
+        <pet-modal v-if="petModalOpened" @reload="reload" @changed="petChanged"></pet-modal>
         <pet-create-modal v-if="petCreateModalOpened" @reload="reload"></pet-create-modal>
     </div>
 </template>
@@ -76,10 +76,13 @@
             },
             reload() {
                 window.location.reload();
+            },
+            petChanged() {
+                this.$store.commit('CHANGED_PET', true);
+                this.$store.commit('CLOSE_PET_MODAL');
             }
         },
         mounted() {
-
             let theme = themeConfig.theme;
             if (this.$acl.check('client')) {
                 theme = 'light'

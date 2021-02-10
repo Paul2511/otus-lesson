@@ -49,7 +49,21 @@ export default [
         icon: "pets",
         i18n: "myPets",
     },
-
+    {
+        url: "/cabinet/admin/users",
+        name: "User list",
+        slug: "user-list",
+        icon: "UsersIcon",
+        i18n: "Users",
+    },
+    {
+        url: "/cabinet/admin/pets",
+        name: "Pet list",
+        slug: "pet-list",
+        iconPack: "material-icons",
+        icon: "pets",
+        i18n: "Pets",
+    },
     {
         url: null,
         name: "References",

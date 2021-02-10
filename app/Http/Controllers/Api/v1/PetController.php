@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pet\PetCreateRequest;
+use App\Http\Requests\Pet\PetGetRequest;
 use App\Http\Requests\Pet\PetUpdateRequest;
+use App\Http\Resources\Pet\PetCollection;
 use App\Http\Resources\Pet\PetResource;
 use App\Models\Pet;
 use App\Models\User;
@@ -40,7 +42,7 @@ class PetController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
-        $pets = $this->petService->getUserPets($user);
+        $pets = $this->petService->getPets($user);
 
         return PetResource::collection($pets);
     }
@@ -50,15 +52,18 @@ class PetController extends Controller
      * @throws AuthorizationException
      * @throws \App\Exceptions\Client\ClientNotFoundException
      */
-    public function list(): JsonResource
+    public function list(PetGetRequest $request): JsonResource
     {
         if (!$this->authorize('list', Pet::class)) {
             throw new AuthorizationException();
         }
 
-        $pets = $this->petService->getUserPets();
+        $perPage = $request->get('per_page', self::RESULTS_PER_PAGE);
 
-        return PetResource::collection($pets);
+        $pets = $this->petService->getPets(null, $perPage);
+
+        //return PetResource::collection($pets);
+        return new PetCollection($pets);
     }
 
 
@@ -110,10 +115,19 @@ class PetController extends Controller
             ->setStatusCode(self::JSON_STATUS_ACCEPTED);
     }
 
+    /**
+     * @throws \App\Exceptions\Pet\PetDeleteException
+     */
     public function destroy(Pet $pet): JsonResponse
     {
         $this->petService->deletePet($pet);
 
-        return response()->json([]);
+        $message = [
+            'message'=>[
+                'title'=>trans('form.message.successDeleteTitle'),
+                'text'=>trans('form.message.successDeleteText')]
+        ];
+
+        return response()->json($message);
     }
 }

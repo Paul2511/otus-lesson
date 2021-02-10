@@ -53,10 +53,26 @@ const router = new Router({
                 },
                 {
                     path: '/cabinet/pets',
-                    name: 'pets',
+                    name: 'myPets',
                     component: () => import('./views/cabinet/pets/Pets.vue'),
                     meta: {
                         rule: 'client'
+                    }
+                },
+                {
+                    path: '/cabinet/admin/users',
+                    name: 'users',
+                    component: () => import('./views/cabinet/admin/users/users.vue'),
+                    meta: {
+                        rule: 'canAdmin'
+                    }
+                },
+                {
+                    path: '/cabinet/admin/pets',
+                    name: 'pets',
+                    component: () => import('./views/cabinet/admin/pets/pets.vue'),
+                    meta: {
+                        rule: 'canAdmin'
                     }
                 },
                 {

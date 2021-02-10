@@ -124,7 +124,7 @@ class ApiPetControllerDeleteTest extends TestPet
      * @group petDelete
      * @group queue
      */
-    public function testQueueSuccess()
+    /*public function testQueueSuccess()
     {
         Bus::fake();
 
@@ -141,5 +141,5 @@ class ApiPetControllerDeleteTest extends TestPet
 
         Bus::assertDispatched(PetDeleteJob::class);
 
-    }
+    }*/
 }

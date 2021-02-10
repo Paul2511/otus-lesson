@@ -15,6 +15,7 @@ export const GET_USER_PETS = (userId) => {
 };
 
 export const GET_PETS = '/api/v1/pets';
+export const GET_ALL_PETS = '/api/v1/pets/list';
 export const CREATE_PET = '/api/v1/pets';
 export const DELETE_PET = (petId) => {
     return '/api/v1/pets/'+petId;

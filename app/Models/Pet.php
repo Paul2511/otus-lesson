@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\HasComments;
 use Spatie\ModelStates\HasStates;
 use App\States\Pet\Sex\PetSex;
+use Laravel\Scout\Searchable;
 /**
  * App\Models\Pet
  *
@@ -50,10 +51,7 @@ use App\States\Pet\Sex\PetSex;
  */
 class Pet extends Model
 {
-    use HasFactory;
-    use Rememberable;
-    use HasComments;
-    use HasStates;
+    use HasFactory, Rememberable, HasComments, HasStates, Searchable;
 
     protected $rememberCachePrefix = 'pets';
 
@@ -62,17 +60,17 @@ class Pet extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at'
     ];
 
     protected $casts = [
         'photo' => PhotoCast::class,
-        'sex' => PetSex::class
+        'sex' => PetSex::class,
+        'created_at' => 'datetime:d.m.Y H:i'
     ];
 
     protected $appends = [
-        'petTypeTitle', 'currentSex'
+        'petTypeTitle', 'currentSex', 'canDelete'
     ];
 
     protected $dispatchesEvents = [
@@ -80,6 +78,26 @@ class Pet extends Model
         'deleted'=>PetDeleted::class,
         'created'=>PetCreated::class
     ];
+
+    public function toSearchableArray() : array
+    {
+        $result = [
+            'id' => $this->id,
+            'client_id' => $this->client_id,
+            'name' => $this->name,
+            'sex' => $this->sex
+        ];
+
+        if ($this->petType && $this->petType->title) {
+            $result['petType'] = $this->petType->title;
+        }
+
+        if ($this->bread) {
+            $result['bread'] = $this->bread;
+        }
+
+        return $result;
+    }
 
     public function client()
     {
@@ -105,5 +123,10 @@ class Pet extends Model
             'sex'=>$this->sex->getValue(),
             'label'=>$this->sex->label()
         ];
+    }
+
+    public function getCanDeleteAttribute()
+    {
+        return true;
     }
 }

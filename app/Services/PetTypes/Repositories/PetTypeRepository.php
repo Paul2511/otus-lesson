@@ -31,9 +31,7 @@ abstract class PetTypeRepository
 
     abstract public function update(PetType $petType, array $data): bool;
 
-
     /** @return bool|null */
-    
     abstract public function delete(PetType $petType);
 
     /**

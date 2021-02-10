@@ -136,6 +136,11 @@ const mutations = {
     CLOSE_PET_MODAL(state) {
         state.petModalOpened = undefined;
     },
+
+    CHANGED_PET(state, changedState) {
+        state.changedPet = changedState;
+    },
+
     OPEN_PET_CREATE_MODAL(state) {
         state.petCreateModalOpened = true;
     },
