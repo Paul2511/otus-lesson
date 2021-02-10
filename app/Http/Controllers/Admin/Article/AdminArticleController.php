@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin\Article;
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\Article\Request\AdminArticleStoreRequest;
+use App\Http\Controllers\Admin\Article\Request\AdminUserRequest;
 use App\Models\Article;
+use App\Policies\Permission;
 use App\Services\Articles\ArticleService;
 use App\Services\Articles\Repositories\EloquentArticleRepository;
 use App\Services\Routes\Providers\AdminRoutes;
@@ -12,20 +13,18 @@ use App\Services\Routes\Providers\AdminRoutes;
 
 class AdminArticleController extends AdminController
 {
-    private EloquentArticleRepository $eloquentArticleRepository;
     private ArticleService $articleService;
 
     public function __construct(
-        ArticleService $articleService,
-        EloquentArticleRepository $eloquentArticleRepository
+        ArticleService $articleService
     )
     {
         $this->articleService = $articleService;
-        $this->eloquentArticleRepository = $eloquentArticleRepository;
     }
 
     public function index()
     {
+        $this->authorize(Permission::VIEW_ANY, Article::class);
 
         \View::share([
             'articles' => $this->articleService->searchArticle(self::DEFAULT_MODELS_PER_PAGE)
@@ -37,13 +36,15 @@ class AdminArticleController extends AdminController
 
     public function create()
     {
+        $this->authorize(Permission::CREATE, Article::class);
 
         return view('admin.articles.create');
     }
 
 
-    public function store(AdminArticleStoreRequest $request)
+    public function store(AdminUserRequest $request)
     {
+        $this->authorize(Permission::UPDATE, Article::class);
 
         $this->articleService->createArticle($request->all());
 
@@ -61,14 +62,17 @@ class AdminArticleController extends AdminController
 
     public function edit(Article $article)
     {
+        $this->authorize(Permission::UPDATE, Article::class);
+
         return view(AdminRoutes::ADMIN_ARTICLE_EDIT, [
             'article' => $article
         ]);
     }
 
 
-    public function update(AdminArticleStoreRequest $request,  Article $article)
+    public function update(AdminUserRequest $request, Article $article)
     {
+        $this->authorize(Permission::UPDATE, Article::class);
 
         $this->articleService->updateArticle($article, $request->all());
 
@@ -78,6 +82,8 @@ class AdminArticleController extends AdminController
 
     public function destroy(Article $article)
     {
+        $this->authorize(Permission::DELETE, Article::class);
+
         $this->articleService->deleteArticle($article);
 
         return redirect()->route(AdminRoutes::ADMIN_ARTICLE_INDEX)

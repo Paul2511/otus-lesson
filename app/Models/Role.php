@@ -30,4 +30,6 @@ class Role extends Model
     protected $casts = [
         'permissions' => 'array',
     ];
+
+
 }
