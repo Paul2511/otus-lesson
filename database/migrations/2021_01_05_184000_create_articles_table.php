@@ -19,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->string('slug');
             $table->integer('sort')->default(Article::SORT);
             $table->text('short_description');
             $table->longText('description');

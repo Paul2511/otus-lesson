@@ -23,9 +23,10 @@ class RestaurantFactory extends Factory
     {
 
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->company,
             'rating' => rand(20, 100),
             'sort' => rand(50, 100),
+            'slug' => $this->faker->slug,
             'description' => $this->faker->realText(100, 3),
             'meta_title' => $this->faker->name,
             'meta_description' => $this->faker->realText(100, 3),

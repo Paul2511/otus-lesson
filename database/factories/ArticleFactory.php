@@ -23,6 +23,7 @@ class ArticleFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'slug' => $this->faker->slug,
             'sort' => Article::SORT,
             'short_description' => $this->faker->realText(100, 3),
             'description' => $this->faker->paragraph,

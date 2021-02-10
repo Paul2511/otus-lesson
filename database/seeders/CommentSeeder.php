@@ -17,6 +17,6 @@ class CommentSeeder extends Seeder
      */
     public function run(Comment $model)
     {
-        $model::factory(50)->create();
+        $model::factory(150)->create();
     }
 }
