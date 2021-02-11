@@ -13,7 +13,9 @@ final class RoutesProvider {
 	
 	public function register(){
 		Route::group([
-			'middleware'=> 'auth',
+			'middleware'=> ['auth', 'setlocale'],
+                        'prefix' => '{locale}',
+                        'where' => ['locale' => '[a-zA-Z]{2}']
 		], function(){
                     Route::resource('promotions', PromotionsController::class);
                     Route::resource('categories', CategoriesController::class);
