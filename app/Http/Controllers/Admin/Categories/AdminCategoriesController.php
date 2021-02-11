@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\AdminCategoriesUpdateRequest;
 use Illuminate\Support\Facades\View;
 use App\Services\Categories\CategoriesService;
 use App\Services\Routes\Providers\Admin\AdminRoutes;
+use App\Services\Errors\ErrorsService;
 
 class AdminCategoriesController extends AdminBaseController
 {
@@ -19,15 +20,20 @@ class AdminCategoriesController extends AdminBaseController
      */
     
     private CategoriesService $categoriesService;
+    private ErrorsService $log;
     
     public function __construct(
-            CategoriesService $categoriesService
+            CategoriesService $categoriesService,
+            ErrorsService $errorService
             ){
         $this->categoriesService = $categoriesService;
+        $this->log = $errorService;
     }
     public function index()
     {
         $categories = $this->categoriesService->getRootCategory();
+        
+        $this->log->writeLog($categories);
         view::share([
             'categories' => $categories,
         ]);
