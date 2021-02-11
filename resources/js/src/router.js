@@ -52,7 +52,7 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/cabinet/pets',
+                    path: '/cabinet/my-pets',
                     name: 'myPets',
                     component: () => import('./views/cabinet/pets/Pets.vue'),
                     meta: {
@@ -60,7 +60,7 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/cabinet/admin/users',
+                    path: '/cabinet/users',
                     name: 'users',
                     component: () => import('./views/cabinet/admin/users/users.vue'),
                     meta: {
@@ -68,7 +68,7 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/cabinet/admin/pets',
+                    path: '/cabinet/pets',
                     name: 'pets',
                     component: () => import('./views/cabinet/admin/pets/pets.vue'),
                     meta: {
@@ -93,7 +93,6 @@ const router = new Router({
                 },
             ],
         },
-        
         // =============================================================================
         // FULL PAGE LAYOUTS
         // =============================================================================

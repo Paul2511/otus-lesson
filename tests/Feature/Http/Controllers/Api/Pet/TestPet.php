@@ -13,24 +13,5 @@ use Tests\Generators\PetGenerator;
 use App\Services\Pets\Repositories\PetRepository;
 class TestPet extends TestCase
 {
-    use AuthAttach;
 
-    /**
-     * @param int|null $count
-     * @param array|null $data
-     * @return Pet|Pet[]|Collection
-     */
-    protected function generatePet(?int $count = 1, ?array $data = [])
-    {
-        $this->seedPetTypes();
-
-        if (!count($data) || !isset($data['client_id'])) {
-            $clientId = $this->currentUser()->client->id;
-            $data = array_merge($data, [
-                'client_id' => $clientId
-            ]);
-        }
-
-        return PetGenerator::generate($count, $data);
-    }
 }

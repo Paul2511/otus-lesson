@@ -50,9 +50,15 @@ class PetTypeService
     /**
      * @return PetType[]|array|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|mixed
      */
-    public function getAll(?int $perPage = null)
+    public function getAll(?int $perPage = null, ?bool $withRequest = false)
     {
-        $result = $perPage ? $this->repository->paginate($perPage) : $this->repository->get();
+        $repository = $this->repository;
+
+        if ($withRequest) {
+            $repository = $repository->withRequest();
+        }
+
+        $result = $perPage ? $repository->paginate($perPage) : $repository->get();
         return $result ?? [];
     }
 

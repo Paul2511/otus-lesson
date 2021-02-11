@@ -32,7 +32,7 @@ class PetTypeController extends Controller
     {
         $perPage = $request->get('per_page', self::RESULTS_PER_PAGE);
 
-        $petTypes = $this->petTypeService->getAll($perPage);
+        $petTypes = $this->petTypeService->getAll($perPage, true);
 
         return new PetTypeCollection($petTypes);
     }

@@ -14,6 +14,32 @@
             </div>
 
             <div v-else>
+                <b-row class="align-items-center">
+                    <b-col cols="12" xl="4" sm="6" xs="12" class="mb-5">
+                        <div class="img-container">
+                            <img class="img-thumbnail" :src="pet.photo.src"/>
+                        </div>
+                    </b-col>
+                    <b-col cols="12" xl="8" sm="6" xs="12" class="mb-5" v-if="edit">
+                        <input type="file" class="hidden" ref="update_photo_input" @change="uploadPhoto" accept="image/*">
+
+                        <vs-button
+                                id="button-upload-photo"
+                                class="mr-4 mb-2"
+                                @click="$refs.update_photo_input.click()"
+                                :disabled="uploading"
+                        >
+                            {{ changePhotoLabel }}
+                        </vs-button>
+
+                        <vs-button v-if="showPhotoDelete" @click="deletePhoto" type="border" color="danger">
+                            {{ $t('pet.deletePhoto') }}
+                        </vs-button>
+
+                        <p class="text-danger text-xs" v-show="!!errors.file">{{ errors.file | arr2str }}</p>
+                    </b-col>
+                </b-row>
+
                 <b-row>
                     <b-col cols="12" xl="6">
                         <table class="mt-2 mt-xl-0 w-100">
@@ -96,7 +122,8 @@
                 active: false,
                 edit: false,
                 errors: [],
-                oldPet: {}
+                oldPet: {},
+                uploading: false
             }
         },
         mounted() {
@@ -178,7 +205,47 @@
                             color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
                     })
                     .finally(() => (this.$vs.loading.close()));
-            }
+            },
+            uploadPhoto () {
+                this.uploading = true;
+
+                if (!!this.errors.file) {
+                    this.errors.file = null;
+                }
+
+                this.$vs.loading({
+                    container: "#button-upload-photo",
+                    scale: 0.45
+                });
+
+                let formData = new FormData();
+
+                let image = this.$refs.update_photo_input.files[0];
+                formData.append('image', image);
+                formData.append('uploadPath', 'pet.photo');
+                formData.append('id', this.pet.id);
+
+                this.$store.dispatch('uploadImage', formData)
+                    .then(res => {
+                        if (res.data.data) {
+                            this.pet.photo = res.data.data;
+                        }
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors ? err.response.data.errors : [];
+                        this.$vs.notify({
+                            title: this.$t('Error'),
+                            text: err.response.data.message || this.$t('ErrorResponse'),
+                            color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
+                    })
+                    .finally(() => {
+                        this.uploading = false;
+                        this.$vs.loading.close("#button-upload-photo > .con-vs-loading");
+                    });
+            },
+            deletePhoto() {
+                this.pet.photo = this.defaultPhoto;
+            },
         },
         computed: {
             modalData() {
@@ -204,10 +271,28 @@
             },
             petSexes() {
                 return this.params.petSexes;
+            },
+            changePhotoLabel() {
+                const photo = this.pet.photo;
+                if (!photo.type || photo.type === 'default') {
+                    return this.$t('pet.uploadPhoto');
+                }
+                return this.$t('pet.changePhoto');
+            },
+            showPhotoDelete() {
+                const photo = this.pet.photo;
+                if (!!photo.type && photo.type === 'default') {
+                    return false;
+                }
+                return true;
+            },
+            defaultPhoto() {
+                return this.pet.defaultPhotos.find(p=>p.petType===this.pet.pet_type_id);
             }
         },
     }
 </script>
+
 <style lang="scss" scoped>
     #photo-col {
         width: 10rem;

@@ -148,18 +148,6 @@
                 this.$emit('cancel');
             },
             save() {
-                /*if (this.userData.name) {
-                    const allowedNameFields = ['lastName', 'firstName', 'middleName'];
-                    const name = Object.keys(this.userData.name)
-                        .filter(key => allowedNameFields.includes(key))
-                        .reduce((obj, key) => {
-                            obj[key] = this.userData.name[key];
-                            return obj;
-                        }, {});
-                    Vue.set(this.userData, 'name', name);
-                }*/
-
-
                 this.$vs.loading();
 
                 this.$store.dispatch('updateUser', {userId: this.user.id, data: this.userData})
@@ -195,7 +183,7 @@
                 let image = this.$refs.update_avatar_input.files[0];
                 formData.append('image', image);
                 formData.append('uploadPath', 'user.avatar');
-                formData.append('userId', this.user.id);
+                formData.append('id', this.user.id);
                 this.$store.dispatch('uploadImage', formData)
                     .then(res => {
                         if (res.data.data) {

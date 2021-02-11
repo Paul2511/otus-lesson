@@ -47,21 +47,7 @@ abstract class PetRepository
 
         $this->tag = \Str::plural(class_basename(Pet::class));
 
-        $search = $request->get('query', null);
-
-        if ($search) {
-            $this->query = Pet::search($search);
-            $this->isSearch = true;
-        } else {
-            $this->query = Pet::query();
-        }
-
-        $filters = $request->get('filter');
-        if ($filters && count($filters) && !$search) {
-            $this->query->where($filters);
-        }
-
-        $this->setOrder();
+        $this->query = Pet::query();
     }
 
     protected function setOrder(): void
@@ -81,5 +67,25 @@ abstract class PetRepository
         return $this;
     }
 
+    public function withRequest(): self
+    {
+        $search = $this->request->get('query', null);
+
+        if ($search) {
+            $this->query = Pet::search($search);
+            $this->isSearch = true;
+        }
+
+        $filters = $this->request->get('filter');
+
+
+        if ($filters && count($filters) && !$search) {
+            $this->query->where($filters);
+        }
+
+        $this->setOrder();
+
+        return $this;
+    }
 
 }

@@ -10,6 +10,7 @@ class ImageData extends FileData
     public ?int $width;
     public ?int $height;
 
+    protected bool $ignoreMissing = true;
 
     public static function fromArray(array $data): self
     {

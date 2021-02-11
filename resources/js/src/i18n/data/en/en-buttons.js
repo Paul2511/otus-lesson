@@ -1,6 +1,7 @@
 export default
 {
     edit: 'Edit',
+    view: 'View',
     save: 'Save',
     cancel: 'Cancel',
     delete: 'Delete',

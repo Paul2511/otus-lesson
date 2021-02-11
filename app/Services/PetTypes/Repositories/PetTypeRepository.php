@@ -6,15 +6,8 @@ namespace App\Services\PetTypes\Repositories;
 use App\Http\Requests\ApiGetRequest;
 use App\Models\PetType;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-
 abstract class PetTypeRepository
 {
-    /**
-     * @var Request
-     */
-    protected $request;
-
     abstract public function findById(int $id): PetType;
 
     /**
@@ -35,6 +28,11 @@ abstract class PetTypeRepository
     abstract public function delete(PetType $petType);
 
     /**
+     * @var ApiGetRequest
+     */
+    protected $request;
+
+    /**
      * @var PetType|\Illuminate\Database\Eloquent\Builder
      */
     protected $query;
@@ -46,21 +44,25 @@ abstract class PetTypeRepository
     public function __construct(ApiGetRequest $request)
     {
         $this->request = $request;
-
         $this->tag = \Str::plural(class_basename(PetType::class));
 
-        $search = $request->get('query', null);
+        $this->query = PetType::query();
+    }
+
+    public function withRequest(): self
+    {
+        $search = $this->request->get('query', null);
 
         if ($search) {
             $this->query = PetType::search($search);
             $this->isSearch = true;
-        } else {
-            $this->query = PetType::query();
         }
 
-        $order = $request->get('sort', 'id');
-        $direction = $request->get('direction', 'asc');
+        $order = $this->request->get('sort', 'id');
+        $direction = $this->request->get('direction', 'asc');
 
         $this->query->orderBy($order, $direction);
+
+        return $this;
     }
 }

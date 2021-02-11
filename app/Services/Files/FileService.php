@@ -41,7 +41,7 @@ class FileService
     public function uploadImage(UploadImageData $uploadData): ImageData
     {
         $uploadPath = str_replace('.', '/', $uploadData->uploadPath);
-        $filePath = $uploadPath . '/' . $uploadData->user;
+        $filePath = $uploadPath . '/' . $uploadData->id;
 
         $file = $uploadData->file;
         $path = $file->store($filePath, $uploadData->disk);

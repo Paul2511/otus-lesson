@@ -104,7 +104,10 @@
                                 <vs-dropdown vs-trigger-click>
                                     <vs-button radius color="primary" type="flat" icon-pack="feather" icon="icon-more-vertical"></vs-button>
                                     <vs-dropdown-menu>
-                                        <vs-dropdown-item @click="edit(data[indextr])">
+                                        <vs-dropdown-item @click="view(data[indextr], false)">
+                                            {{ $t('buttons.view') }}
+                                        </vs-dropdown-item>
+                                        <vs-dropdown-item @click="view(data[indextr], true)">
                                             {{ $t('buttons.edit') }}
                                         </vs-dropdown-item>
                                         <vs-dropdown-item :disabled="!data[indextr].canDelete" @click="del(data[indextr])">
@@ -252,8 +255,8 @@
                     })
                     .finally(() => (this.$vs.loading.close()));
             },
-            edit(item) {
-                this.$store.dispatch('openPetModal', {petId: item.id, isEdit: true, modalAction: 'changed'});
+            view(item, isEdit) {
+                this.$store.dispatch('openPetModal', {petId: item.id, isEdit: isEdit, modalAction: 'changed'});
             }
         },
 

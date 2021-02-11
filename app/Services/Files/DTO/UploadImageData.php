@@ -13,7 +13,7 @@ class UploadImageData extends DataTransferObject
 
     public string $uploadPath;
 
-    public string $user;
+    public string $id;
 
     public string $disk;
 
@@ -22,7 +22,7 @@ class UploadImageData extends DataTransferObject
         return new self([
             'file'=>$request->file('image'),
             'uploadPath'=>$request->get('uploadPath', UploadHelper::DEFAULT_UPLOAD_PATH),
-            'user'=>(string)$request->get('userId', UploadHelper::DEFAULT_UPLOAD_USER),
+            'id'=>(string)$request->get('id', UploadHelper::DEFAULT_UPLOAD_ID),
             'disk'=>$request->get('disk', config('filesystems.default')),
         ]);
     }

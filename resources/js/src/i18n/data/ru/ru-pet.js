@@ -11,5 +11,8 @@ export default
     type: 'Тип питомца',
     sex: 'Пол',
     bread: 'Порода',
-    newPet: 'Новый питомец'
+    newPet: 'Новый питомец',
+    uploadPhoto: 'Загрузить фото',
+    changePhoto: 'Сменить фото',
+    deletePhoto: 'Удалить фото'
 }

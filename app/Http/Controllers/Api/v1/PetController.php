@@ -60,9 +60,8 @@ class PetController extends Controller
 
         $perPage = $request->get('per_page', self::RESULTS_PER_PAGE);
 
-        $pets = $this->petService->getPets(null, $perPage);
+        $pets = $this->petService->getPets(null, $perPage, true);
 
-        //return PetResource::collection($pets);
         return new PetCollection($pets);
     }
 

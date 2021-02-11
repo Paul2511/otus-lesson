@@ -4,9 +4,17 @@
 namespace App\Services\Files\Helpers;
 
 
+use App\Models\PetType;
+use App\Services\PetTypes\PetTypeService;
+
 class SrcHelper
 {
     const NO_AVATAR_SRC = '/images/no-avatar.jpg';
+
+    private function getPetTypeService():PetTypeService
+    {
+        return app(PetTypeService::class);
+    }
 
     public static function getUserDefaultAvatar(): array
     {
@@ -22,7 +30,28 @@ class SrcHelper
     {
         return [
             'src' => "/images/{$type}-photo.jpg",
-            'type'=>UploadHelper::TYPE_DEFAULT
+            'thumb_src'=>"/images/{$type}-photo.jpg",
+            'type'=>UploadHelper::TYPE_DEFAULT,
         ];
+    }
+
+    public function getAllPetDefaultPhoto(): array
+    {
+        $result = [];
+
+        $this->getPetTypeService()->getAll()->each(function (PetType $petType) use (&$result) {
+            $default = self::getPetDefaultPhoto($petType->slug);
+            $src = $default['src'];
+
+            try {
+                file_get_contents(public_path().$src);
+            } catch (\Exception $e) {
+                $default['src'] = '/images/unknown-photo.jpg';
+            }
+            $default['petType'] = $petType->id;
+            $result[] = $default;
+        });
+
+        return $result;
     }
 }

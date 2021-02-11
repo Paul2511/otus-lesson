@@ -1,6 +1,7 @@
 export default
 {
     edit: 'Редактировать',
+    view: 'Просмотр',
     save: 'Сохранить',
     cancel: 'Отмена',
     delete: 'Удалить',

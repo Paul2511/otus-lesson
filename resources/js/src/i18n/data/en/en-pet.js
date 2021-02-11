@@ -11,5 +11,8 @@ export default
     type: 'Type',
     sex: 'Sex',
     bread: 'Bread',
-    newPet: 'New pet'
+    newPet: 'New pet',
+    uploadPhoto: 'Upload photo',
+    changePhoto: 'Change photo',
+    deletePhoto: 'Delete photo'
 }

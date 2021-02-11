@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition()
     {
         //Предустанавливаем всем фейковым пользователям один пароль
-        $password = env('USER_TEST_PASSWORD');
+        $password = env('USER_TEST_PASSWORD', '12345');
         $hash = Hash::make($password);
 
         $sex = $this->faker->randomElement(['male', 'female']);

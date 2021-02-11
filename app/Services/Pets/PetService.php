@@ -45,10 +45,13 @@ class PetService
      * @return Pet[]|array|\Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|mixed
      * @throws ClientNotFoundException
      */
-    public function getPets(?User $user = null, ?int $perPage = null)
+    public function getPets(?User $user = null, ?int $perPage = null, ?bool $withRequest = false)
     {
         $repository = $this->repository;
 
+        if ($withRequest) {
+            $repository = $repository->withRequest();
+        }
 
         $clientId = null;
 
@@ -61,6 +64,7 @@ class PetService
         }
 
         $result = $perPage ? $repository->paginate($perPage) : $repository->get();
+
         return $result ?? [];
     }
 

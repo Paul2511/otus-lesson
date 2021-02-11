@@ -41,6 +41,9 @@ class CachePetRepository extends PetRepository
     public function paginate(int $perPage)
     {
         $query = $this->query;
+
+        //dd('ok1');
+
         if ($this->isSearch) {
             return $query->paginate($perPage);
         }
