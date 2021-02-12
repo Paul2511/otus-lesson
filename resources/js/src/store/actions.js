@@ -246,6 +246,37 @@ const actions = {
     },
 
     // /////////////////////////////////////////////
+    // Comments
+    // /////////////////////////////////////////////
+    createComment({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.CREATE_COMMENT, data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    updateComment({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.put(requests.UPDATE_COMMENT(data.id), data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    deleteComment({ commit }, id) {
+        return new Promise((resolve, reject) => {
+            axios.delete(requests.DELETE_COMMENT(id))
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+
+    // /////////////////////////////////////////////
     // Files
     // /////////////////////////////////////////////
     //Загрузка одного изображения

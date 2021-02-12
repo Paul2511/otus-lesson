@@ -3,6 +3,7 @@
 
 namespace App\Http\Resources\Pet;
 
+use App\Http\Resources\Comment\CommentResource;
 use App\Models\Pet;
 use App\Http\Resources\BaseResource;
 use App\Models\User;
@@ -31,6 +32,7 @@ class PetResource extends BaseResource
         $my = auth()->user();
         if ($my->canManage) {
             $result['clientName'] = $this->client->user->name->displayName;
+            $result['comments'] = CommentResource::collection($this->comments);
         }
 
         $defaultPhotos = $this->getSrcHelper()->getAllPetDefaultPhoto();

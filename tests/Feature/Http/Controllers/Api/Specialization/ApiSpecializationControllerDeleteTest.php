@@ -70,7 +70,7 @@ class ApiSpecializationControllerDeleteTest extends TestCase
      * @group specialization
      * @group specializationDelete
      */
-    public function testSpecializationTypeNotFound404()
+    public function testSpecializationNotFound404()
     {
         $admin = $this->createUser(AdminUserRole::class);
 

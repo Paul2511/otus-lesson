@@ -45,4 +45,12 @@ export const DELETE_SPECIALIZATION = (id) => {
     return '/api/v1/specializations/'+id;
 };
 
+export const CREATE_COMMENT = '/api/v1/comments';
+export const UPDATE_COMMENT = (id) => {
+    return '/api/v1/comments/'+id;
+};
+export const DELETE_COMMENT = (id) => {
+    return '/api/v1/comments/'+id;
+};
+
 export const UPLOAD_IMAGE = '/api/v1/files/upload-image';

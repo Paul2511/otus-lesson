@@ -14,87 +14,99 @@
             </div>
 
             <div v-else>
-                <b-row class="align-items-center">
-                    <b-col cols="12" xl="4" sm="6" xs="12" class="mb-5">
-                        <div class="img-container">
-                            <img class="img-thumbnail" :src="pet.photo.src"/>
+
+                <vs-tabs>
+                    <vs-tab :label="$t('info')" icon-pack="feather" icon="icon-info" @click="changeActiveTab('info')">
+                        <div class="tab-text mt-5">
+                            <b-row class="align-items-center">
+                                <b-col cols="12" xl="4" sm="6" xs="12" class="mb-5">
+                                    <div class="img-container">
+                                        <img class="img-thumbnail" :src="pet.photo.src"/>
+                                    </div>
+                                </b-col>
+                                <b-col cols="12" xl="8" sm="6" xs="12" class="mb-5" v-if="edit">
+                                    <input type="file" class="hidden" ref="update_photo_input" @change="uploadPhoto" accept="image/*">
+
+                                    <vs-button
+                                            id="button-upload-photo"
+                                            class="mr-4 mb-2"
+                                            @click="$refs.update_photo_input.click()"
+                                            :disabled="uploading"
+                                    >
+                                        {{ changePhotoLabel }}
+                                    </vs-button>
+
+                                    <vs-button v-if="showPhotoDelete" @click="deletePhoto" type="border" color="danger">
+                                        {{ $t('pet.deletePhoto') }}
+                                    </vs-button>
+
+                                    <p class="text-danger text-xs" v-show="!!errors.file">{{ errors.file | arr2str }}</p>
+                                </b-col>
+                            </b-row>
+
+                            <b-row>
+                                <b-col cols="12" xl="6">
+                                    <table class="mt-2 mt-xl-0 w-100">
+                                        <tr>
+                                            <td class="font-semibold">{{ $t('pet.name') }}:</td>
+                                            <td v-if="!edit">{{ pet.name }}</td>
+                                            <td v-else class="mb-3">
+                                                <vs-input v-model="pet.name" :danger="!!errors.name" val-icon-danger="icon-x" val-icon-pack="feather" />
+                                                <div class="text-danger text-xs" v-show="!!errors.name">{{ errors.name | arr2str }}</div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="font-semibold">{{ $t('pet.type') }}:</td>
+                                            <td v-if="!edit">{{ pet.petTypeTitle }}</td>
+                                            <td v-else class="mb-3">
+                                                <vs-select v-model="pet.pet_type_id" class="w-full" :danger="!!errors.pet_type_id" val-icon-danger="icon-x" val-icon-pack="feather">
+                                                    <vs-select-item :key="petType.id" :value="petType.id" :text="petType.title" v-for="petType in petTypes" class="w-full" />
+                                                </vs-select>
+                                                <div class="text-danger text-xs" v-show="!!errors.pet_type_id">{{ errors.pet_type_id | arr2str }}</div>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </b-col>
+                                <b-col cols="12" xl="6">
+                                    <table class="mt-2 mt-xl-0 w-100">
+                                        <tr>
+                                            <td class="font-semibold">{{ $t('pet.sex') }}:</td>
+                                            <td v-if="!edit">{{ pet.currentSex.label }}</td>
+                                            <td v-else class="mb-3">
+                                                <vs-select v-model="pet.sex" class="w-full" :danger="!!errors.sex" val-icon-danger="icon-x" val-icon-pack="feather">
+                                                    <vs-select-item :key="index" :value="index" :text="item" v-for="(item,index) in petSexes" class="w-full" />
+                                                </vs-select>
+                                                <div class="text-danger text-xs" v-show="!!errors.sex">{{ errors.sex | arr2str }}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-semibold">{{ $t('pet.bread') }}:</td>
+                                            <td v-if="!edit">{{ pet.bread }}</td>
+                                            <td v-else>
+                                                <vs-input v-model="pet.bread" :danger="!!errors.bread" val-icon-danger="icon-x" val-icon-pack="feather" />
+                                                <div class="text-danger text-xs" v-show="!!errors.bread">{{ errors.bread | arr2str }}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </b-col>
+                            </b-row>
                         </div>
-                    </b-col>
-                    <b-col cols="12" xl="8" sm="6" xs="12" class="mb-5" v-if="edit">
-                        <input type="file" class="hidden" ref="update_photo_input" @change="uploadPhoto" accept="image/*">
-
-                        <vs-button
-                                id="button-upload-photo"
-                                class="mr-4 mb-2"
-                                @click="$refs.update_photo_input.click()"
-                                :disabled="uploading"
-                        >
-                            {{ changePhotoLabel }}
-                        </vs-button>
-
-                        <vs-button v-if="showPhotoDelete" @click="deletePhoto" type="border" color="danger">
-                            {{ $t('pet.deletePhoto') }}
-                        </vs-button>
-
-                        <p class="text-danger text-xs" v-show="!!errors.file">{{ errors.file | arr2str }}</p>
-                    </b-col>
-                </b-row>
-
-                <b-row>
-                    <b-col cols="12" xl="6">
-                        <table class="mt-2 mt-xl-0 w-100">
-                            <tr>
-                                <td class="font-semibold">{{ $t('pet.name') }}:</td>
-                                <td v-if="!edit">{{ pet.name }}</td>
-                                <td v-else class="mb-3">
-                                    <vs-input v-model="pet.name" :danger="!!errors.name" val-icon-danger="icon-x" val-icon-pack="feather" />
-                                    <div class="text-danger text-xs" v-show="!!errors.name">{{ errors.name | arr2str }}</div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="font-semibold">{{ $t('pet.type') }}:</td>
-                                <td v-if="!edit">{{ pet.petTypeTitle }}</td>
-                                <td v-else class="mb-3">
-                                    <vs-select v-model="pet.pet_type_id" class="w-full" :danger="!!errors.pet_type_id" val-icon-danger="icon-x" val-icon-pack="feather">
-                                        <vs-select-item :key="petType.id" :value="petType.id" :text="petType.title" v-for="petType in petTypes" class="w-full" />
-                                    </vs-select>
-                                    <div class="text-danger text-xs" v-show="!!errors.pet_type_id">{{ errors.pet_type_id | arr2str }}</div>
-                                </td>
-                            </tr>
-
-                        </table>
-                    </b-col>
-                    <b-col cols="12" xl="6">
-                        <table class="mt-2 mt-xl-0 w-100">
-                            <tr>
-                                <td class="font-semibold">{{ $t('pet.sex') }}:</td>
-                                <td v-if="!edit">{{ pet.currentSex.label }}</td>
-                                <td v-else class="mb-3">
-                                    <vs-select v-model="pet.sex" class="w-full" :danger="!!errors.sex" val-icon-danger="icon-x" val-icon-pack="feather">
-                                        <vs-select-item :key="index" :value="index" :text="item" v-for="(item,index) in petSexes" class="w-full" />
-                                    </vs-select>
-                                    <div class="text-danger text-xs" v-show="!!errors.sex">{{ errors.sex | arr2str }}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="font-semibold">{{ $t('pet.bread') }}:</td>
-                                <td v-if="!edit">{{ pet.bread }}</td>
-                                <td v-else>
-                                    <vs-input v-model="pet.bread" :danger="!!errors.bread" val-icon-danger="icon-x" val-icon-pack="feather" />
-                                    <div class="text-danger text-xs" v-show="!!errors.bread">{{ errors.bread | arr2str }}</div>
-                                </td>
-                            </tr>
-                        </table>
-                    </b-col>
-                </b-row>
+                    </vs-tab>
+                    <vs-tab v-if="$acl.check('canAdmin')" :label="$t('comments') + ' (' + pet.comments.length + ')'" icon-pack="feather" icon="icon-message-square" @click="changeActiveTab('comments')">
+                        <div class="tab-text">
+                            <comments type="pet" :items="pet.comments" :row-id="pet.id"></comments>
+                        </div>
+                    </vs-tab>
+                </vs-tabs>
             </div>
             <template #modal-footer>
                 <template v-if="edit">
                     <b-button variant="outline-secondary" @click="close()">
                         {{ $t('buttons.cancel') }}
                     </b-button>
-                    <b-button variant="success" @click="save">
+                    <b-button v-if="activeTab === 'info'" variant="success" @click="save">
                         {{ $t('buttons.save') }}
                     </b-button>
                 </template>
@@ -102,7 +114,7 @@
                     <b-button variant="outline-secondary" @click="close()">
                         {{ $t('buttons.close') }}
                     </b-button>
-                    <b-button variant="info" @click="edit = true">
+                    <b-button v-if="activeTab === 'info'" variant="info" @click="edit = true">
                         {{ $t('buttons.edit') }}
                     </b-button>
                 </template>
@@ -113,8 +125,9 @@
 
 <script>
     import { BModal, BSpinner, BCard, BRow, BCol, BButton } from 'bootstrap-vue'
+    import comments from '../comments/comments.vue'
     export default {
-        components: {BModal, BSpinner, BCard, BRow, BCol, BButton},
+        components: {BModal, BSpinner, BCard, BRow, BCol, BButton, comments},
         data() {
             return {
                 isLoading: true,
@@ -123,7 +136,8 @@
                 edit: false,
                 errors: [],
                 oldPet: {},
-                uploading: false
+                uploading: false,
+                activeTab: 'info'
             }
         },
         mounted() {
@@ -246,6 +260,9 @@
             deletePhoto() {
                 this.pet.photo = this.defaultPhoto;
             },
+            changeActiveTab(tab) {
+                this.activeTab = tab;
+            }
         },
         computed: {
             modalData() {

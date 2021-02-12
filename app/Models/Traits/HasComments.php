@@ -11,8 +11,8 @@ trait HasComments
 {
     public function comments()
     {
-        $modelName = strtolower(class_basename(self::class));
+        $modelName = lcfirst(class_basename(self::class));
         /** @var $this Model */
-        return $this->hasMany(Comment::class, 'row_id')->where('type', $modelName);
+        return $this->hasMany(Comment::class, 'row_id')->where('type', $modelName)->orderBy('created_at');
     }
 }

@@ -48,6 +48,7 @@ use Laravel\Scout\Searchable;
  *
  * @property-read Collection|Client $client
  * @property-read Collection|PetType $petType
+ * @property-read Collection|Comment[] $comments
  */
 class Pet extends Model
 {

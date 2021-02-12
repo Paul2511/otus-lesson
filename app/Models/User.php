@@ -43,6 +43,7 @@ use App\States\User\Role\UserRole;
  * @property string|null $phone
  * @property string $locale
  * @property ImageData|null $avatar
+ * @property string $timezone
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens

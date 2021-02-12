@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\Comments\Repositories\CacheCommentRepository;
+use App\Services\Comments\Repositories\CommentRepository;
+use App\Services\Comments\Repositories\EloquentCommentRepository;
 use App\Services\PetTypes\Repositories\CachePetTypeRepository;
 use App\Services\PetTypes\Repositories\EloquentPetTypeRepository;
 use App\Services\PetTypes\Repositories\PetTypeRepository;
@@ -25,14 +28,17 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
-        if (!CacheHelper::isCacheEnabled()) {
+        if (CacheHelper::isCacheEnabled()) {
             $this->app->bind(PetRepository::class, CachePetRepository::class);
             $this->app->bind(PetTypeRepository::class, CachePetTypeRepository::class);
             $this->app->bind(SpecializationRepository::class, CacheSpecializationRepository::class);
+            $this->app->bind(CommentRepository::class, CacheCommentRepository::class);
+
         } else {
             $this->app->bind(PetRepository::class, EloquentPetRepository::class);
             $this->app->bind(PetTypeRepository::class, EloquentPetTypeRepository::class);
             $this->app->bind(SpecializationRepository::class, EloquentSpecializationRepository::class);
+            $this->app->bind(CommentRepository::class, EloquentCommentRepository::class);
         }
     }
 

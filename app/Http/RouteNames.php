@@ -35,6 +35,10 @@ class RouteNames
     const V1_UPDATE_SPECIALIZATION = 'updateSpecialization';
     const V1_DELETE_SPECIALIZATION = 'deleteSpecialization';
 
+    const V1_CREATE_COMMENT = 'createComment';
+    const V1_UPDATE_COMMENT = 'updateComment';
+    const V1_DELETE_COMMENT = 'deleteComment';
+
     const V1_UPLOAD_IMAGE = 'uploadImage';
 
     public static $notFound = [
@@ -50,6 +54,8 @@ class RouteNames
         self::V1_GET_SPECIALIZATION => 'specialization',
         self::V1_UPDATE_SPECIALIZATION => 'specialization',
         self::V1_DELETE_SPECIALIZATION => 'specialization',
+        self::V1_UPDATE_COMMENT => 'comment',
+        self::V1_DELETE_COMMENT => 'comment',
     ];
 
 }

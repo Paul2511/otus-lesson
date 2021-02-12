@@ -10,6 +10,8 @@ use App\Policies\PetTypePolicy;
 use App\Models\User;
 use App\Policies\SpecializationPolicy;
 use App\Policies\UserPolicy;
+use App\Models\Comment;
+use App\Policies\CommentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -23,7 +25,8 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Pet::class => PetPolicy::class,
         PetType::class => PetTypePolicy::class,
-        Specialization::class => SpecializationPolicy::class
+        Specialization::class => SpecializationPolicy::class,
+        Comment::class => CommentPolicy::class
     ];
 
     /**

@@ -5,6 +5,7 @@ import ruUser from './data/ru/ru-user';
 import ruPet from './data/ru/ru-pet';
 import ruPetType from './data/ru/ru-pet-type';
 import ruSpecialization from './data/ru/ru-specialization';
+import ruComment from './data/ru/ru-comment';
 
 import enMain from './data/en/en-main';
 import enButtons from './data/en/en-buttons';
@@ -13,6 +14,7 @@ import enUser from './data/en/en-user';
 import enPet from './data/en/en-pet';
 import enPetType from './data/en/en-pet-type';
 import enSpecialization from './data/en/en-specialization';
+import enComment from './data/en/en-comment';
 
 export default {
     en: {
@@ -163,6 +165,7 @@ export default {
         pet: enPet,
         petType: enPetType,
         specialization: enSpecialization,
+        comment: enComment,
         References: 'References',
         PetTypes: 'Pet types',
         Pets: 'Pets',
@@ -170,7 +173,9 @@ export default {
         Specializations: 'Specializations',
         noData: 'No data available',
         slug: 'Key',
-        value: 'Value'
+        value: 'Value',
+        info: 'Info',
+        comments: 'Comments'
     },
     ru: {
         Dashboard: 'Рабочий стол',
@@ -202,6 +207,7 @@ export default {
         pet: ruPet,
         petType: ruPetType,
         specialization: ruSpecialization,
+        comment: ruComment,
         References: 'Справочники',
         PetTypes: 'Типы питомцев',
         Pets: 'Питомцы',
@@ -209,6 +215,8 @@ export default {
         Specializations: 'Специализации',
         noData: 'Записей не найдено',
         slug: 'Ключ',
-        value: 'Значение'
+        value: 'Значение',
+        info: 'Информация',
+        comments: 'Комментарии'
     }
 }

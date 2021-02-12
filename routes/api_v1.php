@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\FileController;
 use App\Http\Controllers\Api\v1\PetTypeController;
 use App\Http\Controllers\Api\v1\SpecializationController;
+use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\RouteNames;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
@@ -54,6 +55,14 @@ Route::group([
     Route::post('/', [SpecializationController::class, 'store'])->name(RouteNames::V1_CREATE_SPECIALIZATION);
     Route::put('/{specialization}', [SpecializationController::class, 'update'])->name(RouteNames::V1_UPDATE_SPECIALIZATION);
     Route::delete('/{specialization}', [SpecializationController::class, 'destroy'])->name(RouteNames::V1_DELETE_SPECIALIZATION);
+});
+
+Route::group([
+    'prefix' => 'comments',
+], function () {
+    Route::post('/', [CommentController::class, 'store'])->name(RouteNames::V1_CREATE_COMMENT);
+    Route::put('/{comment}', [CommentController::class, 'update'])->name(RouteNames::V1_UPDATE_COMMENT);
+    Route::delete('/{comment}', [CommentController::class, 'destroy'])->name(RouteNames::V1_DELETE_COMMENT);
 });
 
 Route::group([

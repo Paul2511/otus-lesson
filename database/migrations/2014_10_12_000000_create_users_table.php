@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('phone', 15)->nullable();
             $table->string('locale', 4)->default(Locale::LOCALE_RU);
             $table->json('avatar')->nullable();
+            $table->string('timezone')->default('Europe/Moscow');
         });
     }
 

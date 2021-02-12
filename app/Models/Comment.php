@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\UserTimezoneTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Watson\Rememberable\Rememberable;
+
 /**
  * App\Models\Comment
  *
@@ -32,16 +36,30 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory, UserTimezoneTrait, Rememberable;
 
+    protected $rememberCachePrefix = 'comments';
 
     protected $fillable = [
-        'type', 'body'
+        'type', 'body', 'row_id', 'user_id'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime:d.m.Y H:i'
+    ];
+
+    protected $appends = [
+        'formatCreatedAt'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getFormatCreatedAtAttribute(): string
+    {
+        return $this->created_at ? $this->asDateTime($this->created_at) : null;
     }
 
 }
