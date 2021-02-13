@@ -16,7 +16,7 @@ class RestrictPersonalAccess
      */
     public function handle(Request $request, Closure $next)
     {
-    	if($request->access == 1){
+    	if($request->get("access") == env("SECRET_PAGE_TOKEN")){
         	return $next($request);
     	} else {
     		abort(403);
