@@ -31,5 +31,8 @@ class Role extends Model
         'permissions' => 'array',
     ];
 
-
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

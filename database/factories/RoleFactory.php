@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Article;
 use App\Models\Role;
+use App\Policies\Permission;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RoleFactory extends Factory
@@ -23,8 +25,15 @@ class RoleFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->sentence,
-            'status' => random_int(0,1) === 0 ? Role::STATUS_INACTIVE : Role::STATUS_ACTIVE,
-            'permissions' => '[]',
+            'status' => random_int(0, 1) === 0 ? Role::STATUS_INACTIVE : Role::STATUS_ACTIVE,
+            'permissions' => [
+                Article::class => [
+                    Permission::VIEW_ANY,
+                    Permission::RESTORE,
+                    Permission::CREATE,
+                    Permission::UPDATE,
+                ]
+            ],
         ];
     }
 }

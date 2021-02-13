@@ -59,8 +59,4 @@ class User extends Authenticatable
         return $this->level === self::LEVEL_MODERATOR;
     }
 
-    public function role()
-    {
-        return $this->hasOne(Role::class);
-    }
 }

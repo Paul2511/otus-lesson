@@ -9,6 +9,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class EloquentArticleRepository
 {
+    public function find($id)
+    {
+        return Article::find($id);
+    }
 
     public function search(int $pregPage, array $with = []): LengthAwarePaginator
     {

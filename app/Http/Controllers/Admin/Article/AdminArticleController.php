@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Article;
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Article\Request\AdminArticleStoreRequest;
 use App\Http\Controllers\Admin\Article\Request\AdminUserRequest;
 use App\Models\Article;
 use App\Policies\Permission;
@@ -42,7 +43,7 @@ class AdminArticleController extends AdminController
     }
 
 
-    public function store(AdminUserRequest $request)
+    public function store(AdminArticleStoreRequest $request)
     {
         $this->authorize(Permission::UPDATE, Article::class);
 
@@ -70,7 +71,7 @@ class AdminArticleController extends AdminController
     }
 
 
-    public function update(AdminUserRequest $request, Article $article)
+    public function update(AdminArticleStoreRequest $request, Article $article)
     {
         $this->authorize(Permission::UPDATE, Article::class);
 
