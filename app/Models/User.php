@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
+use App\Services\Cache\Cache;
 
 /**
  * Class User
@@ -70,5 +71,20 @@ class User extends Authenticatable
     
     public function role(){
         return $this->hasOne(Role::class);
+    }
+    
+    public static function cacheKey($key){
+        return "user_".$key;
+    }
+    
+    public static function booted(){
+       static::created(function($user){
+           Cache::set(static::cacheKey($user->id), $user);
+       });
+       
+       static::updated(function($user){
+           Cache::set(static::cacheKey($user->id), $user);
+       });
+       
     }
 }

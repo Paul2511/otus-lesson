@@ -6,9 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use App\Services\Cache\Cache;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
+    use \Watson\Rememberable;
     /**
      * Validate and update the given user's profile information.
      *
@@ -32,9 +34,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
-            $this->updateVerifiedUser($user, $input);
+            $this->remember(Cache::TTL)->updateVerifiedUser($user, $input);
         } else {
-            $user->forceFill([
+            $user->remember(Cache::TTL)->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
             ])->save();

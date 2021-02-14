@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use App\Services\Cache\Cache;
 
 class CreateNewUser implements CreatesNewUsers
 {
-    use PasswordValidationRules;
+    use PasswordValidationRules, \Watson\Rememberable\Rememberable;
 
     /**
      * Validate and create a newly registered user.
@@ -32,7 +33,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        return User::remember(Cache::TTL)->create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
