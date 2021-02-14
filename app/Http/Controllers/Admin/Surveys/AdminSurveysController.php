@@ -32,7 +32,7 @@ class AdminSurveysController extends AdminBaseController
 
         ViewFacade::share(
             [
-                'surveys' => $this->surveysService->eloquentSurveyRepository->searchForCurrentUser(),
+                'surveys' => $this->surveysService->searchForCurrentUser(),
                 'user' => $user,
                 'canCreate' => $user->can(Permission::CREATE, $this->model),
             ]
@@ -96,12 +96,10 @@ class AdminSurveysController extends AdminBaseController
     {
         $this->authorize(Permission::CREATE, $this->model);
 
-        // $survey = $this->surveysService->createFromArray($request->all());
-
         $data = $request->all();
         $data['_user'] = Auth::user();
 
-        CreateSurvey::dispatch($data);
+        $this->surveysService->createFromArray($data);
 
         return redirect(AdminRoutes::surveysIndex())
             ->with('surveysIndexSuccess', __('surveys.create_planned'));
