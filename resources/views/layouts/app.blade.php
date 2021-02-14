@@ -59,7 +59,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item"
-                                       href="{{ route('home') }}">
+                                       href="{{ route('home', App::getLocale()) }}">
                                         {{ __('Домой') }}
                                     </a>
 
@@ -69,7 +69,7 @@
                                     </a>
 
                                     <a class="dropdown-item"
-                                       href="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX) }}">
+                                       href="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX, App::getLocale()) }}">
                                         {{ __('Мои словари') }}
                                     </a>
 
