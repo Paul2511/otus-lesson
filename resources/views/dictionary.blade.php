@@ -3,8 +3,8 @@
 @section('content')
     @include('blocks.breadcrumb', [
         'links' => [
-            __('Домой') => route('home'),
-            __('Словари') => route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX),
+            __('Домой') => route('home', App::getLocale()),
+            __('Словари') => route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX, App::getLocale()),
             ],
         'current' => $dictionary->name
     ])
@@ -35,7 +35,7 @@
                             </svg>
                         </button>
 
-                        @include('blocks.forms.destroy', ['link' => route(\App\Services\Words\Providers\Routes::WORDS_DESTROY, [$word->id])])
+                        @include('blocks.forms.destroy', ['link' => route(\App\Services\Words\Providers\Routes::WORDS_DESTROY, ['locale' => App::getLocale(), 'dictionary' => $word->id])])
                     </div>
                 </div>
 

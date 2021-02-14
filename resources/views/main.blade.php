@@ -6,8 +6,8 @@
             <h1 class="jumbotron-heading">{{ __('Инструмент запоминания иностранных слов') }}</h1>
             <p class="lead text-muted">Поможет вам выучить больше новых слов слова</p>
             <p>
-                <a href="{{ route('home') }}" class="btn btn-primary my-2">{{ __('Начать тренировку') }}</a>
-                <a href="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX) }}" class="btn btn-secondary my-2">{{ __('Добавить слова') }}</a>
+                <a href="{{ route('home', App::getLocale()) }}" class="btn btn-primary my-2">{{ __('Начать тренировку') }}</a>
+                <a href="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_INDEX, App::getLocale()) }}" class="btn btn-secondary my-2">{{ __('Добавить слова') }}</a>
             </p>
         </div>
     </section>

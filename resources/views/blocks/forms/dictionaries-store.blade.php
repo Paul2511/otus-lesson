@@ -5,7 +5,7 @@
                 <div class="card-header">{{ __('Добавить словарь') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_STORE) }}"
+                    <form action="{{ route(\App\Services\Dictionaries\Providers\Routes::DICTIONARIES_STORE, App::getLocale()) }}"
                           method="POST">
                         @csrf
                         <div class="form-group">
