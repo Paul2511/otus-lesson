@@ -1,0 +1,21 @@
+{
+    "name": "otuslessons/promotions",
+    "type": "library",
+    "require": {
+        "illuminate/support": "^8.27",
+        "illuminate/routing": "^8.27"
+    },
+    "autoload":{
+        "psr-4":{
+            "Otuslessons\\Promotions\\": "src/"
+        }
+    },
+    "extra":{
+        "laravel":{
+            "providers":[
+                "Otuslessons\\Promotions\\PromotionsServiceProvider",
+                "Otuslessons\\Promotions\\Services\\ErrorService"
+            ]
+        }
+    }
+}
