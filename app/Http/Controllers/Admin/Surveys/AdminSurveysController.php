@@ -16,8 +16,7 @@ use View as ViewFacade;
 
 class AdminSurveysController extends AdminBaseController
 {
-    private $model = Survey::class;
-
+    private string $model = Survey::class;
     private SurveysService $surveysService;
 
     public function __construct(SurveysService $surveysService)
@@ -32,8 +31,8 @@ class AdminSurveysController extends AdminBaseController
 
         ViewFacade::share(
             [
-                'surveys'   => $this->surveysService->eloquentSurveyRepository->searchForCurrentUser(),
-                'user'      => $user,
+                'surveys' => $this->surveysService->searchForCurrentUser(),
+                'user' => $user,
                 'canCreate' => $user->can(Permission::CREATE, $this->model),
             ]
         );
@@ -85,7 +84,7 @@ class AdminSurveysController extends AdminBaseController
                         'method' => 'POST',
                     ],
 
-                'survey' => new Survey,
+                'survey' => new Survey(),
             ]
         );
 
@@ -123,5 +122,4 @@ class AdminSurveysController extends AdminBaseController
 
         return redirect(AdminRoutes::surveysIndex());
     }
-
 }
