@@ -14,18 +14,15 @@ class ReportCallsService
 {
 
     private ReportsCallsFormDataHelper $callsFormDataHelper;
-    private EloquentModScenarioAliasesRepository $eloquentModScenarioAliasesRepository;
     private ExportCsvHandler $exportCsvHandler;
 
     public function __construct(
         EloquentModRecordsRepository $eloquentModRecordsRepository,
-        EloquentModScenarioAliasesRepository $eloquentModScenarioAliasesRepository,
         ReportsCallsFormDataHelper $callsFormDataHelper,
         ExportCsvHandler $exportCsvHandler
     ) {
         $this->eloquentModRecordsRepository = $eloquentModRecordsRepository;
         $this->callsFormDataHelper = $callsFormDataHelper;
-        $this->eloquentModScenarioAliasesRepository= $eloquentModScenarioAliasesRepository;
         $this->exportCsvHandler = $exportCsvHandler;
     }
 
