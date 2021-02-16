@@ -10,6 +10,7 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Laravel\Sanctum\HasApiTokens;
 
 
 /**
@@ -44,12 +45,13 @@ use Illuminate\Support\Carbon;
  */
 class User extends Authenticatable
 {
+    use HasApiTokens;
     use HasFactory;
     use Notifiable;
 
-    public const ROLE_DEFAULT = 0;
+    public const ROLE_DEFAULT   = 0;
     public const ROLE_MODERATOR = 50;
-    public const ROLE_ADMIN = 90;
+    public const ROLE_ADMIN     = 90;
 
     /**
      * The attributes that are mass assignable.
