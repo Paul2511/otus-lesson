@@ -39,23 +39,24 @@ use Illuminate\Support\Carbon;
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @method static Builder|User whereRole($value)
+ * @property string|null $api_token
+ * @method static Builder|User whereApiToken($value)
  */
 class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
 
-
-    const ROLE_DEFAULT   = 0;
-    const ROLE_MODERATOR = 50;
-    const ROLE_ADMIN     = 90;
+    public const ROLE_DEFAULT = 0;
+    public const ROLE_MODERATOR = 50;
+    public const ROLE_ADMIN = 90;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
+    protected array $fillable = [
         'name',
         'email',
         'password',
@@ -66,7 +67,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
+    protected array $hidden = [
         'password',
         'remember_token',
     ];
@@ -76,7 +77,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
+    protected array $casts = [
         'email_verified_at' => 'datetime',
     ];
 
