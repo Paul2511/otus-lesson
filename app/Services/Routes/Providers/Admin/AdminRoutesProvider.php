@@ -16,7 +16,6 @@ class AdminRoutesProvider
 
     public function register()
     {
-
         Route::prefix('admin')
             ->as('admin.')
             ->middleware('auth')
@@ -26,7 +25,6 @@ class AdminRoutesProvider
                     $this->registerUsersRoutes();
                 }
             );
-
     }
 
     private function registerSurveyRoutes()

@@ -6,6 +6,7 @@ use App\Models\Survey;
 use App\Models\User;
 use Auth;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 
 class EloquentSurveyRepository extends EloquentBaseRepository
@@ -15,7 +16,9 @@ class EloquentSurveyRepository extends EloquentBaseRepository
     public function searchForCurrentUser(?int $perPage = null): LengthAwarePaginator
     {
         $user = Auth::user();
-        if (!$user) abort(403);
+        if (!$user) {
+            abort(403);
+        }
 
         if ($user->can('viewTotallyAny', Survey::class)) {
             return $this->search($perPage);
@@ -49,7 +52,9 @@ class EloquentSurveyRepository extends EloquentBaseRepository
     public function store(array $data): Survey
     {
         $user = Auth::user();
-        if (!$user) abort(403);
+        if (!$user) {
+            abort(403);
+        }
 
         $survey = new Survey($data);
 
@@ -68,9 +73,21 @@ class EloquentSurveyRepository extends EloquentBaseRepository
         return $survey;
     }
 
-    public function delete(Survey $survey)
+    public function delete(Survey $survey): ?bool
     {
-        $survey->delete();
+        return $survey->delete();
     }
 
+    public function getAll(array $filters = [], ?int $limit = null, ?int $offset = 0): Collection
+    {
+        $limit = min($limit, static::MAX_API_RESPONSE_SIZE);
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $query = Survey::query()->remember(static::DEFAULT_CACHE_TIME);
+        $this->applyFilters($query, $filters);
+        $query->take($limit);
+        $offset && $query->skip($offset);
+
+        return $query->get();
+    }
 }
