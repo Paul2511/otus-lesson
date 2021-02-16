@@ -1,6 +1,8 @@
 @extends("layouts.app")
 
 @section("first_screen_content")
+    @include("components.weather")
+
     <p class="h1">{{ config('app.name', 'Survius') }} &mdash; @lang("messages.is")</p>
     <p class="mt-4">@lang("home.description")</p>
 @endsection
