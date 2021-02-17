@@ -41,8 +41,8 @@ class Question extends BaseModel
 {
     use Rememberable;
 
-    const TYPE_CHECKBOX = 10;
-    const TYPE_RADIO    = 20;
+    public const TYPE_CHECKBOX = 10;
+    public const TYPE_RADIO = 20;
 
     /**
      * The attributes that are mass assignable.
