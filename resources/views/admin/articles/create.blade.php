@@ -5,7 +5,7 @@
 @section('content')
     <h1>{{__('admin/article.title_added') }}</h1>
 
-    {!! Form::open(['url'=>route(\App\Services\Routes\Providers\AdminRoutes::ADMIN_ARTICLE_STORE)]) !!}
+    {!! Form::open(['url'=>route(\App\Services\Routes\Providers\AdminRoutes::ADMIN_ARTICLE_STORE),['locale'=>App::getLocale()]]) !!}
 
     @include('blocks.form.errors')
     @include('admin.articles.blocks.form.navbar')

@@ -1,7 +1,7 @@
-<a href="{{route(\App\Services\Routes\Providers\AdminRoutes::ADMIN_ARTICLE_DELETE, $id)}}" class="btn btn-primary">
+<a href="{{route(\App\Services\Routes\Providers\AdminRoutes::ADMIN_ARTICLE_DELETE, [$id,'locale'=>App::getLocale()])}}" class="btn btn-primary">
     {{ __('admin/article.button.view')}}
 </a>
 
-<a href="{{route(\App\Services\Routes\Providers\AdminRoutes::ADMIN_ARTICLE_EDIT, $id)}}" class="btn btn-secondary">
+<a href="{{route(\App\Services\Routes\Providers\AdminRoutes::ADMIN_ARTICLE_EDIT,[$id,'locale'=>App::getLocale()])}}" class="btn btn-secondary">
     {{ __('admin/article.button.edit')}}
 </a>
