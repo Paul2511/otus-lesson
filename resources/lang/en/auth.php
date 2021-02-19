@@ -19,6 +19,7 @@ return [
     'notToken' => 'You are not authorized',
     'accessDenied' => 'You do not have permission to perform this action',
     'wrongToken' => 'Auth error',
-    'cannotRefresh' => 'Token cannot be refreshed, please Login again'
+    'cannotRefresh' => 'Token cannot be refreshed, please Login again',
+    'wrongPassword' => 'Wrong password'
 
 ];

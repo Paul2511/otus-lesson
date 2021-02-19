@@ -9,5 +9,6 @@ export default
     create: 'Create',
     add: 'Add',
     find: 'Find',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    reset: 'Reset'
 }

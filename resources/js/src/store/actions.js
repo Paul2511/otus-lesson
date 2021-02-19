@@ -48,6 +48,16 @@ const actions = {
     // User/Account
     // /////////////////////////////////////////////
 
+    changePassword({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.CHANGE_PASSWORD, payload)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+
     updateUserInfo ({ commit }, payload) {
         commit('UPDATE_USER_INFO', payload)
     },

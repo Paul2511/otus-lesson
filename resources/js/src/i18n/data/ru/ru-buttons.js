@@ -9,5 +9,6 @@ export default
     create: 'Создать',
     add: 'Добавить',
     find: 'Найти',
-    confirm: 'Подтвердить'
+    confirm: 'Подтвердить',
+    reset: 'Сбросить'
 }

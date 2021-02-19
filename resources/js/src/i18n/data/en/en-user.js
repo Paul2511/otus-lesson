@@ -20,5 +20,8 @@ export default
     add: 'Add user',
     adding: 'Adding user',
     loginAs: 'Login as user',
-    confirmLogin: 'Are you sure you want to login as a user {name}?'
+    confirmLogin: 'Are you sure you want to login as a user {name}?',
+    oldPassword: 'Old password',
+    newPassword: 'New password',
+    confirmNewPassword: 'Confirm new password'
 }

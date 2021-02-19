@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\AuthChangePasswordRequest;
 use App\Http\Requests\User\UserRegisterRequest;
 use App\Http\Resources\User\UserResource;
+use App\Models\Pet;
 use App\Models\User;
 use App\Services\Auth\DTO\AuthLoginData;
 use App\Services\Users\Dto\UserRegisterData;
@@ -95,4 +97,27 @@ class AuthController extends Controller
         return new UserResource($user);
     }
 
+    /**
+     * @throws AuthorizationException
+     * @throws \App\Exceptions\Auth\ChangePasswordException
+     */
+    public function changePassword(AuthChangePasswordRequest $request)
+    {
+        $userId = $request->get('userId');
+        $password = $request->get('newPassword');
+
+        if ($userId && !$this->authorize('changePassword', User::class)) {
+            throw new AuthorizationException();
+        }
+
+        $this->authService->changePassword($password, $userId);
+
+        $message = [
+            'message'=>[
+                'title'=>trans('form.message.successTitle'),
+                'text'=>trans('form.message.successPasswordChangeText')]
+        ];
+
+        return response()->json($message);
+    }
 }

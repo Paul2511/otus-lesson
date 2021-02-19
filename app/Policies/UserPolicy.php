@@ -64,6 +64,11 @@ class UserPolicy
         return $user->isManager;
     }
 
+    public function changePassword(User $user)
+    {
+        return $user->isManager;
+    }
+
     /**
      * Determine whether the user can create models.
      *
