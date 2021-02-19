@@ -24,6 +24,9 @@ class UserRegisterData extends DataTransferObject
 
     public ?string $name;
 
+    public ?array $clientData;
+    public ?array $specialistData;
+
     protected bool $ignoreMissing = true;
 
     public static function fromRequest(UserRegisterRequest $request): self
@@ -37,6 +40,8 @@ class UserRegisterData extends DataTransferObject
             'sendWelcomeEmail' => $request->get('sendWelcomeEmail'),
             'clientPassword' => $request->get('password'),
             'locale' => $request->get('locale'),
+            'clientData' => $request->get('clientData'),
+            'specialistData' => $request->get('specialistData'),
         ];
 
         return new self($data);

@@ -243,6 +243,16 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
             unset($attributes['clientPassword']);
         }
 
+        if (isset($attributes['clientData'])) {
+            $this->clientData = $attributes['clientData'];
+            unset($attributes['clientData']);
+        }
+
+        if (isset($attributes['specialistData'])) {
+            $this->specialistData = $attributes['specialistData'];
+            unset($attributes['specialistData']);
+        }
+
         return parent::fill($attributes);
     }
 }

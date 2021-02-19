@@ -12,6 +12,7 @@ class RouteNames
     const V1_PROFILE = 'profile';
     const V1_TOKEN_REFRESH = 'tokenRefresh';
     const V1_CLIENT_REGISTRATION = 'clientRegistration';
+    const V1_SPEC_REGISTRATION = 'specRegistration';
     const V1_CHANGE_PASSWORD = 'changePassword';
 
     const V1_GET_USER = 'getUser';

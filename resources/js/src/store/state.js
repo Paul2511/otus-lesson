@@ -96,7 +96,8 @@ const state = {
 
     petModalOpened: undefined,
     petCreateModalOpened: undefined,
-    changedPet: false
+    changedPet: false,
+    loginMsg: undefined
 
 };
 

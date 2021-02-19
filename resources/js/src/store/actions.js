@@ -57,6 +57,25 @@ const actions = {
                 .catch((error) => { reject(error) })
         });
     },
+    registerClient({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.CLIENT_REGISTER, payload)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+
+    registerSpec({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.SPEC_REGISTER, payload)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
 
     updateUserInfo ({ commit }, payload) {
         commit('UPDATE_USER_INFO', payload)

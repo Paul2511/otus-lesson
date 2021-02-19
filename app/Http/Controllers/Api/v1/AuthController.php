@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\Auth\DTO\AuthLoginData;
 use App\Services\Users\Dto\UserRegisterData;
 use App\States\User\Role\ClientUserRole;
+use App\States\User\Role\SpecialistUserRole;
 use Illuminate\Auth\Access\AuthorizationException;
 use \Illuminate\Http\JsonResponse;
 use App\Http\Requests\Auth\AuthLoginRequest;
@@ -31,7 +32,7 @@ class AuthController extends Controller
         AuthService $authService
     )
     {
-        $this->middleware('auth.jwt:api', ['except' => ['login', 'registration']]);
+        $this->middleware('auth.jwt:api', ['except' => ['login', 'clientRegister', 'specRegister']]);
         $this->authService = $authService;
     }
 
@@ -80,13 +81,42 @@ class AuthController extends Controller
     /**
      * @throws \App\Exceptions\User\UserRegisterException
      */
-    public function registration(UserRegisterRequest $request, UserService $userService): JsonResponse
+    public function clientRegister(UserRegisterRequest $request, UserService $userService): JsonResponse
     {
         $userData = UserRegisterData::fromRequest($request);
-        $userData->role = ClientUserRole::$name; //жестко зашиваем в клиентском контроллере
+        $userData->role = ClientUserRole::$name;
+        $userData->sendWelcomeEmail = true;
+
         $userService->registerUser($userData);
 
-        return response()->json([], self::JSON_STATUS_CREATED);
+        $message = [
+            'message'=>[
+                'title'=>trans('form.message.registerTitle'),
+                'text'=>trans('form.message.registerText')]
+        ];
+
+        return response()->json($message, self::JSON_STATUS_CREATED);
+    }
+
+
+    /**
+     * @throws \App\Exceptions\User\UserRegisterException
+     */
+    public function specRegister(UserRegisterRequest $request, UserService $userService): JsonResponse
+    {
+        $userData = UserRegisterData::fromRequest($request);
+        $userData->role = SpecialistUserRole::$name;
+        $userData->sendWelcomeEmail = true;
+
+        $userService->registerUser($userData);
+
+        $message = [
+            'message'=>[
+                'title'=>trans('form.message.registerTitle'),
+                'text'=>trans('form.message.registerText')]
+        ];
+
+        return response()->json($message, self::JSON_STATUS_CREATED);
     }
 
 

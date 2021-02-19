@@ -2,11 +2,11 @@ import Vue from 'vue'
 import {AclInstaller, AclCreate, AclRule} from 'vue-acl'
 import router from '@/router'
 
-Vue.use(AclInstaller)
+Vue.use(AclInstaller);
 
-let initialRole = 'public'
-const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-if (userInfo && userInfo.currentRole) initialRole = userInfo.currentRole.role
+let initialRole = 'public';
+const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+if (userInfo && userInfo.currentRole) initialRole = userInfo.currentRole.role;
 
 export default new AclCreate({
     initial: initialRole,

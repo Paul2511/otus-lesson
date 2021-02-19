@@ -17,7 +17,8 @@ Route::group([
     Route::get('profile', [AuthController::class, 'profile'])->name(RouteNames::V1_PROFILE);
     Route::post('login', [AuthController::class, 'login'])->name(RouteNames::V1_LOGIN);
     Route::post('login-as', [AuthController::class, 'loginAs'])->name(RouteNames::V1_LOGIN_AS);
-    Route::post('registration', [AuthController::class, 'registration'])->name(RouteNames::V1_CLIENT_REGISTRATION);
+    Route::post('client-register', [AuthController::class, 'clientRegister'])->name(RouteNames::V1_CLIENT_REGISTRATION);
+    Route::post('spec-register', [AuthController::class, 'specRegister'])->name(RouteNames::V1_SPEC_REGISTRATION);
     Route::post('change-password', [AuthController::class, 'changePassword'])->name(RouteNames::V1_CHANGE_PASSWORD);
     Route::post('refresh', [AuthController::class, 'refresh'])->name(RouteNames::V1_TOKEN_REFRESH)->middleware(\App\Http\Middleware\JwtMiddleware::class);
 });

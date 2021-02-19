@@ -3,10 +3,10 @@
 namespace App\Http\Middleware;
 
 use App\Models\Pet;
-use App\Models\PetType;
 use App\Models\User;
 use App\Services\Localise\Locale;
 use App\Services\PetTypes\PetTypeService;
+use App\Services\Specializations\SpecializationService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -51,6 +51,10 @@ class WebApplicationData
         });
         $data['petSexes'] = $petSexes;
 
+
+        $specializations = $this->getSpecializationService()->getAll();
+        $data['specializations'] = $specializations;
+
         View::share('data', $data);
 
         return $next($request);
@@ -59,5 +63,10 @@ class WebApplicationData
     private function getPetTypeService(): PetTypeService
     {
         return app(PetTypeService::class);
+    }
+
+    private function getSpecializationService(): SpecializationService
+    {
+        return app(SpecializationService::class);
     }
 }

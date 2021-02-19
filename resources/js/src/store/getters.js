@@ -43,6 +43,10 @@ const getters = {
 
     changedPet: state => {
         return state.changedPet;
+    },
+
+    loginMsg: state => {
+        return state.loginMsg;
     }
 };
 

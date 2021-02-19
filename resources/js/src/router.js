@@ -138,6 +138,14 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/register',
+                    name: 'register',
+                    component: () => import('@/views/pages/register/Register.vue'),
+                    meta: {
+                        rule: 'public'
+                    }
+                },
+                {
                     path: '/error-404',
                     name: 'error-404',
                     component: () => import('@/views/pages/Error404.vue'),

@@ -12,13 +12,14 @@ use Tests\Generators\UserGenerator;
 use Tests\TestCase;
 use Tests\AuthAttach;
 use Illuminate\Support\Facades\Notification;
-class ApiAuthControllerRegistrationTest extends TestCase
+class ApiAuthControllerClientRegisterTest extends TestCase
 {
     use AuthAttach;
 
     /**
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testRequiresEmailAndPassword422()
     {
@@ -30,6 +31,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     /**
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testRequiresEmail422()
     {
@@ -46,6 +48,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     /**
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testRequiresPassword422()
     {
@@ -59,6 +62,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     /**
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testRequiresPasswordConfirm422()
     {
@@ -75,6 +79,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     /**
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testRequiresPasswordNotMatch422()
     {
@@ -92,6 +97,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     /**
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testWrongEmail422()
     {
@@ -111,6 +117,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
      * Ошибка - пользователь с таким email уже существует
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testWrongEmailExists422()
     {
@@ -128,6 +135,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     /**
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testWrongLocale422()
     {
@@ -148,6 +156,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
      * Удачная регистрация клиента
      * @group auth
      * @group register
+     * @group clientRegister
      */
     public function testRegisterSuccessfully201()
     {
@@ -177,6 +186,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
      * Отправка письма при регистрации
      * @group auth
      * @group register
+     * @group clientRegister
      * @group mail
      */
     public function testSendWelcomeEmail201()

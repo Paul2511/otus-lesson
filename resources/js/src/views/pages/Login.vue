@@ -1,6 +1,12 @@
 <template>
     <div class="min-h-screen flex w-full bg-img vx-row no-gutter items-center justify-center" id="page-login">
+
         <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+
+            <vs-alert v-if="!!loginMsg" :title="loginMsg.title" :active="!!loginMsg" color="#842993">
+                {{ loginMsg.text }}
+            </vs-alert>
+
             <vx-card>
                 <div slot="no-body" class="full-page-bg-color">
 
@@ -43,7 +49,7 @@
                                     <div class="flex flex-wrap justify-between my-5">
                                         <router-link to="">{{ $t('ForgotPassword') }}?</router-link>
                                     </div>
-                                    <vs-button type="border">{{ $t('Register') }}</vs-button>
+                                    <vs-button type="border" @click="registerUser">{{ $t('Register') }}</vs-button>
                                     <vs-button @click="login" class="float-right">{{ $t('Login') }}</vs-button>
 
                                 </div>
@@ -83,7 +89,7 @@
                     password: this.password
                 };
                 this.$store.dispatch('auth/login', payload)
-                    .then(res =>  {
+                    .then(res => {
                         window.location.reload();
                     })
                     .catch(err => {
@@ -91,16 +97,17 @@
                         this.$vs.notify({
                             title: this.$t('Error'),
                             text: err.response.data.message || this.$t('ErrorResponse'),
-                            color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
+                            color: 'danger', iconPack: 'feather', icon: 'icon-alert-circle'
+                        })
                     })
                     .finally(() => (this.$vs.loading.close()));
             },
-            checkLogin () {
+            checkLogin() {
                 if (this.$store.state.auth.isUserLoggedIn()) {
 
                     this.$vs.notify({
-                        title: 'Предупреждение',
-                        text: 'Вы уже авторизованы!',
+                        title: this.$t('warning'),
+                        text: this.$t('loginError'),
                         iconPack: 'feather',
                         icon: 'icon-alert-circle',
                         color: 'warning'
@@ -108,10 +115,18 @@
                     return false
                 }
                 return true
+            },
+            registerUser() {
+                if (!this.checkLogin()) return;
+                this.$router.push('/register').catch(() => {
+
+                })
             }
         },
         computed: {
-
+            loginMsg() {
+                return this.$store.getters.loginMsg
+            }
         },
     }
 </script>

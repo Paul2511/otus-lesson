@@ -127,7 +127,7 @@ const mutations = {
     },
 
     // /////////////////////////////////////////////
-    // Modals
+    // Modals & misc
     // /////////////////////////////////////////////
 
     OPEN_PET_MODAL(state, data) {
@@ -145,6 +145,10 @@ const mutations = {
     },
     CLOSE_PET_CREATE_MODAL(state) {
         state.petCreateModalOpened = undefined;
+    },
+
+    SET_LOGIN_MSG(state, data) {
+        state.loginMsg = data;
     }
 };
 

@@ -1,7 +1,8 @@
 export const PROFILE = '/api/v1/auth/profile';
 export const LOGIN = '/api/v1/auth/login';
 export const LOGIN_AS = '/api/v1/auth/login-as';
-export const CLIENT_REGISTRATION = '/api/v1/auth/registration';
+export const CLIENT_REGISTER = '/api/v1/auth/client-register';
+export const SPEC_REGISTER = '/api/v1/auth/spec-register';
 export const TOKEN_REFRESH = '/api/v1/auth/refresh';
 export const CHANGE_PASSWORD = '/api/v1/auth/change-password';
 

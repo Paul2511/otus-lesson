@@ -6,6 +6,7 @@ import ruPet from './data/ru/ru-pet';
 import ruPetType from './data/ru/ru-pet-type';
 import ruSpecialization from './data/ru/ru-specialization';
 import ruComment from './data/ru/ru-comment';
+import ruRegister from './data/ru/ru-register';
 
 import enMain from './data/en/en-main';
 import enButtons from './data/en/en-buttons';
@@ -15,6 +16,7 @@ import enPet from './data/en/en-pet';
 import enPetType from './data/en/en-pet-type';
 import enSpecialization from './data/en/en-specialization';
 import enComment from './data/en/en-comment';
+import enRegister from './data/en/en-register';
 
 export default {
     en: {
@@ -151,6 +153,8 @@ export default {
         siteClose: 'The service coming soon!',
         loginClient: 'Login',
         loginText: 'Please login to enter your Personal Account',
+        warning: 'warning',
+        loginError: 'You are already logged in!',
         Password: 'Password',
         RememberMe: 'Remember Me',
         ErrorResponse: 'An error occurred while executing the request',
@@ -166,6 +170,7 @@ export default {
         petType: enPetType,
         specialization: enSpecialization,
         comment: enComment,
+        register: enRegister,
         References: 'References',
         PetTypes: 'Pet types',
         Pets: 'Pets',
@@ -217,6 +222,9 @@ export default {
         slug: 'Ключ',
         value: 'Значение',
         info: 'Информация',
-        comments: 'Комментарии'
+        comments: 'Комментарии',
+        warning: 'Предупреждение',
+        loginError: 'Вы уже авторизованы!',
+        register: ruRegister
     }
 }
