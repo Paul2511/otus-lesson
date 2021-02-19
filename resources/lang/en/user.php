@@ -12,5 +12,13 @@ return [
     'status'=>[
         'active'=>'Active',
         'blocked'=>'Blocked'
+    ],
+    'label'=>[
+        'name'=>'Full name',
+        'role'=>'Role',
+        'status'=>'Status',
+        'email'=>'email',
+        'created_at'=>'Registration date',
+        'petsCount'=>'Pets count'
     ]
 ];

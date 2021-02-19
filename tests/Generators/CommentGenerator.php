@@ -6,6 +6,7 @@ namespace Tests\Generators;
 
 use App\Models\Comment;
 use App\Models\Pet;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class CommentGenerator
@@ -27,6 +28,23 @@ class CommentGenerator
         return self::generate($count, array_merge([
             'type' => lcfirst(class_basename(Pet::class)),
             'row_id' => $pet->id
+        ], $data), $fake);
+    }
+
+    public static function generateByUser(?int $count = 1, ?array $data = [], ?bool $fake = false)
+    {
+        if (!isset($data['row_id'])) {
+            $user = UserGenerator::generateClient();
+            $data['row_id'] = $user->id;
+        }
+
+        if (!isset($data['user_id'])) {
+            $manager = UserGenerator::generateManager();
+            $data['user_id'] = $manager->id;
+        }
+
+        return self::generate($count, array_merge([
+            'type' => lcfirst(class_basename(User::class)),
         ], $data), $fake);
     }
 }

@@ -57,9 +57,4 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getFormatCreatedAtAttribute(): string
-    {
-        return $this->created_at ? $this->asDateTime($this->created_at) : null;
-    }
-
 }

@@ -54,6 +54,23 @@ export default {
                 })
         })
     },
+    loginAs({commit}, userId) {
+        return new Promise((resolve, reject) => {
+            jwt.loginAs(userId)
+                .then(response => {
+                    if (response.data.userData) {
+                        localStorage.setItem('accessToken', response.data.accessToken);
+                        commit('SET_USER_INFO', response.data.userData, {root: true});
+                        commit('SET_BEARER', response.data.accessToken)
+                    }
+                    resolve(response)
+                })
+                .catch(error => {
+                    reject(error)
+                })
+        })
+    },
+
     registerUser({commit}, payload) {
 
         const {displayName, email, password, confirmPassword} = payload.userDetails

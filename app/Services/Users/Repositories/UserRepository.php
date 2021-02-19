@@ -3,28 +3,78 @@
 
 namespace App\Services\Users\Repositories;
 
+use App\Http\Requests\ApiGetRequest;
 use App\Models\User;
-use Support\Cache\CacheHelper;
-class UserRepository
+abstract class UserRepository
 {
+    /**
+     * @var ApiGetRequest
+     */
+    protected $request;
 
-    public function findUser(int $userId, ?bool $fromCache=false): User
+    abstract public function findById(int $id): User;
+
+    abstract public function get();
+
+    /**
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|mixed
+     */
+    abstract public function paginate(int $perPage);
+
+    abstract public function create(array $data): User;
+
+    abstract public function update(User $user, array $data): bool;
+
+    /** @return bool|null */
+    abstract public function delete(User $user);
+
+    /**
+     * @var User|\Illuminate\Database\Eloquent\Builder
+     */
+    protected $query;
+
+    protected $isSearch = false;
+
+    protected $tag;
+
+
+    public function __construct(ApiGetRequest $request)
     {
-        return $fromCache ?
-            CacheHelper::remember(User::query(), class_basename(User::class), $userId)->findOrFail($userId) :
-            User::findOrFail($userId);
+        $this->request = $request;
+
+        $this->tag = \Str::plural(class_basename(User::class));
+
+        $this->query = User::query();
     }
 
-    public function updateUser(User $user, array $data): bool
+    protected function setOrder(): void
     {
-        $data = collect($data)->whereNotNull()->all();
+        $request = $this->request;
 
-        return $user->update($data);
+        $order = $request->get('sort', 'id');
+        $direction = $request->get('direction', 'asc');
+
+        $this->query->orderBy($order, $direction);
     }
 
-    public function createUser(array $data): User
+    public function withRequest(): self
     {
-        $data = collect($data)->whereNotNull()->all();
-        return User::create($data);
+        $search = $this->request->get('query', null);
+
+        if ($search) {
+            $this->query = User::search($search);
+            $this->isSearch = true;
+        }
+
+        $filters = $this->request->get('filter');
+
+
+        if ($filters && count($filters) && !$search) {
+            $this->query->where($filters);
+        }
+
+        $this->setOrder();
+
+        return $this;
     }
 }

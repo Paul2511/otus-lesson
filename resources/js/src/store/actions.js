@@ -62,7 +62,6 @@ const actions = {
         })
     },
     getUser({commit}, userId) {
-
         return new Promise((resolve, reject) => {
             axios.get(requests.GET_USER(userId))
                 .then((response) => {
@@ -76,6 +75,38 @@ const actions = {
             axios.put(requests.UPDATE_USER(data.userId), data.data)
                 .then((response) => {
                     commit('UPDATE_USER_INFO', response.data.data);
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    getUserList({ commit }, queryData) {
+        if (typeof queryData !== 'object') {
+            queryData = {};
+        }
+        return new Promise((resolve, reject) => {
+            axios.get(requests.GET_ALL_USERS, {
+                params: queryData,
+            })
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    createUser({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.CREATE_USER, data)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+    getUserComments({ commit }, userId) {
+        return new Promise((resolve, reject) => {
+            axios.get(requests.GET_USER_COMMENTS(userId))
+                .then((response) => {
                     resolve(response);
                 })
                 .catch((error) => { reject(error) })
@@ -99,8 +130,13 @@ const actions = {
         if (typeof queryData !== 'object') {
             queryData = {};
         }
+        let url = requests.GET_ALL_PETS;
+        if (!!queryData.userId) {
+            url = requests.GET_USER_PETS(queryData.userId);
+            delete queryData.userId;
+        }
         return new Promise((resolve, reject) => {
-            axios.get(requests.GET_ALL_PETS, {
+            axios.get(url, {
                 params: queryData,
             })
                 .then((response) => {
@@ -297,6 +333,7 @@ const actions = {
         });
     },
 
+
     // /////////////////////////////////////////////
     // Modals
     // /////////////////////////////////////////////
@@ -308,8 +345,8 @@ const actions = {
         commit('CLOSE_PET_MODAL');
     },
 
-    openPetCreateModal({ commit }) {
-        commit('OPEN_PET_CREATE_MODAL');
+    openPetCreateModal({ commit }, data) {
+        commit('OPEN_PET_CREATE_MODAL', data);
     },
 
     closePetCreateModal({ commit }) {

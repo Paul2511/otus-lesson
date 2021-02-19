@@ -12,6 +12,7 @@ use App\Models\Pet;
 use App\Models\User;
 use App\Services\Pets\DTO\PetCreateData;
 use App\Services\Pets\DTO\PetUpdateData;
+use App\Services\Users\UserService;
 use Illuminate\Auth\Access\AuthorizationException;
 use \Illuminate\Http\JsonResponse;
 use App\Services\Pets\PetService;
@@ -23,15 +24,21 @@ class PetController extends Controller
      * @var PetService
      */
     private $petService;
+    /**
+     * @var UserService
+     */
+    private $userService;
 
     public function __construct(
-        PetService $petService
+        PetService $petService,
+        UserService $userService
     )
     {
         $this->petService = $petService;
         $this->middleware('auth.jwt:api');
 
         $this->authorizeResource(Pet::class, 'pet');
+        $this->userService = $userService;
     }
 
     /**
@@ -72,14 +79,23 @@ class PetController extends Controller
     }
 
     /**
+     * @throws AuthorizationException
      * @throws \App\Exceptions\Client\ClientNotFoundException
      * @throws \App\Exceptions\Pet\PetCreateException
      */
     public function store(PetCreateRequest $request)
     {
+        $userId = $request->get('userId');
+
+        $user = $userId?$this->userService->findUser($userId):null;
+
+        if ($user && !$this->authorize('createAnother', Pet::class)) {
+            throw new AuthorizationException();
+        }
+
         $data = PetCreateData::fromRequest($request);
 
-        $pet = $this->petService->createPet($data);
+        $pet = $this->petService->createPet($data, $user);
 
         $message = [
             'message'=>[

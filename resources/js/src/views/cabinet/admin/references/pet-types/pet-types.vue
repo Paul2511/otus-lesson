@@ -67,7 +67,7 @@
                     </template>
                 </vs-table>
                 <div v-if="totalItems > maxItems" class="mt-5">
-                    <vs-pagination :total="Math.round(totalItems/maxItems)" v-model="currentPage"></vs-pagination>
+                    <vs-pagination :total="Math.ceil(totalItems/maxItems)" v-model="currentPage"></vs-pagination>
                 </div>
             </div>
         </div>

@@ -18,6 +18,8 @@ class PetCreateData extends DataTransferObject
 
     public ?int $client_id;
 
+    protected bool $ignoreMissing = true;
+
     public static function fromRequest(PetCreateRequest $request): self
     {
         return new self([

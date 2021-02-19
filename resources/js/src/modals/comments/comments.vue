@@ -1,7 +1,7 @@
 <template>
-    <div class="mt-4">
+    <div>
         <div class="comments-container">
-            <ul class="user-comments-list">
+            <ul v-if="items.length" class="user-comments-list">
                 <li v-for="(item, index) in items" :key="index" class="commented-user flex items-start mb-4">
                     <div class="mr-3"><vs-avatar class="m-0" :src="item.user.avatar.thumb_src" size="30px" /></div>
                     <div class="comment-body leading-tight">
@@ -9,7 +9,7 @@
                         <div class="mb-3 comment-date text-xs">{{ item.formatCreatedAt }}</div>
                         <span class="text-sm comment-body">{{ item.body }}</span>
                     </div>
-                    <div class="ml-auto" v-if="item.canEdit">
+                    <div class="ml-auto" v-if="item.canEdit && !editMode">
                         <div class="flex">
                             <feather-icon
                                     icon="EditIcon"
@@ -29,9 +29,10 @@
                     </div>
                 </li>
             </ul>
+            <p v-else>{{ $t('comment.none') }}</p>
         </div>
 
-        <div class="post-comment mb-5">
+        <div class="post-comment mb-5 mt-5">
             <vs-textarea :placeholder="$t('comment.comment')" class="mb-4" v-model="comment.body"/>
             <vs-button size="small" @click="saveComment" :disabled="!comment.body || !comment.body.length">{{ $t('buttons.save') }}</vs-button>
             <vs-button v-if="editMode" type="border" size="small" @click="cancelEdit">{{ $t('buttons.cancel') }}</vs-button>

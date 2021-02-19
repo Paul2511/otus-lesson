@@ -96,7 +96,10 @@
                     </vs-tab>
                     <vs-tab v-if="$acl.check('canAdmin')" :label="$t('comments') + ' (' + pet.comments.length + ')'" icon-pack="feather" icon="icon-message-square" @click="changeActiveTab('comments')">
                         <div class="tab-text">
-                            <comments type="pet" :items="pet.comments" :row-id="pet.id"></comments>
+                            <div class="mt-4">
+                                <comments type="pet" :items="pet.comments" :row-id="pet.id"></comments>
+                            </div>
+
                         </div>
                     </vs-tab>
                 </vs-tabs>

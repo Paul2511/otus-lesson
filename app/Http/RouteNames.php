@@ -8,16 +8,20 @@ class RouteNames
 {
 
     const V1_LOGIN = 'login';
+    const V1_LOGIN_AS = 'loginAs';
     const V1_PROFILE = 'profile';
     const V1_TOKEN_REFRESH = 'tokenRefresh';
     const V1_CLIENT_REGISTRATION = 'clientRegistration';
 
     const V1_GET_USER = 'getUser';
+    const V1_CREATE_USER = 'createUser';
     const V1_UPDATE_USER = 'updateUser';
+    const V1_GET_ALL_USERS = 'getAllUser';
 
     const V1_GET_PETS = 'getPets';
     const V1_GET_ALL_PETS = 'getAllPets';
     const V1_GET_USER_PETS = 'getUserPets';
+    const V1_GET_USER_COMMENTS = 'getUserComments';
     const V1_GET_PET = 'getPet';
     const V1_UPDATE_PET = 'updatePet';
     const V1_DELETE_PET = 'deletePet';
@@ -45,6 +49,8 @@ class RouteNames
         self::V1_GET_USER => 'user',
         self::V1_UPDATE_USER => 'user',
         self::V1_GET_USER_PETS => 'user',
+        self::V1_GET_USER_COMMENTS => 'user',
+        self::V1_LOGIN_AS => 'user',
         self::V1_GET_PET => 'pet',
         self::V1_UPDATE_PET => 'pet',
         self::V1_DELETE_PET => 'pet',

@@ -8,6 +8,8 @@ use Support\Log\LogHelper;
 use App\Services\Users\UserService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class AuthService
 {
 
@@ -31,18 +33,27 @@ class AuthService
 
         $credentials = $authLoginData->toArray();
         if (!$token = auth()->attempt($credentials)) {
-
             LogHelper::auth('Ошибка авторизации', [
                 'data'=>$credentials
             ], 'error');
-
             throw new UnauthorizedException();
         } else {
             LogHelper::auth('Авторизация пользователя', [
                 'data'=>$credentials
             ]);
-
             return $token;
         }
+    }
+
+    public function loginAs(int $userId): string
+    {
+        if (auth()->onceUsingId($userId)) {
+            $token = auth()->login(auth()->user());
+            if ($token) {
+                return $token;
+            }
+        }
+
+        throw new NotFoundHttpException();
     }
 }

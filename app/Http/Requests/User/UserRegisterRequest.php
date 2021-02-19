@@ -23,7 +23,8 @@ class UserRegisterRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'password' => 'required|min:5',
+            'password' => ['required', 'string', 'min:5', 'confirmed'],
+            'password_confirmation' => ['required', 'string', 'min:5'],
             'email' => ['email','required','unique:users'],
             'role' => [
                 new ValidStateRule(UserRole::class)

@@ -68,11 +68,29 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/cabinet/users/:userId',
+                    name: 'user',
+                    component: () => import('./views/cabinet/user-settings/UserSettings.vue'),
+                    meta: {
+                        rule: 'canAdmin',
+                        parent: 'users'
+                    }
+                },
+                {
                     path: '/cabinet/pets',
                     name: 'pets',
                     component: () => import('./views/cabinet/admin/pets/pets.vue'),
                     meta: {
                         rule: 'canAdmin'
+                    }
+                },
+                {
+                    path: '/cabinet/pets/:userId',
+                    name: 'user-pets',
+                    component: () => import('./views/cabinet/admin/pets/pets.vue'),
+                    meta: {
+                        rule: 'canAdmin',
+                        parent: 'pets'
                     }
                 },
                 {

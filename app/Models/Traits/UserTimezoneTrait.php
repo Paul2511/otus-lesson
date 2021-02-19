@@ -30,4 +30,9 @@ trait UserTimezoneTrait
 
         return $value->setTimezone($timezone);
     }
+
+    public function getFormatCreatedAtAttribute(): string
+    {
+        return $this->created_at ? $this->asDateTime($this->created_at)->format('d.m.Y H:i') : null;
+    }
 }

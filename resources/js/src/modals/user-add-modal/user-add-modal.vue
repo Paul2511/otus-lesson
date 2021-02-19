@@ -1,9 +1,9 @@
 <template>
     <div>
         <b-modal
-                id="pet-create-modal"
+                id="user-add-modal"
                 centered
-                :title="$t('pet.newPet')"
+                :title="$t('user.adding')"
                 v-model="active"
                 @hidden="close()"
                 @ok="save"
@@ -14,44 +14,65 @@
             <div>
                 <div class="vx-row mb-6">
                     <div class="vx-col sm:w-1/3 w-full">
-                        <strong>{{ $t('pet.name') }}:</strong>
+                        <strong>{{ $t('user.role') }}:</strong>
                     </div>
                     <div class="vx-col sm:w-2/3 w-full">
-                        <vs-input class="w-full" v-model="pet.name" :danger="!!errors.name" val-icon-danger="icon-x" val-icon-pack="feather" />
+                        <vs-select v-model="item.role" class="w-full" :danger="!!errors.role" val-icon-danger="icon-x" val-icon-pack="feather">
+                            <vs-select-item :key="index" :value="index" :text="role" v-for="(role, index) in userRoles" class="w-full" />
+                        </vs-select>
+                        <div class="text-danger text-xs" v-show="!!errors.role">{{ errors.role | arr2str }}</div>
+                    </div>
+                </div>
+
+                <div class="vx-row mb-6">
+                    <div class="vx-col sm:w-1/3 w-full">
+                        <strong>{{ $t('user.fullname') }}:</strong>
+                    </div>
+                    <div class="vx-col sm:w-2/3 w-full">
+                        <vs-input required class="w-full" v-model="item.name" :danger="!!errors.name" val-icon-danger="icon-x" val-icon-pack="feather" />
                         <div class="text-danger text-xs" v-show="!!errors.name">{{ errors.name | arr2str }}</div>
                     </div>
                 </div>
+
                 <div class="vx-row mb-6">
                     <div class="vx-col sm:w-1/3 w-full">
-                        <strong>{{ $t('pet.type') }}:</strong>
+                        <strong>{{ $t('user.email') }}:</strong>
                     </div>
                     <div class="vx-col sm:w-2/3 w-full">
-                        <vs-select v-model="pet.pet_type_id" class="w-full" :danger="!!errors.pet_type_id" val-icon-danger="icon-x" val-icon-pack="feather">
-                            <vs-select-item :key="petType.id" :value="petType.id" :text="petType.title" v-for="petType in petTypes" class="w-full" />
-                        </vs-select>
-                        <div class="text-danger text-xs" v-show="!!errors.pet_type_id">{{ errors.pet_type_id | arr2str }}</div>
+                        <vs-input required class="w-full" v-model="item.email" :danger="!!errors.email" val-icon-danger="icon-x" val-icon-pack="feather" />
+                        <div class="text-danger text-xs" v-show="!!errors.email">{{ errors.email | arr2str }}</div>
                     </div>
                 </div>
+
                 <div class="vx-row mb-6">
                     <div class="vx-col sm:w-1/3 w-full">
-                        <strong>{{ $t('pet.sex') }}:</strong>
+                        <strong>{{ $t('user.password') }}:</strong>
                     </div>
                     <div class="vx-col sm:w-2/3 w-full">
-                        <vs-select v-model="pet.sex" class="w-full" :danger="!!errors.sex" val-icon-danger="icon-x" val-icon-pack="feather">
-                            <vs-select-item :key="index" :value="index" :text="item" v-for="(item,index) in petSexes" class="w-full" />
-                        </vs-select>
-                        <div class="text-danger text-xs" v-show="!!errors.sex">{{ errors.sex | arr2str }}</div>
+                        <vs-input required type="password" class="w-full" v-model="item.password" :danger="!!errors.password" val-icon-danger="icon-x" val-icon-pack="feather" />
+                        <div class="text-danger text-xs" v-show="!!errors.password">{{ errors.password | arr2str }}</div>
                     </div>
                 </div>
+
                 <div class="vx-row mb-6">
                     <div class="vx-col sm:w-1/3 w-full">
-                        <strong>{{ $t('pet.bread') }}:</strong>
+                        <strong>{{ $t('user.confirmPassword') }}:</strong>
                     </div>
                     <div class="vx-col sm:w-2/3 w-full">
-                        <vs-input class="w-full" v-model="pet.bread" :danger="!!errors.bread" val-icon-danger="icon-x" val-icon-pack="feather" />
-                        <div class="text-danger text-xs" v-show="!!errors.bread">{{ errors.bread | arr2str }}</div>
+                        <vs-input required type="password" class="w-full" v-model="item.password_confirmation" :danger="!!errors.password" val-icon-danger="icon-x" val-icon-pack="feather" />
+                        <div class="text-danger text-xs" v-show="!!errors.password_confirmation">{{ errors.password_confirmation | arr2str }}</div>
                     </div>
                 </div>
+
+                <div class="vx-row mb-6">
+                    <div class="vx-col sm:w-1/3 w-full">
+
+                    </div>
+                    <div class="vx-col sm:w-2/3 w-full">
+                        <vs-checkbox v-model="item.sendWelcomeEmail">Отправить письмо с данными</vs-checkbox>
+                    </div>
+                </div>
+
             </div>
         </b-modal>
     </div>
@@ -63,15 +84,13 @@
         components: {BModal, BSpinner, BCard, BRow, BCol, BButton},
         data() {
             return {
-                pet: {},
                 active: false,
-                errors: []
+                errors: [],
+                item: {}
             }
         },
         mounted() {
-            if (this.userId) {
-                this.pet.userId = this.userId;
-            }
+
         },
         created() {
             this.active = true;
@@ -79,19 +98,19 @@
         methods: {
             close() {
                 this.active = false;
-                this.$store.dispatch('closePetCreateModal');
+                this.$emit('close');
             },
             save(e) {
                 e.preventDefault();
 
                 this.$vs.loading();
 
-                this.$store.dispatch('createPet', this.pet)
+                this.$store.dispatch('createUser', this.item)
                     .then(res => {
                         if (!!res.data.message) {
                             this.$vs.notify({title:res.data.message.title, text: res.data.message.text, color: 'success', iconPack: 'feather', icon:'icon-check'});
                         }
-                        this.$emit(this.modalAction);
+                        this.$emit('created');
                     })
                     .catch(err => {
                         this.errors = err.response.data.errors ? err.response.data.errors : [];
@@ -104,42 +123,21 @@
             }
         },
         computed: {
-            user() {
-                return this.$store.state.AppActiveUser
-            },
             params() {
                 return this.$store.state.appParams;
             },
-            petTypes() {
-                return this.params.petTypes;
+            userRoles() {
+                return this.params.userRoles;
             },
-            petSexes() {
-                return this.params.petSexes;
-            },
-            modalData() {
-                return this.$store.state.petCreateModalOpened;
-            },
-            userId() {
-                return !!this.modalData.userId?this.modalData.userId:null;
-            },
-            modalAction() {
-                return this.modalData.modalAction ? this.modalData.modalAction : 'reload';
-            },
+
         },
     }
 </script>
 <style lang="scss" scoped>
-    #photo-col {
-        width: 10rem;
-    }
-
-    #pet-modal {
+    #user-add-modal {
         table {
             td {
-                //vertical-align: top;
-                //min-width: 140px;
                 padding-bottom: .8rem;
-                //word-break: break-all;
             }
 
             &:not(.permissions-table) {
@@ -151,13 +149,4 @@
             }
         }
     }
-
-
-    @media screen and (min-width:1201px) and (max-width:1211px),
-    only screen and (min-width:636px) and (max-width:991px) {
-        #pet-info-col-1 {
-            //width: calc(100% - 12rem) !important;
-        }
-    }
-
 </style>

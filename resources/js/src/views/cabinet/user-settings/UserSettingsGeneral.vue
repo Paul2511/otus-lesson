@@ -3,6 +3,9 @@
         <vx-card no-shadow>
             <div v-if="!!user">
                 <vx-card :title="$t('user.general')" class="mb-base">
+                    <template v-if="canAdmin" slot="actions">
+                        <feather-icon @click="loginAsConfirm" :title="$t('user.loginAs')" icon="LogInIcon" svgClasses="w-6 h-6 text-grey"></feather-icon>
+                    </template>
                     <user-settings-general-view :user="user" @edit="edit" v-if="!editing" />
                     <user-settings-general-edit v-if="editing" :user-info="user" @cancel="cancel" @set="setUser" />
                 </vx-card>
@@ -10,7 +13,6 @@
         </vx-card>
     </div>
 </template>
-
 
 <script>
     import UserSettingsGeneralView from './user-settings-general/UserSettingsGeneralView.vue'
@@ -26,8 +28,16 @@
             }
         },
         created() {
+            let action = 'getProfile';
+            let userId = this.userId;
+            if (userId) {
+                action = 'getUser';
+            } else {
+                userId = null;
+            }
+
             this.$vs.loading();
-            this.$store.dispatch('getProfile')
+            this.$store.dispatch(action, userId)
                 .then(res => {
                     this.user = res.data.data;
                 })
@@ -49,11 +59,44 @@
             setUser(user) {
                 this.user = user;
                 this.editing = false;
+            },
+            loginAsConfirm() {
+                let _this = this;
+                this.$vs.dialog({
+                    type: 'confirm',
+                    color:'warning',
+                    title: this.$t('main.confirmLogin'),
+                    text: this.$t('user.confirmLogin', {name: _this.user.name.fullName}),
+                    acceptText: this.$t('buttons.confirm'),
+                    cancelText: this.$t('buttons.cancel'),
+                    buttonsHidden: true,
+                    accept:function () {
+                        _this.loginAs();
+                    }
+                })
+            },
+            loginAs() {
+                this.$vs.loading();
+                this.$store.dispatch('auth/loginAs', this.user.id)
+                    .then(res =>  {
+                        window.location.reload();
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors ? err.response.data.errors : [];
+                        this.$vs.notify({
+                            title: this.$t('Error'),
+                            text: err.response.data.message || this.$t('ErrorResponse'),
+                            color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
+                    })
+                    .finally(() => (this.$vs.loading.close()));
             }
         },
         computed: {
-            appUser() {
-                return this.$store.state.AppActiveUser
+            canAdmin() {
+                return this.$acl.check('canAdmin')
+            },
+            userId() {
+                return this.$route.params.userId;
             }
         }
     }

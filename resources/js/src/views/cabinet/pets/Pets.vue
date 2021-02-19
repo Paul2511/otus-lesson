@@ -94,7 +94,7 @@
         },
         methods: {
             addPet() {
-                this.$store.dispatch('openPetCreateModal');
+                this.$store.dispatch('openPetCreateModal', {});
             },
             removePet(pet) {
                 let _this = this;

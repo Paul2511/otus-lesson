@@ -24,7 +24,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
     {
         $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION))
             ->assertStatus(422)
-            ->assertJsonValidationErrors(['email', 'password']);
+            ->assertJsonValidationErrors(['email', 'password', 'password_confirmation']);
     }
 
     /**
@@ -33,7 +33,10 @@ class ApiAuthControllerRegistrationTest extends TestCase
      */
     public function testRequiresEmail422()
     {
-        $payload = ['password' => env('USER_TEST_PASSWORD')];
+        $payload = [
+            'password' => env('USER_TEST_PASSWORD'),
+            'password_confirmation' => env('USER_TEST_PASSWORD')
+        ];
 
         $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
@@ -57,10 +60,46 @@ class ApiAuthControllerRegistrationTest extends TestCase
      * @group auth
      * @group register
      */
+    public function testRequiresPasswordConfirm422()
+    {
+        $payload = [
+            'email' => 'testlogin@user.com',
+            'password' => env('USER_TEST_PASSWORD')
+        ];
+
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['password_confirmation']);
+    }
+
+    /**
+     * @group auth
+     * @group register
+     */
+    public function testRequiresPasswordNotMatch422()
+    {
+        $payload = [
+            'email' => 'testlogin@user.com',
+            'password' => env('USER_TEST_PASSWORD'),
+            'password_confirmation' => 'test',
+        ];
+
+        $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['password_confirmation']);
+    }
+
+    /**
+     * @group auth
+     * @group register
+     */
     public function testWrongEmail422()
     {
-
-        $payload = ['email' => 'wrongEmail', 'password' => env('USER_TEST_PASSWORD')];
+        $payload = [
+            'email' => 'wrongEmail',
+            'password' => env('USER_TEST_PASSWORD'),
+            'password_confirmation' => env('USER_TEST_PASSWORD'),
+        ];
 
         $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload)
             ->assertStatus(422)
@@ -96,6 +135,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
         $payload = [
             'email' => 'testlogin@user.com',
             'password' => env('USER_TEST_PASSWORD'),
+            'password_confirmation' => env('USER_TEST_PASSWORD'),
             'locale' => 'fr'
         ];
 
@@ -113,7 +153,8 @@ class ApiAuthControllerRegistrationTest extends TestCase
     {
         $payload = [
             'email' => 'testlogin@user.com',
-            'password' => env('USER_TEST_PASSWORD')
+            'password' => env('USER_TEST_PASSWORD'),
+            'password_confirmation' => env('USER_TEST_PASSWORD')
         ];
 
         $response= $this->json('POST', route(RouteNames::V1_CLIENT_REGISTRATION), $payload);
@@ -143,6 +184,7 @@ class ApiAuthControllerRegistrationTest extends TestCase
         $payload = [
             'email' => 'testlogin@user.com',
             'password' => env('USER_TEST_PASSWORD'),
+            'password_confirmation' => env('USER_TEST_PASSWORD'),
             'sendWelcomeEmail' => true
         ];
 

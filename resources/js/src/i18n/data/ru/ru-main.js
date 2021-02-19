@@ -9,5 +9,6 @@ export default
         cancel: 'Отмена',
         delete: 'Удалить'
     },
-    confirmDelete: 'Подтвердите удаление'
+    confirmDelete: 'Подтвердите удаление',
+    confirmLogin: 'Подтвердите авторизацию'
 }

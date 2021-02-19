@@ -19,21 +19,38 @@ class UserService
     /**
      * @var UserRepository
      */
-    private $userRepository;
+    private $repository;
 
     public function __construct(
         UserRepository $userRepository
     )
     {
-        $this->userRepository = $userRepository;
+        $this->repository = $userRepository;
     }
 
     public function findUser(int $id): User
     {
-        $user = $this->userRepository->findUser($id, true);
+        $user = $this->repository->findById($id);
 
         return $user;
     }
+
+    /**
+     * @return User[]|array|\Illuminate\Contracts\Pagination\LengthAwarePaginator|mixed
+     */
+    public function getUsers(?int $perPage = null, ?bool $withRequest = false)
+    {
+        $repository = $this->repository;
+
+        if ($withRequest) {
+            $repository = $repository->withRequest();
+        }
+
+        $result = $perPage ? $repository->paginate($perPage) : $repository->get();
+
+        return $result ?? [];
+    }
+
 
     /**
      * @throws UserUpdateException
@@ -49,7 +66,7 @@ class UserService
         $data = $updateData->all();
 
         try {
-            $result = $this->userRepository->updateUser($user, $data);
+            $result = $this->repository->update($user, $data);
 
             if (!$result) {
                 throw new UserUpdateException();
@@ -79,7 +96,7 @@ class UserService
         $data = $userRegisterData->toArray();
 
         try {
-            $user = $this->userRepository->createUser($data);
+            $user = $this->repository->create($data);
 
             LogHelper::registration('Новая регистрация пользователя', [
                 'id'=>$user->id,

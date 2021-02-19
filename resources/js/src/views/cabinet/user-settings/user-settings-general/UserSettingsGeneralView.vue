@@ -30,7 +30,7 @@
         <!-- Information - Col 2 -->
         <div class="vx-col flex-1" id="account-info-col-2">
             <table>
-                <tr>
+                <tr v-if="0">
                     <td class="font-semibold">{{ $t('user.phone') }}</td>
                     <td>{{ user.phone.formatPhone }}</td>
                 </tr>
@@ -53,6 +53,15 @@
                 <tr v-if="!!user.specialist && !!user.specialist.specializationTitle">
                     <td class="font-semibold">{{ $t('user.specialization') }}</td>
                     <td>{{ user.specialist.specializationTitle }}</td>
+                </tr>
+
+                <tr v-if="canAdmin && user.currentRole.role==='client'">
+                    <td class="font-semibold">{{ $t('user.petsCount') }}:</td>
+                    <td>
+                        <router-link :to="'/cabinet/pets/'+user.id">
+                            {{ user.petsCount }}
+                        </router-link>
+                    </td>
                 </tr>
             </table>
         </div>

@@ -17,4 +17,9 @@ class AuthLoginData extends DataTransferObject
             'password' => $request->get('password')
         ]);
     }
+
+    public static function fromArray(array $data): self
+    {
+        return new self($data);
+    }
 }

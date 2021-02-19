@@ -13,7 +13,7 @@
         <router-view @setAppClasses="setAppClasses"/>
 
         <pet-modal v-if="petModalOpened" @reload="reload" @changed="petChanged"></pet-modal>
-        <pet-create-modal v-if="petCreateModalOpened" @reload="reload"></pet-create-modal>
+        <pet-create-modal v-if="petCreateModalOpened" @reload="reload" @created="petCreated"></pet-create-modal>
     </div>
 </template>
 
@@ -80,6 +80,10 @@
             petChanged() {
                 this.$store.commit('CHANGED_PET', true);
                 this.$store.commit('CLOSE_PET_MODAL');
+            },
+            petCreated() {
+                this.$store.commit('CHANGED_PET', true);
+                this.$store.commit('CLOSE_PET_CREATE_MODAL');
             }
         },
         mounted() {

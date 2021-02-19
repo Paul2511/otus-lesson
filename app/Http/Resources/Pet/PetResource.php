@@ -32,6 +32,7 @@ class PetResource extends BaseResource
         $my = auth()->user();
         if ($my->canManage) {
             $result['clientName'] = $this->client->user->name->displayName;
+            $result['clientUserId'] = $this->client->user_id;
             $result['comments'] = CommentResource::collection($this->comments);
         }
 

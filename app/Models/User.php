@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Casts\PhoneCast;
 use App\Models\Casts\User\AvatarCast;
 use App\Models\Casts\User\NameCast;
+use App\Models\Traits\HasComments;
+use App\Models\Traits\UserTimezoneTrait;
 use App\Services\Files\DTO\ImageData;
 use App\States\User\Role\AdminUserRole;
 use App\States\User\Role\ClientUserRole;
@@ -14,6 +16,7 @@ use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Scout\Searchable;
 use Support\Person\PersonName\PersonNameData;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -70,6 +73,7 @@ use App\States\User\Role\UserRole;
  * @property-read bool                  $canManage
  *
  * @property-read Collection|Comment[]  $commentsByUser
+ * @property-read Collection|Comment[] $comments
  * @property-read Collection|Client     $client
  * @property-read Collection|Specialist $specialist
  * @property-read Collection|Lead[]     $leads
@@ -77,11 +81,7 @@ use App\States\User\Role\UserRole;
  */
 class User extends Authenticatable implements JWTSubject, HasLocalePreference
 {
-    use HasApiTokens;
-    use HasFactory;
-    use Notifiable;
-    use Rememberable;
-    use HasStates;
+    use HasApiTokens, HasFactory, Notifiable, Rememberable, Rememberable, HasStates, Searchable, HasComments, UserTimezoneTrait;
 
     public string $clientPassword;
 
@@ -97,7 +97,7 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
     public $sendWelcomeEmail = false;
 
     protected $fillable = [
-        'email', 'password', 'phone', 'status', 'locale', 'role', 'name', 'avatar'
+        'email', 'password', 'phone', 'status', 'locale', 'role', 'name', 'avatar', 'status'
     ];
 
     public function preferredLocale()
@@ -110,14 +110,14 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
-        'created_at',
         'updated_at',
         'status',
         'role'
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime:Y-m-d H:i',
+        'email_verified_at' => 'datetime:d.m.Y H:i',
+        'created_at' => 'datetime:d.m.Y H:i',
         'name' => NameCast::class,
         'phone' => PhoneCast::class,
         'avatar'=>AvatarCast::class,
@@ -126,7 +126,7 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
     ];
 
     protected $appends = [
-        'currentStatus', 'currentRole', 'specialist'
+        'currentStatus', 'currentRole', 'specialist', 'formatCreatedAt'
     ];
 
     protected $rememberCachePrefix = 'users';
@@ -135,6 +135,17 @@ class User extends Authenticatable implements JWTSubject, HasLocalePreference
         'created'=>UserCreated::class,
         'updated'=>UserUpdated::class
     ];
+
+    public function toSearchableArray() : array
+    {
+        $result = [
+            'id' => $this->id,
+            'name' => $this->name->fullName,
+            'email' => $this->email
+        ];
+
+        return $result;
+    }
 
     public function client()
     {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="pet-types-list">
+        <div id="pet-list">
             <div class="vx-card p-6">
                 <vs-table
                         v-if="!isLoading"
@@ -10,30 +10,70 @@
                         @sort="handleSort"
                 >
                     <template slot="header">
-                        <h3>{{ $t('PetTypes') }}</h3>
 
-                        <vs-button
-                                color="primary"
-                                style="margin-left: auto"
-                                size="small"
-                                class="mb-2"
-                                icon-pack="feather"
-                                icon="icon-plus-circle"
-                                @click="add"
-                        >
-                            {{ $t('buttons.add') }}
-                        </vs-button>
+                        <div class="flex flex-col flex-grow-1">
+                            <div class="flex align-content-center">
+                                <h3>{{ $t('user.userList') }}</h3>
+                                <vs-button
+                                   color="primary"
+                                   style="margin-left: auto"
+                                   size="small"
+                                   class="mb-2"
+                                   icon-pack="feather"
+                                   icon="icon-plus-circle"
+                                   @click="add"
+                                >
+                                    {{ $t('user.add') }}
+                                </vs-button>
 
-                        <vx-input-group class="mb-2 input-group-search">
-                            <vs-input :placeholder="$t('Search')+'...'" @keyup.enter="handleSearch" v-model="search"/>
+                                <vx-input-group class="mb-2 input-group-search">
+                                    <vs-input :placeholder="$t('Search')+'...'" @keyup.enter="handleSearch" v-model="search"/>
 
-                            <template slot="append">
-                                <div class="append-text btn-addon">
-                                    <vs-button color="primary" size="small" @click="handleSearch">{{ $t('buttons.find') }}</vs-button>
+                                    <template slot="append">
+                                        <div class="append-text btn-addon">
+                                            <vs-button color="primary" size="small" @click="handleSearch">{{ $t('buttons.find') }}</vs-button>
+                                        </div>
+                                    </template>
+                                </vx-input-group>
+                            </div>
+                            <div class="flex align-content-center" style="margin-top: 10px; margin-bottom: 10px">
+                                <div class="flex align-items-center">
+                                    <div>
+                                        <vs-select v-model="filterRole" val-icon-danger="icon-x" val-icon-pack="feather">
+                                            <vs-select-item
+                                                    size="small"
+                                                    :text="'- ' + $t('user.role') + ' -'"
+                                                    class="w-full"/>
+                                            <vs-select-item
+                                                    size="small"
+                                                    :key="index"
+                                                    :value="index"
+                                                    :text="role"
+                                                    v-for="(role, index) in userRoles"
+                                                    class="w-full"
+                                            />
+                                        </vs-select>
+                                    </div>
+
+                                    <div class="ml-3">
+                                        <vs-select v-model="filterStatus" val-icon-danger="icon-x" val-icon-pack="feather">
+                                            <vs-select-item
+                                                    size="small"
+                                                    :text="'- ' + $t('user.status') + ' -'"
+                                                    class="w-full"/>
+                                            <vs-select-item
+                                                    size="small"
+                                                    :key="index"
+                                                    :value="index"
+                                                    :text="item"
+                                                    v-for="(item,index) in userStatuses"
+                                                    class="w-full"
+                                            />
+                                        </vs-select>
+                                    </div>
                                 </div>
-                            </template>
-                        </vx-input-group>
-
+                            </div>
+                        </div>
                     </template>
                     <template slot="thead">
                         <vs-th :key="th.key" v-for="th in tableColumns" :sort-key="th.sort?th.key:null">{{ th.label }}</vs-th>
@@ -44,21 +84,39 @@
                             <vs-td :data="data[indextr].id">
                                 {{ data[indextr].id }}
                             </vs-td>
-                            <vs-td :data="data[indextr].slug">
-                                {{ data[indextr].slug }}
+                            <vs-td :data="data[indextr].name.fullName">
+                                {{ data[indextr].name.fullName }}
                             </vs-td>
-                            <vs-td :key="locale" v-for="locale in locales" :data="data[indextr]['locale_'+locale] || ''">
-                                {{ data[indextr]['locale_'+locale] || '' }}
+                            <vs-td :data="data[indextr].currentRole.label">
+                                {{ data[indextr].currentRole.label }}
+                            </vs-td>
+                            <vs-td :data="data[indextr].currentStatus.label">
+                                <vs-chip :color="data[indextr].currentStatus.color">
+                                    {{ data[indextr].currentStatus.label }}
+                                </vs-chip>
+                            </vs-td>
+                            <vs-td :data="data[indextr].email">
+                                {{ data[indextr].email }}
+                            </vs-td>
+                            <vs-td :data="data[indextr].formatCreatedAt">
+                                {{ data[indextr].formatCreatedAt }}
+                            </vs-td>
+                            <vs-td :data="data[indextr].petsCount?data[indextr].petsCount:''" class="text-center">
+                                <router-link v-if="!!data[indextr].petsCount" :to="'/cabinet/pets/'+data[indextr].id">
+                                    {{ data[indextr].petsCount }}
+                                </router-link>
                             </vs-td>
                             <vs-td class="action-column">
                                 <vs-dropdown vs-trigger-click>
                                     <vs-button radius color="primary" type="flat" icon-pack="feather" icon="icon-more-vertical"></vs-button>
                                     <vs-dropdown-menu>
-                                        <vs-dropdown-item @click="edit(data[indextr])">
-                                            {{ $t('buttons.edit') }}
-                                        </vs-dropdown-item>
-                                        <vs-dropdown-item :disabled="!data[indextr].canDelete" @click="del(data[indextr])">
-                                            {{ $t('buttons.delete') }}
+                                        <router-link :to="'/cabinet/users/'+data[indextr].id">
+                                            <vs-dropdown-item>
+                                                {{ $t('buttons.view') }}
+                                            </vs-dropdown-item>
+                                        </router-link>
+                                        <vs-dropdown-item @click="loginAsConfirm(data[indextr])">
+                                            {{ $t('user.loginAs') }}
                                         </vs-dropdown-item>
                                     </vs-dropdown-menu>
                                 </vs-dropdown>
@@ -67,23 +125,22 @@
                     </template>
                 </vs-table>
                 <div v-if="totalItems > maxItems" class="mt-5">
-                    <vs-pagination :total="Math.round(totalItems/maxItems)" v-model="currentPage"></vs-pagination>
+                    <vs-pagination :total="Math.ceil(totalItems/maxItems)" v-model="currentPage"></vs-pagination>
                 </div>
             </div>
         </div>
 
-        <pet-type-modal v-if="modalOpened" :item="modalItem" @close="modalClose" @changed="itemChanged"></pet-type-modal>
-    </div>
+        <user-add-modal v-if="modalOpened" @close="modalClose" @created="created"></user-add-modal>
 
+    </div>
 </template>
 
-
 <script>
-    import {BSpinner, BRow, BCol, BButton, BFormInput} from 'bootstrap-vue'
-    import petTypeModal from '@/modals/pet-type-modal/pet-type-modal.vue'
+    import {BSpinner, BRow, BCol, BButton, BFormInput} from 'bootstrap-vue';
+    import userAddModal from '@/modals/user-add-modal/user-add-modal.vue';
     export default {
         components: {
-            BSpinner, BRow, BCol, BButton, BFormInput, petTypeModal
+            BSpinner, BRow, BCol, BButton, BFormInput, userAddModal
         },
         data() {
             return {
@@ -97,16 +154,17 @@
                 page: 1,
                 currentPage: 1,
                 search: '',
-                modalOpened: false,
-                modalItem: {}
+                filter: {},
+                filterRole: null,
+                filterStatus: null,
+                modalOpened: false
             }
         },
-
         mounted() {
-            this.getPetTypes();
+            this.getItems();
         },
         methods: {
-            getPetTypes() {
+            getItems() {
                 this.$vs.loading({
                     type: 'point'
                 });
@@ -124,7 +182,19 @@
                     params.query = this.search;
                 }
 
-                this.$store.dispatch('getPetTypes', params)
+                if (this.filter) {
+                    let hasFilter = false;
+                    for (let key in this.filter) {
+                        if (hasOwnProperty.call(this.filter, key)) {
+                            hasFilter = true;
+                        }
+                    }
+                    if (hasFilter) {
+                        params.filter = this.filter;
+                    }
+                }
+
+                this.$store.dispatch('getUserList', params)
                     .then(res => {
                         this.items = res.data.data;
                         this.tableColumns = res.data.fields;
@@ -151,54 +221,38 @@
                 if (key) {
                     this.sort = key;
                     this.direction = active;
-                    this.getPetTypes();
+                    this.getItems();
                 }
             },
             handleSearch() {
-                this.getPetTypes();
+                this.getItems();
             },
             add() {
-                let translates = [];
-
-                if (this.locales.length) {
-                    this.locales.forEach((locale) => {
-                        translates.push({
-                            type: 'petType',
-                            locale: locale,
-                            value: ''
-                        });
-                    });
-                }
-                this.modalItem = {
-                    slug: '',
-                    translates: translates
-                };
                 this.modalOpened = true;
             },
-            del(petType) {
+            del(item) {
                 let _this = this;
-
                 this.$vs.dialog({
                     type: 'confirm',
                     color:'danger',
                     title: this.$t('main.confirmDelete'),
-                    text: this.$t('petType.confirmDelete', {slug: petType.slug}),
+                    text: this.$t('pet.confirmDelete', {name: item.name}),
                     acceptText: this.$t('buttons.delete'),
                     cancelText: this.$t('buttons.cancel'),
                     buttonsHidden: true,
                     accept:function () {
-                        _this.acceptDel(petType);
+                        _this.acceptDel(item);
                     }
                 })
             },
-            acceptDel(petType) {
+            acceptDel(item) {
                 this.$vs.loading();
-                this.$store.dispatch('deletePetType', petType.id)
+                this.$store.dispatch('deletePet', item.id)
                     .then(res => {
                         if (!!res.data.message) {
                             this.$vs.notify({title:res.data.message.title, text: res.data.message.text, color: 'success', iconPack: 'feather', icon:'icon-check'});
                         }
-                        this.getPetTypes();
+                        this.getItems();
                     })
                     .catch(err => {
                         this.$vs.notify({
@@ -208,42 +262,93 @@
                     })
                     .finally(() => (this.$vs.loading.close()));
             },
-            edit(petType) {
-                this.modalItem = petType;
-                this.modalOpened = true;
+            view(item, isEdit) {
+                this.$store.dispatch('openPetModal', {petId: item.id, isEdit: isEdit, modalAction: 'changed'});
             },
             modalClose() {
                 this.modalOpened = false;
-                this.modalItem = undefined;
             },
-            itemChanged() {
+            created() {
                 this.modalOpened = false;
-                this.modalItem = undefined;
-                this.getPetTypes();
+                this.getItems();
             },
+            loginAsConfirm(user) {
+                let _this = this;
+                this.$vs.dialog({
+                    type: 'confirm',
+                    color:'warning',
+                    title: this.$t('main.confirmLogin'),
+                    text: this.$t('user.confirmLogin', {name: user.name.fullName}),
+                    acceptText: this.$t('buttons.confirm'),
+                    cancelText: this.$t('buttons.cancel'),
+                    buttonsHidden: true,
+                    accept:function () {
+                        _this.loginAs(user.id);
+                    }
+                })
+            },
+            loginAs(userId) {
+                this.$vs.loading();
+                this.$store.dispatch('auth/loginAs', userId)
+                    .then(res =>  {
+                        window.location.reload();
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors ? err.response.data.errors : [];
+                        this.$vs.notify({
+                            title: this.$t('Error'),
+                            text: err.response.data.message || this.$t('ErrorResponse'),
+                            color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
+                    })
+                    .finally(() => (this.$vs.loading.close()));
+            }
         },
+
         computed: {
             params() {
                 return this.$store.state.appParams;
             },
-            locales() {
-                return this.params.locales;
-            },
             windowWidth() {
                 return this.$store.getters.windowBreakPoint
-            }
+            },
+            userStatuses() {
+                return this.params.userStatuses;
+            },
+            userRoles() {
+                return this.params.userRoles;
+            },
         },
         watch: {
             currentPage(val) {
                 this.page = val;
-                this.getPetTypes();
+                this.getItems();
+            },
+            filterRole(v) {
+                if (v) {
+                    this.filter.role = v;
+                } else {
+                    delete this.filter.role;
+                }
+                this.getItems();
+            },
+            filterStatus(v) {
+                if (v) {
+                    this.filter.status = v;
+                } else {
+                    delete this.filter.status;
+                }
+
+                this.getItems();
             }
         }
     }
 </script>
 
+<style lang="scss">
+    .header-table {
+        margin-bottom: 10px;
+    }
 
-<style lang="scss" scoped>
     .input-group-search {
         margin-left: auto;
     }

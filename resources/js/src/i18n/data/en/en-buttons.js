@@ -8,5 +8,6 @@ export default
     close: 'Close',
     create: 'Create',
     add: 'Add',
-    find: 'Find'
+    find: 'Find',
+    confirm: 'Confirm'
 }

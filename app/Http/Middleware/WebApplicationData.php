@@ -36,6 +36,12 @@ class WebApplicationData
         });
         $data['userStatuses'] = $userStatuses;
 
+        $userRoles = [];
+        User::getStatesFor('role')->each(function (string $role) use (&$userRoles) {
+            $userRoles[$role] = trans('user.role.'.$role);
+        });
+        $data['userRoles'] = $userRoles;
+
         $petTypes = $this->getPetTypeService()->getAll();
         $data['petTypes'] = $petTypes;
 

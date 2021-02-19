@@ -12,5 +12,13 @@ return [
     'status'=>[
         'active'=>'Активный',
         'blocked'=>'Заблокирован'
+    ],
+    'label'=>[
+        'name'=>'ФИО',
+        'role'=>'Роль',
+        'status'=>'Статус',
+        'email'=>'email',
+        'created_at'=>'Дата регистрации',
+        'petsCount'=>'Кол-во питомцев'
     ]
 ];

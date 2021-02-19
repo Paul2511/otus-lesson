@@ -1,9 +1,10 @@
 export const PROFILE = '/api/v1/auth/profile';
 export const LOGIN = '/api/v1/auth/login';
+export const LOGIN_AS = '/api/v1/auth/login-as';
 export const CLIENT_REGISTRATION = '/api/v1/auth/registration';
 export const TOKEN_REFRESH = '/api/v1/auth/refresh';
 
-
+export const CREATE_USER = '/api/v1/users';
 export const GET_USER = (userId) => {
     return '/api/v1/users/'+userId;
 };
@@ -13,6 +14,10 @@ export const UPDATE_USER = (userId) => {
 export const GET_USER_PETS = (userId) => {
     return '/api/v1/users/'+userId+'/pets';
 };
+export const GET_USER_COMMENTS = (userId) => {
+    return '/api/v1/users/'+userId+'/comments';
+};
+export const GET_ALL_USERS = '/api/v1/users/list';
 
 export const GET_PETS = '/api/v1/pets';
 export const GET_ALL_PETS = '/api/v1/pets/list';

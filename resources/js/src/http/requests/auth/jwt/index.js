@@ -79,11 +79,9 @@ export default {
             password: pwd
         })
     },
-    registerUser(name, email, pwd) {
-        return axios.post(requests.CLIENT_REGISTRATION, {
-            displayName: name,
-            email,
-            password: pwd
+    loginAs(userId) {
+        return axios.post(requests.LOGIN_AS, {
+            userId: userId
         })
     },
     refreshToken() {

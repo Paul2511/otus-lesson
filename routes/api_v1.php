@@ -16,6 +16,7 @@ Route::group([
 ], function () {
     Route::get('profile', [AuthController::class, 'profile'])->name(RouteNames::V1_PROFILE);
     Route::post('login', [AuthController::class, 'login'])->name(RouteNames::V1_LOGIN);
+    Route::post('login-as', [AuthController::class, 'loginAs'])->name(RouteNames::V1_LOGIN_AS);
     Route::post('registration', [AuthController::class, 'registration'])->name(RouteNames::V1_CLIENT_REGISTRATION);
     Route::post('refresh', [AuthController::class, 'refresh'])->name(RouteNames::V1_TOKEN_REFRESH)->middleware(\App\Http\Middleware\JwtMiddleware::class);
 });
@@ -23,9 +24,12 @@ Route::group([
 Route::group([
     'prefix' => 'users',
 ], function () {
+    Route::post('/', [UserController::class, 'store'])->name(RouteNames::V1_CREATE_USER);
+    Route::get('/list', [UserController::class, 'list'])->name(RouteNames::V1_GET_ALL_USERS);
     Route::get('/{user}', [UserController::class, 'show'])->name(RouteNames::V1_GET_USER);
     Route::put('/{user}', [UserController::class, 'update'])->name(RouteNames::V1_UPDATE_USER);
     Route::get('/{user}/pets', [UserController::class, 'pets'])->name(RouteNames::V1_GET_USER_PETS);
+    Route::get('/{user}/comments', [UserController::class, 'comments'])->name(RouteNames::V1_GET_USER_COMMENTS);
 });
 
 Route::group([

@@ -8,5 +8,6 @@ export default
     close: 'Закрыть',
     create: 'Создать',
     add: 'Добавить',
-    find: 'Найти'
+    find: 'Найти',
+    confirm: 'Подтвердить'
 }

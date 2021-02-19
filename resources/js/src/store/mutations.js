@@ -105,23 +105,23 @@ const mutations = {
     UPDATE_USER_INFO (state, payload) {
 
         // Get Data localStorage
-        const userInfo = JSON.parse(localStorage.getItem('userInfo')) || state.AppActiveUser
-        for (const property of Object.keys(payload)) {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo')) || state.AppActiveUser;
 
-            if (payload[property] !== null) {
-                // If some of user property is null - user default property defined in state.AppActiveUser
-                state.AppActiveUser[property] = payload[property]
+        if (payload.id === userInfo.id) {
+            for (const property of Object.keys(payload)) {
 
-                // Update key in localStorage
-                userInfo[property] = payload[property]
+                if (payload[property] !== null) {
+                    // If some of user property is null - user default property defined in state.AppActiveUser
+                    state.AppActiveUser[property] = payload[property]
+
+                    // Update key in localStorage
+                    userInfo[property] = payload[property]
+                }
             }
-
-
+            // Store data in localStorage
+            localStorage.setItem('userInfo', JSON.stringify(userInfo))
         }
-        // Store data in localStorage
-        localStorage.setItem('userInfo', JSON.stringify(userInfo))
     },
-
     SET_USER_INFO(state, payload) {
         localStorage.setItem('userInfo', JSON.stringify(payload))
     },
@@ -140,12 +140,11 @@ const mutations = {
     CHANGED_PET(state, changedState) {
         state.changedPet = changedState;
     },
-
-    OPEN_PET_CREATE_MODAL(state) {
-        state.petCreateModalOpened = true;
+    OPEN_PET_CREATE_MODAL(state, data) {
+        state.petCreateModalOpened = data;
     },
     CLOSE_PET_CREATE_MODAL(state) {
-        state.petCreateModalOpened = false;
+        state.petCreateModalOpened = undefined;
     }
 };
 

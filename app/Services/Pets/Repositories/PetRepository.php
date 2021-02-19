@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 abstract class PetRepository
 {
     /**
-     * @var Request
+     * @var ApiGetRequest
      */
     protected $request;
 
@@ -62,7 +62,7 @@ abstract class PetRepository
 
     public function filterByClient(int $clientId): self
     {
-        $this->query->where(['client_id'=>$clientId]);
+        $this->query->where('client_id', $clientId);
 
         return $this;
     }

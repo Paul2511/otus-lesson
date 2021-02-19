@@ -49,6 +49,21 @@ class UserPolicy
         return $user->isManager || $user->id == $model->id;
     }
 
+    public function list(User $user)
+    {
+        return $user->isManager;
+    }
+
+    public function comments(User $user)
+    {
+        return $user->isManager;
+    }
+
+    public function loginAs(User $user)
+    {
+        return $user->isManager;
+    }
+
     /**
      * Determine whether the user can create models.
      *
@@ -57,7 +72,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->isManager;
     }
 
     /**

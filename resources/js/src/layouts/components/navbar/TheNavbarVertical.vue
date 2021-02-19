@@ -107,7 +107,7 @@
                     if (!n.url && !!n.submenu) {
                         return n.submenu.find(s => s.url === this.currentPath);
                     }
-                    return n.url === this.currentPath;
+                    return n.url === this.currentPath || this.$route.meta.parent === n.slug;
                 });
                 if (item) {
                     this.headerTitle = item.i18n ? item.i18n : item.name;

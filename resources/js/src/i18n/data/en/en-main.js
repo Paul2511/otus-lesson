@@ -9,5 +9,6 @@ export default
         cancel: 'Cancel',
         delete: 'Delete'
     },
-    confirmDelete: 'Confirm Delete'
+    confirmDelete: 'Confirm Delete',
+    confirmLogin: 'Confirm Login'
 }

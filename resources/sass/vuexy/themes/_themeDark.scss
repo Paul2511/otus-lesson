@@ -705,6 +705,9 @@
     }
 
     .vs-dropdown--item {
+      .vs-dropdown--item-link {
+        color: $theme-dark-text-color!important;
+      }
       .vs-dropdown--item-link.disabled {
         color: $grey !important;
       }

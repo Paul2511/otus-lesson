@@ -14,7 +14,7 @@
                         <div class="flex flex-col flex-grow-1">
                             <div class="flex align-content-center">
                                 <h3>{{ $t('pet.petList') }}</h3>
-                                <vs-button v-if="0"
+                                <vs-button v-if="!!userId"
                                         color="primary"
                                         style="margin-left: auto"
                                         size="small"
@@ -89,7 +89,9 @@
                                 {{ data[indextr].name }}
                             </vs-td>
                             <vs-td :data="data[indextr].clientName">
-                                {{ data[indextr].clientName }}
+                                <router-link :to="'/cabinet/users/'+data[indextr].clientUserId">
+                                    {{ data[indextr].clientName }}
+                                </router-link>
                             </vs-td>
                             <vs-td :data="data[indextr].petTypeTitle">
                                 {{ data[indextr].petTypeTitle }}
@@ -97,8 +99,8 @@
                             <vs-td :data="data[indextr].currentSex.label">
                                 {{ data[indextr].currentSex.label }}
                             </vs-td>
-                            <vs-td :data="data[indextr].created_at">
-                                {{ data[indextr].created_at }}
+                            <vs-td :data="data[indextr].formatCreatedAt">
+                                {{ data[indextr].formatCreatedAt }}
                             </vs-td>
                             <vs-td class="action-column">
                                 <vs-dropdown vs-trigger-click>
@@ -120,7 +122,7 @@
                     </template>
                 </vs-table>
                 <div v-if="totalItems > maxItems" class="mt-5">
-                    <vs-pagination :total="Math.round(totalItems/maxItems)" v-model="currentPage"></vs-pagination>
+                    <vs-pagination :total="Math.ceil(totalItems/maxItems)" v-model="currentPage"></vs-pagination>
                 </div>
             </div>
         </div>
@@ -186,6 +188,10 @@
                     }
                 }
 
+                if (!!this.userId) {
+                    params.userId = this.userId;
+                }
+
                 this.$store.dispatch('getPetsList', params)
                     .then(res => {
                         this.items = res.data.data;
@@ -220,8 +226,7 @@
                 this.getItems();
             },
             add() {
-
-                //this.modalOpened = true;
+                this.$store.dispatch('openPetCreateModal', {'userId': this.userId, 'modalAction': 'created'});
             },
             del(item) {
                 let _this = this;
@@ -275,6 +280,9 @@
             },
             changedPet() {
                 return this.$store.getters.changedPet
+            },
+            userId() {
+                return this.$route.params.userId;
             }
 
         },
@@ -305,11 +313,13 @@
                     this.getItems();
                     this.$store.commit('CHANGED_PET', false);
                 }
+            },
+            userId() {
+                this.getItems();
             }
         }
     }
 </script>
-
 <style lang="scss">
     .header-table {
         margin-bottom: 10px;

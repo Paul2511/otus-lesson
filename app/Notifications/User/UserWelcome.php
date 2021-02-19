@@ -10,10 +10,10 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
 class UserWelcome extends Notification implements ShouldQueue
 {
-    //use Queueable;
+    use Queueable;
     use InteractsWithQueue;
 
-    public $afterCommit = true;
+    //public $afterCommit = true;
     /**
      * @var string
      */

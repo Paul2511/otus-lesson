@@ -67,6 +67,11 @@ class PetPolicy
         return $user->isClient;
     }
 
+    public function createAnother(User $user)
+    {
+        return $user->canManage;
+    }
+
     /**
      * Determine whether the user can update the model.
      *

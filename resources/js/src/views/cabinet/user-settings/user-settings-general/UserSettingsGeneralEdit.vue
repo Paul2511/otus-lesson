@@ -59,7 +59,7 @@
             <!-- Information - Col 2 -->
             <div class="vx-col flex-1" id="account-info-col-2">
                 <table>
-                    <tr>
+                    <tr v-if="0">
                         <td class="font-semibold">{{ $t('user.phone') }}</td>
                         <td>{{ user.phone.formatPhone }}</td>
                     </tr>
@@ -72,7 +72,7 @@
                     <tr v-if="canAdmin">
                         <td class="font-semibold">{{ $t('user.status') }}</td>
                         <td>
-                            <vs-select @change="setUserData('status')" v-model="user.currentStatus.status" class="w-full" :danger="!!errors.status" val-icon-danger="icon-x" val-icon-pack="feather">
+                            <vs-select @change="setStatus" v-model="user.currentStatus.status" class="w-full" :danger="!!errors.status" val-icon-danger="icon-x" val-icon-pack="feather">
                                 <vs-select-item :key="index" :value="index" :text="item" v-for="(item,index) in userStatuses" class="w-full" />
                             </vs-select>
                             <span class="text-danger text-xs" v-show="!!errors.status">{{ errors.status | arr2str }}</span>
@@ -143,6 +143,11 @@
                     this.userData = {};
                 }
                 Vue.set(this.userData, 'name', this.name);
+            },
+            setStatus() {
+                this.user.status = this.user.currentStatus.status;
+                this.setUserData('status');
+                //Vue.set(this.userData, 'status', this.user.currentStatus.status);
             },
             cancel() {
                 this.$emit('cancel');

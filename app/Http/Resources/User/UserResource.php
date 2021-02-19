@@ -3,6 +3,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Comment\CommentResource;
 use App\Models\User;
 use App\Http\Resources\BaseResource;
 /**
@@ -27,9 +28,12 @@ class UserResource extends BaseResource
         if (!$my->canManage) {
             unset($result['currentStatus']);
             unset($result['currentRole']);
+        } else {
+            $result['comments'] = CommentResource::collection($this->comments);
+            if ($this->isClient) {
+                $result['petsCount'] = $this->client->pets()->count();
+            }
         }
-
-
 
         return $result;
     }

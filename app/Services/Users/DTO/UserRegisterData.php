@@ -22,9 +22,14 @@ class UserRegisterData extends DataTransferObject
 
     public ?string $locale;
 
+    public ?string $name;
+
+    protected bool $ignoreMissing = true;
+
     public static function fromRequest(UserRegisterRequest $request): self
     {
-        return new self([
+        $data = [
+            'name' => $request->get('name'),
             'role' => $request->get('role', ClientUserRole::$name),
             'email' => $request->get('email'),
             'password' => $request->get('password'),
@@ -32,7 +37,9 @@ class UserRegisterData extends DataTransferObject
             'sendWelcomeEmail' => $request->get('sendWelcomeEmail'),
             'clientPassword' => $request->get('password'),
             'locale' => $request->get('locale'),
-        ]);
+        ];
+
+        return new self($data);
     }
 
     public static function fromArray(array $data): self

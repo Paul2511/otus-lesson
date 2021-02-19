@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\Pet\PetCreated;
 use App\Events\Pet\PetDeleted;
 use App\Events\Pet\PetUpdated;
+use App\Models\Traits\UserTimezoneTrait;
 use App\Services\Files\DTO\ImageData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,7 +53,7 @@ use Laravel\Scout\Searchable;
  */
 class Pet extends Model
 {
-    use HasFactory, Rememberable, HasComments, HasStates, Searchable;
+    use HasFactory, Rememberable, HasComments, HasStates, Searchable, UserTimezoneTrait;
 
     protected $rememberCachePrefix = 'pets';
 
@@ -71,7 +72,7 @@ class Pet extends Model
     ];
 
     protected $appends = [
-        'petTypeTitle', 'currentSex', 'canDelete'
+        'petTypeTitle', 'currentSex', 'canDelete', 'formatCreatedAt'
     ];
 
     protected $dispatchesEvents = [

@@ -95,8 +95,9 @@ const state = {
     appParams: window.appParams,
 
     petModalOpened: undefined,
-    petCreateModalOpened: false,
+    petCreateModalOpened: undefined,
     changedPet: false
+
 };
 
 export default state

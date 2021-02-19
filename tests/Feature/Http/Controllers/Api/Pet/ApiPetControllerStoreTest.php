@@ -6,6 +6,7 @@ namespace Tests\Feature\Http\Controllers\Api\Pet;
 use App\Http\Controllers\Controller;
 use App\Http\RouteNames;
 use App\Models\PetType;
+use App\States\User\Role\AdminUserRole;
 use App\States\User\Role\ClientUserRole;
 use Tests\Generators\UserGenerator;
 
@@ -144,6 +145,69 @@ class ApiPetControllerStoreTest extends TestPet
             'sex' => 'male',
             'pet_type_id'=>$petType->id,
             'client_id'=>$user->client->id
+        ]);
+    }
+
+    /**
+     * В запросе присутствует чужой userId - клиету запрещен
+     * @group pet
+     * @group petStore
+     */
+    public function testUserIdDenied403()
+    {
+        $user = $this->currentUser();
+        $anotherUser = UserGenerator::generateClient();
+
+        $this->seedPetTypes();
+        /** @var PetType $petType */
+        $petType = PetType::orderByRaw('RAND()')->take(1)->first();
+
+        $payload = [
+            'name' => 'Гриня',
+            'sex' => 'male',
+            'pet_type_id'=>$petType->id,
+            'userId' => $anotherUser->id
+        ];
+
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_CREATE_PET), $payload);
+
+        $response->assertStatus(403)
+            ->assertJsonFragment(['message'=>trans('auth.accessDenied')]);
+    }
+
+    /**
+     * В запросе присутствует чужой userId - админу разрешен
+     * @group pet
+     * @group petStore
+     */
+    public function testUserIdAdminSuccess201()
+    {
+        $admin = $this->createUser(AdminUserRole::class);
+
+        $anotherUser = UserGenerator::generateClient();
+
+        $this->seedPetTypes();
+        /** @var PetType $petType */
+        $petType = PetType::orderByRaw('RAND()')->take(1)->first();
+
+        $payload = [
+            'name' => 'Гриня',
+            'sex' => 'male',
+            'pet_type_id'=>$petType->id,
+            'userId' => $anotherUser->id
+        ];
+
+        $response = $this->tokenHeader()->json('post', route(RouteNames::V1_CREATE_PET), $payload);
+
+
+        $response->assertStatus(Controller::JSON_STATUS_CREATED)
+            ->assertJsonStructure(['data']);
+
+        $this->assertDatabaseHas('pets', [
+            'name' => 'Гриня',
+            'sex' => 'male',
+            'pet_type_id'=>$petType->id,
+            'client_id'=>$anotherUser->client->id
         ]);
     }
 }
