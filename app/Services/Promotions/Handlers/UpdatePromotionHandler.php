@@ -3,9 +3,9 @@
 namespace App\Services\Promotions\Handlers;
 
 use \App\Services\Promotions\Repositories\EloquentPromotionsRepository;
-use \App\Services\Promotions\DTO\CreatePromotionDTO;
+use \App\Services\Promotions\DTO\UpdatePromotionDTO;
 
-class CreatePromotionHandler {
+class UpdatePromotionHandler {
     
     private EloquentPromotionsRepository $eloquentPromotionsRepository;
     
@@ -15,9 +15,7 @@ class CreatePromotionHandler {
         $this->eloquentPromotionsRepository = $eloquentPromotionsRepository;
     }
     
-    public function handler(CreatePromotionDTO $createPromotionDTO)
-    {
-        $this->eloquentPromotionsRepository->createFromArray($createPromotionDTO->toArray());
-        $this->eloquentPromotionsRepository->sendEmail($createPromotionDTO->toArray());
+    public function handler(UpdatePromotionDTO $updatePromotionDTO):void{
+        $this->eloquentPromotionsRepository->updateFromArray($updatePromotionDTO->toArray());
     }
 }

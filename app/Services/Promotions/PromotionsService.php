@@ -4,17 +4,18 @@ namespace App\Services\Promotions;
 
 use App\Models\Promotion;
 use App\Services\Promotions\DTO\CreatePromotionDTO;
-use App\Services\Promotions\Handlers\CreatePromotionHandler;
+use App\Services\Promotions\DTO\UpdatePromotionDTO;
+use App\Services\Promotions\Handlers\UpdatePromotionHandler;
 use App\Jobs\SendPromotionsEmail;
 
 class PromotionsService {
     
-    private CreatePromotionHandler $createPromotionHandler;
+    private UpdatePromotionHandler $updatePromotionHandler;
     
     public function __construct(
-            CreatePromotionHandler $createPromotionHandler
+            UpdatePromotionHandler $updatePromotionHandler
             ) {
-        $this->createPromotionHandler = $createPromotionHandler;
+        $this->updatePromotionHandler = $updatePromotionHandler;
     }
     
     public function createPromotion(CreatePromotionDTO $createPromotionDTO):Promotion{
