@@ -13,8 +13,9 @@ class PromotionsService {
     private UpdatePromotionHandler $updatePromotionHandler;
     
     public function __construct(
-            UpdatePromotionHandler $updatePromotionHandler
-            ) {
+        UpdatePromotionHandler $updatePromotionHandler
+    ) 
+    {
         $this->updatePromotionHandler = $updatePromotionHandler;
     }
     

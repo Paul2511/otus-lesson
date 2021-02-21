@@ -10,11 +10,11 @@ class UpdatePromotionDTO {
     private int $status;
     
     public function __construct(
-            string $text,
-            string $title,
-            string $validate,
-            int $category_id,
-            int $status
+        string $text,
+        string $title,
+        string $validate,
+        int $category_id,
+        int $status
     ) {
         $this->text = $text;
         $this->title = $title;
@@ -24,12 +24,12 @@ class UpdatePromotionDTO {
     }
     public static function fromArray(array $data){
         return new static(
-                $data['text'],
-                $data['title'],
-                $data['status'],
-                $date['category_id'],
-                $data['validate']
-           );
+            $data['text'],
+            $data['title'],
+            $data['status'],
+            $data['category_id'],
+            $data['validate']
+        );
     }
 
 
@@ -40,6 +40,6 @@ class UpdatePromotionDTO {
             'status' => $this->status,
             'category_id' => $this->category_id,
             'validate' => $this->validate
-            ];
+        ];
     }
 }

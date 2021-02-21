@@ -10,8 +10,9 @@ class CreatePromotionHandler {
     private EloquentPromotionsRepository $eloquentPromotionsRepository;
     
     public function __construct(
-        EloquentPromotionsRepository $eloquentPromotionsRepository
-        ) {
+            EloquentPromotionsRepository $eloquentPromotionsRepository
+        ) 
+    {
         $this->eloquentPromotionsRepository = $eloquentPromotionsRepository;
     }
     

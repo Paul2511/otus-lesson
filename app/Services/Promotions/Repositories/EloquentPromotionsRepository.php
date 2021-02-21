@@ -4,7 +4,7 @@ namespace App\Services\Promotions\Repositories;
 
 use App\Models\Promotion;
 use App\Http\Controllers\Admin\AdminBaseController;
-use \Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,15 +35,22 @@ class EloquentPromotionsRepository {
     }
     
     private function getUsersFromPromotionsLink(int $category_id){
-        return DB::table('promotions_link')->select('user_id')->where('category_id', $category_id)->get();
+        return DB::table('promotions_link')
+                ->select('user_id')
+                ->where('category_id', $category_id)
+                ->get();
     }
     
     private function getUsersEmail(int $category_id){
-        return User::select('email')->whereIn('id', $this->getUsersFromPromotionsLink($category_id))->get();
+        return User::select('email')
+                ->whereIn('id', $this->getUsersFromPromotionsLink($category_id))
+                ->get();
     }
     
     public function sendEmail(array $data){
+        
         $emails = $this->getUsersEmail($data['category_id']);
+        
         foreach($emails as $email){
             Mail::to($email)->send(new \App\Mail\Promotions($data));
         }

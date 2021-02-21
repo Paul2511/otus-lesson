@@ -11,7 +11,8 @@ class UpdatePromotionHandler {
     
     public function __construct(
         EloquentPromotionsRepository $eloquentPromotionsRepository
-        ) {
+    ) 
+    {
         $this->eloquentPromotionsRepository = $eloquentPromotionsRepository;
     }
     

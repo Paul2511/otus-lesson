@@ -15,7 +15,8 @@ class CreatePromotionDTO {
             string $validate,
             int $category_id,
             int $status
-    ) {
+    ) 
+    {
         $this->text = $text;
         $this->title = $title;
         $this->status = $status;
@@ -40,6 +41,6 @@ class CreatePromotionDTO {
             'status' => $this->status,
             'category_id' => $this->category_id,
             'validate' => $this->validate
-            ];
+        ];
     }
 }
