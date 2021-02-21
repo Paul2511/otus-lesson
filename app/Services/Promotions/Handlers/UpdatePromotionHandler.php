@@ -15,7 +15,7 @@ class UpdatePromotionHandler {
         $this->eloquentPromotionsRepository = $eloquentPromotionsRepository;
     }
     
-    public function handler(UpdatePromotionDTO $updatePromotionDTO):void{
+    public function handler(UpdatePromotionDTO $updatePromotionDTO){
         $this->eloquentPromotionsRepository->updateFromArray($updatePromotionDTO->toArray());
     }
 }
