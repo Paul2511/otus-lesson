@@ -57,6 +57,27 @@ const actions = {
                 .catch((error) => { reject(error) })
         });
     },
+
+    forgotPassword({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.FORGOT_PASSWORD, payload)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+
+    resetPassword({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            axios.post(requests.RESET_PASSWORD, payload)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => { reject(error) })
+        });
+    },
+
     registerClient({commit}, payload) {
         return new Promise((resolve, reject) => {
             axios.post(requests.CLIENT_REGISTER, payload)

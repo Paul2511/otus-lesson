@@ -47,7 +47,7 @@
                                     <span class="text-danger text-xs" v-show="!!errors.password">{{ errors.password | arr2str }}</span>
 
                                     <div class="flex flex-wrap justify-between my-5">
-                                        <router-link to="">{{ $t('ForgotPassword') }}?</router-link>
+                                        <router-link to="/forgot-password">{{ $t('ForgotPassword') }}?</router-link>
                                     </div>
                                     <vs-button type="border" @click="registerUser">{{ $t('Register') }}</vs-button>
                                     <vs-button @click="login" class="float-right">{{ $t('Login') }}</vs-button>

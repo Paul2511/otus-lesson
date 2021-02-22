@@ -14,6 +14,10 @@ class RouteNames
     const V1_CLIENT_REGISTRATION = 'clientRegistration';
     const V1_SPEC_REGISTRATION = 'specRegistration';
     const V1_CHANGE_PASSWORD = 'changePassword';
+    const V1_FORGOT_PASSWORD = 'forgotPassword';
+    const V1_RESET_PASSWORD = 'resetPassword';
+
+    const PASSWORD_RESET = 'password.reset';
 
     const V1_GET_USER = 'getUser';
     const V1_CREATE_USER = 'createUser';
@@ -54,6 +58,7 @@ class RouteNames
         self::V1_GET_USER_COMMENTS => 'user',
         self::V1_LOGIN_AS => 'user',
         self::V1_CHANGE_PASSWORD => 'user',
+        self::V1_FORGOT_PASSWORD => 'user',
         self::V1_GET_PET => 'pet',
         self::V1_UPDATE_PET => 'pet',
         self::V1_DELETE_PET => 'pet',

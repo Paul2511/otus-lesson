@@ -12,6 +12,7 @@ use App\States\User\Role\AdminUserRole;
 use App\States\User\Role\ClientUserRole;
 use App\States\User\Role\ManagerUserRole;
 use App\States\User\Role\SpecialistUserRole;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -79,9 +80,10 @@ use App\States\User\Role\UserRole;
  * @property-read Collection|Lead[]     $leads
  * @property-read Collection|Lead[]     $managerLeads
  */
-class User extends Authenticatable implements JWTSubject, HasLocalePreference
+class User extends Authenticatable implements JWTSubject, HasLocalePreference, CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable, Rememberable, Rememberable, HasStates, Searchable, HasComments, UserTimezoneTrait;
+    use \Illuminate\Auth\Passwords\CanResetPassword;
 
     public string $clientPassword;
 

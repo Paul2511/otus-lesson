@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthChangePasswordRequest;
+use App\Http\Requests\Auth\AuthForgotPasswordRequest;
+use App\Http\Requests\Auth\AuthResetPasswordRequest;
 use App\Http\Requests\User\UserRegisterRequest;
 use App\Http\Resources\User\UserResource;
 use App\Models\Pet;
 use App\Models\User;
 use App\Services\Auth\DTO\AuthLoginData;
+use App\Services\Auth\DTO\AuthResetPasswordData;
 use App\Services\Users\Dto\UserRegisterData;
 use App\States\User\Role\ClientUserRole;
 use App\States\User\Role\SpecialistUserRole;
@@ -32,7 +35,9 @@ class AuthController extends Controller
         AuthService $authService
     )
     {
-        $this->middleware('auth.jwt:api', ['except' => ['login', 'clientRegister', 'specRegister']]);
+        $this->middleware('auth.jwt:api', [
+            'except' => ['login', 'clientRegister', 'specRegister', 'forgotPassword', 'resetPassword']
+        ]);
         $this->authService = $authService;
     }
 
@@ -146,6 +151,42 @@ class AuthController extends Controller
             'message'=>[
                 'title'=>trans('form.message.successTitle'),
                 'text'=>trans('form.message.successPasswordChangeText')]
+        ];
+
+        return response()->json($message);
+    }
+
+    /**
+     * @throws \App\Exceptions\Auth\ForgotPasswordException
+     */
+    public function forgotPassword(AuthForgotPasswordRequest $request)
+    {
+        $credentials = $request->only('email');
+
+        $this->authService->forgotPassword($credentials);
+
+        $message = [
+            'message'=>[
+                'title'=>trans('form.message.forgotTitle'),
+                'text'=>trans('passwords.sent')]
+        ];
+
+        return response()->json($message);
+    }
+
+    /**
+     * @throws \App\Exceptions\Auth\ResetPasswordException
+     */
+    public function resetPassword(AuthResetPasswordRequest $request) {
+
+        $data = AuthResetPasswordData::fromRequest($request);
+
+        $this->authService->resetPassword($data);
+
+        $message = [
+            'message'=>[
+                'title'=>trans('passwords.reset'),
+                'text'=>trans('form.message.resetText')]
         ];
 
         return response()->json($message);

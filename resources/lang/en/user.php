@@ -3,6 +3,7 @@
 return [
     'notFound' => 'User not found',
     'emailExists' => 'A user with this email already exists!',
+    'emailNotFound' => 'User with this email was not found',
     'role'=>[
         'client' => 'Client',
         'specialist' => 'Specialist',

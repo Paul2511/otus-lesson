@@ -82,7 +82,6 @@
                             color: 'danger', iconPack: 'feather', icon:'icon-alert-circle'})
                     })
                     .finally(() => (this.$vs.loading.close()));
-
             }
 
         },

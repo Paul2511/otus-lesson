@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\RouteNames;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Middleware\WebApplicationData;
@@ -14,6 +15,9 @@ use App\Http\Middleware\WebApplicationData;
 |
 */
 
+Route::get('/reset-password/{token}', function ($token) {
+    return view('application', ['token' => $token]);
+})->name(RouteNames::PASSWORD_RESET);
 
 Route::get('/{any}', ApplicationController::class)
     ->where('any', '.*')

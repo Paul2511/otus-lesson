@@ -3,13 +3,17 @@
 
 namespace App\Services\Auth;
 
+use App\Exceptions\Auth\ForgotPasswordException;
+use App\Exceptions\Auth\ResetPasswordException;
 use App\Services\Auth\DTO\AuthLoginData;
+use App\Services\Auth\DTO\AuthResetPasswordData;
 use App\Services\Auth\Handlers\ChangePasswordHandler;
 use Support\Log\LogHelper;
 use App\Services\Users\UserService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Facades\Password;
 class AuthService
 {
 
@@ -74,5 +78,43 @@ class AuthService
         $user = $this->userService->findUser($userId);
 
         $this->passwordHandler->handle($user, $password);
+    }
+
+    /**
+     * @throws ForgotPasswordException
+     */
+    public function forgotPassword(array $credentials): void
+    {
+        try {
+            $status = Password::sendResetLink($credentials);
+
+            if ($status !== Password::RESET_LINK_SENT) {
+                throw new ForgotPasswordException(__($status));
+            }
+
+        } catch (\Throwable $e) {
+            throw new ForgotPasswordException($e->getMessage());
+        }
+    }
+
+    /**
+     * @throws ResetPasswordException
+     */
+    public function resetPassword(AuthResetPasswordData $resetData): void
+    {
+        $data = $resetData->toArray();
+
+        try {
+            $status = Password::reset($data, function ($user, $password) {
+                $this->passwordHandler->handle($user, $password);
+            });
+
+            if ($status !== Password::PASSWORD_RESET) {
+                throw new ResetPasswordException(__($status), 403);
+            }
+        } catch (\Throwable $e) {
+            throw new ResetPasswordException($e->getMessage(), 403);
+        }
+
     }
 }
