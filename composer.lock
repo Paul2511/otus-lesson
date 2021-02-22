@@ -791,7 +791,7 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../records",
+                "url": "https://github.com/o-gordjshina/records",
                 "reference": "6eb37223513f32037abc42f3c71ad8df2229cc07"
             },
             "require": {
