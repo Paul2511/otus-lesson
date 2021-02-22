@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\{Knowledge, User};
 use Illuminate\Http\Request;
 use App\Service\KnowledgeService;
+use Illuminate\Support\Facades\Cache;
 
 class KnowledgeController extends Controller
 {
@@ -23,7 +24,9 @@ class KnowledgeController extends Controller
     {
         if(\Auth::check()){
             $this->authorize(User::VIEW_ANY, Knowledge::class);
-            $knowledges = $this->knowledgeService->getKnowledges();
+            $knowledges = Cache::remember("knowledges", 3600 * 24, function(){
+                return $this->knowledgeService->getKnowledges();
+            });
             return view("knowledges.index", ['knowls' => $knowledges]);
         } else {
             return redirect()->route('user.login');
