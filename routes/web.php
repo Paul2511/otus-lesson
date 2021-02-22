@@ -35,3 +35,6 @@ Route::resource('/client', ClientController::class);
 Route::get('/error', function(){
 	Log::critical("critical !!!");
 });
+Route::get('/locked', function(){
+	return "locked page";
+})->middleware("myaccess");
