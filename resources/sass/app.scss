@@ -136,3 +136,41 @@ img {
     color: $cyan;
   }
 }
+
+.weather {
+  width: 170px;
+  background: #fff;
+  color: #000;
+  padding: 12px 0 12px 26px;
+  position: absolute;
+  top: -35px;
+  left: -10px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px #00000088;
+
+  &__temp {
+    align-items: baseline;
+    display: inline-flex;
+    background: #376ce3;
+    color: #fff;
+    padding: 0 4px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+
+  &__city {
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__description {
+    background: #ffc930;
+    border-radius: 5px;
+    margin-left: 8px;
+    padding: 0 8px;
+    color: #bd7407;
+  }
+}
