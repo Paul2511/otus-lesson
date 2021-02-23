@@ -17,7 +17,7 @@ class ApiRoutesProvider
     {
         Route::as('api.')->middleware('auth:api')->group(
             function () {
-                Route::get('surveys/list', [ApiSurveysController::class, 'list']);
+                Route::as('surveys.list')->get('surveys/list', [ApiSurveysController::class, 'list']);
 
                 Route::apiResource(
                     'surveys',
