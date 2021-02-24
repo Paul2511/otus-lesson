@@ -1,4 +1,4 @@
-@if ($weather)
+@if ($weather ?? false)
     <div class="weather">
         <div class="weather__city">{{ $weather->cityName }}</div>
         <div>

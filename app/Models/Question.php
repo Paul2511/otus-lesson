@@ -58,7 +58,7 @@ class Question extends BaseModel
         return $this->belongsTo(Survey::class);
     }
 
-    public function answer(): HasMany
+    public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
     }

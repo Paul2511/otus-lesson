@@ -5,6 +5,8 @@
 
     <p class="h1">{{ config('app.name', 'Survius') }} &mdash; @lang("messages.is")</p>
     <p class="mt-4">@lang("home.description")</p>
+
+    <a href="{{ PublicRoutes::surveys() }}" class="btn btn-success">Пройти доступные опросы</a>
 @endsection
 
 @section("first_screen_image")

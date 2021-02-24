@@ -1,0 +1,56 @@
+.survey-question {
+  padding: 50px;
+
+  &__answers {
+    margin-top: 30px;
+
+    input {
+      opacity: 0;
+      width: .001px;
+      height: .001px;
+      position: absolute;
+    }
+
+    label {
+      cursor: pointer;
+      padding: 10px 30px 10px 40px ;
+      position: relative;
+      background: #efefef;
+      border-radius: 4px;
+      margin-bottom: 0;
+      margin-top: 15px;
+
+      .input {
+        height: 14px;
+        width: 14px;
+        background-color: #fff;
+        border: 1px solid #888;
+        border-radius: 50%;
+        position: absolute;
+        top: 1em;
+        left: 1em;
+      }
+    }
+
+    input:checked + label {
+      .input {
+        background-color: #666;
+        box-shadow: inset 0 0 2px 2px #fff;
+      }
+    }
+
+    .answer-correct:checked + label {
+      background-color: #b5deb6;
+    }
+
+    .answer-wrong:checked + label {
+      background-color: #fbd1d1;
+    }
+  }
+}
+
+.slick-list {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px #00000018;
+}

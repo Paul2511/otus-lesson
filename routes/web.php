@@ -19,6 +19,6 @@ use App\Services\Routes\Providers\PublicRoutes\PublicRoutesProvider;
 
 Auth::routes();
 
+app(AdminRoutesProvider::class)->register();
 app(PublicRoutesProvider::class)->register();
 app(DebugRoutesProvider::class)->register();
-app(AdminRoutesProvider::class)->register();

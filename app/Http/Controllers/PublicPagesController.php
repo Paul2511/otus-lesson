@@ -20,7 +20,7 @@ class PublicPagesController extends Controller
     {
         View::share(
             [
-                'weather' => $this->weatherService->loadWeather()
+                // 'weather' => $this->weatherService->loadWeather()
             ]
         );
 

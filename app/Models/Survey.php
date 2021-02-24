@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\Routes\Providers\Admin\AdminRoutes;
+use App\Services\Routes\Providers\PublicRoutes\PublicRoutes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -54,6 +56,16 @@ class Survey extends BaseModel
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function publicUrl(): string
+    {
+        return PublicRoutes::survey($this);
+    }
+
+    public function editUrl(): string
+    {
+        return AdminRoutes::surveysEdit($this);
     }
 
 }
