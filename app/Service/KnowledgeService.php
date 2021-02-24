@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 use App\Service\Handlers\{CreateKnowledgeHandler, UpdateKnowledgeHandler, DeleteKnowledgeHandler, GiveMeKnowledgeHandler, GiveMeAllKnowledgeHandler};
+use Illuminate\Support\Facades\Cache;
 class KnowledgeService{
 	protected $createKnowledgeHandler;
     protected $updateKnowledgeHandler;
@@ -40,5 +41,13 @@ class KnowledgeService{
 	public function getKnowledge($id)
 	{
 		return $this->giveMeKnowledgeHandler->handle($id);
+	}
+	public function getCachedKnowledges(){
+		return Cache::tags(["knowlegde"])->remember("knowledges", 3600 * 24, function(){
+                return $this->getKnowledges();
+        });
+	}
+	public function updateKnowledgeCache(){
+		Cache::tags(["knowlegde"])->flush();
 	}
 }

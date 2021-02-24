@@ -24,9 +24,7 @@ class KnowledgeController extends Controller
     {
         if(\Auth::check()){
             $this->authorize(User::VIEW_ANY, Knowledge::class);
-            $knowledges = Cache::remember("knowledges", 3600 * 24, function(){
-                return $this->knowledgeService->getKnowledges();
-            });
+            $knowledges = $this->knowledgeService->getCachedKnowledges();
             return view("knowledges.index", ['knowls' => $knowledges]);
         } else {
             return redirect()->route('user.login');
@@ -128,6 +126,7 @@ class KnowledgeController extends Controller
             $updatingKnowledge = $this->knowledgeService->getKnowledge($id);
             $this->authorize(User::UPDATE, $updatingKnowledge);
             $this->knowledgeService->updateKnowledge($data, $id);
+            $this->knowledgeService->updateKnowledgeCache();
             return redirect()->back();
         } else {
             return redirect()->route('user.login');

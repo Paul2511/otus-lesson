@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use App\Service\KnowledgeService;
 
 class ResetCache extends Command
 {
@@ -13,6 +14,7 @@ class ResetCache extends Command
      * @var string
      */
     protected $signature = 'appcache:reset';
+    protected $knowledgeService;
 
     /**
      * The console command description.
@@ -26,9 +28,10 @@ class ResetCache extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(KnowledgeService $knowledgeService)
     {
         parent::__construct();
+        $this->knowledgeService = $knowledgeService;
     }
 
     /**
@@ -38,6 +41,7 @@ class ResetCache extends Command
      */
     public function handle()
     {
-        Cache::flush();
+        $this->knowledgeService->updateKnowledgeCache();
+        $this->knowledgeService->getCachedKnowledges();
     }
 }
